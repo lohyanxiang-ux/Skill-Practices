@@ -1,14 +1,13 @@
 {
   "skillTitle": "Multiplying and Dividing Algebraic Fractions",
-  "keypad": [
-    "a", "b", "c",
-    "x", "y", "z",
-    "a/b", "^2", "-",
-    "7", "8", "9",
-    "4", "5", "6",
-    "1", "2", "3",
-    "0", "⌫", "Clear"
-  ],
+"keypad": [
+  "Clear", "⌫", "a", "b",
+  "c", "x", "y", "z",
+  "7", "8", "9", "-",
+  "4", "5", "6", "^2",
+  "1", "2", "3", "a/b",
+  "0"
+],
   "structures": [
     {
       "level": 1,
