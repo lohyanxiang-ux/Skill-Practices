@@ -1,0 +1,127 @@
+{
+  "skillTitle": "Graphs of Functions",
+  "keypad": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "⌫"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "type": { "type": "randInt", "min": 0, "max": 3 }
+      },
+      "derived": {
+        "optsRaw": "['$y = 2x$', '$y = 3x^2$', '$y = x^3$', '$y = 3$']",
+        "order": "[0, 1, 2, 3].map(i => ({i, r: Math.random()})).sort((a,b) => a.r - b.r).map(a => a.i)",
+        "ans": "['A', 'B', 'C', 'D'][scope.order.indexOf(scope.type)]",
+        "optA": "scope.optsRaw[scope.order[0]]",
+        "optB": "scope.optsRaw[scope.order[1]]",
+        "optC": "scope.optsRaw[scope.order[2]]",
+        "optD": "scope.optsRaw[scope.order[3]]",
+        "svgHeader": "'<svg viewBox=\"0 0 220 180\" width=\"220\" height=\"180\" style=\"background:#ffffff; border:1px solid #d1d5db; border-radius:8px; display:block; margin:10px 0;\"><defs><marker id=\"ar\" viewBox=\"0 0 10 10\" refX=\"5\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#333333\"/></marker></defs><line x1=\"20\" y1=\"100\" x2=\"200\" y2=\"100\" stroke=\"#333333\" stroke-width=\"2\" marker-end=\"url(#ar)\"/><line x1=\"110\" y1=\"170\" x2=\"110\" y2=\"15\" stroke=\"#333333\" stroke-width=\"2\" marker-end=\"url(#ar)\"/><text x=\"192\" y=\"118\" font-size=\"13\" font-style=\"italic\">x</text><text x=\"116\" y=\"22\" font-size=\"13\" font-style=\"italic\">y</text><text x=\"98\" y=\"116\" font-size=\"13\" font-style=\"italic\">O</text>'",
+        "svgBody": "scope.type === 0 ? '<line x1=\"40\" y1=\"160\" x2=\"180\" y2=\"40\" stroke=\"#d9534f\" stroke-width=\"2.5\"/>' : scope.type === 1 ? '<path d=\"M 50 30 Q 110 170 170 30\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/>' : scope.type === 2 ? '<path d=\"M 30 170 C 70 100 90 100 110 100 C 130 100 150 100 190 30\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/>' : '<line x1=\"20\" y1=\"50\" x2=\"200\" y2=\"50\" stroke=\"#d9534f\" stroke-width=\"2.5\"/><line x1=\"107\" y1=\"50\" x2=\"113\" y2=\"50\" stroke=\"#333333\" stroke-width=\"2\"/><text x=\"95\" y=\"46\" font-size=\"12\" fill=\"#d9534f\">3</text>'",
+        "svg": "scope.svgHeader + scope.svgBody + '</svg>'"
+      },
+      "questionTemplate": "Select the equation of the graph shown below:\n\n${scope.svg}\n\nA: ${scope.optA}\n\nB: ${scope.optB}\n\nC: ${scope.optC}\n\nD: ${scope.optD}",
+      "inputs": [
+        { "label": "Option:", "answer": "${scope.ans}" }
+      ],
+      "steps": []
+    },
+    {
+      "level": 1,
+      "variables": {
+        "type": { "type": "randInt", "min": 0, "max": 3 }
+      },
+      "derived": {
+        "optsRaw": "['$y = -2x$', '$y = -3x^2$', '$y = -x^3$', '$y = -3$']",
+        "order": "[0, 1, 2, 3].map(i => ({i, r: Math.random()})).sort((a,b) => a.r - b.r).map(a => a.i)",
+        "ans": "['A', 'B', 'C', 'D'][scope.order.indexOf(scope.type)]",
+        "optA": "scope.optsRaw[scope.order[0]]",
+        "optB": "scope.optsRaw[scope.order[1]]",
+        "optC": "scope.optsRaw[scope.order[2]]",
+        "optD": "scope.optsRaw[scope.order[3]]",
+        "svgHeader": "'<svg viewBox=\"0 0 220 180\" width=\"220\" height=\"180\" style=\"background:#ffffff; border:1px solid #d1d5db; border-radius:8px; display:block; margin:10px 0;\"><defs><marker id=\"ar\" viewBox=\"0 0 10 10\" refX=\"5\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#333333\"/></marker></defs><line x1=\"20\" y1=\"100\" x2=\"200\" y2=\"100\" stroke=\"#333333\" stroke-width=\"2\" marker-end=\"url(#ar)\"/><line x1=\"110\" y1=\"170\" x2=\"110\" y2=\"15\" stroke=\"#333333\" stroke-width=\"2\" marker-end=\"url(#ar)\"/><text x=\"192\" y=\"118\" font-size=\"13\" font-style=\"italic\">x</text><text x=\"116\" y=\"22\" font-size=\"13\" font-style=\"italic\">y</text><text x=\"98\" y=\"116\" font-size=\"13\" font-style=\"italic\">O</text>'",
+        "svgBody": "scope.type === 0 ? '<line x1=\"40\" y1=\"40\" x2=\"180\" y2=\"160\" stroke=\"#d9534f\" stroke-width=\"2.5\"/>' : scope.type === 1 ? '<path d=\"M 50 170 Q 110 30 170 170\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/>' : scope.type === 2 ? '<path d=\"M 30 30 C 70 100 90 100 110 100 C 130 100 150 100 190 170\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/>' : '<line x1=\"20\" y1=\"150\" x2=\"200\" y2=\"150\" stroke=\"#d9534f\" stroke-width=\"2.5\"/><line x1=\"107\" y1=\"150\" x2=\"113\" y2=\"150\" stroke=\"#333333\" stroke-width=\"2\"/><text x=\"89\" y=\"154\" font-size=\"12\" fill=\"#d9534f\">-3</text>'",
+        "svg": "scope.svgHeader + scope.svgBody + '</svg>'"
+      },
+      "questionTemplate": "Select the equation of the graph shown below:\n\n${scope.svg}\n\nA: ${scope.optA}\n\nB: ${scope.optB}\n\nC: ${scope.optC}\n\nD: ${scope.optD}",
+      "inputs": [
+        { "label": "Option:", "answer": "${scope.ans}" }
+      ],
+      "steps": []
+    },
+    {
+      "level": 1,
+      "variables": {
+        "type": { "type": "randInt", "min": 0, "max": 3 }
+      },
+      "derived": {
+        "optsRaw": "['$y = \\\\frac{4}{x}$', '$y = -\\\\frac{1}{x}$', '$y = \\\\frac{1}{x^2}$', '$y = -\\\\frac{3}{x^2}$']",
+        "order": "[0, 1, 2, 3].map(i => ({i, r: Math.random()})).sort((a,b) => a.r - b.r).map(a => a.i)",
+        "ans": "['A', 'B', 'C', 'D'][scope.order.indexOf(scope.type)]",
+        "optA": "scope.optsRaw[scope.order[0]]",
+        "optB": "scope.optsRaw[scope.order[1]]",
+        "optC": "scope.optsRaw[scope.order[2]]",
+        "optD": "scope.optsRaw[scope.order[3]]",
+        "svgHeader": "'<svg viewBox=\"0 0 220 180\" width=\"220\" height=\"180\" style=\"background:#ffffff; border:1px solid #d1d5db; border-radius:8px; display:block; margin:10px 0;\"><defs><marker id=\"ar\" viewBox=\"0 0 10 10\" refX=\"5\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#333333\"/></marker></defs><line x1=\"20\" y1=\"100\" x2=\"200\" y2=\"100\" stroke=\"#333333\" stroke-width=\"2\" marker-end=\"url(#ar)\"/><line x1=\"110\" y1=\"170\" x2=\"110\" y2=\"15\" stroke=\"#333333\" stroke-width=\"2\" marker-end=\"url(#ar)\"/><text x=\"192\" y=\"118\" font-size=\"13\" font-style=\"italic\">x</text><text x=\"116\" y=\"22\" font-size=\"13\" font-style=\"italic\">y</text><text x=\"98\" y=\"116\" font-size=\"13\" font-style=\"italic\">O</text>'",
+        "svgBody": "scope.type === 0 ? '<path d=\"M 120 25 Q 125 85 195 92\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/><path d=\"M 25 108 Q 95 115 100 175\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/>' : scope.type === 1 ? '<path d=\"M 25 92 Q 95 85 100 25\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/><path d=\"M 120 175 Q 125 115 195 108\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/>' : scope.type === 2 ? '<path d=\"M 120 25 Q 123 88 195 93\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/><path d=\"M 25 93 Q 97 88 100 25\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/>' : '<path d=\"M 120 175 Q 123 112 195 107\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/><path d=\"M 25 107 Q 97 112 100 175\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/>'",
+        "svg": "scope.svgHeader + scope.svgBody + '</svg>'"
+      },
+      "questionTemplate": "Select the equation of the graph shown below:\n\n${scope.svg}\n\nA: ${scope.optA}\n\nB: ${scope.optB}\n\nC: ${scope.optC}\n\nD: ${scope.optD}",
+      "inputs": [
+        { "label": "Option:", "answer": "${scope.ans}" }
+      ],
+      "steps": []
+    },
+    {
+      "level": 1,
+      "variables": {
+        "type": { "type": "randInt", "min": 0, "max": 3 }
+      },
+      "derived": {
+        "optsRaw": "['$y = 4^x$', '$y = -3^x$', '$y = 2(2^x)$', '$y = -2(3^x)$']",
+        "order": "[0, 1, 2, 3].map(i => ({i, r: Math.random()})).sort((a,b) => a.r - b.r).map(a => a.i)",
+        "ans": "['A', 'B', 'C', 'D'][scope.order.indexOf(scope.type)]",
+        "optA": "scope.optsRaw[scope.order[0]]",
+        "optB": "scope.optsRaw[scope.order[1]]",
+        "optC": "scope.optsRaw[scope.order[2]]",
+        "optD": "scope.optsRaw[scope.order[3]]",
+        "svgHeader": "'<svg viewBox=\"0 0 220 180\" width=\"220\" height=\"180\" style=\"background:#ffffff; border:1px solid #d1d5db; border-radius:8px; display:block; margin:10px 0;\"><defs><marker id=\"ar\" viewBox=\"0 0 10 10\" refX=\"5\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#333333\"/></marker></defs><line x1=\"20\" y1=\"100\" x2=\"200\" y2=\"100\" stroke=\"#333333\" stroke-width=\"2\" marker-end=\"url(#ar)\"/><line x1=\"110\" y1=\"170\" x2=\"110\" y2=\"15\" stroke=\"#333333\" stroke-width=\"2\" marker-end=\"url(#ar)\"/><text x=\"192\" y=\"118\" font-size=\"13\" font-style=\"italic\">x</text><text x=\"116\" y=\"22\" font-size=\"13\" font-style=\"italic\">y</text><text x=\"98\" y=\"116\" font-size=\"13\" font-style=\"italic\">O</text>'",
+        "svgBody": "scope.type === 0 ? '<path d=\"M 25 97 C 75 96 100 90 185 20\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/><line x1=\"107\" y1=\"85\" x2=\"113\" y2=\"85\" stroke=\"#333333\" stroke-width=\"2\"/><text x=\"95\" y=\"88\" font-size=\"12\" fill=\"#333333\">1</text>' : scope.type === 1 ? '<path d=\"M 25 103 C 75 104 100 110 185 180\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/><line x1=\"107\" y1=\"115\" x2=\"113\" y2=\"115\" stroke=\"#333333\" stroke-width=\"2\"/><text x=\"91\" y=\"118\" font-size=\"12\" fill=\"#333333\">-1</text>' : scope.type === 2 ? '<path d=\"M 25 97 C 75 94 100 80 185 15\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/><line x1=\"107\" y1=\"65\" x2=\"113\" y2=\"65\" stroke=\"#333333\" stroke-width=\"2\"/><text x=\"95\" y=\"68\" font-size=\"12\" fill=\"#333333\">2</text>' : '<path d=\"M 25 103 C 75 106 100 120 185 185\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/><line x1=\"107\" y1=\"135\" x2=\"113\" y2=\"135\" stroke=\"#333333\" stroke-width=\"2\"/><text x=\"91\" y=\"138\" font-size=\"12\" fill=\"#333333\">-2</text>'",
+        "svg": "scope.svgHeader + scope.svgBody + '</svg>'"
+      },
+      "questionTemplate": "Select the equation of the graph shown below:\n\n${scope.svg}\n\nA: ${scope.optA}\n\nB: ${scope.optB}\n\nC: ${scope.optC}\n\nD: ${scope.optD}",
+      "inputs": [
+        { "label": "Option:", "answer": "${scope.ans}" }
+      ],
+      "steps": []
+    },
+    {
+      "level": 1,
+      "variables": {
+        "type": { "type": "randInt", "min": 0, "max": 3 }
+      },
+      "derived": {
+        "optsRaw": "['$y = -\\\\frac{3}{x^2}$', '$y = -2x^3$', '$y = 2x^2$', '$y = -3^x$']",
+        "order": "[0, 1, 2, 3].map(i => ({i, r: Math.random()})).sort((a,b) => a.r - b.r).map(a => a.i)",
+        "ans": "['A', 'B', 'C', 'D'][scope.order.indexOf(scope.type)]",
+        "optA": "scope.optsRaw[scope.order[0]]",
+        "optB": "scope.optsRaw[scope.order[1]]",
+        "optC": "scope.optsRaw[scope.order[2]]",
+        "optD": "scope.optsRaw[scope.order[3]]",
+        "svgHeader": "'<svg viewBox=\"0 0 220 180\" width=\"220\" height=\"180\" style=\"background:#ffffff; border:1px solid #d1d5db; border-radius:8px; display:block; margin:10px 0;\"><defs><marker id=\"ar\" viewBox=\"0 0 10 10\" refX=\"5\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#333333\"/></marker></defs><line x1=\"20\" y1=\"100\" x2=\"200\" y2=\"100\" stroke=\"#333333\" stroke-width=\"2\" marker-end=\"url(#ar)\"/><line x1=\"110\" y1=\"170\" x2=\"110\" y2=\"15\" stroke=\"#333333\" stroke-width=\"2\" marker-end=\"url(#ar)\"/><text x=\"192\" y=\"118\" font-size=\"13\" font-style=\"italic\">x</text><text x=\"116\" y=\"22\" font-size=\"13\" font-style=\"italic\">y</text><text x=\"98\" y=\"116\" font-size=\"13\" font-style=\"italic\">O</text>'",
+        "svgBody": "scope.type === 0 ? '<path d=\"M 120 175 Q 123 112 195 107\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/><path d=\"M 25 107 Q 97 112 100 175\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/>' : scope.type === 1 ? '<path d=\"M 30 30 C 70 100 90 100 110 100 C 130 100 150 100 190 170\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/>' : scope.type === 2 ? '<path d=\"M 50 30 Q 110 170 170 30\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/>' : '<path d=\"M 25 103 C 75 104 100 110 185 180\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"2.5\"/><line x1=\"107\" y1=\"115\" x2=\"113\" y2=\"115\" stroke=\"#333333\" stroke-width=\"2\"/><text x=\"91\" y=\"118\" fill=\"#333333\">-1</text>'",
+        "svg": "scope.svgHeader + scope.svgBody + '</svg>'"
+      },
+      "questionTemplate": "Select the equation of the graph shown below:\n\n${scope.svg}\n\nA: ${scope.optA}\n\nB: ${scope.optB}\n\nC: ${scope.optC}\n\nD: ${scope.optD}",
+      "inputs": [
+        { "label": "Option:", "answer": "${scope.ans}" }
+      ],
+      "steps": []
+    }
+  ]
+}

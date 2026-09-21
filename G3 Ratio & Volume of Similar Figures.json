@@ -1,0 +1,209 @@
+{
+  "skillTitle": "Ratio & Volume of Similar Figures",
+  "keypad": [
+    "7", "8", "9", "/",
+    "4", "5", "6", "-",
+    "1", "2", "3", "0",
+    ".", ":"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "b": { "type": "randInt", "min": 1, "max": 4 },
+        "a": { "type": "randInt", "min": 2, "max": 6, "notEqual": "b" },
+        "m": { "type": "randInt", "min": 2, "max": 5 },
+        "k": { "type": "randInt", "min": 2, "max": 8 }
+      },
+      "derived": {
+        "l1": "scope.b * scope.m",
+        "l2": "scope.a * scope.m",
+        "A1": "scope.b * scope.b * scope.k",
+        "a_sq": "scope.a * scope.a",
+        "b_sq": "scope.b * scope.b",
+        "g": "gcd(scope.l2, scope.l1)",
+        "red_l2": "scope.l2 / scope.g",
+        "red_l1": "scope.l1 / scope.g",
+        "ans_num": "scope.a_sq * scope.k",
+        "ans": "scope.ans_num.toString()"
+      },
+      "questionTemplate": "<div style=\"text-align:center; margin-bottom:12px;\"><svg width=\"260\" height=\"110\" viewBox=\"0 0 260 110\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"10,90 80,90 10,30\" fill=\"#f0fdf4\" stroke=\"#166534\" stroke-width=\"2\"/><text x=\"45\" y=\"105\" font-size=\"12\" text-anchor=\"middle\">${scope.l1} cm</text><text x=\"40\" y=\"65\" font-size=\"12\" text-anchor=\"middle\">A₁ = ${scope.A1} cm²</text><polygon points=\"110,90 230,90 110,10\" fill=\"#f0fdf4\" stroke=\"#166534\" stroke-width=\"2\"/><text x=\"170\" y=\"105\" font-size=\"12\" text-anchor=\"middle\">${scope.l2} cm</text><text x=\"150\" y=\"55\" font-size=\"12\" text-anchor=\"middle\">A₂</text></svg></div>\n\nTwo similar figures have corresponding side lengths of $${scope.l1}\\text{ cm}$ and $${scope.l2}\\text{ cm}$. If the area of the first figure is $${scope.A1}\\text{ cm}^2$, find the unknown area $A_2$.",
+      "inputs": [
+        { "label": "A₂ =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "State the area ratio formula for similar figures: $$\\frac{A_2}{A_1} = \\left(\\frac{l_2}{l_1}\\right)^2$$",
+        "Substitute the given values into the formula: $$\\frac{A_2}{${scope.A1}} = \\left(\\frac{${scope.l2}}{${scope.l1}}\\right)^2 = \\left(\\frac{${scope.red_l2}}{${scope.red_l1}}\\right)^2 = \\frac{${scope.a_sq}}{${scope.b_sq}}$$",
+        "Solve for $A_2$: $$A_2 = ${scope.A1} \\times \\frac{${scope.a_sq}}{${scope.b_sq}} = ${scope.ans}\\text{ cm}^2$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "b": { "type": "randInt", "min": 1, "max": 3 },
+        "a": { "type": "randInt", "min": 2, "max": 4, "notEqual": "b" },
+        "m": { "type": "randInt", "min": 2, "max": 4 },
+        "k": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "h1": "scope.b * scope.m",
+        "h2": "scope.a * scope.m",
+        "V1": "scope.b * scope.b * scope.b * scope.k",
+        "a3": "scope.a * scope.a * scope.a",
+        "b3": "scope.b * scope.b * scope.b",
+        "g": "gcd(scope.h2, scope.h1)",
+        "red_h2": "scope.h2 / scope.g",
+        "red_h1": "scope.h1 / scope.g",
+        "ans_num": "scope.a3 * scope.k",
+        "ans": "scope.ans_num.toString()"
+      },
+      "questionTemplate": "<div style=\"text-align:center; margin-bottom:12px;\"><svg width=\"260\" height=\"120\" viewBox=\"0 0 260 120\" xmlns=\"http://www.w3.org/2000/svg\"><ellipse cx=\"40\" cy=\"25\" rx=\"25\" ry=\"10\" fill=\"#f0fdf4\" stroke=\"#166534\" stroke-width=\"2\"/><path d=\"M15,25 L15,85 A25,10 0 0,0 65,85 L65,25\" fill=\"#f0fdf4\" stroke=\"#166534\" stroke-width=\"2\"/><ellipse cx=\"40\" cy=\"85\" rx=\"25\" ry=\"10\" fill=\"none\" stroke=\"#166534\" stroke-width=\"1\" stroke-dasharray=\"3,3\"/><text x=\"40\" y=\"60\" font-size=\"11\" text-anchor=\"middle\">V₁ = ${scope.V1} cm³</text><text x=\"75\" y=\"55\" font-size=\"11\">${scope.h1} cm</text><ellipse cx=\"170\" cy=\"18\" rx=\"35\" ry=\"12\" fill=\"#f0fdf4\" stroke=\"#166534\" stroke-width=\"2\"/><path d=\"M135,18 L135,102 A35,12 0 0,0 205,102 L205,18\" fill=\"#f0fdf4\" stroke=\"#166534\" stroke-width=\"2\"/><ellipse cx=\"170\" cy=\"102\" rx=\"35\" ry=\"12\" fill=\"none\" stroke=\"#166534\" stroke-width=\"1\" stroke-dasharray=\"3,3\"/><text x=\"170\" y=\"65\" font-size=\"11\" text-anchor=\"middle\">V₂</text><text x=\"215\" y=\"60\" font-size=\"11\">${scope.h2} cm</text></svg></div>\n\nTwo similar solids have heights of $${scope.h1}\\text{ cm}$ and $${scope.h2}\\text{ cm}$ respectively. If the volume of the first solid is $${scope.V1}\\text{ cm}^3$, find the volume of the second solid $V_2$.",
+      "inputs": [
+        { "label": "V₂ =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "State the volume ratio formula for similar solids: $$\\frac{V_2}{V_1} = \\left(\\frac{h_2}{h_1}\\right)^3$$",
+        "Substitute the given values into the formula: $$\\frac{V_2}{${scope.V1}} = \\left(\\frac{${scope.h2}}{${scope.h1}}\\right)^3 = \\left(\\frac{${scope.red_h2}}{${scope.red_h1}}\\right)^3 = \\frac{${scope.a3}}{${scope.b3}}$$",
+        "Solve for $V_2$: $$V_2 = ${scope.V1} \\times \\frac{${scope.a3}}{${scope.b3}} = ${scope.ans}\\text{ cm}^3$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "b": { "type": "randInt", "min": 1, "max": 4 },
+        "a": { "type": "randInt", "min": 2, "max": 5, "notEqual": "b" },
+        "m": { "type": "randInt", "min": 2, "max": 5 },
+        "k": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "A1": "scope.b * scope.b * scope.k",
+        "A2": "scope.a * scope.a * scope.k",
+        "l1": "scope.b * scope.m",
+        "ans_num": "scope.a * scope.m",
+        "ans": "scope.ans_num.toString()"
+      },
+      "questionTemplate": "<div style=\"text-align:center; margin-bottom:12px;\"><svg width=\"260\" height=\"110\" viewBox=\"0 0 260 110\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"10\" y=\"30\" width=\"60\" height=\"60\" fill=\"#eff6ff\" stroke=\"#1e40af\" stroke-width=\"2\"/><text x=\"40\" y=\"65\" font-size=\"11\" text-anchor=\"middle\">${scope.A1} cm²</text><text x=\"40\" y=\"105\" font-size=\"11\" text-anchor=\"middle\">${scope.l1} cm</text><rect x=\"110\" y=\"10\" width=\"90\" height=\"80\" fill=\"#eff6ff\" stroke=\"#1e40af\" stroke-width=\"2\"/><text x=\"155\" y=\"55\" font-size=\"11\" text-anchor=\"middle\">${scope.A2} cm²</text><text x=\"155\" y=\"105\" font-size=\"11\" text-anchor=\"middle\">x</text></svg></div>\n\nTwo similar figures have areas of $${scope.A1}\\text{ cm}^2$ and $${scope.A2}\\text{ cm}^2$. If a side length of the first figure is $${scope.l1}\\text{ cm}$, find the corresponding side length $x$ of the second figure.",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "State the linear length ratio formula derived from area ratio: $$\\frac{x}{l_1} = \\sqrt{\\frac{A_2}{A_1}}$$",
+        "Substitute the given values into the formula: $$\\frac{x}{${scope.l1}} = \\sqrt{\\frac{${scope.A2}}{${scope.A1}}} = \\frac{${scope.a}}{${scope.b}}$$",
+        "Solve for $x$: $$x = ${scope.l1} \\times \\frac{${scope.a}}{${scope.b}} = ${scope.ans}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "ad": { "type": "randInt", "min": 2, "max": 8 },
+        "bd": { "type": "randInt", "min": 2, "max": 6 },
+        "k": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "ab": "scope.ad + scope.bd",
+        "g": "gcd(scope.ab, scope.ad)",
+        "num": "scope.ab / scope.g",
+        "den": "scope.ad / scope.g",
+        "areaADE": "scope.den * scope.den * scope.k",
+        "num_sq": "scope.num * scope.num",
+        "den_sq": "scope.den * scope.den",
+        "ans_num": "scope.num_sq * scope.k",
+        "ans": "scope.ans_num.toString()"
+      },
+      "questionTemplate": "<div style=\"text-align:center; margin-bottom:12px;\"><svg width=\"200\" height=\"130\" viewBox=\"0 0 200 130\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"100,10 20,110 180,110\" fill=\"none\" stroke=\"#991b1b\" stroke-width=\"2\"/><line x1=\"52\" y1=\"70\" x2=\"148\" y2=\"70\" stroke=\"#991b1b\" stroke-width=\"2\"/><text x=\"100\" y=\"8\" font-size=\"12\" text-anchor=\"middle\">A</text><text x=\"12\" y=\"122\" font-size=\"12\">B</text><text x=\"182\" y=\"122\" font-size=\"12\">C</text><text x=\"40\" y=\"70\" font-size=\"12\">D</text><text x=\"154\" y=\"70\" font-size=\"12\">E</text><text x=\"68\" y=\"42\" font-size=\"11\" text-anchor=\"middle\">${scope.ad}</text><text x=\"28\" y=\"95\" font-size=\"11\" text-anchor=\"middle\">${scope.bd}</text></svg></div>\n\nIn $\\Delta ABC$, $DE \\parallel BC$ such that $D$ lies on $AB$ and $E$ lies on $AC$. Given $AD = ${scope.ad}\\text{ cm}$, $BD = ${scope.bd}\\text{ cm}$, and the area of $\\Delta ADE$ is $${scope.areaADE}\\text{ cm}^2$, find the area of $\\Delta ABC$.",
+      "inputs": [
+        { "label": "Area(ΔABC) =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Calculate total length $AB$: $$AB = AD + BD = ${scope.ad} + ${scope.bd} = ${scope.ab}\\text{ cm}$$",
+        "State the area ratio formula for similar triangles $\\Delta ABC \\sim \\Delta ADE$: $$\\frac{\\text{Area}(\\Delta ABC)}{\\text{Area}(\\Delta ADE)} = \\left(\\frac{AB}{AD}\\right)^2$$",
+        "Substitute the given side lengths into the formula: $$\\frac{\\text{Area}(\\Delta ABC)}{${scope.areaADE}} = \\left(\\frac{${scope.ab}}{${scope.ad}}\\right)^2 = \\left(\\frac{${scope.num}}{${scope.den}}\\right)^2 = \\frac{${scope.num_sq}}{${scope.den_sq}}$$",
+        "Solve for $\\text{Area}(\\Delta ABC)$: $$\\text{Area}(\\Delta ABC) = ${scope.areaADE} \\times \\frac{${scope.num_sq}}{${scope.den_sq}} = ${scope.ans}\\text{ cm}^2$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "p1_raw": { "type": "randInt", "min": 2, "max": 5 },
+        "p2_raw": { "type": "randInt", "min": 2, "max": 6, "notEqual": "p1_raw" },
+        "m": { "type": "randInt", "min": 2, "max": 4 }
+      },
+      "derived": {
+        "p1": "scope.p1_raw * scope.m",
+        "p2": "scope.p2_raw * scope.m",
+        "g": "gcd(scope.p1, scope.p2)",
+        "n1": "scope.p1 / scope.g",
+        "n2": "scope.p2 / scope.g",
+        "n1_sq": "scope.n1 * scope.n1",
+        "n2_sq": "scope.n2 * scope.n2",
+        "ans": "scope.n1_sq + ':' + scope.n2_sq"
+      },
+      "questionTemplate": "The perimeters of two similar pentagons are $${scope.p1}\\text{ cm}$ and $${scope.p2}\\text{ cm}$ respectively. Find the ratio of their areas in simplest form $a : b$.",
+      "inputs": [
+        { "label": "Ratio =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "State the area ratio formula based on perimeter ratio: $$\\frac{A_1}{A_2} = \\left(\\frac{P_1}{P_2}\\right)^2$$",
+        "Substitute values and simplify the fraction: $$\\frac{A_1}{A_2} = \\left(\\frac{${scope.p1}}{${scope.p2}}\\right)^2 = \\left(\\frac{${scope.n1}}{${scope.n2}}\\right)^2 = \\frac{${scope.n1_sq}}{${scope.n2_sq}}$$",
+        "Convert the simplified fraction into a ratio: $$\\text{Ratio of areas } A_1 : A_2 = ${scope.n1_sq} : ${scope.n2_sq}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "b": { "type": "randInt", "min": 1, "max": 3 },
+        "a": { "type": "randInt", "min": 3, "max": 5, "notEqual": "b" },
+        "k": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "areaB": "scope.b * scope.b",
+        "areaA": "scope.a * scope.a",
+        "volB": "scope.b * scope.b * scope.b * scope.k",
+        "a3": "scope.a * scope.a * scope.a",
+        "b3": "scope.b * scope.b * scope.b",
+        "ans_num": "scope.a3 * scope.k",
+        "ans": "scope.ans_num.toString()"
+      },
+      "questionTemplate": "The ratio of the areas of corresponding faces of two similar cubes is $${scope.areaB} : ${scope.areaA}$. If the volume of the smaller cube is $${scope.volB}\\text{ cm}^3$, find the volume of the larger cube.",
+      "inputs": [
+        { "label": "V =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Find the linear side ratio from the area ratio: $$\\frac{l_2}{l_1} = \\sqrt{\\frac{A_2}{A_1}} = \\sqrt{\\frac{${scope.areaA}}{${scope.areaB}}} = \\frac{${scope.a}}{${scope.b}}$$",
+        "State the volume ratio formula: $$\\frac{V_2}{V_1} = \\left(\\frac{l_2}{l_1}\\right)^3$$",
+        "Substitute the linear scale factor into the volume ratio formula: $$\\frac{V_2}{${scope.volB}} = \\left(\\frac{${scope.a}}{${scope.b}}\\right)^3 = \\frac{${scope.a3}}{${scope.b3}}$$",
+        "Solve for the volume of the larger cube $V_2$: $$V_2 = ${scope.volB} \\times \\frac{${scope.a3}}{${scope.b3}} = ${scope.ans}\\text{ cm}^3$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "h1": { "type": "randInt", "min": 2, "max": 4 },
+        "h2": { "type": "randInt", "min": 2, "max": 4 },
+        "k": { "type": "randInt", "min": 1, "max": 3 }
+      },
+      "derived": {
+        "H": "scope.h1 + scope.h2",
+        "g": "gcd(scope.H, scope.h1)",
+        "big_num": "scope.H / scope.g",
+        "small_den": "scope.h1 / scope.g",
+        "big_cubed": "scope.big_num * scope.big_num * scope.big_num",
+        "small_cubed": "scope.small_den * scope.small_den * scope.small_den",
+        "vTotal": "scope.big_cubed * scope.k",
+        "vTop": "scope.small_cubed * scope.k",
+        "ans_num": "scope.vTotal - scope.vTop",
+        "ans": "scope.ans_num.toString()"
+      },
+      "questionTemplate": "<div style=\"text-align:center; margin-bottom:12px;\"><svg width=\"180\" height=\"130\" viewBox=\"0 0 180 130\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"90,10 20,110 160,110\" fill=\"#fef2f2\" stroke=\"#991b1b\" stroke-width=\"2\"/><line x1=\"55\" y1=\"60\" x2=\"125\" y2=\"60\" stroke=\"#991b1b\" stroke-width=\"2\" stroke-dasharray=\"3,3\"/><text x=\"90\" y=\"40\" font-size=\"11\" text-anchor=\"middle\">Top Cone</text><text x=\"90\" y=\"90\" font-size=\"11\" text-anchor=\"middle\">Frustum</text><text x=\"135\" y=\"38\" font-size=\"10\">${scope.h1} cm</text><text x=\"148\" y=\"88\" font-size=\"10\">${scope.h2} cm</text></svg></div>\n\nA solid cone of total height $${scope.H}\\text{ cm}$ has a total volume of $${scope.vTotal}\\text{ cm}^3$. A smaller cone of height $${scope.h1}\\text{ cm}$ is sliced off parallel to the base. Find the volume of the remaining frustum.",
+      "inputs": [
+        { "label": "V_frustum =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "State the height ratio of the top small cone to the full cone: $$\\frac{h_{\\text{top}}}{H} = \\frac{${scope.h1}}{${scope.H}} = \\frac{${scope.small_den}}{${scope.big_num}}$$",
+        "Calculate the volume of the sliced top cone $V_{\\text{top}}$: $$\\frac{V_{\\text{top}}}{V_{\\text{total}}} = \\left(\\frac{h_{\\text{top}}}{H}\\right)^3 = \\left(\\frac{${scope.small_den}}{${scope.big_num}}\\right)^3 = \\frac{${scope.small_cubed}}{${scope.big_cubed}}$$",
+        "Find $V_{\\text{top}}$: $$V_{\\text{top}} = ${scope.vTotal} \\times \\frac{${scope.small_cubed}}{${scope.big_cubed}} = ${scope.vTop}\\text{ cm}^3$$",
+        "Subtract $V_{\\text{top}}$ from total volume to get the volume of the frustum: $$V_{\\text{frustum}} = V_{\\text{total}} - V_{\\text{top}} = ${scope.vTotal} - ${scope.vTop} = ${scope.ans}\\text{ cm}^3$$"
+      ]
+    }
+  ]
+}

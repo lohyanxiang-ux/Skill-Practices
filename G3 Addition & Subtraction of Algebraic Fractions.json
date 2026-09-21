@@ -1,0 +1,278 @@
+{
+  "skillTitle": "Addition & Subtraction of Algebraic Fractions",
+  "keypad": [
+    "x", "y", "z", "/",
+    "a", "b", "c", "^", 
+    "7", "8","9", "+", 
+    "4", "5","6", "-", 
+    "1", "2","3",  "⌫",
+     "0","(", ")", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 9 },
+        "b": { "type": "randInt", "min": 1, "max": 9 },
+        "k": { "type": "randInt", "min": 2, "max": 5 },
+        "isAdd": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "op": "scope.isAdd === 1 ? '+' : '-'",
+        "bk": "scope.b * scope.k",
+        "expr": "'\\\\frac{' + scope.a + '}{' + scope.k + 'x} ' + scope.op + ' \\\\frac{' + scope.b + '}{xy}'",
+        "s2": "'The lowest common denominator is $' + scope.k + 'xy$.'",
+        "s3": "'\\\\frac{' + scope.a + 'y}{' + scope.k + 'xy} ' + scope.op + ' \\\\frac{' + scope.bk + '}{' + scope.k + 'xy}'",
+        "s4": "'\\\\frac{' + scope.a + 'y ' + scope.op + ' ' + scope.bk + '}{' + scope.k + 'xy}'",
+        "ans": "'\\\\frac{' + scope.a + 'y ' + scope.op + ' ' + scope.bk + '}{' + scope.k + 'xy}'"
+      },
+      "questionTemplate": "Express as a single fraction in its simplest form:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "1) Identify lowest common denominator among the terms: ${scope.s2}",
+        "2) Manipulate each term to have the lowest common denominator: $$${scope.s3}$$",
+        "3) Add/subtract the numerator, divided by the LCD: $$${scope.s4}$$",
+        "4) Simplify the numerator: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 9 },
+        "b": { "type": "randInt", "min": 1, "max": 9 },
+        "isAdd": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "op": "scope.isAdd === 1 ? '+' : '-'",
+        "expr": "'\\\\frac{' + scope.a + '}{xy} ' + scope.op + ' \\\\frac{' + scope.b + '}{yz}'",
+        "s2": "'The lowest common denominator is $xyz$.'",
+        "s3": "'\\\\frac{' + scope.a + 'z}{xyz} ' + scope.op + ' \\\\frac{' + scope.b + 'x}{xyz}'",
+        "s4": "'\\\\frac{' + scope.a + 'z ' + scope.op + ' ' + scope.b + 'x}{xyz}'",
+        "ans": "'\\\\frac{' + scope.a + 'z ' + scope.op + ' ' + scope.b + 'x}{xyz}'"
+      },
+      "questionTemplate": "Express as a single fraction in its simplest form:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "1) Identify lowest common denominator among the terms: ${scope.s2}",
+        "2) Manipulate each term to have the lowest common denominator: $$${scope.s3}$$",
+        "3) Add/subtract the numerator, divided by the LCD: $$${scope.s4}$$",
+        "4) Simplify the numerator: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 5 },
+        "b": { "type": "randInt", "min": 1, "max": 15 },
+        "k": { "type": "randInt", "min": 2, "max": 5 },
+        "isAdd": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "op": "scope.isAdd === 1 ? '+' : '-'",
+        "ak": "scope.a * scope.k",
+        "expr": "'' + scope.a + ' ' + scope.op + ' \\\\frac{' + scope.b + '}{' + scope.k + 'xy}'",
+        "s2": "'The lowest common denominator is $' + scope.k + 'xy$.'",
+        "s3": "'\\\\frac{' + scope.ak + 'xy}{' + scope.k + 'xy} ' + scope.op + ' \\\\frac{' + scope.b + '}{' + scope.k + 'xy}'",
+        "s4": "'\\\\frac{' + scope.ak + 'xy ' + scope.op + ' ' + scope.b + '}{' + scope.k + 'xy}'",
+        "ans": "'\\\\frac{' + scope.ak + 'xy ' + scope.op + ' ' + scope.b + '}{' + scope.k + 'xy}'"
+      },
+      "questionTemplate": "Express as a single fraction in its simplest form:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "1) Identify lowest common denominator among the terms: ${scope.s2}",
+        "2) Manipulate each term to have the lowest common denominator: $$${scope.s3}$$",
+        "3) Add/subtract the numerator, divided by the LCD: $$${scope.s4}$$",
+        "4) Simplify the numerator: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "isAdd": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "op": "scope.isAdd === 1 ? '+' : '-'",
+        "expr": "'\\\\frac{1 - x}{y} ' + scope.op + ' \\\\frac{1 - y}{x}'",
+        "s2": "'The lowest common denominator is $xy$.'",
+        "s3": "'\\\\frac{x(1 - x)}{xy} ' + scope.op + ' \\\\frac{y(1 - y)}{xy}'",
+        "s4": "'\\\\frac{x(1 - x) ' + scope.op + ' y(1 - y)}{xy}'",
+        "ans": "scope.isAdd === 1 ? '\\\\frac{x - x^2 + y - y^2}{xy}' : '\\\\frac{x - x^2 - y + y^2}{xy}'"
+      },
+      "questionTemplate": "Express as a single fraction in its simplest form:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "1) Identify lowest common denominator among the terms: ${scope.s2}",
+        "2) Manipulate each term to have the lowest common denominator: $$${scope.s3}$$",
+        "3) Add/subtract the numerator, divided by the LCD: $$${scope.s4}$$",
+        "4) Simplify the numerator: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 15 },
+        "b": { "type": "randInt", "min": 2, "max": 15 },
+        "isAdd": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "op": "scope.isAdd === 1 ? '+' : '-'",
+        "term1_num": "scope.a * 7",
+        "term2_num": "scope.b * 2",
+        "expr": "'\\\\frac{' + scope.a + '}{6ab^3} ' + scope.op + ' \\\\frac{' + scope.b + '}{21a^2b}'",
+        "s2": "'The lowest common denominator is $42a^2b^3$.'",
+        "s3": "'\\\\frac{' + scope.a + ' \\\\times 7a}{42a^2b^3} ' + scope.op + ' \\\\frac{' + scope.b + ' \\\\times 2b^2}{42a^2b^3}'",
+        "s4": "'\\\\frac{' + scope.term1_num + 'a ' + scope.op + ' ' + scope.term2_num + 'b^2}{42a^2b^3}'",
+        "ans": "'\\\\frac{' + scope.term1_num + 'a ' + scope.op + ' ' + scope.term2_num + 'b^2}{42a^2b^3}'"
+      },
+      "questionTemplate": "Express as a single fraction in its simplest form:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "1) Identify lowest common denominator among the terms: ${scope.s2}",
+        "2) Manipulate each term to have the lowest common denominator: $$${scope.s3}$$",
+        "3) Add/subtract the numerator, divided by the LCD: $$${scope.s4}$$",
+        "4) Simplify the numerator: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 9 },
+        "b": { "type": "randInt", "min": 2, "max": 5 },
+        "c": { "type": "randInt", "min": 1, "max": 9 },
+        "d": { "type": "randInt", "min": 1, "max": 8 },
+        "isAdd": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "op": "scope.isAdd === 1 ? '+' : '-'",
+        "eff_d": "scope.isAdd === 1 ? scope.a - scope.d : scope.a + scope.d",
+        "expr": "'\\\\frac{' + scope.a + '}{' + scope.b + 'x - ' + scope.c + '} ' + scope.op + ' \\\\frac{' + scope.d + '}{' + scope.c + ' - ' + scope.b + 'x}'",
+        "s2": "'The lowest common denominator is $' + scope.b + 'x - ' + scope.c + '$.'",
+        "s3": "'\\\\frac{' + scope.a + '}{' + scope.b + 'x - ' + scope.c + '} ' + (scope.isAdd === 1 ? '-' : '+') + ' \\\\frac{' + scope.d + '}{' + scope.b + 'x - ' + scope.c + '}'",
+        "s4": "'\\\\frac{' + scope.a + ' ' + (scope.isAdd === 1 ? '-' : '+') + ' ' + scope.d + '}{' + scope.b + 'x - ' + scope.c + '}'",
+        "ans": "'\\\\frac{' + scope.eff_d + '}{' + scope.b + 'x - ' + scope.c + '}'"
+      },
+      "questionTemplate": "Express as a single fraction in its simplest form:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "1) Identify lowest common denominator among the terms: ${scope.s2}",
+        "2) Manipulate each term to have the lowest common denominator: $$${scope.s3}$$",
+        "3) Add/subtract the numerator, divided by the LCD: $$${scope.s4}$$",
+        "4) Simplify the numerator: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 9 },
+        "b": { "type": "randInt", "min": 1, "max": 9 },
+        "k": { "type": "randInt", "min": 1, "max": 5 },
+        "isAdd": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "op": "scope.isAdd === 1 ? '+' : '-'",
+        "bk": "scope.b * scope.k",
+        "constNum": "scope.isAdd === 1 ? scope.a + scope.bk : scope.a - scope.bk",
+        "expr": "'\\\\frac{' + scope.a + '}{(x + ' + scope.k + ')^2} ' + scope.op + ' \\\\frac{' + scope.b + '}{x + ' + scope.k + '}'",
+        "s1": "'Denominators $(x + ' + scope.k + ')^2$ and $x + ' + scope.k + '$ are already factorised.'",
+        "s2": "'The lowest common denominator is $(x + ' + scope.k + ')^2$.'",
+        "s3": "'\\\\frac{' + scope.a + '}{(x + ' + scope.k + ')^2} ' + scope.op + ' \\\\frac{' + scope.b + '(x + ' + scope.k + ')}{(x + ' + scope.k + ')^2}'",
+        "s4": "'\\\\frac{' + scope.a + ' ' + scope.op + ' ' + scope.b + '(x + ' + scope.k + ')}{(x + ' + scope.k + ')^2}'",
+        "numStr": "scope.isAdd === 1 ? scope.b + 'x + ' + scope.constNum : '-' + scope.b + 'x ' + (scope.constNum >= 0 ? '+ ' + scope.constNum : '- ' + Math.abs(scope.constNum))",
+        "ans": "'\\\\frac{' + scope.numStr + '}{(x + ' + scope.k + ')^2}'"
+      },
+      "questionTemplate": "Express as a single fraction in its simplest form:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "1) Factorise denominator: ${scope.s1}",
+        "2) Identify lowest common denominator among the terms: ${scope.s2}",
+        "3) Manipulate each term to have the lowest common denominator: $$${scope.s3}$$",
+        "4) Add/subtract the numerator, divided by the LCD: $$${scope.s4}$$",
+        "5) Simplify the numerator: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "k": { "type": "randInt", "min": 1, "max": 5 },
+        "a": { "type": "randInt", "min": 2, "max": 9 },
+        "b": { "type": "randInt", "min": 2, "max": 9 },
+        "isAdd": { "type": "randInt", "min": 0, "max": 1 },
+        "isMinusBin": { "type": "randInt", "min": 0, "max": 1 },
+        "firstIsQuad": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "sign": "scope.isMinusBin === 1 ? '-' : '+'",
+        "k2": "scope.k * scope.k",
+        "twoK": "2 * scope.k",
+        "quad": "scope.isMinusBin === 1 ? 'x^2 - ' + scope.twoK + 'x + ' + scope.k2 : 'x^2 + ' + scope.twoK + 'x + ' + scope.k2",
+        "lin": "'x ' + scope.sign + ' ' + scope.k",
+        "op": "scope.isAdd === 1 ? '+' : '-'",
+        "expr": "scope.firstIsQuad === 1 ? '\\\\frac{' + scope.a + '}{' + scope.quad + '} ' + scope.op + ' \\\\frac{' + scope.b + '}{' + scope.lin + '}' : '\\\\frac{' + scope.a + '}{' + scope.lin + '} ' + scope.op + ' \\\\frac{' + scope.b + '}{' + scope.quad + '}'",
+        "s1": "'Factorise $' + scope.quad + ' = (' + scope.lin + ')^2$.'",
+        "s2": "'The lowest common denominator is $(' + scope.lin + ')^2$.'",
+        "s3": "scope.firstIsQuad === 1 ? '\\\\frac{' + scope.a + '}{(' + scope.lin + ')^2} ' + scope.op + ' \\\\frac{' + scope.b + '(' + scope.lin + ')}{(' + scope.lin + ')^2}' : '\\\\frac{' + scope.a + '(' + scope.lin + ')}{(' + scope.lin + ')^2} ' + scope.op + ' \\\\frac{' + scope.b + '}{(' + scope.lin + ')^2}'",
+        "s4": "scope.firstIsQuad === 1 ? '\\\\frac{' + scope.a + ' ' + scope.op + ' ' + scope.b + '(' + scope.lin + ')}{(' + scope.lin + ')^2}' : '\\\\frac{' + scope.a + '(' + scope.lin + ') ' + scope.op + ' ' + scope.b + '}{(' + scope.lin + ')^2}'",
+        "numSimp": "(function(){ var a=scope.a, b=scope.b, k=scope.k, isAdd=scope.isAdd===1, isMinus=scope.isMinusBin===1, fQuad=scope.firstIsQuad===1; if(fQuad){ if(isAdd){ var c = isMinus ? a - b*k : a + b*k; return b + 'x' + (c >= 0 ? ' + ' + c : ' - ' + Math.abs(c)); } else { var c = isMinus ? a + b*k : a - b*k; return '-' + b + 'x' + (c >= 0 ? ' + ' + c : ' - ' + Math.abs(c)); } } else { if(isAdd){ var c = isMinus ? -a*k + b : a*k + b; return a + 'x' + (c >= 0 ? ' + ' + c : ' - ' + Math.abs(c)); } else { var c = isMinus ? -a*k - b : a*k - b; return a + 'x' + (c >= 0 ? ' + ' + c : ' - ' + Math.abs(c)); } } })()",
+        "ans": "'\\\\frac{' + scope.numSimp + '}{(' + scope.lin + ')^2}'"
+      },
+      "questionTemplate": "Express as a single fraction in its simplest form:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "1) Factorise denominator: ${scope.s1}",
+        "2) Identify lowest common denominator among the terms: ${scope.s2}",
+        "3) Manipulate each term to have the lowest common denominator: $$${scope.s3}$$",
+        "4) Add/subtract the numerator, divided by the LCD: $$${scope.s4}$$",
+        "5) Simplify the numerator: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 6 },
+        "b": { "type": "randInt", "min": 2, "max": 5 },
+        "c": { "type": "randInt", "min": 1, "max": 9 },
+        "isAdd": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "b2": "scope.b * scope.b",
+        "op": "scope.isAdd === 1 ? '+' : '-'",
+        "ab": "scope.a * scope.b",
+        "constNum": "scope.isAdd === 1 ? -scope.ab + scope.c : -scope.ab - scope.c",
+        "expr": "'\\\\frac{' + scope.a + '}{x + ' + scope.b + '} ' + scope.op + ' \\\\frac{' + scope.c + '}{x^2 - ' + scope.b2 + '}'",
+        "s1": "'Factorise $x^2 - ' + scope.b2 + ' = (x + ' + scope.b + ')(x - ' + scope.b + ')$.'",
+        "s2": "'The lowest common denominator is $(x + ' + scope.b + ')(x - ' + scope.b + ')$.'",
+        "s3": "'\\\\frac{' + scope.a + '(x - ' + scope.b + ')}{(x + ' + scope.b + ')(x - ' + scope.b + ')} ' + scope.op + ' \\\\frac{' + scope.c + '}{(x + ' + scope.b + ')(x - ' + scope.b + ')}'",
+        "s4": "'\\\\frac{' + scope.a + '(x - ' + scope.b + ') ' + scope.op + ' ' + scope.c + '}{(x + ' + scope.b + ')(x - ' + scope.b + ')}'",
+        "partC": "scope.constNum >= 0 ? ' + ' + scope.constNum : ' - ' + Math.abs(scope.constNum)",
+        "ans": "'\\\\frac{' + scope.a + 'x' + scope.partC + '}{(x + ' + scope.b + ')(x - ' + scope.b + ')}'"
+      },
+      "questionTemplate": "Express as a single fraction in its simplest form:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "1) Factorise denominator: ${scope.s1}",
+        "2) Identify lowest common denominator among the terms: ${scope.s2}",
+        "3) Manipulate each term to have the lowest common denominator: $$${scope.s3}$$",
+        "4) Add/subtract the numerator, divided by the LCD: $$${scope.s4}$$",
+        "5) Simplify the numerator: $$${scope.ans}$$"
+      ]
+    }
+  ]
+}

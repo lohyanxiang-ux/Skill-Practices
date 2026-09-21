@@ -1,0 +1,299 @@
+{
+  "skillTitle": "Map Scale",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "/",
+    "4",
+    "5",
+    "6",
+    "⌫",
+    "1",
+    "2",
+    "3",
+    "Clear",
+    ".",
+    "0"    
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "x_code": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        },
+        "y_km": {
+          "type": "randInt",
+          "min": 1,
+          "max": 10
+        }
+      },
+      "derived": {
+        "x_cm": "[2, 4, 5, 8, 10][scope.x_code - 1]",
+        "y_cm": "scope.y_km * 100000",
+        "r_val": "Math.round(scope.y_cm / scope.x_cm)",
+        "ans": "scope.r_val.toString()"
+      },
+      "questionTemplate": "A line of length $${scope.x_cm}\\text{ cm}$ on a map represents an actual distance of $${scope.y_km}\\text{ km}$.\n\nFind the scale of the map in the form $1 : r$. (State the value of $r$)",
+      "inputs": [
+        {
+          "label": "r =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Convert the actual ground distance from kilometres to centimetres:<br>$$${scope.y_km}\\text{ km} = ${scope.y_cm}\\text{ cm}$$",
+        "Divide the actual distance in centimetres by the map distance:<br>$$r = \\frac{${scope.y_cm}}{${scope.x_cm}} = ${scope.r_val}$$",
+        "State the scale ratio: $1\\text{ cm}$ on the map represents $${scope.r_val}\\text{ cm}$ on the ground, so $r = ${scope.r_val}$."
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "k_km": {
+          "type": "randInt",
+          "min": 1,
+          "max": 8
+        },
+        "map_cm": {
+          "type": "randInt",
+          "min": 3,
+          "max": 15
+        }
+      },
+      "derived": {
+        "scale_n": "scope.k_km * 100000",
+        "ans_num": "scope.map_cm * scope.k_km",
+        "ans": "scope.ans_num.toString()"
+      },
+      "questionTemplate": "The scale of a map is $1 : ${scope.scale_n}$. The distance between two points on the map is $${scope.map_cm}\\text{ cm}$.\n\nFind the actual distance between the two points in kilometres.",
+      "inputs": [
+        {
+          "label": "Actual distance (km) =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Convert the scale ratio to find the actual distance represented by $1\\text{ cm}$:<br>$$1\\text{ cm} = ${scope.scale_n}\\text{ cm} = ${scope.k_km}\\text{ km}$$",
+        "Multiply by the map distance:<br>$$\\text{Actual distance} = ${scope.map_cm} \\times ${scope.k_km} = ${scope.ans_num}\\text{ km}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "k_km": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        },
+        "map_cm_val": {
+          "type": "randInt",
+          "min": 4,
+          "max": 12
+        }
+      },
+      "derived": {
+        "scale_n": "scope.k_km * 100000",
+        "actual_km": "scope.map_cm_val * scope.k_km",
+        "ans": "scope.map_cm_val.toString()"
+      },
+      "questionTemplate": "The scale of a map is $1 : ${scope.scale_n}$. The actual distance between two towns is $${scope.actual_km}\\text{ km}$.\n\nCalculate the distance between the two towns on the map in centimetres.",
+      "inputs": [
+        {
+          "label": "Map distance (cm) =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Convert the actual distance to centimetres:<br>$$${scope.actual_km}\\text{ km} = ${scope.actual_km * 100000}\\text{ cm}$$",
+        "Divide by the scale factor $r = ${scope.scale_n}$:<br>$$\\text{Map distance} = \\frac{${scope.actual_km * 100000}}{${scope.scale_n}} = ${scope.map_cm_val}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k_km": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        },
+        "map_area": {
+          "type": "randInt",
+          "min": 2,
+          "max": 12
+        }
+      },
+      "derived": {
+        "scale_n": "scope.k_km * 100000",
+        "sq_km": "scope.k_km * scope.k_km",
+        "ans_num": "scope.map_area * scope.sq_km",
+        "ans": "scope.ans_num.toString()"
+      },
+      "questionTemplate": "The scale of a map is $1 : ${scope.scale_n}$. An island is represented on the map by an area of $${scope.map_area}\\text{ cm}^2$.\n\nFind the actual area of the island in square kilometres ($\\text{km}^2$).",
+      "inputs": [
+        {
+          "label": "Actual area (km²) =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Find the linear distance represented by $1\\text{ cm}$:<br>$$1\\text{ cm} = ${scope.scale_n}\\text{ cm} = ${scope.k_km}\\text{ km}$$",
+        "Square both sides to find the area scale:<br>$$1\\text{ cm}^2 = (${scope.k_km}\\text{ km})^2 = ${scope.sq_km}\\text{ km}^2$$",
+        "Multiply by the map area:<br>$$\\text{Actual area} = ${scope.map_area} \\times ${scope.sq_km} = ${scope.ans_num}\\text{ km}^2$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k_km": {
+          "type": "randInt",
+          "min": 1,
+          "max": 4
+        },
+        "map_area_val": {
+          "type": "randInt",
+          "min": 3,
+          "max": 10
+        }
+      },
+      "derived": {
+        "scale_n": "scope.k_km * 100000",
+        "sq_km": "scope.k_km * scope.k_km",
+        "actual_area": "scope.map_area_val * scope.sq_km",
+        "ans": "scope.map_area_val.toString()"
+      },
+      "questionTemplate": "A map is drawn to a scale of $1 : ${scope.scale_n}$. A park has an actual area of $${scope.actual_area}\\text{ km}^2$.\n\nFind the area of the park on the map in square centimetres ($\\text{cm}^2$).",
+      "inputs": [
+        {
+          "label": "Area on map (cm²) =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Find the area represented by $1\\text{ cm}^2$ on the map:<br>$$1\\text{ cm} = ${scope.k_km}\\text{ km} \\implies 1\\text{ cm}^2 = ${scope.sq_km}\\text{ km}^2$$",
+        "Divide the actual area by the area scale factor:<br>$$\\text{Area on map} = \\frac{${scope.actual_area}}{${scope.sq_km}} = ${scope.map_area_val}\\text{ cm}^2$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "scale_code": {
+          "type": "randInt",
+          "min": 1,
+          "max": 3
+        },
+        "l_mult": {
+          "type": "randInt",
+          "min": 2,
+          "max": 8
+        },
+        "w_mult": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        }
+      },
+      "derived": {
+        "scale_n": "[20, 50, 100][scope.scale_code - 1]",
+        "l_cm": "scope.l_mult * (scope.scale_n / 2)",
+        "w_cm": "scope.w_mult * (scope.scale_n / 2)",
+        "l_m": "scope.l_cm / 100",
+        "w_m": "scope.w_cm / 100",
+        "map_l": "scope.l_cm / scope.scale_n",
+        "map_w": "scope.w_cm / scope.scale_n",
+        "ans_num": "Math.round(scope.map_l * scope.map_w * 100) / 100",
+        "ans": "scope.ans_num.toString()"
+      },
+      "questionTemplate": "An object measures $${scope.l_m}\\text{ m}$ by $${scope.w_m}\\text{ m}$. It is drawn on a floor plan with a scale of $1 : ${scope.scale_n}$.\n\nWhat will be the area representing the object on the floor plan in $\\text{cm}^2$?",
+      "inputs": [
+        {
+          "label": "Plan area (cm²) =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Convert the actual dimensions from metres to centimetres:<br>$$${scope.l_m}\\text{ m} = ${scope.l_cm}\\text{ cm} \\quad \\text{and} \\quad ${scope.w_m}\\text{ m} = ${scope.w_cm}\\text{ cm}$$",
+        "Divide each dimension by the scale factor $${scope.scale_n}$ to find the plan dimensions:<br>$$\\text{Plan length} = \\frac{${scope.l_cm}}{${scope.scale_n}} = ${scope.map_l}\\text{ cm}, \\quad \\text{Plan width} = \\frac{${scope.w_cm}}{${scope.scale_n}} = ${scope.map_w}\\text{ cm}$$",
+        "Multiply the plan length and width to find the area:<br>$$\\text{Plan area} = ${scope.map_l} \\times ${scope.map_w} = ${scope.ans_num}\\text{ cm}^2$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "k_km": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        },
+        "map_factor": {
+          "type": "randInt",
+          "min": 1,
+          "max": 4
+        }
+      },
+      "derived": {
+        "map_area": "scope.map_factor * 2",
+        "sq_km_per_cm2": "scope.k_km * scope.k_km",
+        "actual_area": "scope.map_area * scope.sq_km_per_cm2",
+        "r_val": "scope.k_km * 100000",
+        "ans": "scope.r_val.toString()"
+      },
+      "questionTemplate": "A region of actual area $${scope.actual_area}\\text{ km}^2$ is represented by an area of $${scope.map_area}\\text{ cm}^2$ on a map.\n\nFind the scale of the map in the form $1 : r$. (State the value of $r$)",
+      "inputs": [
+        {
+          "label": "r =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Find the ground area represented by $1\\text{ cm}^2$ on the map:<br>$$1\\text{ cm}^2 = \\frac{${scope.actual_area}}{${scope.map_area}} = ${scope.sq_km_per_cm2}\\text{ km}^2$$",
+        "Take the square root to find the linear distance represented by $1\\text{ cm}$:<br>$$1\\text{ cm} = \\sqrt{${scope.sq_km_per_cm2}} = ${scope.k_km}\\text{ km}$$",
+        "Convert kilometres to centimetres:<br>$$${scope.k_km}\\text{ km} = ${scope.r_val}\\text{ cm}$$",
+        "State the scale ratio value $r$: $1 : ${scope.r_val} \\implies r = ${scope.r_val}$."
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "k_a": {
+          "type": "randInt",
+          "min": 1,
+          "max": 3
+        },
+        "mult_b": {
+          "type": "randInt",
+          "min": 2,
+          "max": 3
+        },
+        "area_a": {
+          "type": "randInt",
+          "min": 4,
+          "max": 16
+        }
+      },
+      "derived": {
+        "k_b": "scope.k_a * scope.mult_b",
+        "scale_a": "scope.k_a * 100000",
+        "scale_b": "scope.k_b * 100000",
+        "actual_area_km2": "scope.area_a * (scope.k_a * scope.k_a)",
+        "area_b_num": "scope.actual_area_km2 / (scope.k_b * scope.k_b)",
+        "ans": "scope.area_b_num.toString()"
+      },
+      "questionTemplate": "Map A is drawn to a scale of $1 : ${scope.scale_a}$. Map B is drawn to a scale of $1 : ${scope.scale_b}$.\n\nA lake has an area of $${scope.area_a}\\text{ cm}^2$ on Map A. Calculate the area of the lake on Map B in $\\text{cm}^2$.",
+      "inputs": [
+        {
+          "label": "Area on Map B (cm²) =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Find the actual area using Map A:<br>$$1\\text{ cm (Map A)} = ${scope.k_a}\\text{ km} \\implies 1\\text{ cm}^2 = ${scope.k_a * scope.k_a}\\text{ km}^2$$<br>$$\\text{Actual area} = ${scope.area_a} \\times ${scope.k_a * scope.k_a} = ${scope.actual_area_km2}\\text{ km}^2$$",
+        "Find the area scale for Map B:<br>$$1\\text{ cm (Map B)} = ${scope.k_b}\\text{ km} \\implies 1\\text{ cm}^2 = ${scope.k_b * scope.k_b}\\text{ km}^2$$",
+        "Calculate the area on Map B:<br>$$\\text{Area on Map B} = \\frac{${scope.actual_area_km2}}{${scope.k_b * scope.k_b}} = ${scope.area_b_num}\\text{ cm}^2$$"
+      ]
+    }
+  ]
+}
