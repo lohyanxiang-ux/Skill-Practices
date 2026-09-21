@@ -112,6 +112,12 @@
       padding: 0;
     }
 
+    /* Smaller dropdown content specifically for level selection */
+    #header-level-dropdown-content {
+      min-width: 110px;
+      width: max-content;
+    }
+
     .dropdown-content.show {
       display: block;
     }
@@ -204,14 +210,30 @@
       letter-spacing: 0.5px;
     }
 
+    /* Difficulty Level Badges with Color Variations */
     .level-badge {
-      background: #e0f2fe;
-      color: #0369a1;
       font-size: 0.75rem;
       font-weight: bold;
-      padding: 2px 8px;
+      padding: 2px 10px;
       border-radius: 12px;
-      border: 1px solid #bae6fd;
+    }
+
+    .level-badge.basic {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .level-badge.intermediate {
+      background: #ffedd5;
+      color: #9a3412;
+      border: 1px solid #fed7aa;
+    }
+
+    .level-badge.advanced {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
     }
 
     #question-text {
@@ -532,13 +554,13 @@
       <!-- 1st Dropdown: Select Level (e.g. G1, G2, G3) -->
       <div class="dropdown-wrapper" id="header-level-dropdown-wrapper">
         <button class="dropdown-btn" id="header-level-dropdown-btn" onclick="toggleDropdown('header-level-dropdown-content', event)">Select Level</button>
-        <div class="dropdown-content" id="header-level-dropdown-content"></div>
+        <div class="dropdown-content" id="header-level-dropdown-content" onclick="event.stopPropagation()"></div>
       </div>
 
       <!-- 2nd Dropdown: Select Skills (Filterable by Year & Strand) -->
       <div class="dropdown-wrapper" id="skills-dropdown-wrapper">
         <button class="dropdown-btn" id="skills-dropdown-btn" onclick="toggleDropdown('skills-dropdown-content', event)">Select Level First</button>
-        <div class="dropdown-content" id="skills-dropdown-content">
+        <div class="dropdown-content" id="skills-dropdown-content" onclick="event.stopPropagation()">
           <div id="skills-filter-container" onclick="event.stopPropagation()" style="position: sticky; top: 0; background: #f8f9fa; border-bottom: 1px solid #e0e0e0; padding: 8px 10px; z-index: 10;">
             <div style="display: flex; gap: 6px; margin-bottom: 6px;">
               <select id="filterYear" style="flex: 1; min-width: 0; font-size: 0.75rem; padding: 4px; border-radius: 4px; border: 1px solid #ccc; color: #212529; background-color: #fff;" onchange="renderSkillsList()">
@@ -562,7 +584,7 @@
       <!-- 3rd Dropdown: Difficulty Level -->
       <div class="dropdown-wrapper" id="difficulty-dropdown-wrapper">
         <button class="dropdown-btn" id="difficulty-dropdown-btn" onclick="toggleDropdown('difficulty-dropdown-content', event)">Difficulty: All</button>
-        <div class="dropdown-content" id="difficulty-dropdown-content">
+        <div class="dropdown-content" id="difficulty-dropdown-content" onclick="event.stopPropagation()">
           <div class="dropdown-item" onclick="selectDifficulty('all')">All</div>
           <div class="dropdown-item" onclick="selectDifficulty('1')">Basic</div>
           <div class="dropdown-item" onclick="selectDifficulty('2')">Intermediate</div>
@@ -579,7 +601,7 @@
       <div class="card">
         <div class="card-title-header">
           <span class="card-title">Question</span>
-          <span id="question-level-badge" class="level-badge" style="display:none;">Basic</span>
+          <span id="question-level-badge" class="level-badge basic" style="display:none;">Basic</span>
         </div>
         <div id="question-text">Please select a level and skill to begin...</div>
       </div>
@@ -1321,7 +1343,7 @@ function populateFilterDropdowns() {
   const levels = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.level)))].sort();
   const strands = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.strand)))].sort();
 
-  // Populate 1st Header Dropdown (Level filter e.g. G1, G2, G3 - No "All Levels")
+  // Populate 1st Header Dropdown (Level filter e.g. G1, G2, G3)
   const headerLevelContent = document.getElementById('header-level-dropdown-content');
   if (headerLevelContent) {
     headerLevelContent.innerHTML = '';
@@ -1711,9 +1733,21 @@ function loadQuestion() {
   inputCursors = new Array(currentQuestion.inputs.length).fill(0);
   activeInputIdx = 0;
 
-  const diffMap = { '1': 'Basic', '2': 'Intermediate', '3': 'Advanced', 1: 'Basic', 2: 'Intermediate', 3: 'Advanced' };
+  // Set difficulty badge text & color classes
+  const levelStr = String(currentQuestion.level || '1');
   const badge = document.getElementById('question-level-badge');
-  badge.innerText = diffMap[currentQuestion.level] || 'Basic';
+  badge.className = 'level-badge';
+
+  if (levelStr === '2') {
+    badge.innerText = 'Intermediate';
+    badge.classList.add('intermediate');
+  } else if (levelStr === '3') {
+    badge.innerText = 'Advanced';
+    badge.classList.add('advanced');
+  } else {
+    badge.innerText = 'Basic';
+    badge.classList.add('basic');
+  }
   badge.style.display = 'inline-block';
 
   document.getElementById('solution-box').style.display = 'none';
