@@ -173,7 +173,7 @@
         "ans": "(scope.partY2 + scope.partY + scope.partC) || '0'",
         "step1": "'\\\\left(' + scope.a + ' - ' + scope.fracLaTeX + '\\\\right)y^2 + (' + scope.b + ' ' + (scope.d > 0 ? '+ ' + scope.d : '- ' + Math.abs(scope.d)) + ')y + ' + scope.c"
       },
-      "questionTemplate": "Simplify the expression containing fractional coefficients:\n\n$$${scope.expr}$$",
+      "questionTemplate": "Simplify the following expression:\n\n$$${scope.expr}$$",
       "inputs": [
         { "label": "=", "answer": "${scope.ans}" }
       ],
