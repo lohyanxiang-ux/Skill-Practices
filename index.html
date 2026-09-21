@@ -71,16 +71,6 @@
       flex-wrap: wrap;
     }
 
-    .file-load-btn {
-      background: #0056b3;
-      color: white;
-      border: 1px solid #ffffff44;
-      padding: 6px 12px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      cursor: pointer;
-    }
-
     .dropdown-wrapper {
       position: relative;
       display: inline-block;
@@ -110,6 +100,7 @@
       top: calc(100% + 4px);
       right: 0;
       background-color: #ffffff;
+      color: #212529;
       min-width: 280px;
       max-width: 380px;
       max-height: 380px;
@@ -130,7 +121,7 @@
       align-items: center;
       gap: 8px;
       padding: 8px 12px;
-      color: #333;
+      color: #212529;
       font-size: 0.85rem;
       cursor: pointer;
       user-select: none;
@@ -149,6 +140,7 @@
       border-bottom: 1px solid #f0f0f0;
       cursor: pointer;
       user-select: none;
+      color: #212529;
     }
 
     .skill-item-row:hover {
@@ -157,7 +149,7 @@
 
     .empty-msg {
       padding: 12px;
-      color: #777;
+      color: #6c757d;
       font-size: 0.85rem;
       text-align: center;
     }
@@ -536,22 +528,19 @@
   <header>
     <h1 id="app-title">Math Skills Trainer</h1>
     <div class="header-controls">
-      <input type="file" id="file-input" accept=".json,.xlsx,.xls" multiple style="display: none;">
-      <button class="file-load-btn" onclick="document.getElementById('file-input').click()">Load Files (.json/.xlsx)</button>
-
       <div class="dropdown-wrapper" id="skills-dropdown-wrapper">
         <button class="dropdown-btn" id="skills-dropdown-btn" onclick="toggleDropdown('skills-dropdown-content', event)">Select Skills (0)</button>
         <div class="dropdown-content" id="skills-dropdown-content">
           <div id="skills-filter-container" onclick="event.stopPropagation()" style="position: sticky; top: 0; background: #f8f9fa; border-bottom: 1px solid #e0e0e0; padding: 8px 10px; z-index: 10;">
             <div style="display: flex; gap: 4px; margin-bottom: 6px;">
-              <select id="filterStream" style="flex: 1; min-width: 0; font-size: 0.75rem; padding: 4px; border-radius: 4px; border: 1px solid #ccc;" onchange="renderSkillsList()">
-                <option value="All">All Streams</option>
+              <select id="filterYear" style="flex: 1; min-width: 0; font-size: 0.75rem; padding: 4px; border-radius: 4px; border: 1px solid #ccc; color: #212529; background-color: #fff;" onchange="renderSkillsList()">
+                <option value="All">All Years</option>
               </select>
-              <select id="filterLevel" style="flex: 1; min-width: 0; font-size: 0.75rem; padding: 4px; border-radius: 4px; border: 1px solid #ccc;" onchange="renderSkillsList()">
+              <select id="filterLevel" style="flex: 1; min-width: 0; font-size: 0.75rem; padding: 4px; border-radius: 4px; border: 1px solid #ccc; color: #212529; background-color: #fff;" onchange="renderSkillsList()">
                 <option value="All">All Levels</option>
               </select>
-              <select id="filterTopic" style="flex: 1; min-width: 0; font-size: 0.75rem; padding: 4px; border-radius: 4px; border: 1px solid #ccc;" onchange="renderSkillsList()">
-                <option value="All">All Topics</option>
+              <select id="filterStrand" style="flex: 1; min-width: 0; font-size: 0.75rem; padding: 4px; border-radius: 4px; border: 1px solid #ccc; color: #212529; background-color: #fff;" onchange="renderSkillsList()">
+                <option value="All">All Strands</option>
               </select>
             </div>
             <div style="display: flex; gap: 6px;">
@@ -1316,25 +1305,23 @@ function parseTags(cellValue) {
     .toString()
     .split(',')
     .map(tag => tag.trim())
-    .filter(Boolean); // Remove empty values
+    .filter(Boolean);
 }
 
-// 1. Populate filter dropdowns with UNIQUE individual tags
+// 1. Populate filter dropdowns with Year, Level, Strand tags
 function populateFilterDropdowns() {
-  // flatMap splits each skill's tags into a flat list before extracting unique values
-  const streams = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.stream)))].sort();
+  const years = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.year)))].sort();
   const levels = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.level)))].sort();
-  const topics = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.topic)))].sort();
+  const strands = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.strand)))].sort();
 
-  populateSelect('filterStream', streams);
+  populateSelect('filterYear', years);
   populateSelect('filterLevel', levels);
-  populateSelect('filterTopic', topics);
+  populateSelect('filterStrand', strands);
 }
 
 function populateSelect(elementId, options) {
   const select = document.getElementById(elementId);
   if (!select) return;
-  // Clear previous options except the first "All" option
   select.innerHTML = select.options[0].outerHTML; 
 
   options.forEach(opt => {
@@ -1345,27 +1332,26 @@ function populateSelect(elementId, options) {
   });
 }
 
-// 2. Render filtered list by checking if selected filter exists in tag array
+// 2. Render filtered list by checking Year, Level, Strand
 function renderSkillsList() {
-  const streamVal = document.getElementById('filterStream').value;
+  const yearVal = document.getElementById('filterYear').value;
   const levelVal = document.getElementById('filterLevel').value;
-  const topicVal = document.getElementById('filterTopic').value;
+  const strandVal = document.getElementById('filterStrand').value;
 
   const container = document.getElementById('skillsListContainer');
   if (!container) return;
   container.innerHTML = '';
 
   const filtered = masterSkillsIndex.filter(skill => {
-    const skillStreams = parseTags(skill.stream);
+    const skillYears = parseTags(skill.year);
     const skillLevels = parseTags(skill.level);
-    const skillTopics = parseTags(skill.topic);
+    const skillStrands = parseTags(skill.strand);
 
-    // Matches if filter is 'All' OR if the selected option is included in the skill's tag array
-    const matchStream = (streamVal === 'All' || streamVal === 'ALL' || skillStreams.includes(streamVal));
+    const matchYear = (yearVal === 'All' || yearVal === 'ALL' || skillYears.includes(yearVal));
     const matchLevel = (levelVal === 'All' || levelVal === 'ALL' || skillLevels.includes(levelVal));
-    const matchTopic = (topicVal === 'All' || topicVal === 'ALL' || skillTopics.includes(topicVal));
+    const matchStrand = (strandVal === 'All' || strandVal === 'ALL' || skillStrands.includes(strandVal));
 
-    return matchStream && matchLevel && matchTopic;
+    return matchYear && matchLevel && matchStrand;
   });
 
   if (filtered.length === 0) {
@@ -1424,20 +1410,20 @@ async function handleSkillToggle(skillPath, isChecked) {
 }
 
 function setAllFilteredSkills(enableState) {
-  const streamVal = document.getElementById('filterStream').value;
+  const yearVal = document.getElementById('filterYear').value;
   const levelVal = document.getElementById('filterLevel').value;
-  const topicVal = document.getElementById('filterTopic').value;
+  const strandVal = document.getElementById('filterStrand').value;
 
   const filtered = masterSkillsIndex.filter(skill => {
-    const skillStreams = parseTags(skill.stream);
+    const skillYears = parseTags(skill.year);
     const skillLevels = parseTags(skill.level);
-    const skillTopics = parseTags(skill.topic);
+    const skillStrands = parseTags(skill.strand);
 
-    const matchStream = (streamVal === 'All' || streamVal === 'ALL' || skillStreams.includes(streamVal));
+    const matchYear = (yearVal === 'All' || yearVal === 'ALL' || skillYears.includes(yearVal));
     const matchLevel = (levelVal === 'All' || levelVal === 'ALL' || skillLevels.includes(levelVal));
-    const matchTopic = (topicVal === 'All' || topicVal === 'ALL' || skillTopics.includes(topicVal));
+    const matchStrand = (strandVal === 'All' || strandVal === 'ALL' || skillStrands.includes(strandVal));
 
-    return matchStream && matchLevel && matchTopic;
+    return matchYear && matchLevel && matchStrand;
   });
 
   const promises = filtered.map(async (skill) => {
@@ -1481,9 +1467,9 @@ async function loadBuiltInSkills() {
         masterSkillsIndex = rawRows.map(r => ({
           title: r.title || r.Title || r.skillTitle || r.name || r.Name || '',
           path: r.path || r.Path || r.file || r.File || '',
-          stream: r.stream || r.Stream || r.streams || '',
-          level: r.level || r.Level || r.levels || '',
-          topic: r.topic || r.Topic || r.topics || ''
+          year: r.year || r.Year || r.years || r.Years || r.stream || r.Stream || r.streams || '',
+          level: r.level || r.Level || r.levels || r.Levels || '',
+          strand: r.strand || r.Strand || r.strands || r.Strands || r.topic || r.Topic || r.topics || ''
         })).filter(s => s.path);
 
         loadedFromExcel = true;
@@ -1500,22 +1486,15 @@ async function loadBuiltInSkills() {
         masterSkillsIndex = rawIndex.map(r => ({
           title: r.title || r.name || r.file,
           path: r.file || r.path,
-          stream: r.streams || r.stream || '',
+          year: r.year || r.years || r.streams || r.stream || '',
           level: r.levels || r.level || '',
-          topic: r.topics || r.topic || ''
+          strand: r.strand || r.strands || r.topics || r.topic || ''
         }));
       }
     }
 
-    // Pre-fetch skill JSON data for available skills
-    for (const skill of masterSkillsIndex) {
-      try {
-        const res = await fetch(skill.path);
-        if (res.ok) {
-          loadedSkillData[skill.path] = await res.json();
-        }
-      } catch (e) {}
-    }
+    // On initial app startup, no skills are pre-selected
+    loadedSkillData = {};
 
     populateFilterDropdowns();
     renderSkillsList();
@@ -2054,69 +2033,6 @@ function requestHint() {
     document.getElementById('hint-trigger-btn').style.display = 'none';
   }
 }
-
-// Support uploading JSON skill templates or Excel index/skill files
-document.getElementById('file-input').addEventListener('change', function(e) {
-  const files = e.target.files;
-  if (!files.length) return;
-
-  Array.from(files).forEach(file => {
-    const isExcel = file.name.endsWith('.xlsx') || file.name.endsWith('.xls');
-    const reader = new FileReader();
-
-    if (isExcel) {
-      reader.onload = function(evt) {
-        try {
-          const arrayBuffer = evt.target.result;
-          const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-          const sheetName = workbook.SheetNames[0];
-          const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-
-          masterSkillsIndex = rawRows.map(r => ({
-            title: r.title || r.Title || r.skillTitle || r.name || r.Name || file.name,
-            path: r.path || r.Path || r.file || r.File || file.name,
-            stream: r.stream || r.Stream || r.streams || '',
-            level: r.level || r.Level || r.levels || '',
-            topic: r.topic || r.Topic || r.topics || ''
-          })).filter(s => s.path);
-
-          populateFilterDropdowns();
-          renderSkillsList();
-          loadQuestion();
-        } catch (err) {
-          console.error('Error parsing Excel file:', err);
-        }
-      };
-      reader.readAsArrayBuffer(file);
-    } else {
-      reader.onload = function(evt) {
-        try {
-          const json = JSON.parse(evt.target.result);
-          const name = json.skillTitle || json.title || file.name.replace('.json', '');
-          const path = file.name;
-
-          if (!masterSkillsIndex.some(s => s.path === path)) {
-            masterSkillsIndex.push({
-              title: name,
-              path: path,
-              stream: json.streams || json.stream || 'Uploaded',
-              level: json.levels || json.level || 'Custom',
-              topic: json.topics || json.topic || 'Uploaded Files'
-            });
-          }
-          loadedSkillData[path] = json;
-
-          populateFilterDropdowns();
-          renderSkillsList();
-          loadQuestion();
-        } catch (err) {
-          console.error('Error parsing JSON file:', err);
-        }
-      };
-      reader.readAsText(file);
-    }
-  });
-});
 
 // Canvas Drawing Features
 const canvas = document.getElementById('drawingCanvas');
