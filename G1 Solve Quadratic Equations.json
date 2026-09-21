@@ -4,13 +4,12 @@
   "unordered": true,
   "ignoreOrder": true,
   "orderMatters": false,
-  "keypad": [
-    "+", "-", ".",
-    "7", "8", "9",
-    "4", "5", "6",
-    "1", "2", "3",
-    "0", "⌫", "Clear"
-  ],
+"keypad": [
+  "7", "8", "9", "Clear",
+  "4", "5", "6", "⌫",
+  "1", "2", "3", "+",
+  "0", ".", "-"
+],
   "structures": [
     {
       "level": 1,
