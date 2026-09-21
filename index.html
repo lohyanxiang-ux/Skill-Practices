@@ -1299,10 +1299,9 @@ let totalAttempts = 0;
 
 // Helper function to convert comma-separated cell values into clean arrays
 function parseTags(cellValue) {
-  if (!cellValue) return [];
+  if (cellValue === null || cellValue === undefined) return [];
   if (Array.isArray(cellValue)) return cellValue.map(t => String(t).trim()).filter(Boolean);
-  return cellValue
-    .toString()
+  return String(cellValue)
     .split(',')
     .map(tag => tag.trim())
     .filter(Boolean);
@@ -1310,9 +1309,10 @@ function parseTags(cellValue) {
 
 // 1. Populate filter dropdowns with Year, Level, Strand tags
 function populateFilterDropdowns() {
-  const years = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.year)))].sort();
-  const levels = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.level)))].sort();
-  const strands = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.strand)))].sort();
+  const natSort = (a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+  const years = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.year)))].sort(natSort);
+  const levels = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.level)))].sort(natSort);
+  const strands = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.strand)))].sort(natSort);
 
   populateSelect('filterYear', years);
   populateSelect('filterLevel', levels);
@@ -1464,13 +1464,19 @@ async function loadBuiltInSkills() {
         const sheetName = workbook.SheetNames[0];
         const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-        masterSkillsIndex = rawRows.map(r => ({
-          title: r.title || r.Title || r.skillTitle || r.name || r.Name || '',
-          path: r.path || r.Path || r.file || r.File || '',
-          year: r.year || r.Year || r.years || r.Years || r.stream || r.Stream || r.streams || '',
-          level: r.level || r.Level || r.levels || r.Levels || '',
-          strand: r.strand || r.Strand || r.strands || r.Strands || r.topic || r.Topic || r.topics || ''
-        })).filter(s => s.path);
+        masterSkillsIndex = rawRows.map(r => {
+          const norm = {};
+          Object.keys(r).forEach(k => {
+            if (k) norm[k.trim().toLowerCase()] = r[k];
+          });
+          return {
+            title: String(norm.title || norm.skilltitle || norm.name || '').trim(),
+            path: String(norm.path || norm.file || '').trim(),
+            year: norm.year || norm.years || norm.stream || norm.streams || '',
+            level: norm.level || norm.levels || '',
+            strand: norm.strand || norm.strands || norm.topic || norm.topics || ''
+          };
+        }).filter(s => s.path);
 
         loadedFromExcel = true;
       }
@@ -1483,17 +1489,22 @@ async function loadBuiltInSkills() {
       const resJson = await fetch('skills-index.json');
       if (resJson.ok) {
         const rawIndex = await resJson.json();
-        masterSkillsIndex = rawIndex.map(r => ({
-          title: r.title || r.name || r.file,
-          path: r.file || r.path,
-          year: r.year || r.years || r.streams || r.stream || '',
-          level: r.levels || r.level || '',
-          strand: r.strand || r.strands || r.topics || r.topic || ''
-        }));
+        masterSkillsIndex = rawIndex.map(r => {
+          const norm = {};
+          Object.keys(r).forEach(k => {
+            if (k) norm[k.trim().toLowerCase()] = r[k];
+          });
+          return {
+            title: String(norm.title || norm.skilltitle || norm.name || norm.file || '').trim(),
+            path: String(norm.path || norm.file || '').trim(),
+            year: norm.year || norm.years || norm.streams || norm.stream || '',
+            level: norm.level || norm.levels || '',
+            strand: norm.strand || norm.strands || norm.topics || norm.topic || ''
+          };
+        }).filter(s => s.path);
       }
     }
 
-    // On initial app startup, no skills are pre-selected
     loadedSkillData = {};
 
     populateFilterDropdowns();
