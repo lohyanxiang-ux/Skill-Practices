@@ -1,0 +1,194 @@
+{
+  "skillTitle": "Solving linear equations",
+  "keypad": [
+    "x", "y", "z",
+    "7", "8", "9",
+    "4", "5", "6",
+    "1", "2", "3",
+    "+", "0", "-",
+    "/", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 9 },
+        "x_val": { "type": "randInt", "min": -9, "max": 9, "excludeZero": true },
+        "b": { "type": "randInt", "min": -15, "max": 15, "excludeZero": true }
+      },
+      "derived": {
+        "c": "scope.a * scope.x_val + scope.b",
+        "coeffX": "scope.a === 1 ? 'x' : (scope.a === -1 ? '-x' : scope.a + 'x')",
+        "expr": "scope.coeffX + ' ' + (scope.b > 0 ? '+ ' + scope.b : '- ' + Math.abs(scope.b)) + ' = ' + scope.c",
+        "rem": "scope.c - scope.b",
+        "op1": "scope.b > 0 ? '-' + scope.b : '+' + Math.abs(scope.b)",
+        "step1_eq": "scope.coeffX + ' = ' + scope.rem",
+        "step2_txt": "scope.a === 1 ? 'The variable x is now isolated:' : 'Divide by ' + scope.a + ' on both sides of the equation to isolate x:'",
+        "ans": "scope.x_val.toString()"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply ${scope.op1} on both sides of the equation: $$${scope.step1_eq}$$",
+        "${scope.step2_txt} $$x = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 3, "max": 8 },
+        "c": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "x_val": { "type": "randInt", "min": -9, "max": 9, "excludeZero": true },
+        "b": { "type": "randInt", "min": -12, "max": 12, "excludeZero": true }
+      },
+      "derived": {
+        "c_eff": "scope.c === scope.a ? scope.c + 2 : scope.c",
+        "d": "scope.a * scope.x_val + scope.b - scope.c_eff * scope.x_val",
+        "lhs": "(scope.a === 1 ? 'x' : (scope.a === -1 ? '-x' : scope.a + 'x')) + ' ' + (scope.b > 0 ? '+ ' + scope.b : '- ' + Math.abs(scope.b))",
+        "rhs": "(scope.c_eff === 1 ? 'x' : (scope.c_eff === -1 ? '-x' : scope.c_eff + 'x')) + ' ' + (scope.d > 0 ? '+ ' + scope.d : '- ' + Math.abs(scope.d))",
+        "expr": "scope.lhs + ' = ' + scope.rhs",
+        "diffCoeff": "scope.a - scope.c_eff",
+        "diffConst": "scope.d - scope.b",
+        "op1": "scope.c_eff > 0 ? '-' + (scope.c_eff === 1 ? 'x' : scope.c_eff + 'x') : '+' + (scope.c_eff === -1 ? 'x' : Math.abs(scope.c_eff) + 'x')",
+        "op2": "scope.b > 0 ? '-' + scope.b : '+' + Math.abs(scope.b)",
+        "step1_eq": "(scope.diffCoeff === 1 ? 'x' : (scope.diffCoeff === -1 ? '-x' : scope.diffCoeff + 'x')) + ' ' + (scope.b > 0 ? '+ ' + scope.b : '- ' + Math.abs(scope.b)) + ' = ' + scope.d",
+        "step2_eq": "(scope.diffCoeff === 1 ? 'x' : (scope.diffCoeff === -1 ? '-x' : scope.diffCoeff + 'x')) + ' = ' + scope.diffConst",
+        "step3_txt": "scope.diffCoeff === 1 ? 'The variable x is now isolated:' : 'Divide by ' + scope.diffCoeff + ' on both sides of the equation to isolate x:'",
+        "ans": "scope.x_val.toString()"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply ${scope.op1} on both sides of the equation: $$${scope.step1_eq}$$",
+        "Apply ${scope.op2} on both sides of the equation: $$${scope.step2_eq}$$",
+        "${scope.step3_txt} $$x = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 6 },
+        "b": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true },
+        "c": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true },
+        "x_val": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true }
+      },
+      "derived": {
+        "c_eff": "scope.c === scope.a ? scope.c + 1 : scope.c",
+        "ab": "scope.a * scope.b",
+        "d": "scope.a * scope.x_val + scope.ab - scope.c_eff * scope.x_val",
+        "bracketStr": "'(' + (scope.b > 0 ? 'x + ' + scope.b : 'x - ' + Math.abs(scope.b)) + ')'",
+        "lhs": "(scope.a === 1 ? '' : (scope.a === -1 ? '-' : scope.a)) + scope.bracketStr",
+        "rhs": "(scope.c_eff === 1 ? 'x' : (scope.c_eff === -1 ? '-x' : scope.c_eff + 'x')) + ' ' + (scope.d > 0 ? '+ ' + scope.d : '- ' + Math.abs(scope.d))",
+        "expr": "scope.lhs + ' = ' + scope.rhs",
+        "expandedLhs": "(scope.a === 1 ? 'x' : (scope.a === -1 ? '-x' : scope.a + 'x')) + ' ' + (scope.ab > 0 ? '+ ' + scope.ab : '- ' + Math.abs(scope.ab))",
+        "diffCoeff": "scope.a - scope.c_eff",
+        "diffConst": "scope.d - scope.ab",
+        "op1": "scope.c_eff > 0 ? '-' + (scope.c_eff === 1 ? 'x' : scope.c_eff + 'x') : '+' + (scope.c_eff === -1 ? 'x' : Math.abs(scope.c_eff) + 'x')",
+        "op2": "scope.ab > 0 ? '-' + scope.ab : '+' + Math.abs(scope.ab)",
+        "step1_eq": "scope.expandedLhs + ' = ' + scope.rhs",
+        "step2_eq": "(scope.diffCoeff === 1 ? 'x' : (scope.diffCoeff === -1 ? '-x' : scope.diffCoeff + 'x')) + ' ' + (scope.ab > 0 ? '+ ' + scope.ab : '- ' + Math.abs(scope.ab)) + ' = ' + scope.d",
+        "step3_eq": "(scope.diffCoeff === 1 ? 'x' : (scope.diffCoeff === -1 ? '-x' : scope.diffCoeff + 'x')) + ' = ' + scope.diffConst",
+        "step4_txt": "scope.diffCoeff === 1 ? 'The variable x is now isolated:' : 'Divide by ' + scope.diffCoeff + ' on both sides of the equation to isolate x:'",
+        "ans": "scope.x_val.toString()"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Expand the bracket on the left side of the equation: $$${scope.step1_eq}$$",
+        "Apply ${scope.op1} on both sides of the equation: $$${scope.step2_eq}$$",
+        "Apply ${scope.op2} on both sides of the equation: $$${scope.step3_eq}$$",
+        "${scope.step4_txt} $$x = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 5 },
+        "c": { "type": "randInt", "min": 2, "max": 5 },
+        "m": { "type": "randInt", "min": -3, "max": 3, "excludeZero": true },
+        "n": { "type": "randInt", "min": -3, "max": 3, "excludeZero": true }
+      },
+      "derived": {
+        "c_eff": "scope.c === scope.a ? scope.c + 1 : scope.c",
+        "b": "scope.m * scope.c_eff",
+        "x_val": "scope.n * scope.c_eff",
+        "ab": "scope.a * scope.b",
+        "d": "((scope.a - scope.c_eff) * scope.x_val + scope.ab) / scope.c_eff",
+        "cd": "scope.c_eff * scope.d",
+        "diffCoeff": "scope.a - scope.c_eff",
+        "diffConst": "scope.cd - scope.ab",
+        "bracket1": "'(' + (scope.b > 0 ? 'x + ' + scope.b : 'x - ' + Math.abs(scope.b)) + ')'",
+        "bracket2": "'(' + (scope.d > 0 ? 'x + ' + scope.d : 'x - ' + Math.abs(scope.d)) + ')'",
+        "lhs": "scope.a + scope.bracket1",
+        "rhs": "scope.c_eff + scope.bracket2",
+        "expr": "scope.lhs + ' = ' + scope.rhs",
+        "expandedLhs": "scope.a + 'x ' + (scope.ab > 0 ? '+ ' + scope.ab : '- ' + Math.abs(scope.ab))",
+        "expandedRhs": "scope.c_eff + 'x ' + (scope.cd > 0 ? '+ ' + scope.cd : '- ' + Math.abs(scope.cd))",
+        "op1": "scope.c_eff > 0 ? '-' + scope.c_eff + 'x' : '+' + Math.abs(scope.c_eff) + 'x'",
+        "op2": "scope.ab > 0 ? '-' + scope.ab : '+' + Math.abs(scope.ab)",
+        "step1_eq": "scope.expandedLhs + ' = ' + scope.expandedRhs",
+        "step2_eq": "(scope.diffCoeff === 1 ? 'x' : (scope.diffCoeff === -1 ? '-x' : scope.diffCoeff + 'x')) + ' ' + (scope.ab > 0 ? '+ ' + scope.ab : '- ' + Math.abs(scope.ab)) + ' = ' + scope.cd",
+        "step3_eq": "(scope.diffCoeff === 1 ? 'x' : (scope.diffCoeff === -1 ? '-x' : scope.diffCoeff + 'x')) + ' = ' + scope.diffConst",
+        "step4_txt": "scope.diffCoeff === 1 ? 'The variable x is now isolated:' : 'Divide by ' + scope.diffCoeff + ' on both sides of the equation to isolate x:'",
+        "ans": "scope.x_val.toString()"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Expand brackets on both sides of the equation: $$${scope.step1_eq}$$",
+        "Apply ${scope.op1} on both sides of the equation: $$${scope.step2_eq}$$",
+        "Apply ${scope.op2} on both sides of the equation: $$${scope.step3_eq}$$",
+        "${scope.step4_txt} $$x = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 4 },
+        "b": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "c": { "type": "randInt", "min": 1, "max": 5 },
+        "x_val": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+      },
+      "derived": {
+        "totLhsCoeff": "1 + scope.a",
+        "c_eff": "scope.c === scope.totLhsCoeff ? scope.c + 1 : scope.c",
+        "ab": "scope.a * scope.b",
+        "d": "(1 + scope.a) * scope.x_val + scope.ab - scope.c_eff * scope.x_val",
+        "diffCoeff": "(1 + scope.a) - scope.c_eff",
+        "diffConst": "scope.d - scope.ab",
+        "bracket": "'(' + (scope.b > 0 ? 'x + ' + scope.b : 'x - ' + Math.abs(scope.b)) + ')'",
+        "expr": "'x ' + (scope.a > 0 ? '+ ' + scope.a : '- ' + Math.abs(scope.a)) + scope.bracket + ' = ' + (scope.c_eff === 1 ? 'x' : scope.c_eff + 'x') + ' ' + (scope.d > 0 ? '+ ' + scope.d : '- ' + Math.abs(scope.d))",
+        "expandedLhs": "'x ' + (scope.a > 0 ? '+ ' + scope.a + 'x' : '- ' + Math.abs(scope.a) + 'x') + ' ' + (scope.ab > 0 ? '+ ' + scope.ab : '- ' + Math.abs(scope.ab))",
+        "combinedLhs": "scope.totLhsCoeff + 'x ' + (scope.ab > 0 ? '+ ' + scope.ab : '- ' + Math.abs(scope.ab))",
+        "rhs": "(scope.c_eff === 1 ? 'x' : scope.c_eff + 'x') + ' ' + (scope.d > 0 ? '+ ' + scope.d : '- ' + Math.abs(scope.d))",
+        "op1": "scope.c_eff > 0 ? '-' + (scope.c_eff === 1 ? 'x' : scope.c_eff + 'x') : '+' + (scope.c_eff === -1 ? 'x' : Math.abs(scope.c_eff) + 'x')",
+        "op2": "scope.ab > 0 ? '-' + scope.ab : '+' + Math.abs(scope.ab)",
+        "step1_eq": "scope.expandedLhs + ' = ' + scope.rhs",
+        "step2_eq": "scope.combinedLhs + ' = ' + scope.rhs",
+        "step3_eq": "(scope.diffCoeff === 1 ? 'x' : (scope.diffCoeff === -1 ? '-x' : scope.diffCoeff + 'x')) + ' ' + (scope.ab > 0 ? '+ ' + scope.ab : '- ' + Math.abs(scope.ab)) + ' = ' + scope.d",
+        "step4_eq": "(scope.diffCoeff === 1 ? 'x' : (scope.diffCoeff === -1 ? '-x' : scope.diffCoeff + 'x')) + ' = ' + scope.diffConst",
+        "step5_txt": "scope.diffCoeff === 1 ? 'The variable x is now isolated:' : 'Divide by ' + scope.diffCoeff + ' on both sides of the equation to isolate x:'",
+        "ans": "scope.x_val.toString()"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Expand the bracket on the left side of the equation: $$${scope.step1_eq}$$",
+        "Combine like terms on the left side: $$${scope.step2_eq}$$",
+        "Apply ${scope.op1} on both sides of the equation: $$${scope.step3_eq}$$",
+        "Apply ${scope.op2} on both sides of the equation: $$${scope.step4_eq}$$",
+        "${scope.step5_txt} $$x = ${scope.ans}$$"
+      ]
+    }
+  ]
+}

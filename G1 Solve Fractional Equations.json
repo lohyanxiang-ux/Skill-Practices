@@ -1,0 +1,185 @@
+{
+  "skillTitle": "Solve Fractional Equations",
+  "keypad": [
+    "+", "-", "=",
+    "7", "8", "9",
+    "4", "5", "6",
+    "1", "2", "3",
+    "0", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "x_val": { "type": "randInt", "min": 2, "max": 10 },
+        "a": { "type": "randInt", "min": 1, "max": 3 },
+        "c": { "type": "randInt", "min": 2, "max": 6 },
+        "d": { "type": "randInt", "min": 2, "max": 8 }
+      },
+      "derived": {
+        "b": "scope.c * scope.d - scope.a * scope.x_val",
+        "b_eff": "scope.b === 0 ? scope.c : scope.b",
+        "d_eff": "(scope.a * scope.x_val + scope.b_eff) / scope.c",
+        "ax_str": "scope.a === 1 ? 'x' : scope.a + 'x'",
+        "num_str": "scope.b_eff > 0 ? scope.ax_str + ' + ' + scope.b_eff : scope.ax_str + ' - ' + Math.abs(scope.b_eff)",
+        "expr": "'\\\\frac{' + scope.num_str + '}{' + scope.c + '} = ' + scope.d_eff",
+        "step1": "scope.num_str + ' = ' + (scope.c * scope.d_eff)",
+        "rhs1": "scope.c * scope.d_eff - scope.b_eff",
+        "step2": "scope.ax_str + ' = ' + scope.rhs1",
+        "ans": "scope.x_val.toString()"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Multiply both sides by ${scope.c}: $$${scope.step1}$$",
+        "Isolate the variable term on the left side: $$${scope.step2}$$",
+        "Solve for $x$: $$x = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "y_val": { "type": "randInt", "min": 2, "max": 9 },
+        "b_raw": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "C": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "denom": "scope.y_val + scope.b_raw",
+        "b_eff": "scope.denom <= 0 ? 1 - scope.y_val : scope.b_raw",
+        "denom_val": "scope.y_val + scope.b_eff",
+        "A": "scope.denom_val * scope.C",
+        "denom_str": "scope.b_eff > 0 ? 'y + ' + scope.b_eff : 'y - ' + Math.abs(scope.b_eff)",
+        "expr": "'\\\\frac{' + scope.A + '}{' + scope.denom_str + '} = ' + scope.C",
+        "step1": "scope.A + ' = ' + scope.C + '(' + scope.denom_str + ')'",
+        "step2": "scope.A + ' = ' + scope.C + 'y ' + (scope.C * scope.b_eff > 0 ? '+ ' + (scope.C * scope.b_eff) : '- ' + Math.abs(scope.C * scope.b_eff))",
+        "ans": "scope.y_val.toString()"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "y =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Multiply both sides by the denominator $$(${scope.denom_str})$$: $$${scope.step1}$$",
+        "Expand the right side: $$${scope.step2}$$",
+        "Solve for $y$: $$y = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "x_val": { "type": "randInt", "min": 2, "max": 8 },
+        "a": { "type": "randInt", "min": 2, "max": 4 },
+        "b": { "type": "randInt", "min": 1, "max": 3 },
+        "k_raw": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "c": { "type": "randInt", "min": 3, "max": 7 }
+      },
+      "derived": {
+        "coeff_sum": "scope.a + scope.b",
+        "raw_num": "scope.coeff_sum * scope.x_val + scope.k_raw",
+        "rem": "((scope.raw_num % scope.c) + scope.c) % scope.c",
+        "k_eff": "scope.k_raw - scope.rem === 0 ? scope.k_raw + scope.c - scope.rem : scope.k_raw - scope.rem",
+        "E": "(scope.coeff_sum * scope.x_val + scope.k_eff) / scope.c",
+        "ax_str": "scope.a + 'x'",
+        "bx_k_str": "scope.b === 1 ? ('x ' + (scope.k_eff > 0 ? '+ ' + scope.k_eff : '- ' + Math.abs(scope.k_eff))) : (scope.b + 'x ' + (scope.k_eff > 0 ? '+ ' + scope.k_eff : '- ' + Math.abs(scope.k_eff)))",
+        "expr": "'\\\\frac{' + scope.ax_str + '}{' + scope.c + '} + \\\\frac{' + scope.bx_k_str + '}{' + scope.c + '} = ' + scope.E",
+        "step1": "'\\\\frac{' + scope.ax_str + ' + ' + scope.bx_k_str + '}{' + scope.c + '} = ' + scope.E",
+        "step2": "scope.coeff_sum + 'x ' + (scope.k_eff > 0 ? '+ ' + scope.k_eff : '- ' + Math.abs(scope.k_eff)) + ' = ' + (scope.E * scope.c)",
+        "ans": "scope.x_val.toString()"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Combine terms over the common denominator ${scope.c}: $$${scope.step1}$$",
+        "Multiply both sides by ${scope.c}: $$${scope.step2}$$",
+        "Simplify and solve for $x$: $$x = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 4 },
+        "diff_unit": { "type": "randInt", "min": 1, "max": 2 },
+        "mult": { "type": "randInt", "min": 5, "max": 15 }
+      },
+      "derived": {
+        "b": "scope.a + scope.diff_unit",
+        "D": "scope.mult * (scope.b - scope.a)",
+        "ans_num": "scope.mult * scope.a * scope.b",
+        "ans": "scope.ans_num.toString()",
+        "eq_str": "'\\\\frac{p}{' + scope.a + '} - \\\\frac{p}{' + scope.b + '} = ' + scope.D",
+        "step1": "'\\\\frac{' + scope.b + 'p - ' + scope.a + 'p}{' + (scope.a * scope.b) + '} = ' + scope.D",
+        "step2": "(scope.b - scope.a) + 'p = ' + (scope.D * scope.a * scope.b)"
+      },
+      "questionTemplate": "A packet contains $p$ grams of flour. Raimi uses $\\frac{1}{${scope.a}}$ of it to bake a cake and $\\frac{1}{${scope.b}}$ of it to bake cookies.\n\nGiven that he uses ${scope.D} grams more flour for the cake than for the cookies, find the original mass of the packet of flour.",
+      "inputs": [
+        { "label": "p =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Form the equation for the difference in flour used: $$${scope.eq_str}$$",
+        "Express the fractions using a common denominator of ${scope.a * scope.b}: $$${scope.step1}$$",
+        "Multiply both sides by ${scope.a * scope.b}: $$${scope.step2}$$",
+        "Solve for $p$: $$p = ${scope.ans}\\text{ g}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "m": { "type": "randInt", "min": 2, "max": 3 },
+        "k": { "type": "randInt", "min": 1, "max": 5 },
+        "d": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "n": "scope.m + 1",
+        "lcm": "scope.m * scope.n",
+        "x_val": "scope.lcm * scope.d + scope.m * scope.k",
+        "ans": "scope.x_val.toString()",
+        "expr": "'\\\\frac{x}{' + scope.m + '} - \\\\frac{x + ' + scope.k + '}{' + scope.n + '} = ' + scope.d",
+        "step1": "'\\\\frac{' + scope.n + 'x - ' + scope.m + '(x + ' + scope.k + ')}{' + scope.lcm + '} = ' + scope.d",
+        "step2": "scope.n + 'x - ' + scope.m + 'x - ' + (scope.m * scope.k) + ' = ' + (scope.lcm * scope.d)",
+        "step3": "'x - ' + (scope.m * scope.k) + ' = ' + (scope.lcm * scope.d)"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Combine the terms over a common denominator of ${scope.lcm}: $$${scope.step1}$$",
+        "Multiply both sides by ${scope.lcm} and expand brackets: $$${scope.step2}$$",
+        "Simplify the linear expression: $$${scope.step3}$$",
+        "Solve for $x$: $$x = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "y_base": { "type": "randInt", "min": 2, "max": 5 },
+        "k_factor": { "type": "randInt", "min": 1, "max": 3 }
+      },
+      "derived": {
+        "y_val": "scope.y_base * 6",
+        "k": "scope.k_factor * 2",
+        "boys": "scope.y_val + scope.k",
+        "N": "(scope.boys / 2) + (scope.y_val / 3)",
+        "ans": "scope.y_val.toString()",
+        "eq_str": "'\\\\frac{y + ' + scope.k + '}{2} + \\\\frac{y}{3} = ' + scope.N",
+        "step1": "'\\\\frac{3(y + ' + scope.k + ') + 2y}{6} = ' + scope.N",
+        "step2": "'3y + ' + (3 * scope.k) + ' + 2y = ' + (6 * scope.N)",
+        "step3": "'5y + ' + (3 * scope.k) + ' = ' + (6 * scope.N)"
+      },
+      "questionTemplate": "In a school club, the number of girls is $y$ and there are ${scope.k} more boys than girls.\n\n$\\frac{1}{2}$ of the boys and $\\frac{1}{3}$ of the girls participate in a competition.\n\nGiven that ${scope.N} students participate in total, find the number of girls $y$.",
+      "inputs": [
+        { "label": "y =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Form the fractional equation for total participants: $$${scope.eq_str}$$",
+        "Combine fractions using a common denominator of $6$: $$${scope.step1}$$",
+        "Multiply both sides by $6$ and expand brackets: $$${scope.step2}$$",
+        "Simplify like terms and solve for $y$: $$${scope.step3}\\implies y = ${scope.ans}$$"
+      ]
+    }
+  ]
+}

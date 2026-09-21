@@ -1,0 +1,205 @@
+{
+  "skillTitle": "Multiplying and Dividing Algebraic Fractions",
+  "keypad": [
+    "a", "b", "c",
+    "x", "y", "z",
+    "a/b", "^2", "-",
+    "7", "8", "9",
+    "4", "5", "6",
+    "1", "2", "3",
+    "0", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 6 },
+        "b": { "type": "randInt", "min": 4, "max": 12 },
+        "c": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "num_raw": "scope.a * scope.c",
+        "den_raw": "scope.b",
+        "g": "(function(u, v) { return (function gcd(x, y) { return y ? gcd(y, x % y) : Math.abs(x); })(u, v); })(scope.num_raw, scope.den_raw)",
+        "num_sim": "scope.num_raw / scope.g",
+        "den_sim": "scope.den_raw / scope.g",
+        "num_str_input": "scope.num_sim === 1 ? 'x' : scope.num_sim + 'x'",
+        "ans": "scope.den_sim === 1 ? scope.num_str_input : scope.num_str_input + '/' + scope.den_sim",
+        "num_str_latex": "scope.num_sim === 1 ? 'x' : scope.num_sim + 'x'",
+        "ans_latex": "scope.den_sim === 1 ? scope.num_str_latex : '\\\\frac{' + scope.num_str_latex + '}{' + scope.den_sim + '}'",
+        "expr": "'\\\\frac{' + (scope.a === 1 ? 'x' : scope.a + 'x') + '}{' + scope.b + '} \\\\times ' + scope.c",
+        "step1_num": "(scope.num_raw === 1 ? '' : scope.num_raw) + 'x'",
+        "step1": "'\\\\frac{' + scope.step1_num + '}{' + scope.den_raw + '}'",
+        "step2": "'\\\\frac{' + scope.num_raw + ' \\\\times x}{' + scope.den_raw + '}'",
+        "calc_num_frac": "'\\\\frac{' + scope.num_raw + '}{' + scope.den_raw + '}'",
+        "calc_num_sim": "scope.den_sim === 1 ? scope.num_sim.toString() : '\\\\frac{' + scope.num_sim + '}{' + scope.den_sim + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Multiply the numerators together and denominators together: $$${scope.step1}$$",
+        "Rewrite terms separately using multiplication: $$${scope.step2}$$",
+        "Use your calculator to simplify the numerical fraction $$${scope.calc_num_frac}$$ to $$${scope.calc_num_sim}$$, leaving the final simplified fraction: $$${scope.ans_latex}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 6 },
+        "b": { "type": "randInt", "min": 3, "max": 8 },
+        "c": { "type": "randInt", "min": 2, "max": 5 },
+        "d": { "type": "randInt", "min": 3, "max": 8 }
+      },
+      "derived": {
+        "num_raw": "scope.a * scope.d",
+        "den_raw": "scope.b * scope.c",
+        "g": "(function(u, v) { return (function gcd(x, y) { return y ? gcd(y, x % y) : Math.abs(x); })(u, v); })(scope.num_raw, scope.den_raw)",
+        "num_sim": "scope.num_raw / scope.g",
+        "den_sim": "scope.den_raw / scope.g",
+        "ans_den_input": "(scope.den_sim === 1 ? '' : scope.den_sim) + 'x'",
+        "ans": "scope.num_sim + '/' + scope.ans_den_input",
+        "ans_den_latex": "(scope.den_sim === 1 ? '' : scope.den_sim) + 'x'",
+        "ans_latex": "'\\\\frac{' + scope.num_sim + '}{' + scope.ans_den_latex + '}'",
+        "expr": "'\\\\frac{' + scope.a + '}{' + scope.b + '} \\\\div \\\\frac{' + (scope.c === 1 ? 'x' : scope.c + 'x') + '}{' + scope.d + '}'",
+        "step1_f2": "'\\\\frac{' + scope.d + '}{' + (scope.c === 1 ? 'x' : scope.c + 'x') + '}'",
+        "step1": "'\\\\frac{' + scope.a + '}{' + scope.b + '} \\\\times ' + scope.step1_f2",
+        "step2_den": "(scope.den_raw === 1 ? '' : scope.den_raw) + 'x'",
+        "step2": "'\\\\frac{' + scope.num_raw + '}{' + scope.step2_den + '}'",
+        "step3": "'\\\\frac{' + scope.num_raw + '}{' + scope.den_raw + ' \\\\times x}'",
+        "calc_num_frac": "'\\\\frac{' + scope.num_raw + '}{' + scope.den_raw + '}'",
+        "calc_num_sim": "scope.den_sim === 1 ? scope.num_sim.toString() : '\\\\frac{' + scope.num_sim + '}{' + scope.den_sim + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply Keep Change Flip (keep first term, change division to multiplication, and flip second term): $$${scope.step1}$$",
+        "Multiply the numerators together and denominators together: $$${scope.step2}$$",
+        "Rewrite terms separately using multiplication: $$${scope.step3}$$",
+        "Use your calculator to simplify the numerical fraction $$${scope.calc_num_frac}$$ to $$${scope.calc_num_sim}$$, leaving the final simplified fraction: $$${scope.ans_latex}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 5 },
+        "b": { "type": "randInt", "min": 2, "max": 6 },
+        "c": { "type": "randInt", "min": 2, "max": 5 },
+        "d": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "num_raw": "scope.a * scope.c",
+        "den_raw": "scope.b * scope.d",
+        "g": "(function(u, v) { return (function gcd(x, y) { return y ? gcd(y, x % y) : Math.abs(x); })(u, v); })(scope.num_raw, scope.den_raw)",
+        "num_sim": "scope.num_raw / scope.g",
+        "den_sim": "scope.den_raw / scope.g",
+        "ans_num_str": "scope.num_sim === 1 ? 'xy' : scope.num_sim + 'xy'",
+        "ans": "scope.den_sim === 1 ? scope.ans_num_str : scope.ans_num_str + '/' + scope.den_sim",
+        "ans_latex": "scope.den_sim === 1 ? scope.ans_num_str : '\\\\frac{' + scope.ans_num_str + '}{' + scope.den_sim + '}'",
+        "expr_f1": "'\\\\frac{' + (scope.a === 1 ? 'x^2' : scope.a + 'x^2') + '}{' + scope.b + '}'",
+        "expr_f2": "'\\\\frac{' + (scope.c === 1 ? 'y' : scope.c + 'y') + '}{' + (scope.d === 1 ? 'x' : scope.d + 'x') + '}'",
+        "expr": "scope.expr_f1 + ' \\\\times ' + scope.expr_f2",
+        "step1_num": "(scope.num_raw === 1 ? '' : scope.num_raw) + 'x^2y'",
+        "step1_den": "(scope.den_raw === 1 ? '' : scope.den_raw) + 'x'",
+        "step1": "'\\\\frac{' + scope.step1_num + '}{' + scope.step1_den + '}'",
+        "step2": "'\\\\frac{' + scope.num_raw + ' \\\\times x \\\\times x \\\\times y}{' + scope.den_raw + ' \\\\times x}'",
+        "calc_num_frac": "'\\\\frac{' + scope.num_raw + '}{' + scope.den_raw + '}'",
+        "calc_num_sim": "scope.den_sim === 1 ? scope.num_sim.toString() : '\\\\frac{' + scope.num_sim + '}{' + scope.den_sim + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Multiply the numerators together and denominators together: $$${scope.step1}$$",
+        "Rewrite terms separately using multiplication: $$${scope.step2}$$",
+        "Use your calculator to simplify the numerical fraction $$${scope.calc_num_frac}$$ to $$${scope.calc_num_sim}$$ and cancel common variable terms: $$${scope.ans_latex}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 6 },
+        "b": { "type": "randInt", "min": 2, "max": 6 },
+        "c": { "type": "randInt", "min": 2, "max": 6 },
+        "d": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "num_raw": "scope.a * scope.d",
+        "den_raw": "scope.b * scope.c",
+        "g": "(function(u, v) { return (function gcd(x, y) { return y ? gcd(y, x % y) : Math.abs(x); })(u, v); })(scope.num_raw, scope.den_raw)",
+        "num_sim": "scope.num_raw / scope.g",
+        "den_sim": "scope.den_raw / scope.g",
+        "ans_num_str": "scope.num_sim === 1 ? 'x' : scope.num_sim + 'x'",
+        "ans": "scope.den_sim === 1 ? scope.ans_num_str : scope.ans_num_str + '/' + scope.den_sim",
+        "ans_latex": "scope.den_sim === 1 ? scope.ans_num_str : '\\\\frac{' + scope.ans_num_str + '}{' + scope.den_sim + '}'",
+        "expr_f1": "'\\\\frac{' + (scope.a === 1 ? 'x^2' : scope.a + 'x^2') + '}{' + (scope.b === 1 ? 'y' : scope.b + 'y') + '}'",
+        "expr_f2": "'\\\\frac{' + (scope.c === 1 ? 'x' : scope.c + 'x') + '}{' + (scope.d === 1 ? 'y' : scope.d + 'y') + '}'",
+        "expr": "scope.expr_f1 + ' \\\\div ' + scope.expr_f2",
+        "step1_f2": "'\\\\frac{' + (scope.d === 1 ? 'y' : scope.d + 'y') + '}{' + (scope.c === 1 ? 'x' : scope.c + 'x') + '}'",
+        "step1": "scope.expr_f1 + ' \\\\times ' + scope.step1_f2",
+        "step2_num": "(scope.num_raw === 1 ? '' : scope.num_raw) + 'x^2y'",
+        "step2_den": "(scope.den_raw === 1 ? '' : scope.den_raw) + 'xy'",
+        "step2": "'\\\\frac{' + scope.step2_num + '}{' + scope.step2_den + '}'",
+        "step3": "'\\\\frac{' + scope.num_raw + ' \\\\times x \\\\times x \\\\times y}{' + scope.den_raw + ' \\\\times x \\\\times y}'",
+        "calc_num_frac": "'\\\\frac{' + scope.num_raw + '}{' + scope.den_raw + '}'",
+        "calc_num_sim": "scope.den_sim === 1 ? scope.num_sim.toString() : '\\\\frac{' + scope.num_sim + '}{' + scope.den_sim + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply Keep Change Flip (keep first term, change division to multiplication, and flip second term): $$${scope.step1}$$",
+        "Multiply the numerators together and denominators together: $$${scope.step2}$$",
+        "Rewrite terms separately using multiplication: $$${scope.step3}$$",
+        "Use your calculator to simplify the numerical fraction $$${scope.calc_num_frac}$$ to $$${scope.calc_num_sim}$$ and cancel common variable terms: $$${scope.ans_latex}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 6 },
+        "b": { "type": "randInt", "min": 2, "max": 6 },
+        "c": { "type": "randInt", "min": 2, "max": 6 },
+        "d": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "num_raw": "scope.a * scope.d",
+        "den_raw": "scope.b * scope.c",
+        "g": "(function(u, v) { return (function gcd(x, y) { return y ? gcd(y, x % y) : Math.abs(x); })(u, v); })(scope.num_raw, scope.den_raw)",
+        "num_sim": "scope.num_raw / scope.g",
+        "den_sim": "scope.den_raw / scope.g",
+        "ans_num_str": "scope.num_sim === 1 ? 'y' : scope.num_sim + 'y'",
+        "ans_den_input": "(scope.den_sim === 1 ? 'xz' : scope.den_sim + 'xz')",
+        "ans": "scope.ans_num_str + '/' + scope.ans_den_input",
+        "ans_den_latex": "(scope.den_sim === 1 ? 'xz' : scope.den_sim + 'xz')",
+        "ans_latex": "'\\\\frac{' + scope.ans_num_str + '}{' + scope.ans_den_latex + '}'",
+        "expr_f1": "'\\\\frac{' + (scope.a === 1 ? 'xy' : scope.a + 'xy') + '}{' + (scope.b === 1 ? 'z^2' : scope.b + 'z^2') + '}'",
+        "expr_f2": "'\\\\frac{' + (scope.c === 1 ? 'x^2' : scope.c + 'x^2') + '}{' + (scope.d === 1 ? 'z' : scope.d + 'z') + '}'",
+        "expr": "scope.expr_f1 + ' \\\\div ' + scope.expr_f2",
+        "step1_f2": "'\\\\frac{' + (scope.d === 1 ? 'z' : scope.d + 'z') + '}{' + (scope.c === 1 ? 'x^2' : scope.c + 'x^2') + '}'",
+        "step1": "scope.expr_f1 + ' \\\\times ' + scope.step1_f2",
+        "step2_num": "(scope.num_raw === 1 ? '' : scope.num_raw) + 'xyz'",
+        "step2_den": "(scope.den_raw === 1 ? '' : scope.den_raw) + 'x^2z^2'",
+        "step2": "'\\\\frac{' + scope.step2_num + '}{' + scope.step2_den + '}'",
+        "step3": "'\\\\frac{' + scope.num_raw + ' \\\\times x \\\\times y \\\\times z}{' + scope.den_raw + ' \\\\times x \\\\times x \\\\times z \\\\times z}'",
+        "calc_num_frac": "'\\\\frac{' + scope.num_raw + '}{' + scope.den_raw + '}'",
+        "calc_num_sim": "scope.den_sim === 1 ? scope.num_sim.toString() : '\\\\frac{' + scope.num_sim + '}{' + scope.den_sim + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply Keep Change Flip (keep first term, change division to multiplication, and flip second term): $$${scope.step1}$$",
+        "Multiply the numerators together and denominators together: $$${scope.step2}$$",
+        "Rewrite terms separately using multiplication: $$${scope.step3}$$",
+        "Use your calculator to simplify the numerical fraction $$${scope.calc_num_frac}$$ to $$${scope.calc_num_sim}$$ and cancel common variable terms: $$${scope.ans_latex}$$"
+      ]
+    }
+  ]
+}

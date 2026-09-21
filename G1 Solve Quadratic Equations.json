@@ -1,0 +1,334 @@
+{
+  "skillTitle": "Solve Quadratic Equations",
+  "allowAnyOrder": true,
+  "unordered": true,
+  "ignoreOrder": true,
+  "orderMatters": false,
+  "keypad": [
+    "+", "-", ".",
+    "7", "8", "9",
+    "4", "5", "6",
+    "1", "2", "3",
+    "0", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "allowAnyOrder": true,
+      "unordered": true,
+      "ignoreOrder": true,
+      "orderMatters": false,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 3 },
+        "b": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true },
+        "c_pos": { "type": "randInt", "min": 1, "max": 9 }
+      },
+      "derived": {
+        "c": "-scope.c_pos",
+        "b_eff": "Math.abs(scope.b) === 5 ? (scope.b > 0 ? 6 : -6) : scope.b",
+        "disc": "scope.b_eff * scope.b_eff - 4 * scope.a * scope.c",
+        "r1": "(-scope.b_eff - Math.sqrt(scope.disc)) / (2 * scope.a)",
+        "r2": "(-scope.b_eff + Math.sqrt(scope.disc)) / (2 * scope.a)",
+        "v1": "Math.min(scope.r1, scope.r2)",
+        "v2": "Math.max(scope.r1, scope.r2)",
+        "ans1": "parseFloat(scope.v1.toPrecision(3)).toString()",
+        "ans2": "parseFloat(scope.v2.toPrecision(3)).toString()",
+        "partA": "scope.a === 1 ? 'x^2' : scope.a + 'x^2'",
+        "partB": "scope.b_eff === 1 ? '+ x' : (scope.b_eff === -1 ? '- x' : (scope.b_eff > 0 ? '+ ' + scope.b_eff + 'x' : '- ' + Math.abs(scope.b_eff) + 'x'))",
+        "partC": "'- ' + Math.abs(scope.c)",
+        "eq": "scope.partA + ' ' + scope.partB + ' ' + scope.partC + ' = 0'",
+        "step2": "'\\\\frac{-(' + scope.b_eff + ') \\\\pm \\\\sqrt{(' + scope.b_eff + ')^2 - 4(' + scope.a + ')(' + scope.c + ')}}{2(' + scope.a + ')}'"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.eq}$$",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans1}",
+          "accept": ["${scope.ans1}", "${scope.ans2}"],
+          "answers": ["${scope.ans1}", "${scope.ans2}"],
+          "altAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "acceptableAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "group": 1,
+          "groupId": "solutions",
+          "unordered": true,
+          "allowAnyOrder": true,
+          "ignoreOrder": true
+        },
+        {
+          "label": "or x =",
+          "answer": "${scope.ans2}",
+          "accept": ["${scope.ans1}", "${scope.ans2}"],
+          "answers": ["${scope.ans1}", "${scope.ans2}"],
+          "altAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "acceptableAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "group": 1,
+          "groupId": "solutions",
+          "unordered": true,
+          "allowAnyOrder": true,
+          "ignoreOrder": true
+        }
+      ],
+      "steps": [
+        "1) Change to the form $ax^2 + bx + c = 0$: $$${scope.eq}$$",
+        "2) Identify the values of $a$, $b$, and $c$: $$a = ${scope.a}, \\quad b = ${scope.b_eff}, \\quad c = ${scope.c}$$",
+        "3) Write down the quadratic formula and sub in the values of $a$, $b$, and $c$: $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} = ${scope.step2}$$",
+        "4) Use calculator to evaluate the expression to find the 2 solutions: $$x = ${scope.ans1} \\quad \\text{or} \\quad x = ${scope.ans2}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "allowAnyOrder": true,
+      "unordered": true,
+      "ignoreOrder": true,
+      "orderMatters": false,
+      "variables": {
+        "a_pos": { "type": "randInt", "min": 1, "max": 3 },
+        "b": { "type": "randInt", "min": 1, "max": 7 },
+        "c": { "type": "randInt", "min": 1, "max": 9 }
+      },
+      "derived": {
+        "a": "-scope.a_pos",
+        "b_eff": "scope.b === 5 ? 6 : scope.b",
+        "disc": "scope.b_eff * scope.b_eff - 4 * scope.a * scope.c",
+        "r1": "(-scope.b_eff - Math.sqrt(scope.disc)) / (2 * scope.a)",
+        "r2": "(-scope.b_eff + Math.sqrt(scope.disc)) / (2 * scope.a)",
+        "v1": "Math.min(scope.r1, scope.r2)",
+        "v2": "Math.max(scope.r1, scope.r2)",
+        "ans1": "parseFloat(scope.v1.toPrecision(3)).toString()",
+        "ans2": "parseFloat(scope.v2.toPrecision(3)).toString()",
+        "partA": "scope.a === -1 ? '-x^2' : scope.a + 'x^2'",
+        "partB": "scope.b_eff === 1 ? '+ x' : '+ ' + scope.b_eff + 'x'",
+        "partC": "'+ ' + scope.c",
+        "eq": "scope.partA + ' ' + scope.partB + ' ' + scope.partC + ' = 0'",
+        "step2": "'\\\\frac{-(' + scope.b_eff + ') \\\\pm \\\\sqrt{(' + scope.b_eff + ')^2 - 4(' + scope.a + ')(' + scope.c + ')}}{2(' + scope.a + ')}'"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.eq}$$",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans1}",
+          "accept": ["${scope.ans1}", "${scope.ans2}"],
+          "answers": ["${scope.ans1}", "${scope.ans2}"],
+          "altAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "acceptableAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "group": 1,
+          "groupId": "solutions",
+          "unordered": true,
+          "allowAnyOrder": true,
+          "ignoreOrder": true
+        },
+        {
+          "label": "or x =",
+          "answer": "${scope.ans2}",
+          "accept": ["${scope.ans1}", "${scope.ans2}"],
+          "answers": ["${scope.ans1}", "${scope.ans2}"],
+          "altAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "acceptableAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "group": 1,
+          "groupId": "solutions",
+          "unordered": true,
+          "allowAnyOrder": true,
+          "ignoreOrder": true
+        }
+      ],
+      "steps": [
+        "1) Change to the form $ax^2 + bx + c = 0$: $$${scope.eq}$$",
+        "2) Identify the values of $a$, $b$, and $c$: $$a = ${scope.a}, \\quad b = ${scope.b_eff}, \\quad c = ${scope.c}$$",
+        "3) Write down the quadratic formula and sub in the values of $a$, $b$, and $c$: $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} = ${scope.step2}$$",
+        "4) Use calculator to evaluate the expression to find the 2 solutions: $$x = ${scope.ans1} \\quad \\text{or} \\quad x = ${scope.ans2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "allowAnyOrder": true,
+      "unordered": true,
+      "ignoreOrder": true,
+      "orderMatters": false,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 3 },
+        "b": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "d": { "type": "randInt", "min": 1, "max": 9 }
+      },
+      "derived": {
+        "b_eff": "Math.abs(scope.b) === 5 ? (scope.b > 0 ? 6 : -6) : scope.b",
+        "c": "-scope.d",
+        "disc": "scope.b_eff * scope.b_eff - 4 * scope.a * scope.c",
+        "r1": "(-scope.b_eff - Math.sqrt(scope.disc)) / (2 * scope.a)",
+        "r2": "(-scope.b_eff + Math.sqrt(scope.disc)) / (2 * scope.a)",
+        "v1": "Math.min(scope.r1, scope.r2)",
+        "v2": "Math.max(scope.r1, scope.r2)",
+        "ans1": "parseFloat(scope.v1.toPrecision(3)).toString()",
+        "ans2": "parseFloat(scope.v2.toPrecision(3)).toString()",
+        "partA": "scope.a === 1 ? 'x^2' : scope.a + 'x^2'",
+        "partB": "scope.b_eff === 1 ? '+ x' : (scope.b_eff === -1 ? '- x' : (scope.b_eff > 0 ? '+ ' + scope.b_eff + 'x' : '- ' + Math.abs(scope.b_eff) + 'x'))",
+        "eq": "scope.partA + ' ' + scope.partB + ' = ' + scope.d",
+        "eq_std": "scope.partA + ' ' + scope.partB + ' - ' + scope.d + ' = 0'",
+        "step2": "'\\\\frac{-(' + scope.b_eff + ') \\\\pm \\\\sqrt{(' + scope.b_eff + ')^2 - 4(' + scope.a + ')(' + scope.c + ')}}{2(' + scope.a + ')}'"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.eq}$$",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans1}",
+          "accept": ["${scope.ans1}", "${scope.ans2}"],
+          "answers": ["${scope.ans1}", "${scope.ans2}"],
+          "altAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "acceptableAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "group": 1,
+          "groupId": "solutions",
+          "unordered": true,
+          "allowAnyOrder": true,
+          "ignoreOrder": true
+        },
+        {
+          "label": "or x =",
+          "answer": "${scope.ans2}",
+          "accept": ["${scope.ans1}", "${scope.ans2}"],
+          "answers": ["${scope.ans1}", "${scope.ans2}"],
+          "altAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "acceptableAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "group": 1,
+          "groupId": "solutions",
+          "unordered": true,
+          "allowAnyOrder": true,
+          "ignoreOrder": true
+        }
+      ],
+      "steps": [
+        "1) Change to the form $ax^2 + bx + c = 0$: $$${scope.eq_std}$$",
+        "2) Identify the values of $a$, $b$, and $c$: $$a = ${scope.a}, \\quad b = ${scope.b_eff}, \\quad c = ${scope.c}$$",
+        "3) Write down the quadratic formula and sub in the values of $a$, $b$, and $c$: $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} = ${scope.step2}$$",
+        "4) Use calculator to evaluate the expression to find the 2 solutions: $$x = ${scope.ans1} \\quad \\text{or} \\quad x = ${scope.ans2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "allowAnyOrder": true,
+      "unordered": true,
+      "ignoreOrder": true,
+      "orderMatters": false,
+      "variables": {
+        "p": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true },
+        "q": { "type": "randInt", "min": 1, "max": 9 }
+      },
+      "derived": {
+        "p_eff": "Math.abs(scope.p) === 5 ? (scope.p > 0 ? 6 : -6) : scope.p",
+        "a": "1",
+        "b": "scope.p_eff",
+        "c": "-scope.q",
+        "disc": "scope.b * scope.b - 4 * scope.a * scope.c",
+        "r1": "(-scope.b - Math.sqrt(scope.disc)) / (2 * scope.a)",
+        "r2": "(-scope.b + Math.sqrt(scope.disc)) / (2 * scope.a)",
+        "v1": "Math.min(scope.r1, scope.r2)",
+        "v2": "Math.max(scope.r1, scope.r2)",
+        "ans1": "parseFloat(scope.v1.toPrecision(3)).toString()",
+        "ans2": "parseFloat(scope.v2.toPrecision(3)).toString()",
+        "bracket": "'x(' + (scope.p_eff > 0 ? 'x + ' + scope.p_eff : 'x - ' + Math.abs(scope.p_eff)) + ')'",
+        "eq": "scope.bracket + ' = ' + scope.q",
+        "eq_std": "'x^2 ' + (scope.p_eff > 0 ? '+ ' + scope.p_eff + 'x' : '- ' + Math.abs(scope.p_eff) + 'x') + ' - ' + scope.q + ' = 0'",
+        "step2": "'\\\\frac{-(' + scope.b + ') \\\\pm \\\\sqrt{(' + scope.b + ')^2 - 4(1)(' + scope.c + ')}}{2(1)}'"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.eq}$$",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans1}",
+          "accept": ["${scope.ans1}", "${scope.ans2}"],
+          "answers": ["${scope.ans1}", "${scope.ans2}"],
+          "altAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "acceptableAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "group": 1,
+          "groupId": "solutions",
+          "unordered": true,
+          "allowAnyOrder": true,
+          "ignoreOrder": true
+        },
+        {
+          "label": "or x =",
+          "answer": "${scope.ans2}",
+          "accept": ["${scope.ans1}", "${scope.ans2}"],
+          "answers": ["${scope.ans1}", "${scope.ans2}"],
+          "altAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "acceptableAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "group": 1,
+          "groupId": "solutions",
+          "unordered": true,
+          "allowAnyOrder": true,
+          "ignoreOrder": true
+        }
+      ],
+      "steps": [
+        "1) Change to the form $ax^2 + bx + c = 0$: $$${scope.eq_std}$$",
+        "2) Identify the values of $a$, $b$, and $c$: $$a = 1, \\quad b = ${scope.b}, \\quad c = ${scope.c}$$",
+        "3) Write down the quadratic formula and sub in the values of $a$, $b$, and $c$: $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} = ${scope.step2}$$",
+        "4) Use calculator to evaluate the expression to find the 2 solutions: $$x = ${scope.ans1} \\quad \\text{or} \\quad x = ${scope.ans2}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "allowAnyOrder": true,
+      "unordered": true,
+      "ignoreOrder": true,
+      "orderMatters": false,
+      "variables": {
+        "p": { "type": "randInt", "min": 2, "max": 6 },
+        "q": { "type": "randInt", "min": 2, "max": 6 },
+        "r": { "type": "randInt", "min": 1, "max": 5 }
+      },
+      "derived": {
+        "pq": "scope.p * scope.q",
+        "a": "-1",
+        "b": "scope.p - scope.q",
+        "b_eff": "scope.b === 0 ? 1 : scope.b",
+        "c": "scope.pq - scope.r",
+        "disc": "scope.b_eff * scope.b_eff - 4 * scope.a * scope.c",
+        "r1": "(-scope.b_eff - Math.sqrt(scope.disc)) / (2 * scope.a)",
+        "r2": "(-scope.b_eff + Math.sqrt(scope.disc)) / (2 * scope.a)",
+        "v1": "Math.min(scope.r1, scope.r2)",
+        "v2": "Math.max(scope.r1, scope.r2)",
+        "ans1": "parseFloat(scope.v1.toPrecision(3)).toString()",
+        "ans2": "parseFloat(scope.v2.toPrecision(3)).toString()",
+        "eq": "'(' + scope.p + ' - x)(x + ' + scope.q + ') = ' + scope.r",
+        "termB_exp": "scope.b_eff === 1 ? '+ x' : (scope.b_eff === -1 ? '- x' : (scope.b_eff > 0 ? '+ ' + scope.b_eff + 'x' : '- ' + Math.abs(scope.b_eff) + 'x'))",
+        "termC_std": "scope.c > 0 ? '+ ' + scope.c : (scope.c < 0 ? '- ' + Math.abs(scope.c) : '')",
+        "eq_std": "'-x^2 ' + scope.termB_exp + ' ' + scope.termC_std + ' = 0'",
+        "step2": "'\\\\frac{-(' + scope.b_eff + ') \\\\pm \\\\sqrt{(' + scope.b_eff + ')^2 - 4(-1)(' + scope.c + ')}}{2(-1)}'"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.eq}$$",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans1}",
+          "accept": ["${scope.ans1}", "${scope.ans2}"],
+          "answers": ["${scope.ans1}", "${scope.ans2}"],
+          "altAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "acceptableAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "group": 1,
+          "groupId": "solutions",
+          "unordered": true,
+          "allowAnyOrder": true,
+          "ignoreOrder": true
+        },
+        {
+          "label": "or x =",
+          "answer": "${scope.ans2}",
+          "accept": ["${scope.ans1}", "${scope.ans2}"],
+          "answers": ["${scope.ans1}", "${scope.ans2}"],
+          "altAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "acceptableAnswers": ["${scope.ans1}", "${scope.ans2}"],
+          "group": 1,
+          "groupId": "solutions",
+          "unordered": true,
+          "allowAnyOrder": true,
+          "ignoreOrder": true
+        }
+      ],
+      "steps": [
+        "1) Change to the form $ax^2 + bx + c = 0$: $$${scope.eq_std}$$",
+        "2) Identify the values of $a$, $b$, and $c$: $$a = -1, \\quad b = ${scope.b_eff}, \\quad c = ${scope.c}$$",
+        "3) Write down the quadratic formula and sub in the values of $a$, $b$, and $c$: $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} = ${scope.step2}$$",
+        "4) Use calculator to evaluate the expression to find the 2 solutions: $$x = ${scope.ans1} \\quad \\text{or} \\quad x = ${scope.ans2}$$"
+      ]
+    }
+  ]
+}

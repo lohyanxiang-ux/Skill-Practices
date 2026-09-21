@@ -1,0 +1,131 @@
+{
+  "skillTitle": "Number Sequences",
+  "keypad": [
+    "n",
+    "+",
+    "-",
+    "7",
+    "8",
+    "9",
+    "4",
+    "5",
+    "6",
+    "1",
+    "2",
+    "3",
+    "0",
+    "⌫",
+    "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a1": { "type": "randInt", "min": -15, "max": 25, "excludeZero": false },
+        "d": { "type": "randInt", "min": -10, "max": 10, "excludeZero": true }
+      },
+      "derived": {
+        "t1": "scope.a1",
+        "t2": "scope.a1 + scope.d",
+        "t3": "scope.a1 + (2 * scope.d)",
+        "t4": "scope.a1 + (3 * scope.d)",
+        "ans": "(scope.a1 + (4 * scope.d)).toString()",
+        "seq": "scope.t1 + ', ' + scope.t2 + ', ' + scope.t3 + ', ' + scope.t4 + ', \\\\dots'",
+        "stepDiff": "scope.d > 0 ? '+' + scope.d : scope.d.toString()"
+      },
+      "questionTemplate": "Write down the next term of the sequence:\n\n$$${scope.seq}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "1) See what number to add or subtract to get to the next term: $$${scope.stepDiff}$$",
+        "2) Add or subtract $$${scope.stepDiff}$$ to the last term ($$${scope.t4}$$) to get the next term: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": -8, "max": 9, "excludeZero": true },
+        "b": { "type": "randInt", "min": -15, "max": 15, "excludeZero": true },
+        "k": { "type": "randInt", "min": 5, "max": 50, "excludeZero": false }
+      },
+      "derived": {
+        "partN": "scope.a === 1 ? 'n' : (scope.a === -1 ? '-n' : scope.a + 'n')",
+        "partB": "scope.b > 0 ? '+ ' + scope.b : '- ' + Math.abs(scope.b)",
+        "expr": "scope.partN + ' ' + scope.partB",
+        "ans": "(scope.a * scope.k + scope.b).toString()",
+        "subStep": "(scope.a === 1 ? '' : (scope.a === -1 ? '-' : scope.a)) + '(' + scope.k + ') ' + scope.partB"
+      },
+      "questionTemplate": "The nth term of a number sequence is $$${scope.expr}$$.\n\nFind the ${scope.k}th term of this sequence.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Substitute $$n = ${scope.k}$$ into the nth term expression: $$${scope.subStep}$$",
+        "Calculate the value: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a1": { "type": "randInt", "min": -15, "max": 25, "excludeZero": false },
+        "d": { "type": "randInt", "min": -9, "max": 9, "excludeZero": true }
+      },
+      "derived": {
+        "t1": "scope.a1",
+        "t2": "scope.a1 + scope.d",
+        "t3": "scope.a1 + (2 * scope.d)",
+        "t4": "scope.a1 + (3 * scope.d)",
+        "seq": "scope.t1 + ', ' + scope.t2 + ', ' + scope.t3 + ', ' + scope.t4 + ', \\\\dots'",
+        "a_val": "scope.d",
+        "b_val": "scope.a1 - scope.d",
+        "a_str": "scope.a_val > 0 ? '+' + scope.a_val : scope.a_val.toString()",
+        "partA": "scope.a_val === 1 ? 'n' : (scope.a_val === -1 ? '-n' : scope.a_val + 'n')",
+        "partB": "scope.b_val === 0 ? '' : (scope.b_val > 0 ? '+' + scope.b_val : scope.b_val.toString())",
+        "ans": "scope.partA + scope.partB",
+        "step3_display": "scope.partA + (scope.b_val === 0 ? '' : (scope.b_val > 0 ? ' + ' + scope.b_val : ' - ' + Math.abs(scope.b_val)))"
+      },
+      "questionTemplate": "Find the nth term of the number sequence:\n\n$$${scope.seq}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "1) See how the numbers are related, i.e. what number to add or subtract to get to the next term. Call this number a: $$a = ${scope.a_str}$$",
+        "2) Next find the number that is before the first term. Call this number b: $$b = ${scope.t1} - (${scope.a_str}) = ${scope.b_val}$$",
+        "3) The nth term = $$an + b = ${scope.step3_display}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a1": { "type": "randInt", "min": -10, "max": 20, "excludeZero": false },
+        "d": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true },
+        "k": { "type": "randInt", "min": 20, "max": 60, "excludeZero": false }
+      },
+      "derived": {
+        "t1": "scope.a1",
+        "t2": "scope.a1 + scope.d",
+        "t3": "scope.a1 + (2 * scope.d)",
+        "t4": "scope.a1 + (3 * scope.d)",
+        "seq": "scope.t1 + ', ' + scope.t2 + ', ' + scope.t3 + ', ' + scope.t4 + ', \\\\dots'",
+        "a_val": "scope.d",
+        "b_val": "scope.a1 - scope.d",
+        "a_str": "scope.a_val > 0 ? '+' + scope.a_val : scope.a_val.toString()",
+        "partA": "scope.a_val === 1 ? 'n' : (scope.a_val === -1 ? '-n' : scope.a_val + 'n')",
+        "partB": "scope.b_val === 0 ? '' : (scope.b_val > 0 ? ' + ' + scope.b_val : ' - ' + Math.abs(scope.b_val))",
+        "ruleExpr": "scope.partA + scope.partB",
+        "ans": "(scope.a1 + (scope.k - 1) * scope.d).toString()"
+      },
+      "questionTemplate": "Given the sequence:\n\n$$${scope.seq}$$\n\nFind the ${scope.k}th term.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "1) See how the numbers are related, i.e. what number to add or subtract to get to the next term. Call this number a: $$a = ${scope.a_str}$$",
+        "2) Next find the number that is before the first term. Call this number b: $$b = ${scope.b_val}$$",
+        "3) The nth term = $$an + b = ${scope.ruleExpr}$$",
+        "4) Substitute $$n = ${scope.k}$$ to find the ${scope.k}th term: $$${scope.ans}$$"
+      ]
+    }
+  ]
+}

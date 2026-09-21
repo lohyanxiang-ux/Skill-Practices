@@ -1,0 +1,150 @@
+{
+  "skillTitle": "Algebraic Expansion",
+  "keypad": [
+    "x", "y", "z",
+    "7", "8", "9",
+    "4", "5", "6",
+    "1", "2", "3",
+    "+", "0", "-",
+    "^2", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true },
+        "b": { "type": "randInt", "min": 2, "max": 6 },
+        "c": { "type": "randInt", "min": -9, "max": 9, "excludeZero": true }
+      },
+      "derived": {
+        "b_eff": "(Math.abs(scope.a * scope.b) % 10 === 0) ? (scope.b === 5 ? 3 : scope.b + 1) : scope.b",
+        "term1": "scope.a * scope.b_eff",
+        "term2": "scope.a * scope.c",
+        "expr": "(scope.a === -1 ? '-' : (scope.a === 1 ? '' : scope.a)) + '(' + (scope.b_eff === 1 ? 'x' : scope.b_eff + 'x') + ' ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c)) + ')'",
+        "partX": "scope.term1 === 1 ? 'x' : (scope.term1 === -1 ? '-x' : scope.term1 + 'x')",
+        "partC": "scope.term2 > 0 ? '+' + scope.term2 : scope.term2.toString()",
+        "ans": "(scope.partX + scope.partC) || '0'",
+        "step1": "scope.partX + ' ' + (scope.term2 > 0 ? '+ ' + scope.term2 : '- ' + Math.abs(scope.term2))"
+      },
+      "questionTemplate": "Expand the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Multiply the term outside the bracket by each term inside using a multiplication frame: $$${scope.step1}$$",
+        "Simplify: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "b": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+      },
+      "derived": {
+        "b_eff": "(Math.abs(scope.a * scope.b) % 10 === 0) ? (scope.b > 0 ? (scope.b === 5 ? 3 : scope.b + 1) : (scope.b === -5 ? -3 : scope.b - 1)) : scope.b",
+        "coeff1": "scope.a",
+        "coeff2": "scope.a * scope.b_eff",
+        "expr": "(scope.a === -1 ? '-' : (scope.a === 1 ? '' : scope.a)) + 'x(y ' + (scope.b_eff === 1 ? '+ z' : (scope.b_eff === -1 ? '- z' : (scope.b_eff > 0 ? '+ ' + scope.b_eff + 'z' : '- ' + Math.abs(scope.b_eff) + 'z'))) + ')'",
+        "part1": "scope.coeff1 === 1 ? 'xy' : (scope.coeff1 === -1 ? '-xy' : scope.coeff1 + 'xy')",
+        "part2": "scope.coeff2 === 1 ? '+xz' : (scope.coeff2 === -1 ? '-xz' : (scope.coeff2 > 0 ? '+' + scope.coeff2 + 'xz' : scope.coeff2 + 'xz'))",
+        "ans": "(scope.part1 + scope.part2) || '0'",
+        "step1": "scope.part1 + ' ' + (scope.coeff2 > 0 ? '+ ' + scope.coeff2 : '- ' + Math.abs(scope.coeff2)) + 'xz'"
+      },
+      "questionTemplate": "Expand the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Multiply the outer term by each term inside using a multiplication frame: $$${scope.step1}$$",
+        "Simplify: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true },
+        "b": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true }
+      },
+      "derived": {
+        "b_eff": "(Math.abs(scope.a + scope.b) === 10) ? (scope.b > 0 ? scope.b - 1 : scope.b + 1) : scope.b",
+        "sum": "scope.a + scope.b_eff",
+        "prod": "scope.a * scope.b_eff",
+        "expr": "'(x ' + (scope.a > 0 ? '+ ' + scope.a : '- ' + Math.abs(scope.a)) + ')(x ' + (scope.b_eff > 0 ? '+ ' + scope.b_eff : '- ' + Math.abs(scope.b_eff)) + ')'",
+        "step1": "'x^2 ' + (scope.b_eff > 0 ? '+ ' + scope.b_eff : '- ' + Math.abs(scope.b_eff)) + 'x ' + (scope.a > 0 ? '+ ' + scope.a : '- ' + Math.abs(scope.a)) + 'x ' + (scope.prod > 0 ? '+ ' + scope.prod : '- ' + Math.abs(scope.prod))",
+        "partX2": "'x^2'",
+        "partX": "scope.sum === 0 ? '' : (scope.sum === 1 ? '+x' : (scope.sum === -1 ? '-x' : (scope.sum > 0 ? '+' + scope.sum + 'x' : scope.sum + 'x')))",
+        "partC": "scope.prod > 0 ? '+' + scope.prod : scope.prod.toString()",
+        "ans": "(scope.partX2 + scope.partX + scope.partC) || '0'"
+      },
+      "questionTemplate": "Expand and simplify:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Expand double brackets using a multiplication frame: $$${scope.step1}$$",
+        "Combine like terms: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 4 },
+        "b": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true },
+        "c": { "type": "randInt", "min": 1, "max": 4 },
+        "d": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true }
+      },
+      "derived": {
+        "b_eff": "Math.abs(scope.b) === 5 ? (scope.b > 0 ? 6 : -6) : scope.b",
+        "d_raw": "Math.abs(scope.d) === 5 ? (scope.d > 0 ? 6 : -6) : scope.d",
+        "d_eff": "Math.abs(scope.a * scope.d_raw + scope.b_eff * scope.c) === 10 ? (scope.d_raw > 0 ? scope.d_raw + 1 : scope.d_raw - 1) : scope.d_raw",
+        "coeffX2": "scope.a * scope.c",
+        "coeffX": "(scope.a * scope.d_eff) + (scope.b_eff * scope.c)",
+        "constTerm": "scope.b_eff * scope.d_eff",
+        "expr": "'(' + scope.a + 'x ' + (scope.b_eff > 0 ? '+ ' + scope.b_eff : '- ' + Math.abs(scope.b_eff)) + ')(' + (scope.c === 1 ? 'x' : scope.c + 'x') + ' ' + (scope.d_eff > 0 ? '+ ' + scope.d_eff : '- ' + Math.abs(scope.d_eff)) + ')'",
+        "partX2": "scope.coeffX2 === 1 ? 'x^2' : scope.coeffX2 + 'x^2'",
+        "partX": "scope.coeffX === 0 ? '' : (scope.coeffX === 1 ? '+x' : (scope.coeffX === -1 ? '-x' : (scope.coeffX > 0 ? '+' + scope.coeffX + 'x' : scope.coeffX + 'x')))",
+        "partC": "scope.constTerm > 0 ? '+' + scope.constTerm : scope.constTerm.toString()",
+        "ans": "(scope.partX2 + scope.partX + scope.partC) || '0'",
+        "step1": "scope.partX2 + ' ' + (scope.a * scope.d_eff > 0 ? '+ ' + (scope.a * scope.d_eff) : '- ' + Math.abs(scope.a * scope.d_eff)) + 'x ' + (scope.b_eff * scope.c > 0 ? '+ ' + (scope.b_eff * scope.c) : '- ' + Math.abs(scope.b_eff * scope.c)) + 'x ' + (scope.constTerm > 0 ? '+ ' + scope.constTerm : '- ' + Math.abs(scope.constTerm))"
+      },
+      "questionTemplate": "Expand and simplify:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Expand terms using a multiplication frame: $$${scope.step1}$$",
+        "Combine like terms to simplify: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 4 },
+        "b": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true }
+      },
+      "derived": {
+        "b_eff": "Math.abs(scope.b) === 5 ? (scope.b > 0 ? 6 : -6) : scope.b",
+        "coeffX2": "scope.a * scope.a",
+        "coeffX": "2 * scope.a * scope.b_eff",
+        "constTerm": "scope.b_eff * scope.b_eff",
+        "expr": "'(' + scope.a + 'x ' + (scope.b_eff > 0 ? '+ ' + scope.b_eff : '- ' + Math.abs(scope.b_eff)) + ')^2'",
+        "partX2": "scope.coeffX2 + 'x^2'",
+        "partX": "scope.coeffX === 0 ? '' : (scope.coeffX === 1 ? '+x' : (scope.coeffX === -1 ? '-x' : (scope.coeffX > 0 ? '+' + scope.coeffX + 'x' : scope.coeffX + 'x')))",
+        "partC": "'+' + scope.constTerm",
+        "ans": "(scope.partX2 + scope.partX + scope.partC) || '0'",
+        "step1": "'(' + scope.a + 'x ' + (scope.b_eff > 0 ? '+ ' + scope.b_eff : '- ' + Math.abs(scope.b_eff)) + ')(' + scope.a + 'x ' + (scope.b_eff > 0 ? '+ ' + scope.b_eff : '- ' + Math.abs(scope.b_eff)) + ')'",
+        "step2": "scope.partX2 + ' ' + (scope.a * scope.b_eff > 0 ? '+ ' + (scope.a * scope.b_eff) : '- ' + Math.abs(scope.a * scope.b_eff)) + 'x ' + (scope.a * scope.b_eff > 0 ? '+ ' + (scope.a * scope.b_eff) : '- ' + Math.abs(scope.a * scope.b_eff)) + 'x + ' + scope.constTerm"
+      },
+      "questionTemplate": "Expand and simplify:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Rewrite as double brackets: $$${scope.step1}$$",
+        "Expand using a multiplication frame: $$${scope.step2}$$",
+        "Simplify: $$${scope.ans}$$"
+      ]
+    }
+  ]
+}

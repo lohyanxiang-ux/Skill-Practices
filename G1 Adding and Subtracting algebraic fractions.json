@@ -1,0 +1,312 @@
+{
+  "skillTitle": "Adding & Subtracting Algebraic Fractions",
+  "keypad": [
+    "x", "(", ")",
+    "+", "-", "/",
+    "7", "8", "9",
+    "4", "5", "6",
+    "1", "2", "3",
+    "0", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 7 },
+        "b": { "type": "randInt", "min": 1, "max": 7 },
+        "d": { "type": "randInt", "min": 2, "max": 9 }
+      },
+      "derived": {
+        "numX": "scope.a + scope.b",
+        "frac1_num": "scope.a === 1 ? 'x' : scope.a + 'x'",
+        "frac2_num": "scope.b === 1 ? 'x' : scope.b + 'x'",
+        "expr": "'\\\\frac{' + scope.frac1_num + '}{' + scope.d + '} + \\\\frac{' + scope.frac2_num + '}{' + scope.d + '}'",
+        "step1": "'\\\\frac{' + scope.frac1_num + ' + ' + scope.frac2_num + '}{' + scope.d + '}'",
+        "unsimpNum": "scope.numX === 1 ? 'x' : scope.numX + 'x'",
+        "gcd": "((a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { const t = b; b = a % b; a = t; } return a || 1; })(scope.numX, scope.d)",
+        "redNumX": "scope.numX / scope.gcd",
+        "redD": "scope.d / scope.gcd",
+        "partX": "scope.redNumX === 1 ? 'x' : scope.redNumX + 'x'",
+        "ans": "scope.redD === 1 ? scope.partX : '(' + scope.partX + ')/' + scope.redD",
+        "simpStep": "scope.redD === 1 ? scope.partX : '\\\\frac{' + scope.partX + '}{' + scope.redD + '}'",
+        "step2": "scope.gcd > 1 ? '\\\\frac{' + scope.unsimpNum + '}{' + scope.d + '} = ' + scope.simpStep : '\\\\frac{' + scope.unsimpNum + '}{' + scope.d + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Add the numerators over the common denominator: $$${scope.step1}$$",
+        "Combine like terms in the numerator and simplify: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 8 },
+        "b": { "type": "randInt", "min": 1, "max": 6 },
+        "d": { "type": "randInt", "min": 2, "max": 9 }
+      },
+      "derived": {
+        "b_eff": "scope.a === scope.b ? scope.b + 1 : scope.b",
+        "numX": "scope.a - scope.b_eff",
+        "frac1_num": "scope.a === 1 ? 'x' : scope.a + 'x'",
+        "frac2_num": "scope.b_eff === 1 ? 'x' : scope.b_eff + 'x'",
+        "expr": "'\\\\frac{' + scope.frac1_num + '}{' + scope.d + '} - \\\\frac{' + scope.frac2_num + '}{' + scope.d + '}'",
+        "step1": "'\\\\frac{' + scope.frac1_num + ' - ' + scope.frac2_num + '}{' + scope.d + '}'",
+        "unsimpNum": "scope.numX === 1 ? 'x' : (scope.numX === -1 ? '-x' : scope.numX + 'x')",
+        "gcd": "((a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { const t = b; b = a % b; a = t; } return a || 1; })(scope.numX, scope.d)",
+        "redNumX": "scope.numX / scope.gcd",
+        "redD": "scope.d / scope.gcd",
+        "partX": "scope.redNumX === 1 ? 'x' : (scope.redNumX === -1 ? '-x' : scope.redNumX + 'x')",
+        "ans": "scope.redD === 1 ? scope.partX : '(' + scope.partX + ')/' + scope.redD",
+        "simpStep": "scope.redD === 1 ? scope.partX : '\\\\frac{' + scope.partX + '}{' + scope.redD + '}'",
+        "step2": "scope.gcd > 1 ? '\\\\frac{' + scope.unsimpNum + '}{' + scope.d + '} = ' + scope.simpStep : '\\\\frac{' + scope.unsimpNum + '}{' + scope.d + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Subtract the numerators over the common denominator: $$${scope.step1}$$",
+        "Combine like terms in the numerator and simplify: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 5 },
+        "b": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "c": { "type": "randInt", "min": 1, "max": 5 },
+        "e": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "d": { "type": "randInt", "min": 2, "max": 9 }
+      },
+      "derived": {
+        "c_eff": "scope.a === scope.c ? scope.c + 1 : scope.c",
+        "numX": "scope.a - scope.c_eff",
+        "numC": "scope.b - scope.e",
+        "frac1_num": "(scope.a === 1 ? 'x' : scope.a + 'x') + ' ' + (scope.b > 0 ? '+ ' + scope.b : '- ' + Math.abs(scope.b))",
+        "frac2_num": "(scope.c_eff === 1 ? 'x' : scope.c_eff + 'x') + ' ' + (scope.e > 0 ? '+ ' + scope.e : '- ' + Math.abs(scope.e))",
+        "expr": "'\\\\frac{' + scope.frac1_num + '}{' + scope.d + '} - \\\\frac{' + scope.frac2_num + '}{' + scope.d + '}'",
+        "step1": "'\\\\frac{(' + scope.frac1_num + ') - (' + scope.frac2_num + ')}{' + scope.d + '}'",
+        "expanded_num": "(scope.a === 1 ? 'x' : scope.a + 'x') + ' ' + (scope.b > 0 ? '+ ' + scope.b : '- ' + Math.abs(scope.b)) + ' ' + (scope.c_eff === 1 ? '- x' : '- ' + scope.c_eff + 'x') + ' ' + (scope.e > 0 ? '- ' + scope.e : '+ ' + Math.abs(scope.e))",
+        "step2": "'\\\\frac{' + scope.expanded_num + '}{' + scope.d + '}'",
+        "unsimpPartX": "scope.numX === 0 ? '' : (scope.numX === 1 ? 'x' : (scope.numX === -1 ? '-x' : scope.numX + 'x'))",
+        "unsimpPartC": "scope.numC === 0 ? (scope.numX === 0 ? '0' : '') : (scope.numX === 0 ? scope.numC.toString() : (scope.numC > 0 ? '+' + scope.numC : scope.numC.toString()))",
+        "unsimpFinalNum": "(scope.unsimpPartX + scope.unsimpPartC) || '0'",
+        "gcd": "((a, b, c) => { const g2 = (x, y) => { x = Math.abs(x); y = Math.abs(y); while (y) { const t = y; y = x % y; x = t; } return x; }; return g2(g2(a, b), c) || 1; })(scope.numX, scope.numC, scope.d)",
+        "redNumX": "scope.numX / scope.gcd",
+        "redNumC": "scope.numC / scope.gcd",
+        "redD": "scope.d / scope.gcd",
+        "partX": "scope.redNumX === 0 ? '' : (scope.redNumX === 1 ? 'x' : (scope.redNumX === -1 ? '-x' : scope.redNumX + 'x'))",
+        "partC": "scope.redNumC === 0 ? (scope.redNumX === 0 ? '0' : '') : (scope.redNumX === 0 ? scope.redNumC.toString() : (scope.redNumC > 0 ? '+' + scope.redNumC : scope.redNumC.toString()))",
+        "finalNum": "(scope.partX + scope.partC) || '0'",
+        "ans": "scope.redD === 1 ? scope.finalNum : '(' + scope.finalNum + ')/' + scope.redD",
+        "simpStep": "scope.redD === 1 ? scope.finalNum : '\\\\frac{' + scope.finalNum + '}{' + scope.redD + '}'",
+        "step3": "scope.gcd > 1 ? '\\\\frac{' + scope.unsimpFinalNum + '}{' + scope.d + '} = ' + scope.simpStep : '\\\\frac{' + scope.unsimpFinalNum + '}{' + scope.d + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Put brackets around the numerator expressions over the common denominator: $$${scope.step1}$$",
+        "Expand terms in the numerator (remove brackets): $$${scope.step2}$$",
+        "Subtract, combine like terms in the numerator, and simplify: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 6 },
+        "b": { "type": "randInt", "min": 1, "max": 6 },
+        "d1": { "type": "randInt", "min": 2, "max": 7 },
+        "d2": { "type": "randInt", "min": 2, "max": 7 }
+      },
+      "derived": {
+        "d2_eff": "scope.d1 === scope.d2 ? scope.d2 + 1 : scope.d2",
+        "gcd_den": "((a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { const t = b; b = a % b; a = t; } return a || 1; })(scope.d1, scope.d2_eff)",
+        "comDen": "(scope.d1 * scope.d2_eff) / scope.gcd_den",
+        "m1": "scope.comDen / scope.d1",
+        "m2": "scope.comDen / scope.d2_eff",
+        "term1X": "scope.a * scope.m1",
+        "term2X": "scope.b * scope.m2",
+        "totX": "scope.term1X + scope.term2X",
+        "frac1_num": "scope.a === 1 ? 'x' : scope.a + 'x'",
+        "frac2_num": "scope.b === 1 ? 'x' : scope.b + 'x'",
+        "expr": "'\\\\frac{' + scope.frac1_num + '}{' + scope.d1 + '} + \\\\frac{' + scope.frac2_num + '}{' + scope.d2_eff + '}'",
+        "s1_t1": "scope.m1 === 1 ? scope.frac1_num : scope.m1 + '(' + scope.frac1_num + ')'",
+        "s1_t2": "scope.m2 === 1 ? scope.frac2_num : scope.m2 + '(' + scope.frac2_num + ')'",
+        "step1": "'\\\\frac{' + scope.s1_t1 + ' + ' + scope.s1_t2 + '}{' + scope.comDen + '}'",
+        "step2": "'\\\\frac{' + scope.term1X + 'x + ' + scope.term2X + 'x}{' + scope.comDen + '}'",
+        "unsimpPartX": "scope.totX === 1 ? 'x' : scope.totX + 'x'",
+        "gcd": "((a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { const t = b; b = a % b; a = t; } return a || 1; })(scope.totX, scope.comDen)",
+        "redTotX": "scope.totX / scope.gcd",
+        "redComDen": "scope.comDen / scope.gcd",
+        "partX": "scope.redTotX === 1 ? 'x' : scope.redTotX + 'x'",
+        "ans": "scope.redComDen === 1 ? scope.partX : '(' + scope.partX + ')/' + scope.redComDen",
+        "simpStep": "scope.redComDen === 1 ? scope.partX : '\\\\frac{' + scope.partX + '}{' + scope.redComDen + '}'",
+        "step3": "scope.gcd > 1 ? '\\\\frac{' + scope.unsimpPartX + '}{' + scope.comDen + '} = ' + scope.simpStep : '\\\\frac{' + scope.unsimpPartX + '}{' + scope.comDen + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Find the common denominator (LCM) and rewrite each numerator: $$${scope.step1}$$",
+        "Multiply each numerator by its corresponding factor: $$${scope.step2}$$",
+        "Add terms in the numerator and simplify: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 7 },
+        "b": { "type": "randInt", "min": 1, "max": 5 },
+        "d1": { "type": "randInt", "min": 2, "max": 6 },
+        "d2": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "d2_eff": "scope.d1 === scope.d2 ? scope.d2 + 1 : scope.d2",
+        "gcd_den": "((a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { const t = b; b = a % b; a = t; } return a || 1; })(scope.d1, scope.d2_eff)",
+        "comDen": "(scope.d1 * scope.d2_eff) / scope.gcd_den",
+        "m1": "scope.comDen / scope.d1",
+        "m2": "scope.comDen / scope.d2_eff",
+        "term1X": "scope.a * scope.m1",
+        "term2X": "scope.b * scope.m2",
+        "totX_raw": "scope.term1X - scope.term2X",
+        "totX": "scope.totX_raw === 0 ? scope.term1X + 1 : scope.totX_raw",
+        "frac1_num": "scope.a === 1 ? 'x' : scope.a + 'x'",
+        "frac2_num": "scope.b === 1 ? 'x' : scope.b + 'x'",
+        "expr": "'\\\\frac{' + scope.frac1_num + '}{' + scope.d1 + '} - \\\\frac{' + scope.frac2_num + '}{' + scope.d2_eff + '}'",
+        "s1_t1": "scope.m1 === 1 ? scope.frac1_num : scope.m1 + '(' + scope.frac1_num + ')'",
+        "s1_t2": "scope.m2 === 1 ? scope.frac2_num : scope.m2 + '(' + scope.frac2_num + ')'",
+        "step1": "'\\\\frac{' + scope.s1_t1 + ' - ' + scope.s1_t2 + '}{' + scope.comDen + '}'",
+        "step2": "'\\\\frac{' + scope.term1X + 'x - ' + scope.term2X + 'x}{' + scope.comDen + '}'",
+        "unsimpPartX": "scope.totX === 1 ? 'x' : (scope.totX === -1 ? '-x' : scope.totX + 'x')",
+        "gcd": "((a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { const t = b; b = a % b; a = t; } return a || 1; })(scope.totX, scope.comDen)",
+        "redTotX": "scope.totX / scope.gcd",
+        "redComDen": "scope.comDen / scope.gcd",
+        "partX": "scope.redTotX === 1 ? 'x' : (scope.redTotX === -1 ? '-x' : scope.redTotX + 'x')",
+        "ans": "scope.redComDen === 1 ? scope.partX : '(' + scope.partX + ')/' + scope.redComDen",
+        "simpStep": "scope.redComDen === 1 ? scope.partX : '\\\\frac{' + scope.partX + '}{' + scope.redComDen + '}'",
+        "step3": "scope.gcd > 1 ? '\\\\frac{' + scope.unsimpPartX + '}{' + scope.comDen + '} = ' + scope.simpStep : '\\\\frac{' + scope.unsimpPartX + '}{' + scope.comDen + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Find the common denominator (LCM) and rewrite each numerator: $$${scope.step1}$$",
+        "Multiply each numerator by its corresponding factor: $$${scope.step2}$$",
+        "Subtract terms in the numerator and simplify: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 4 },
+        "b": { "type": "randInt", "min": 1, "max": 5 },
+        "c": { "type": "randInt", "min": 1, "max": 4 },
+        "e": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "d1": { "type": "randInt", "min": 2, "max": 5 },
+        "d2": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "d2_eff": "scope.d1 === scope.d2 ? scope.d2 + 1 : scope.d2",
+        "gcd_den": "((a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { const t = b; b = a % b; a = t; } return a || 1; })(scope.d1, scope.d2_eff)",
+        "comDen": "(scope.d1 * scope.d2_eff) / scope.gcd_den",
+        "m1": "scope.comDen / scope.d1",
+        "m2": "scope.comDen / scope.d2_eff",
+        "term1X": "scope.a * scope.m1",
+        "term1C": "scope.b * scope.m1",
+        "term2X": "scope.c * scope.m2",
+        "term2C": "scope.e * scope.m2",
+        "totX": "scope.term1X + scope.term2X",
+        "totC": "scope.term1C + scope.term2C",
+        "frac1_num": "(scope.a === 1 ? 'x' : scope.a + 'x') + ' ' + (scope.b > 0 ? '+ ' + scope.b : '- ' + Math.abs(scope.b))",
+        "frac2_num": "(scope.c === 1 ? 'x' : scope.c + 'x') + ' ' + (scope.e > 0 ? '+ ' + scope.e : '- ' + Math.abs(scope.e))",
+        "expr": "'\\\\frac{' + scope.frac1_num + '}{' + scope.d1 + '} + \\\\frac{' + scope.frac2_num + '}{' + scope.d2_eff + '}'",
+        "s1_t1": "scope.m1 === 1 ? scope.frac1_num : scope.m1 + '(' + scope.frac1_num + ')'",
+        "s1_t2": "scope.m2 === 1 ? scope.frac2_num : scope.m2 + '(' + scope.frac2_num + ')'",
+        "step1": "'\\\\frac{' + scope.s1_t1 + ' + ' + scope.s1_t2 + '}{' + scope.comDen + '}'",
+        "step2": "'\\\\frac{' + scope.term1X + 'x ' + (scope.term1C > 0 ? '+ ' + scope.term1C : '- ' + Math.abs(scope.term1C)) + ' + ' + scope.term2X + 'x ' + (scope.term2C > 0 ? '+ ' + scope.term2C : '- ' + Math.abs(scope.term2C)) + '}{' + scope.comDen + '}'",
+        "unsimpPartX": "scope.totX === 1 ? 'x' : scope.totX + 'x'",
+        "unsimpPartC": "scope.totC > 0 ? '+' + scope.totC : (scope.totC < 0 ? scope.totC.toString() : '')",
+        "unsimpFinalNum": "scope.unsimpPartX + scope.unsimpPartC",
+        "gcd": "((a, b, c) => { const g2 = (x, y) => { x = Math.abs(x); y = Math.abs(y); while (y) { const t = y; y = x % y; x = t; } return x; }; return g2(g2(a, b), c) || 1; })(scope.totX, scope.totC, scope.comDen)",
+        "redTotX": "scope.totX / scope.gcd",
+        "redTotC": "scope.totC / scope.gcd",
+        "redComDen": "scope.comDen / scope.gcd",
+        "partX": "scope.redTotX === 1 ? 'x' : scope.redTotX + 'x'",
+        "partC": "scope.redTotC > 0 ? '+' + scope.redTotC : (scope.redTotC < 0 ? scope.redTotC.toString() : '')",
+        "finalNum": "scope.partX + scope.partC",
+        "ans": "scope.redComDen === 1 ? scope.finalNum : '(' + scope.finalNum + ')/' + scope.redComDen",
+        "simpStep": "scope.redComDen === 1 ? scope.finalNum : '\\\\frac{' + scope.finalNum + '}{' + scope.redComDen + '}'",
+        "step3": "scope.gcd > 1 ? '\\\\frac{' + scope.unsimpFinalNum + '}{' + scope.comDen + '} = ' + scope.simpStep : '\\\\frac{' + scope.unsimpFinalNum + '}{' + scope.comDen + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Find the common denominator (LCM) and rewrite each numerator: $$${scope.step1}$$",
+        "Expand terms in the numerator (remove brackets): $$${scope.step2}$$",
+        "Add, combine terms in the numerator, and simplify: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 5 },
+        "b": { "type": "randInt", "min": 1, "max": 6 },
+        "c": { "type": "randInt", "min": 1, "max": 3 },
+        "e": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "d1": { "type": "randInt", "min": 2, "max": 5 },
+        "d2": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "d2_eff": "scope.d1 === scope.d2 ? scope.d2 + 1 : scope.d2",
+        "gcd_den": "((a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { const t = b; b = a % b; a = t; } return a || 1; })(scope.d1, scope.d2_eff)",
+        "comDen": "(scope.d1 * scope.d2_eff) / scope.gcd_den",
+        "m1": "scope.comDen / scope.d1",
+        "m2": "scope.comDen / scope.d2_eff",
+        "term1X": "scope.a * scope.m1",
+        "term1C": "scope.b * scope.m1",
+        "term2X": "scope.c * scope.m2",
+        "term2C": "scope.e * scope.m2",
+        "totX": "scope.term1X - scope.term2X",
+        "totC": "scope.term1C - scope.term2C",
+        "frac1_num": "(scope.a === 1 ? 'x' : scope.a + 'x') + ' ' + (scope.b > 0 ? '+ ' + scope.b : '- ' + Math.abs(scope.b))",
+        "frac2_num": "(scope.c === 1 ? 'x' : scope.c + 'x') + ' ' + (scope.e > 0 ? '+ ' + scope.e : '- ' + Math.abs(scope.e))",
+        "expr": "'\\\\frac{' + scope.frac1_num + '}{' + scope.d1 + '} - \\\\frac{' + scope.frac2_num + '}{' + scope.d2_eff + '}'",
+        "s1_t1": "scope.m1 === 1 ? scope.frac1_num : scope.m1 + '(' + scope.frac1_num + ')'",
+        "s1_t2": "scope.m2 === 1 ? '(' + scope.frac2_num + ')' : scope.m2 + '(' + scope.frac2_num + ')'",
+        "step1": "'\\\\frac{' + scope.s1_t1 + ' - ' + scope.s1_t2 + '}{' + scope.comDen + '}'",
+        "step2": "'\\\\frac{' + scope.term1X + 'x ' + (scope.term1C > 0 ? '+ ' + scope.term1C : '- ' + Math.abs(scope.term1C)) + ' - ' + scope.term2X + 'x ' + (scope.term2C > 0 ? '- ' + scope.term2C : '+ ' + Math.abs(scope.term2C)) + '}{' + scope.comDen + '}'",
+        "unsimpPartX": "scope.totX === 0 ? '' : (scope.totX === 1 ? 'x' : (scope.totX === -1 ? '-x' : scope.totX + 'x'))",
+        "unsimpPartC": "scope.totC === 0 ? (scope.totX === 0 ? '0' : '') : (scope.totX === 0 ? scope.totC.toString() : (scope.totC > 0 ? '+' + scope.totC : scope.totC.toString()))",
+        "unsimpFinalNum": "(scope.unsimpPartX + scope.unsimpPartC) || '0'",
+        "gcd": "((a, b, c) => { const g2 = (x, y) => { x = Math.abs(x); y = Math.abs(y); while (y) { const t = y; y = x % y; x = t; } return x; }; return g2(g2(a, b), c) || 1; })(scope.totX, scope.totC, scope.comDen)",
+        "redTotX": "scope.totX / scope.gcd",
+        "redTotC": "scope.totC / scope.gcd",
+        "redComDen": "scope.comDen / scope.gcd",
+        "partX": "scope.redTotX === 0 ? '' : (scope.redTotX === 1 ? 'x' : (scope.redTotX === -1 ? '-x' : scope.redTotX + 'x'))",
+        "partC": "scope.redTotC === 0 ? (scope.redTotX === 0 ? '0' : '') : (scope.redTotX === 0 ? scope.redTotC.toString() : (scope.redTotC > 0 ? '+' + scope.redTotC : scope.redTotC.toString()))",
+        "finalNum": "(scope.partX + scope.partC) || '0'",
+        "ans": "scope.redComDen === 1 ? scope.finalNum : '(' + scope.finalNum + ')/' + scope.redComDen",
+        "simpStep": "scope.redComDen === 1 ? scope.finalNum : '\\\\frac{' + scope.finalNum + '}{' + scope.redComDen + '}'",
+        "step3": "scope.gcd > 1 ? '\\\\frac{' + scope.unsimpFinalNum + '}{' + scope.comDen + '} = ' + scope.simpStep : '\\\\frac{' + scope.unsimpFinalNum + '}{' + scope.comDen + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Find the common denominator (LCM) and rewrite each numerator: $$${scope.step1}$$",
+        "Expand terms taking care of subtraction signs: $$${scope.step2}$$",
+        "Combine like terms in the numerator and simplify: $$${scope.step3}$$"
+      ]
+    }
+  ]
+}
