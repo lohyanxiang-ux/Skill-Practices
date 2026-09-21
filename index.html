@@ -1211,11 +1211,6 @@ function renderSegmentTokens(str, baseIdx, cursorPos) {
       }
     }
 
-    if (str.startsWith('\\times 10^', i)) {
-      html += `<span class="char-node" data-pos="${rawIdx}" data-len="10">×10<sup><i>n</i></sup></span>`;
-      i += 10;
-      continue;
-    }
     if (str.startsWith('\\times', i)) {
       html += `<span class="char-node" data-pos="${rawIdx}" data-len="6">×</span>`;
       i += 6;
@@ -1306,11 +1301,11 @@ function renderSegmentTokens(str, baseIdx, cursorPos) {
         }
       } else {
         if (cursorPos === expStart) {
-          html += `<sup><span class="frac-placeholder"></span><span class="cursor-caret"></span></sup>`;
+          html += `<sup><span class="frac-placeholder" data-pos="${expStart}" data-len="0"></span><span class="cursor-caret"></span></sup>`;
         } else if (cursorPos === expEnd) {
-          html += `<sup><span class="frac-placeholder"></span></sup><span class="cursor-caret"></span>`;
+          html += `<sup><span class="frac-placeholder" data-pos="${expStart}" data-len="0"></span></sup><span class="cursor-caret"></span>`;
         } else {
-          html += `<sup><span class="frac-placeholder"></span></sup>`;
+          html += `<sup><span class="frac-placeholder" data-pos="${expStart}" data-len="0"></span></sup>`;
         }
       }
 
@@ -1961,7 +1956,7 @@ function handleKeyPress(key) {
   let pos = inputCursors[activeInputIdx];
   if (pos === undefined || pos < 0 || pos > val.length) pos = val.length;
 
-  const multiCharTokens = ['\\times 10^', '\\times', '\\ge', '\\le', '>=', '<=', '\\sqrt{'];
+  const multiCharTokens = ['\\times', '\\ge', '\\le', '>=', '<=', '\\sqrt{'];
 
   if (key === '⌫') {
     if (pos > 0) {
@@ -2021,7 +2016,7 @@ function handleKeyPress(key) {
     pos += 6;
   } else if (key === '×10^' || key === '*10^' || key === '\\times 10^') {
     val = val.slice(0, pos) + '\\times 10^{}' + val.slice(pos);
-    pos += 12;
+    pos += 11;
   } else {
     let insertChar = key;
     if (key === 'a/b') insertChar = '/';
