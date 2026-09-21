@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SLS Math Skill Runner</title>
+  
+  <!-- MathJax Library Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      touch-action: none;
+      user-select: none;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+    }
+
+    #app-container {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      width: 100vw;
+      box-sizing: border-box;
+    }
+
+    header {
+      flex-shrink: 0;
+      min-height: 50px;
+      background-color: #003366;
+      color: #fff;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 30;
+      gap: 10px;
+    }
+
+    header h1 {
+      font-size: 1.1rem;
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .file-load-btn {
+      background: #0056b3;
+      color: white;
+      border: 1px solid #ffffff44;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .dropdown-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-btn {
+      background: #0056b3;
+      color: white;
+      border: 1px solid #ffffff44;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dropdown-btn::after {
+      content: '▼';
+      font-size: 0.65rem;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      background-color: #ffffff;
+      min-width: 280px;
+      max-width: 380px;
+      max-height: 380px;
+      overflow-y: auto;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      z-index: 1000;
+      padding: 0;
+    }
+
+    .dropdown-content.show {
+      display: block;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      color: #333;
+      font-size: 0.85rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f0f4f8;
+    }
+
+    main {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: row;
+      gap: 1px;
+      background-color: #ccc;
+      position: relative;
+    }
+
+    .column {
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    #col-question {
+      width: 34%;
+      padding: 16px;
+      overflow-y: auto;
+      touch-action: pan-y;
+      user-select: text;
+    }
+
+    .card {
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .card-title-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-weight: bold;
+      font-size: 0.85rem;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .level-badge {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid #bae6fd;
+    }
+
+    #question-text {
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    .hint-btn {
+      background: #eef4fc;
+      color: #0056b3;
+      border: 1px dashed #0056b3;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    .hint-box {
+      margin-top: 8px;
+      padding: 10px;
+      background: #fff9e6;
+      border-left: 4px solid #ffc107;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    #solution-box {
+      display: none;
+      background: #e8f5e9;
+      border-left: 4px solid #2e7d32;
+      padding: 12px;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    #col-canvas {
+      flex: 1;
+      position: relative;
+      background-color: #ffffff;
+      overflow: hidden;
+    }
+
+    #drawingCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      touch-action: none;
+      will-change: transform;
+      transform: translateZ(0);
+    }
+
+    .canvas-toolbar {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 20;
+      display: flex;
+      gap: 6px;
+      background: rgba(255,255,255,0.92);
+      padding: 6px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .tool-btn {
+      min-width: 44px;
+      height: 44px;
+      border: 1px solid #ccc;
+      background: #fff;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .tool-btn.active {
+      background: #003366;
+      color: white;
+      border-color: #003366;
+    }
+
+    #col-keypad {
+      width: 30%;
+      min-width: 280px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #f0f2f5;
+      overflow-y: auto;
+    }
+
+    .inputs-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .input-label {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #333;
+      min-width: 35px;
+      display: inline-block;
+    }
+
+    .input-display {
+      flex: 1;
+      min-height: 48px;
+      background: #fff;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      padding: 6px 10px;
+      box-sizing: border-box;
+      color: #111;
+      overflow-x: auto;
+      cursor: text;
+      position: relative;
+      white-space: nowrap;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .input-display.focused {
+      border-color: #0056b3;
+      box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+    }
+
+    .char-node {
+      display: inline-block;
+      user-select: none;
+      vertical-align: baseline;
+    }
+
+    .cursor-caret {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background-color: #0056b3;
+      vertical-align: middle;
+      animation: caret-blink 1s infinite;
+      margin: 0 1px;
+    }
+
+    @keyframes caret-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .key-btn {
+      min-height: 46px;
+      min-width: 40px;
+      background: #ffffff;
+      border: 1px solid #bcc0c4;
+      border-radius: 6px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1c1e21;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.1s, transform 0.05s;
+    }
+
+    .key-btn:active {
+      background: #d8dadf;
+      transform: scale(0.96);
+    }
+
+    .key-btn.action-key {
+      background: #e4e6eb;
+      font-size: 1rem;
+    }
+
+    .key-btn.operator-key {
+      background: #ebedf0;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .action-button-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .submit-btn {
+      flex: 2;
+      height: 48px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    .submit-btn:active { background: #218838; }
+    .submit-btn.next-state { background: #0056b3; }
+
+    .skip-btn {
+      flex: 1;
+      height: 48px;
+      background: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    .skip-btn:active { background: #5a6268; }
+
+    .feedback-banner {
+      padding: 8px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: none;
+    }
+    .feedback-banner.correct { background: #d4edda; color: #155724; display: block; }
+    .feedback-banner.incorrect { background: #f8d7da; color: #721c24; display: block; }
+
+    sup {
+      font-size: 0.78em;
+      line-height: 0;
+      position: relative;
+      vertical-align: baseline;
+      top: -0.55em;
+      font-weight: normal;
+    }
+
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      vertical-align: middle;
+      text-align: center;
+      padding: 0 3px;
+      font-size: 0.85em;
+      line-height: 1.1;
+    }
+
+    sup .frac {
+      font-size: 0.85em;
+      line-height: 1.0;
+    }
+
+    .frac-num {
+      border-bottom: 1.5px solid currentColor;
+      padding-bottom: 1px;
+      min-height: 1em;
+    }
+    .frac-den {
+      padding-top: 1px;
+      min-height: 1em;
+    }
+    .frac-placeholder {
+      display: inline-block;
+      width: 10px;
+      height: 12px;
+      border-bottom: 1.5px dashed #888;
+    }
+  </style>
+</head>
+<body>
+
+<div id="app-container">
+  <header>
+    <h1 id="app-title">Math Skills Trainer</h1>
+    <div class="header-controls">
+      <input type="file" id="file-input" accept=".json" multiple style="display: none;">
+      <button class="file-load-btn" onclick="document.getElementById('file-input').click()">Load JSON Skill File(s)</button>
+
+      <div class="dropdown-wrapper" id="skills-dropdown-wrapper">
+        <button class="dropdown-btn" id="skills-dropdown-btn" onclick="toggleDropdown('skills-dropdown-content', event)">Select Skills (0)</button>
+        <div class="dropdown-content" id="skills-dropdown-content">
+          <div id="skills-filter-container" onclick="event.stopPropagation()" style="position: sticky; top: 0; background: #f8f9fa; border-bottom: 1px solid #e0e0e0; padding: 8px 10px; z-index: 10;">
+            <div style="display: flex; gap: 4px; margin-bottom: 6px;">
+              <select id="filter-stream" style="flex: 1; min-width: 0; font-size: 0.75rem; padding: 4px; border-radius: 4px; border: 1px solid #ccc;" onchange="updateSkillsSelectorUI()">
+                <option value="ALL">All Streams</option>
+              </select>
+              <select id="filter-level" style="flex: 1; min-width: 0; font-size: 0.75rem; padding: 4px; border-radius: 4px; border: 1px solid #ccc;" onchange="updateSkillsSelectorUI()">
+                <option value="ALL">All Levels</option>
+              </select>
+              <select id="filter-topic" style="flex: 1; min-width: 0; font-size: 0.75rem; padding: 4px; border-radius: 4px; border: 1px solid #ccc;" onchange="updateSkillsSelectorUI()">
+                <option value="ALL">All Topics</option>
+              </select>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" onclick="event.stopPropagation(); setAllFilteredSkills(true)" style="flex: 1; font-size: 0.75rem; padding: 4px; cursor: pointer; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; border-radius: 4px; font-weight: 600;">Select All Visible</button>
+              <button type="button" onclick="event.stopPropagation(); setAllFilteredSkills(false)" style="flex: 1; font-size: 0.75rem; padding: 4px; cursor: pointer; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; border-radius: 4px; font-weight: 600;">Deselect All Visible</button>
+            </div>
+          </div>
+          <div id="skills-list-container">
+            <div style="padding: 12px; color: #777; font-size: 0.85rem; text-align: center;">No skills loaded</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dropdown-wrapper" id="levels-dropdown-wrapper">
+        <button class="dropdown-btn" id="levels-dropdown-btn" onclick="toggleDropdown('levels-dropdown-content', event)">Level: All</button>
+        <div class="dropdown-content" id="levels-dropdown-content">
+          <div class="dropdown-item" onclick="selectLevel('all')">All Levels</div>
+          <div class="dropdown-item" onclick="selectLevel('1')">Level 1 (Basic)</div>
+          <div class="dropdown-item" onclick="selectLevel('2')">Level 2 (Intermediate)</div>
+          <div class="dropdown-item" onclick="selectLevel('3')">Level 3 (Advanced)</div>
+        </div>
+      </div>
+
+      <span id="score-display">Score: 0 / 0</span>
+    </div>
+  </header>
+
+  <main>
+    <div class="column" id="col-question">
+      <div class="card">
+        <div class="card-title-header">
+          <span class="card-title">Question</span>
+          <span id="question-level-badge" class="level-badge" style="display:none;">Level 1</span>
+        </div>
+        <div id="question-text">Loading skills...</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Assistance</div>
+        <button class="hint-btn" id="hint-trigger-btn" onclick="requestHint()" style="display:none;">Need a Hint?</button>
+        <div id="hints-wrapper"></div>
+      </div>
+
+      <div id="solution-box" class="card">
+        <div class="card-title" style="color: #1e7e34;">Full Worked Solution</div>
+        <div id="solution-content"></div>
+      </div>
+    </div>
+
+    <div class="column" id="col-canvas">
+      <div class="canvas-toolbar">
+        <button class="tool-btn active" id="pen-btn" onclick="setTool('pen')">Pen</button>
+        <button class="tool-btn" id="eraser-btn" onclick="setTool('eraser')">Eraser</button>
+        <button class="tool-btn" onclick="clearCanvas()">Clear</button>
+      </div>
+      <canvas id="drawingCanvas"></canvas>
+    </div>
+
+    <div class="column" id="col-keypad">
+      <div>
+        <div class="inputs-wrapper" id="inputs-wrapper"></div>
+        <div id="feedback-banner" class="feedback-banner"></div>
+        <div class="keypad-grid" id="keypad-grid"></div>
+      </div>
+
+      <div class="action-button-group">
+        <button id="submit-btn" class="submit-btn" onclick="handleAction()" style="display:none;">Submit</button>
+        <button id="skip-btn" class="skip-btn" onclick="skipQuestion()" style="display:none;">Skip</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  function renderMath(elements) {
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      window.MathJax.typesetPromise(elements).catch(err => console.log('MathJax typesetting error:', err));
+    }
+  }
+
+  function gcd(a, b) { return b === 0 ? Math.abs(a) : gcd(b, a % b); }
+  function simplifyFrac(n, d) {
+    if (d < 0) { n = -n; d = -d; }
+    const g = gcd(n, d);
+    n /= g; d /= g;
+    return { num: n, den: d, str: d === 1 ? `${n}` : `${n}/${d}` };
+  }
+  function formatFracHTML(n, d) {
+    const f = simplifyFrac(n, d);
+    if (f.den === 1) return `${f.num}`;
+    if (f.num < 0) return `-<span class="frac"><span class="frac-num">${Math.abs(f.num)}</span><span class="frac-den">${f.den}</span></span>`;
+    return `<span class="frac"><span class="frac-num">${f.num}</span><span class="frac-den">${f.den}</span></span>`;
+  }
+  function randInt(min, max, excludeZero = false) {
+    let v = 0;
+    do { v = Math.floor(Math.random() * (max - min + 1)) + min; } while (excludeZero && v === 0);
+    return v;
+  }
+
+/* ==========================================================================
+   AC-Equivalence Engine & LaTeX Normalization
+   ========================================================================== */
+
+function convertLatexFractions(str) {
+  let s = String(str);
+  while (s.includes('\\frac')) {
+    let idx = s.indexOf('\\frac');
+    let pre = s.substring(0, idx);
+    let rest = s.substring(idx + 5).trim();
+    if (rest.startsWith('{')) {
+      let depth = 0, numEnd = -1;
+      for (let i = 0; i < rest.length; i++) {
+        if (rest[i] === '{') depth++;
+        else if (rest[i] === '}') {
+          depth--;
+          if (depth === 0) { numEnd = i; break; }
+        }
+      }
+      if (numEnd !== -1) {
+        let num = rest.substring(1, numEnd);
+        let denRest = rest.substring(numEnd + 1).trim();
+        if (denRest.startsWith('{')) {
+          depth = 0;
+          let denEnd = -1;
+          for (let i = 0; i < denRest.length; i++) {
+            if (denRest[i] === '{') depth++;
+            else if (denRest[i] === '}') {
+              depth--;
+              if (depth === 0) { denEnd = i; break; }
+            }
+          }
+          if (denEnd !== -1) {
+            let den = denRest.substring(1, denEnd);
+            let after = denRest.substring(denEnd + 1);
+            s = pre + '(' + num + ')/(' + den + ')' + after;
+            continue;
+          }
+        }
+      }
+    }
+    break;
+  }
+  return s;
+}
+
+function isWrappedInParens(str) {
+  str = str.trim();
+  if (!str.startsWith('(') || !str.endsWith(')')) return false;
+  let depth = 0;
+  for (let i = 0; i < str.length - 1; i++) {
+    if (str[i] === '(') depth++;
+    else if (str[i] === ')') depth--;
+    if (depth === 0) return false;
+  }
+  return true;
+}
+
+function normalizeSlashes(str) {
+  let s = String(str).trim();
+  let depth = 0;
+  let slashIndex = -1;
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '(' || s[i] === '{') depth++;
+    else if (s[i] === ')' || s[i] === '}') depth--;
+    else if (depth === 0 && s[i] === '/') {
+      slashIndex = i;
+      break;
+    }
+  }
+
+  if (slashIndex !== -1) {
+    let numPart = s.substring(0, slashIndex).trim();
+    let denPart = s.substring(slashIndex + 1).trim();
+
+    if (numPart && !isWrappedInParens(numPart)) {
+      numPart = '(' + numPart + ')';
+    }
+    if (denPart && !isWrappedInParens(denPart)) {
+      denPart = '(' + denPart + ')';
+    }
+    return numPart + '/' + denPart;
+  }
+  return s;
+}
+
+function normalizeMathString(str) {
+  if (str === null || str === undefined) return "";
+  let s = String(str).trim();
+  
+  if (s.toLowerCase().replace(/\s+/g, '').includes('nosolution')) {
+    return 'no solution';
+  }
+
+  s = convertLatexFractions(s);
+  s = normalizeSlashes(s);
+
+  s = s.replace(/\\ge/g, '≥')
+       .replace(/\\le/g, '≤')
+       .replace(/>=/g, '≥')
+       .replace(/<=/g, '≤')
+       .replace(/\\times/g, '*')
+       .replace(/×/g, '*')
+       .replace(/\\text\{([^}]+)\}/g, '$1');
+
+  return s;
+}
+
+function parseToACString(exprStr) {
+  if (exprStr === null || exprStr === undefined) return null;
+
+  let clean = String(exprStr).trim().replace(/\s+/g, '');
+  clean = clean.replace(/\\times/g, '*');
+  clean = clean.replace(/×/g, '*');
+  clean = clean.replace(/\{([^}]+)\}/g, '($1)');
+  clean = clean.replace(/(\d)([a-zA-Z\(])/g, '$1*$2');
+  clean = clean.replace(/([a-zA-Z])([a-zA-Z\(])/g, '$1*$2');
+  clean = clean.replace(/\)([\d[a-zA-Z\(])/g, ')*$1');
+
+  const tokens = [];
+  let i = 0;
+  while (i < clean.length) {
+    const ch = clean[i];
+    if (/[0-9.]/.test(ch)) {
+      let num = '';
+      while (i < clean.length && /[0-9.]/.test(clean[i])) num += clean[i++];
+      tokens.push({ type: 'NUM', val: parseFloat(num).toString() });
+    } else if (/[a-zA-Z]/.test(ch)) {
+      tokens.push({ type: 'VAR', val: ch.toLowerCase() });
+      i++;
+    } else if ('+-*/^()'.includes(ch)) {
+      tokens.push({ type: 'OP', val: ch });
+      i++;
+    } else {
+      i++;
+    }
+  }
+
+  let pos = 0;
+  const peek = () => tokens[pos] || null;
+  const consume = () => { const t = peek(); pos++; return t; };
+
+  function parseExpr() {
+    let terms = [];
+    let sign = '+';
+    if (peek() && (peek().val === '+' || peek().val === '-')) {
+      sign = consume().val;
+    }
+    let term = parseTerm();
+    if (sign === '-') term = { type: 'MUL', factors: [{ type: 'NUM', val: '-1' }, term] };
+    terms.push(term);
+
+    while (peek() && (peek().val === '+' || peek().val === '-')) {
+      const op = consume().val;
+      let nextTerm = parseTerm();
+      if (op === '-') nextTerm = { type: 'MUL', factors: [{ type: 'NUM', val: '-1' }, nextTerm] };
+      terms.push(nextTerm);
+    }
+
+    if (terms.length === 1) return terms[0];
+    let flat = [];
+    for (let t of terms) {
+      if (t.type === 'ADD') flat.push(...t.terms);
+      else flat.push(t);
+    }
+    return { type: 'ADD', terms: flat };
+  }
+
+  function parseTerm() {
+    let factors = [parseFactor()];
+    while (peek() && (peek().val === '*' || peek().val === '/')) {
+      const op = consume().val;
+      const nextFactor = parseFactor();
+      if (op === '*') {
+        factors.push(nextFactor);
+      } else {
+        let num = factors.length === 1 ? factors[0] : { type: 'MUL', factors };
+        factors = [{ type: 'DIV', num, den: nextFactor }];
+      }
+    }
+    if (factors.length === 1) return factors[0];
+    let flat = [];
+    for (let f of factors) {
+      if (f.type === 'MUL') flat.push(...f.factors);
+      else flat.push(f);
+    }
+    return { type: 'MUL', factors: flat };
+  }
+
+  function parseFactor() {
+    let sign = 1;
+    while (peek() && (peek().val === '+' || peek().val === '-')) {
+      if (consume().val === '-') sign *= -1;
+    }
+    let base = parseAtom();
+    if (sign === -1) {
+      base = { type: 'MUL', factors: [{ type: 'NUM', val: '-1' }, base] };
+    }
+    if (peek() && peek().val === '^') {
+      consume();
+      let exp = parseFactor();
+      return { type: 'POW', base, exp };
+    }
+    return base;
+  }
+
+  function parseAtom() {
+    const t = peek();
+    if (!t) throw new Error('Unexpected End');
+    if (t.type === 'NUM' || t.type === 'VAR') return consume();
+    if (t.val === '(') {
+      consume();
+      const e = parseExpr();
+      if (peek() && peek().val === ')') consume();
+      return e;
+    }
+    throw new Error('Invalid Token');
+  }
+
+  function canonicalize(node) {
+    if (!node) return '';
+    if (node.type === 'NUM') return `N:${node.val}`;
+    if (node.type === 'VAR') return `V:${node.val}`;
+    if (node.type === 'ADD') return `ADD(${node.terms.map(canonicalize).sort().join(',')})`;
+    if (node.type === 'MUL') return `MUL(${node.factors.map(canonicalize).sort().join(',')})`;
+    if (node.type === 'DIV') return `DIV(${canonicalize(node.num)},${canonicalize(node.den)})`;
+    if (node.type === 'POW') return `POW(${canonicalize(node.base)},${canonicalize(node.exp)})`;
+    return '';
+  }
+
+  try {
+    return canonicalize(parseExpr());
+  } catch (e) {
+    return null;
+  }
+}
+
+function isCommutativeProductEquivalent(val1, val2) {
+  if (val1 === null || val1 === undefined || val2 === null || val2 === undefined) return false;
+
+  const norm1 = normalizeMathString(val1);
+  const norm2 = normalizeMathString(val2);
+
+  if (norm1 === 'no solution' || norm2 === 'no solution') {
+    return norm1 === norm2;
+  }
+
+  const clean1 = norm1.replace(/\s+/g, '');
+  const clean2 = norm2.replace(/\s+/g, '');
+  if (clean1 === clean2) return true;
+
+  const relRegex = /(≥|≤|>|<|=)/g;
+  const ops1 = norm1.match(relRegex) || [];
+  const ops2 = norm2.match(relRegex) || [];
+
+  if (ops1.length !== ops2.length) return false;
+  for (let i = 0; i < ops1.length; i++) {
+    if (ops1[i] !== ops2[i]) return false;
+  }
+
+  const segs1 = norm1.split(relRegex).filter(s => !'≥|≤|>|<|='.includes(s) && s.trim() !== '');
+  const segs2 = norm2.split(relRegex).filter(s => !'≥|≤|>|<|='.includes(s) && s.trim() !== '');
+
+  if (segs1.length !== segs2.length) return false;
+
+  for (let i = 0; i < segs1.length; i++) {
+    const s1 = segs1[i].trim();
+    const s2 = segs2[i].trim();
+
+    if (s1 === s2) continue;
+
+    const c1 = parseToACString(s1);
+    const c2 = parseToACString(s2);
+
+    if (c1 !== null && c2 !== null && c1 === c2) continue;
+
+    try {
+      const toNum = (expr) => {
+        let clean = expr.replace(/\s+/g, '').replace(/\^/g, '**');
+        if (/^[0-9.eE\*\+\-\/\(\)]+$/.test(clean)) {
+          return Function(`"use strict"; return (${clean})`)();
+        }
+        return NaN;
+      };
+      const n1 = toNum(s1);
+      const n2 = toNum(s2);
+      if (!isNaN(n1) && !isNaN(n2) && Math.abs(n1 - n2) < 1e-9) continue;
+    } catch (e) {}
+
+    return false;
+  }
+
+  return true;
+}
+
+/* ==========================================================================
+   UI, Interactive Cursor Formatting, and Keypad Input Handling
+   ========================================================================== */
+
+function formatTerm(coeff, variable = '') {
+  if (coeff === 0) return '';
+  if (coeff === 1) return variable;
+  if (coeff === -1) return `-${variable}`;
+  return `${coeff}${variable}`;
+}
+
+function cleanAlgebra(expr) {
+  if (typeof expr !== 'string') return expr;
+  return expr
+    .replace(/(^|[^0-9a-zA-Z])0[a-zA-Z]/g, '$1')
+    .replace(/(^|[^0-9a-zA-Z])1([a-zA-Z])/g, '$1$2')
+    .replace(/(^|[^0-9a-zA-Z])-1([a-zA-Z])/g, '$1-$2')
+    .replace(/^\s*\+\s*/, '');
+}
+
+function escapeHTML(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function formatInputToHTML(str, cursorPos = -1) {
+  if (str === undefined || str === null) str = "";
+  return parseMarkedString(str, 0, false, cursorPos);
+}
+
+function parseMarkedString(str, baseIdx = 0, isInsideFrac = false, cursorPos = -1) {
+  if (!str && !isInsideFrac) {
+    if (cursorPos === baseIdx) return '<span class="cursor-caret"></span>';
+    return "";
+  }
+  if (!str && isInsideFrac) {
+    if (cursorPos === baseIdx) {
+      return '<span class="frac-placeholder"></span><span class="cursor-caret"></span>';
+    }
+    return '<span class="frac-placeholder"></span>';
+  }
+
+  const relOps = ['\\ge', '\\le', '>=', '<=', '≥', '≤', '>', '<', '='];
+  let topOpIndex = -1;
+  let matchedOp = null;
+  let depth = 0;
+
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === '(' || str[i] === '{') depth++;
+    else if (str[i] === ')' || str[i] === '}') depth--;
+    else if (depth === 0) {
+      for (let op of relOps) {
+        if (str.startsWith(op, i)) {
+          topOpIndex = i;
+          matchedOp = op;
+          break;
+        }
+      }
+      if (topOpIndex !== -1) break;
+    }
+  }
+
+  if (topOpIndex !== -1) {
+    const leftPart = str.substring(0, topOpIndex);
+    const rightPart = str.substring(topOpIndex + matchedOp.length);
+
+    let displayOp = matchedOp;
+    if (displayOp === '\\ge' || displayOp === '>=') displayOp = '≥';
+    if (displayOp === '\\le' || displayOp === '<=') displayOp = '≤';
+
+    const rawOpIdx = baseIdx + topOpIndex;
+    const leftHTML = parseMarkedString(leftPart, baseIdx, false, cursorPos);
+
+    let opCaret = '';
+    if (cursorPos === rawOpIdx) {
+      opCaret = '<span class="cursor-caret"></span>';
+    }
+
+    const opHTML = `<span class="char-node" data-pos="${rawOpIdx}" data-len="${matchedOp.length}">${escapeHTML(displayOp)}</span>`;
+    const rightHTML = parseMarkedString(rightPart, rawOpIdx + matchedOp.length, false, cursorPos);
+
+    return `${leftHTML} ${opCaret}${opHTML} ${rightHTML}`;
+  }
+
+  depth = 0;
+  let slashIndex = -1;
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === '(' || str[i] === '{') depth++;
+    else if (str[i] === ')' || str[i] === '}') depth--;
+    else if (depth === 0) {
+      if (str[i] === '/' && slashIndex === -1) {
+        slashIndex = i;
+        break;
+      }
+    }
+  }
+
+  if (slashIndex !== -1) {
+    const numPart = str.substring(0, slashIndex);
+    const denPart = str.substring(slashIndex + 1);
+    const rawSlashIdx = baseIdx + slashIndex;
+
+    let trimmedNum = numPart.trim();
+    let hasMinus = false;
+    let minusOffset = 0;
+    let cleanNumPart = numPart;
+
+    if (trimmedNum.startsWith('-')) {
+      let candidate = trimmedNum.substring(1).trim();
+      let cDepth = 0;
+      let hasTopLevelPlusMinus = false;
+      for (let c of candidate) {
+        if (c === '(' || c === '{') cDepth++;
+        else if (c === ')' || c === '}') cDepth--;
+        else if (cDepth === 0 && (c === '+' || c === '-')) {
+          hasTopLevelPlusMinus = true;
+          break;
+        }
+      }
+      if (!hasTopLevelPlusMinus) {
+        hasMinus = true;
+        minusOffset = numPart.indexOf('-');
+        cleanNumPart = numPart.substring(0, minusOffset) + ' ' + numPart.substring(minusOffset + 1);
+      }
+    }
+
+    let minusPrefixHTML = '';
+    if (hasMinus) {
+      const rawMinusIdx = baseIdx + minusOffset;
+      if (cursorPos === rawMinusIdx) {
+        minusPrefixHTML = '<span class="cursor-caret"></span>-';
+      } else {
+        minusPrefixHTML = '-';
+      }
+    }
+
+    const numHTML = parseMarkedString(cleanNumPart, baseIdx, true, cursorPos);
+    const denHTML = parseMarkedString(denPart, rawSlashIdx + 1, true, cursorPos);
+
+    return `${minusPrefixHTML}<span class="frac" data-pos="${rawSlashIdx}" data-len="1"><span class="frac-num">${numHTML}</span><span class="frac-den">${denHTML}</span></span>`;
+  }
+
+  return renderSegmentTokens(str, baseIdx, cursorPos);
+}
+
+function renderSegmentTokens(str, baseIdx, cursorPos) {
+  if (!str) return '';
+
+  let html = '';
+  let i = 0;
+
+  while (i < str.length) {
+    const rawIdx = baseIdx + i;
+
+    if (cursorPos === rawIdx) {
+      html += '<span class="cursor-caret"></span>';
+    }
+
+    if (str.startsWith('\\times 10^', i)) {
+      html += `<span class="char-node" data-pos="${rawIdx}" data-len="10">×10<sup><i>n</i></sup></span>`;
+      i += 10;
+      continue;
+    }
+    if (str.startsWith('\\times', i)) {
+      html += `<span class="char-node" data-pos="${rawIdx}" data-len="6">×</span>`;
+      i += 6;
+      continue;
+    }
+    if (str.startsWith('\\ge', i)) {
+      html += `<span class="char-node" data-pos="${rawIdx}" data-len="3">≥</span>`;
+      i += 3;
+      continue;
+    }
+    if (str.startsWith('\\le', i)) {
+      html += `<span class="char-node" data-pos="${rawIdx}" data-len="3">≤</span>`;
+      i += 3;
+      continue;
+    }
+    if (str.startsWith('>=', i)) {
+      html += `<span class="char-node" data-pos="${rawIdx}" data-len="2">≥</span>`;
+      i += 2;
+      continue;
+    }
+    if (str.startsWith('<=', i)) {
+      html += `<span class="char-node" data-pos="${rawIdx}" data-len="2">≤</span>`;
+      i += 2;
+      continue;
+    }
+
+    const ch = str[i];
+
+    if (ch === '^') {
+      let j = i + 1;
+      let expSubstr = '';
+      let hasGroup = false;
+
+      if (j < str.length && str[j] === '{') {
+        hasGroup = true;
+        let depth = 0;
+        let startJ = j + 1;
+        while (j < str.length) {
+          if (str[j] === '{') depth++;
+          else if (str[j] === '}') {
+            depth--;
+            if (depth === 0) break;
+          }
+          j++;
+        }
+        expSubstr = str.substring(startJ, j);
+        if (j < str.length && str[j] === '}') j++;
+      } else if (j < str.length && str[j] === '(') {
+        hasGroup = true;
+        let depth = 0;
+        let startJ = j + 1;
+        while (j < str.length) {
+          if (str[j] === '(') depth++;
+          else if (str[j] === ')') {
+            depth--;
+            if (depth === 0) break;
+          }
+          j++;
+        }
+        expSubstr = str.substring(startJ, j);
+        if (j < str.length && str[j] === ')') j++;
+      } else {
+        let startJ = j;
+        if (j < str.length && (str[j] === '-' || str[j] === '+')) {
+          j++;
+        }
+        if (j < str.length && /[0-9.]/.test(str[j])) {
+          while (j < str.length && /[0-9.]/.test(str[j])) {
+            j++;
+          }
+        } else if (j < str.length) {
+          j++;
+        }
+        expSubstr = str.substring(startJ, j);
+      }
+
+      const expStart = baseIdx + (hasGroup ? i + 2 : i + 1);
+      const expEnd = baseIdx + j;
+      const expLen = expSubstr.length;
+
+      if (expLen > 0) {
+        if (cursorPos === expEnd) {
+          const expHTML = parseMarkedString(expSubstr, expStart, false, -1);
+          html += `<sup>${expHTML}</sup><span class="cursor-caret"></span>`;
+        } else {
+          const expHTML = parseMarkedString(expSubstr, expStart, false, cursorPos);
+          html += `<sup>${expHTML}</sup>`;
+        }
+      } else {
+        if (cursorPos === expStart) {
+          html += `<sup><span class="frac-placeholder"></span><span class="cursor-caret"></span></sup>`;
+        } else if (cursorPos === expEnd) {
+          html += `<sup><span class="frac-placeholder"></span></sup><span class="cursor-caret"></span>`;
+        } else {
+          html += `<sup><span class="frac-placeholder"></span></sup>`;
+        }
+      }
+
+      i = j;
+      continue;
+    }
+
+    let charHTML = escapeHTML(ch);
+    if (ch === 'x') charHTML = '<i>x</i>';
+    else if (ch === 'y') charHTML = '<i>y</i>';
+
+    html += `<span class="char-node" data-pos="${rawIdx}" data-len="1">${charHTML}</span>`;
+    i++;
+  }
+
+  if (cursorPos === baseIdx + str.length) {
+    if (!html.includes('cursor-caret')) {
+      html += '<span class="cursor-caret"></span>';
+    }
+  }
+
+  return html;
+}
+
+/* ==========================================================================
+   Skill Loading, Multi-Tag Filtering & Application Core
+   ========================================================================== */
+
+let loadedSkills = [];
+let selectedLevelFilter = "all";
+let currentQuestion = null;
+let activeSkillKeypad = null;
+let currentHintIndex = 0;
+let hintUsed = false;
+let inputValues = [];
+let inputCursors = [];
+let activeInputIdx = 0;
+let isSubmitted = false;
+let totalScore = 0;
+let totalAttempts = 0;
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadBuiltInSkills();
+});
+
+async function loadBuiltInSkills() {
+  try {
+    const response = await fetch('skills-index.json');
+    if (!response.ok) return;
+
+    const skillList = await response.json();
+
+    for (const item of skillList) {
+      try {
+        const res = await fetch(item.file);
+        if (!res.ok) continue;
+
+        const json = await res.json();
+        const name = item.title || json.skillTitle || json.title || item.file.split('/').pop().replace('.json', '');
+
+        loadedSkills.push({
+          id: item.file,
+          name: name,
+          levels: item.levels || [],
+          streams: item.streams || [],
+          topics: item.topics || [],
+          data: json,
+          keypad: json.keypad,
+          enabled: true
+        });
+      } catch (e) {
+        console.error('Failed to fetch skill file:', item.file, e);
+      }
+    }
+
+    populateFilterDropdowns();
+    updateSkillsSelectorUI();
+    loadQuestion();
+  } catch (err) {
+    console.log('No skills-index.json manifest found or fetch error:', err);
+  }
+}
+
+function populateFilterDropdowns() {
+  const streamSelect = document.getElementById('filter-stream');
+  const levelSelect = document.getElementById('filter-level');
+  const topicSelect = document.getElementById('filter-topic');
+
+  if (!streamSelect || !levelSelect || !topicSelect) return;
+
+  const currentStream = streamSelect.value || 'ALL';
+  const currentLevel = levelSelect.value || 'ALL';
+  const currentTopic = topicSelect.value || 'ALL';
+
+  const streams = new Set();
+  const levels = new Set();
+  const topics = new Set();
+
+  loadedSkills.forEach(s => {
+    (s.streams || []).forEach(v => streams.add(v));
+    (s.levels || []).forEach(v => levels.add(v));
+    (s.topics || []).forEach(v => topics.add(v));
+  });
+
+  populateSelectOptions(streamSelect, 'All Streams', Array.from(streams).sort(), currentStream);
+  populateSelectOptions(levelSelect, 'All Levels', Array.from(levels).sort(), currentLevel);
+  populateSelectOptions(topicSelect, 'All Topics', Array.from(topics).sort(), currentTopic);
+}
+
+function populateSelectOptions(selectEl, defaultLabel, optionsArr, selectedValue) {
+  selectEl.innerHTML = `<option value="ALL">${defaultLabel}</option>`;
+  optionsArr.forEach(opt => {
+    const el = document.createElement('option');
+    el.value = opt;
+    el.textContent = opt;
+    if (opt === selectedValue) el.selected = true;
+    selectEl.appendChild(el);
+  });
+}
+
+function getFilteredSkills() {
+  const streamVal = document.getElementById('filter-stream')?.value || 'ALL';
+  const levelVal = document.getElementById('filter-level')?.value || 'ALL';
+  const topicVal = document.getElementById('filter-topic')?.value || 'ALL';
+
+  return loadedSkills.filter(skill => {
+    const matchesStream = streamVal === 'ALL' || (skill.streams && skill.streams.includes(streamVal));
+    const matchesLevel = levelVal === 'ALL' || (skill.levels && skill.levels.includes(levelVal));
+    const matchesTopic = topicVal === 'ALL' || (skill.topics && skill.topics.includes(topicVal));
+    return matchesStream && matchesLevel && matchesTopic;
+  });
+}
+
+function updateSkillsSelectorUI() {
+  const container = document.getElementById('skills-list-container');
+  const btn = document.getElementById('skills-dropdown-btn');
+
+  if (!container || !btn) return;
+
+  if (loadedSkills.length === 0) {
+    btn.innerText = "Select Skills (0)";
+    container.innerHTML = `<div style="padding: 12px; color: #777; font-size: 0.85rem; text-align: center;">No skills loaded</div>`;
+    return;
+  }
+
+  const activeCount = loadedSkills.filter(s => s.enabled).length;
+  btn.innerText = `Select Skills (${activeCount}/${loadedSkills.length})`;
+
+  const visibleSkills = getFilteredSkills();
+  container.innerHTML = '';
+
+  if (visibleSkills.length === 0) {
+    container.innerHTML = `<div style="padding: 12px; color: #777; font-size: 0.85rem; text-align: center;">No skills match selected filters</div>`;
+    return;
+  }
+
+  visibleSkills.forEach(skill => {
+    const idx = loadedSkills.indexOf(skill);
+    const item = document.createElement('div');
+    item.className = 'dropdown-item';
+    item.style.cssText = "display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 10px; border-bottom: 1px solid #f0f0f0;";
+
+    const leftLabel = document.createElement('label');
+    leftLabel.style.cssText = "display: flex; align-items: center; gap: 8px; cursor: pointer; flex: 1; overflow: hidden; text-overflow: ellipsis;";
+    leftLabel.onclick = (e) => e.stopPropagation();
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = skill.enabled;
+    checkbox.onclick = (e) => {
+      e.stopPropagation();
+      toggleSkill(idx);
+    };
+
+    const titleSpan = document.createElement('span');
+    titleSpan.textContent = skill.name;
+    titleSpan.style.cssText = "overflow: hidden; text-overflow: ellipsis; white-space: nowrap;";
+
+    leftLabel.appendChild(checkbox);
+    leftLabel.appendChild(titleSpan);
+
+    const tags = [];
+    if (skill.streams && skill.streams.length) tags.push(skill.streams.join('/'));
+    if (skill.levels && skill.levels.length) tags.push(skill.levels.join('/'));
+
+    const tagBadge = document.createElement('span');
+    tagBadge.style.cssText = "font-size: 0.7rem; color: #555; background: #eef2f7; padding: 2px 6px; border-radius: 4px; white-space: nowrap;";
+    tagBadge.textContent = tags.length ? tags.join(' • ') : (skill.topics?.join('/') || '');
+
+    item.appendChild(leftLabel);
+    if (tags.length || skill.topics?.length) {
+      item.appendChild(tagBadge);
+    }
+
+    item.onclick = (e) => {
+      e.stopPropagation();
+      toggleSkill(idx);
+    };
+
+    container.appendChild(item);
+  });
+}
+
+function setAllFilteredSkills(enableState) {
+  const visible = getFilteredSkills();
+  visible.forEach(skill => {
+    skill.enabled = enableState;
+  });
+  updateSkillsSelectorUI();
+  loadQuestion();
+}
+
+function toggleSkill(idx) {
+  loadedSkills[idx].enabled = !loadedSkills[idx].enabled;
+  updateSkillsSelectorUI();
+  loadQuestion();
+}
+
+function toggleDropdown(id, e) {
+  if (e) e.stopPropagation();
+  const target = document.getElementById(id);
+  document.querySelectorAll('.dropdown-content').forEach(d => {
+    if (d !== target) d.classList.remove('show');
+  });
+  target.classList.toggle('show');
+}
+
+function selectLevel(lvl) {
+  selectedLevelFilter = lvl;
+  const label = lvl === 'all' ? 'Level: All' : `Level ${lvl}`;
+  document.getElementById('levels-dropdown-btn').innerText = label;
+  document.getElementById('levels-dropdown-content').classList.remove('show');
+  loadQuestion();
+}
+
+window.addEventListener('click', function() {
+  document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show'));
+});
+
+function generateQuestionFromStructure(structure) {
+  const scope = {};
+
+  if (structure.variables) {
+    for (const [vName, config] of Object.entries(structure.variables)) {
+      if (config.type === "randInt") {
+        let val = randInt(config.min, config.max, config.excludeZero);
+        if (config.notEqual && scope[config.notEqual] !== undefined) {
+          while (val === scope[config.notEqual]) {
+            val = randInt(config.min, config.max, config.excludeZero);
+          }
+        }
+        scope[vName] = val;
+      }
+    }
+  }
+
+  if (structure.derived) {
+    for (const [vName, expr] of Object.entries(structure.derived)) {
+      const fn = new Function('scope', 'randInt', 'gcd', 'simplifyFrac', 'formatFracHTML', 'formatTerm', 'cleanAlgebra', `return ${expr};`);
+      scope[vName] = fn(scope, randInt, gcd, simplifyFrac, formatFracHTML, formatTerm, cleanAlgebra);
+    }
+  }
+
+  const interpolate = (str) => {
+    return cleanAlgebra(str.replace(/\$\{([^}]+)\}/g, (_, g1) => {
+      const fn = new Function('scope', 'formatTerm', 'cleanAlgebra', 'randInt', 'gcd', 'simplifyFrac', 'formatFracHTML', `return ${g1};`);
+      return fn(scope, formatTerm, cleanAlgebra, randInt, gcd, simplifyFrac, formatFracHTML);
+    }));
+  };
+
+  const templateText = interpolate(structure.questionTemplate);
+  const inputs = structure.inputs.map(inp => ({
+    label: interpolate(inp.label),
+    answer: interpolate(inp.answer)
+  }));
+  const steps = structure.steps.map(st => interpolate(st));
+  const hints = steps.map((st, i) => `<strong>Step ${i + 1}:</strong><br>&nbsp;&nbsp;${st}`);
+
+  let solutionTemplate = "";
+  steps.forEach((st, i) => {
+    solutionTemplate += `<strong>Step ${i + 1}:</strong><br>&nbsp;&nbsp;${st}<br><br>`;
+  });
+
+  return {
+    template: templateText,
+    inputs: inputs,
+    hints: hints,
+    solutionTemplate: solutionTemplate,
+    level: structure.level || 1
+  };
+}
+
+function loadQuestion() {
+  const activeSkills = loadedSkills.filter(s => s.enabled);
+  if (activeSkills.length === 0) {
+    document.getElementById('question-text').innerHTML = "Please select at least one skill to practice.";
+    document.getElementById('submit-btn').style.display = 'none';
+    document.getElementById('skip-btn').style.display = 'none';
+    document.getElementById('question-level-badge').style.display = 'none';
+    return;
+  }
+
+  let candidatePool = [];
+  activeSkills.forEach(skill => {
+    skill.data.structures.forEach(struct => {
+      const structLvl = String(struct.level || 1);
+      if (selectedLevelFilter === 'all' || structLvl === String(selectedLevelFilter)) {
+        candidatePool.push({ skill, struct });
+      }
+    });
+  });
+
+  if (candidatePool.length === 0) {
+    document.getElementById('question-text').innerHTML = "No questions found for the selected level filter.";
+    document.getElementById('submit-btn').style.display = 'none';
+    document.getElementById('skip-btn').style.display = 'none';
+    document.getElementById('question-level-badge').style.display = 'none';
+    return;
+  }
+
+  const chosen = candidatePool[Math.floor(Math.random() * candidatePool.length)];
+  activeSkillKeypad = chosen.skill.keypad;
+
+  isSubmitted = false;
+  currentHintIndex = 0;
+  hintUsed = false;
+  currentQuestion = generateQuestionFromStructure(chosen.struct);
+
+  inputValues = new Array(currentQuestion.inputs.length).fill("");
+  inputCursors = new Array(currentQuestion.inputs.length).fill(0);
+  activeInputIdx = 0;
+
+  const badge = document.getElementById('question-level-badge');
+  badge.innerText = `Level ${currentQuestion.level}`;
+  badge.style.display = 'inline-block';
+
+  document.getElementById('solution-box').style.display = 'none';
+  document.getElementById('hints-wrapper').innerHTML = '';
+  document.getElementById('hint-trigger-btn').style.display = 'block';
+
+  const banner = document.getElementById('feedback-banner');
+  banner.className = 'feedback-banner';
+  banner.innerText = '';
+
+  const submitBtn = document.getElementById('submit-btn');
+  submitBtn.style.display = 'block';
+  submitBtn.innerText = "Submit";
+  submitBtn.classList.remove('next-state');
+
+  const skipBtn = document.getElementById('skip-btn');
+  skipBtn.style.display = 'block';
+
+  const qTextEl = document.getElementById('question-text');
+  qTextEl.innerHTML = currentQuestion.template;
+  renderMath([qTextEl]);
+
+  renderInputFields();
+  renderKeypad();
+  clearCanvas();
+}
+
+function renderInputFields() {
+  const container = document.getElementById('inputs-wrapper');
+  container.innerHTML = '';
+
+  currentQuestion.inputs.forEach((def, idx) => {
+    const row = document.createElement('div');
+    row.className = 'input-row';
+
+    const label = document.createElement('span');
+    label.className = 'input-label';
+    label.innerHTML = def.label;
+
+    const box = document.createElement('div');
+    const isFocused = idx === activeInputIdx;
+    box.className = 'input-display' + (isFocused ? ' focused' : '');
+    box.innerHTML = formatInputToHTML(inputValues[idx] || '', isFocused ? inputCursors[idx] : -1);
+
+    box.addEventListener('click', (e) => {
+      if (isSubmitted) return;
+
+      activeInputIdx = idx;
+      const rawStr = inputValues[idx] || "";
+
+      if (!rawStr) {
+        inputCursors[idx] = 0;
+        renderInputFields();
+        return;
+      }
+
+      const clientX = e.clientX;
+      const clientY = e.clientY;
+      const charNodes = Array.from(box.querySelectorAll('[data-pos]'));
+
+      if (charNodes.length === 0) {
+        inputCursors[idx] = rawStr.length;
+        renderInputFields();
+        return;
+      }
+
+      let closestNode = null;
+      let minDistance = Infinity;
+      let isAfter = false;
+
+      charNodes.forEach(node => {
+        const rect = node.getBoundingClientRect();
+        const dx = Math.max(rect.left - clientX, 0, clientX - rect.right);
+        const dy = Math.max(rect.top - clientY, 0, clientY - rect.bottom);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < minDistance) {
+          minDistance = dist;
+          closestNode = node;
+          const midX = rect.left + rect.width / 2;
+          isAfter = clientX > midX;
+        }
+      });
+
+      if (closestNode) {
+        const supEl = closestNode.closest('sup');
+        const pos = parseInt(closestNode.getAttribute('data-pos'), 10);
+        const len = parseInt(closestNode.getAttribute('data-len') || '1', 10);
+
+        if (supEl) {
+          const supRect = supEl.getBoundingClientRect();
+          if (clientX >= supRect.right - 2) {
+            let endPos = pos + len;
+            while (endPos < rawStr.length && rawStr[endPos] === '}') {
+              endPos++;
+            }
+            inputCursors[idx] = endPos;
+          } else if (clientX <= supRect.left + 2) {
+            let startPos = pos;
+            while (startPos > 0 && rawStr[startPos - 1] !== '{') {
+              startPos--;
+            }
+            inputCursors[idx] = Math.max(0, startPos);
+          } else {
+            inputCursors[idx] = isAfter ? pos + len : pos;
+          }
+        } else {
+          inputCursors[idx] = isAfter ? Math.min(rawStr.length, pos + len) : Math.max(0, pos);
+        }
+      } else {
+        inputCursors[idx] = rawStr.length;
+      }
+
+      renderInputFields();
+    });
+
+    row.appendChild(label);
+    row.appendChild(box);
+    container.appendChild(row);
+  });
+
+  const labels = container.querySelectorAll('.input-label');
+  renderMath(Array.from(labels));
+}
+
+function renderKeypad() {
+  const grid = document.getElementById('keypad-grid');
+  grid.innerHTML = '';
+
+  let keys = activeSkillKeypad ? [...activeSkillKeypad] : ['7','8','9','4','5','6','1','2','3','±','0','.','⌫','Clear'];
+
+  keys = keys.filter(k => k !== '←' && k !== '→');
+  keys.push('←', '→');
+
+  if (keys.length > 15) {
+    grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+  } else {
+    grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+  }
+
+  keys.forEach((key) => {
+    const btn = document.createElement('button');
+
+    const isOperator = ['+', '-', '±', '*', '/', '=', '×', '\\times', '\\times 10^', '≥', '≤', '>', '<', '\\ge', '\\le'].includes(key);
+    const isWordAction = (isNaN(key) && key !== '.' && !isOperator) || key === 'Clear' || key === '⌫';
+
+    btn.className = 'key-btn' 
+      + (isWordAction ? ' action-key' : '') 
+      + (isOperator ? ' operator-key' : '');
+
+    if (key === '/' || key === 'a/b') {
+      btn.innerHTML = `<span class="frac"><span class="frac-num">a</span><span class="frac-den">b</span></span>`;
+    } else if (key === '^2') {
+      btn.innerHTML = `<i>x</i><sup>2</sup>`;
+    } else if (key === '^3') {
+      btn.innerHTML = `<i>x</i><sup>3</sup>`;
+    } else if (key === '^' || key === 'x^y' || key === 'a^b') {
+      btn.innerHTML = `<i>x</i><sup><i>y</i></sup>`;
+    } else if (key === '\\times 10^' || key === '×10^' || key === '*10^') {
+      btn.innerHTML = `×10<sup><i>n</i></sup>`;
+    } else if (key === '\\times' || key === '*') {
+      btn.innerHTML = `×`;
+    } else if (key === '\\ge' || key === '>=') {
+      btn.innerHTML = `≥`;
+    } else if (key === '\\le' || key === '<=') {
+      btn.innerHTML = `≤`;
+    } else {
+      btn.innerHTML = key;
+    }
+
+    btn.onclick = () => handleKeyPress(key);
+    grid.appendChild(btn);
+  });
+}
+
+function handleKeyPress(key) {
+  if (isSubmitted) return;
+  let val = inputValues[activeInputIdx] || "";
+  let pos = inputCursors[activeInputIdx];
+  if (pos === undefined || pos < 0 || pos > val.length) pos = val.length;
+
+  const multiCharTokens = ['\\times 10^', '\\times', '\\ge', '\\le', '>=', '<='];
+
+  if (key === '⌫') {
+    if (pos > 0) {
+      if (val.slice(0, pos).endsWith('^{') && val.slice(pos).startsWith('}')) {
+        val = val.slice(0, pos - 2) + val.slice(pos + 1);
+        pos -= 2;
+      } else {
+        let deletedToken = multiCharTokens.find(t => val.slice(0, pos).endsWith(t));
+        if (deletedToken) {
+          val = val.slice(0, pos - deletedToken.length) + val.slice(pos);
+          pos -= deletedToken.length;
+        } else {
+          val = val.slice(0, pos - 1) + val.slice(pos);
+          pos -= 1;
+        }
+      }
+    }
+  } else if (key === 'Clear') {
+    val = "";
+    pos = 0;
+  } else if (key === '←' || key === 'Left') {
+    let matchedToken = multiCharTokens.find(t => val.slice(0, pos).endsWith(t));
+    if (matchedToken) {
+      pos = Math.max(0, pos - matchedToken.length);
+    } else {
+      pos = Math.max(0, pos - 1);
+    }
+  } else if (key === '→' || key === 'Right') {
+    let matchedToken = multiCharTokens.find(t => val.slice(pos).startsWith(t));
+    if (matchedToken) {
+      pos = Math.min(val.length, pos + matchedToken.length);
+    } else {
+      pos = Math.min(val.length, pos + 1);
+    }
+  } else if (key === '±') {
+    if (val.startsWith('-')) {
+      val = val.substring(1);
+      pos = Math.max(0, pos - 1);
+    } else {
+      val = '-' + val;
+      pos += 1;
+    }
+  } else if (key === '^' || key === 'x^y' || key === 'a^b') {
+    val = val.slice(0, pos) + '^{}' + val.slice(pos);
+    pos += 2;
+  } else if (key === '^2') {
+    val = val.slice(0, pos) + '^{2}' + val.slice(pos);
+    pos += 4;
+  } else if (key === '^3') {
+    val = val.slice(0, pos) + '^{3}' + val.slice(pos);
+    pos += 4;
+  } else if (key === '×10^' || key === '*10^' || key === '\\times 10^') {
+    val = val.slice(0, pos) + '\\times 10^{}' + val.slice(pos);
+    pos += 12;
+  } else {
+    let insertChar = key;
+    if (key === 'a/b') insertChar = '/';
+
+    if (val.length < 50) {
+      val = val.slice(0, pos) + insertChar + val.slice(pos);
+      pos += insertChar.length;
+    }
+  }
+
+  inputValues[activeInputIdx] = val;
+  inputCursors[activeInputIdx] = pos;
+  renderInputFields();
+}
+
+window.addEventListener('keydown', (e) => {
+  if (isSubmitted) {
+    if (e.key === 'Enter') handleAction();
+    return;
+  }
+
+  if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) {
+    return;
+  }
+
+  if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    handleKeyPress('←');
+  } else if (e.key === 'ArrowRight') {
+    e.preventDefault();
+    handleKeyPress('→');
+  } else if (e.key === 'Backspace') {
+    e.preventDefault();
+    handleKeyPress('⌫');
+  } else if (e.key === 'Escape' || e.key === 'Delete') {
+    e.preventDefault();
+    handleKeyPress('Clear');
+  } else if (e.key === 'Tab') {
+    e.preventDefault();
+    if (e.shiftKey) {
+      activeInputIdx = (activeInputIdx - 1 + currentQuestion.inputs.length) % currentQuestion.inputs.length;
+    } else {
+      activeInputIdx = (activeInputIdx + 1) % currentQuestion.inputs.length;
+    }
+    renderInputFields();
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    handleAction();
+  } else if (e.key === '*') {
+    e.preventDefault();
+    handleKeyPress('×');
+  } else if (e.key === '/') {
+    e.preventDefault();
+    handleKeyPress('/');
+  } else if (e.key === '^') {
+    e.preventDefault();
+    handleKeyPress('^');
+  } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    handleKeyPress(e.key);
+  }
+});
+
+function handleAction() {
+  if (isSubmitted) {
+    loadQuestion();
+    return;
+  }
+
+  if (inputValues.every(v => !v.trim())) return;
+
+  isSubmitted = true;
+  totalAttempts++;
+
+  const expected = currentQuestion.inputs.map(d => d.answer.trim());
+  const entered = inputValues.map(v => v.trim());
+
+  let isCorrect = entered.every((val, i) => isCommutativeProductEquivalent(val, expected[i]));
+
+  if (!isCorrect && entered.length === expected.length) {
+    const remainingExpected = [...expected];
+    let allMatched = true;
+
+    for (const val of entered) {
+      const matchIdx = remainingExpected.findIndex(exp => isCommutativeProductEquivalent(val, exp));
+      if (matchIdx !== -1) {
+        remainingExpected.splice(matchIdx, 1);
+      } else {
+        allMatched = false;
+        break;
+      }
+    }
+
+    if (allMatched && remainingExpected.length === 0) {
+      isCorrect = true;
+    }
+  }
+
+  const banner = document.getElementById('feedback-banner');
+  if (isCorrect) {
+    if (!hintUsed) {
+      totalScore++;
+    }
+    banner.className = 'feedback-banner correct';
+    banner.innerText = hintUsed ? 'Correct! (No point awarded because a hint was used)' : 'Correct!';
+  } else {
+    banner.className = 'feedback-banner incorrect';
+    banner.innerText = 'Incorrect. Check solution on the left.';
+  }
+
+  document.getElementById('score-display').innerText = `Score: ${totalScore} / ${totalAttempts}`;
+
+  const solContentEl = document.getElementById('solution-content');
+  solContentEl.innerHTML = currentQuestion.solutionTemplate;
+  document.getElementById('solution-box').style.display = 'block';
+  renderMath([solContentEl]);
+
+  const btn = document.getElementById('submit-btn');
+  btn.innerText = "Next Question";
+  btn.classList.add('next-state');
+}
+
+function skipQuestion() { loadQuestion(); }
+
+function requestHint() {
+  if (!currentQuestion || currentHintIndex >= currentQuestion.hints.length) return;
+  hintUsed = true;
+  const wrapper = document.getElementById('hints-wrapper');
+  const hintDiv = document.createElement('div');
+  hintDiv.className = 'hint-box';
+  hintDiv.innerHTML = currentQuestion.hints[currentHintIndex];
+  wrapper.appendChild(hintDiv);
+
+  renderMath([hintDiv]);
+
+  currentHintIndex++;
+  if (currentHintIndex >= currentQuestion.hints.length) {
+    document.getElementById('hint-trigger-btn').style.display = 'none';
+  }
+}
+
+document.getElementById('file-input').addEventListener('change', function(e) {
+  const files = e.target.files;
+  if (!files.length) return;
+
+  let readCount = 0;
+  Array.from(files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        const json = JSON.parse(evt.target.result);
+        const name = json.skillTitle || json.title || file.name.replace('.json', '');
+        loadedSkills.push({
+          id: file.name,
+          name: name,
+          levels: json.levels || ['Custom'],
+          streams: json.streams || ['Uploaded'],
+          topics: json.topics || ['Uploaded Files'],
+          data: json,
+          keypad: json.keypad,
+          enabled: true
+        });
+      } catch (err) {
+        console.error('Error parsing JSON:', err);
+      }
+      readCount++;
+      if (readCount === files.length) {
+        populateFilterDropdowns();
+        updateSkillsSelectorUI();
+        loadQuestion();
+      }
+    };
+    reader.readAsText(file);
+  });
+});
+
+// Canvas Drawing Features
+const canvas = document.getElementById('drawingCanvas');
+const ctx = canvas.getContext('2d');
+let isDrawing = false;
+let currentTool = 'pen';
+
+function resizeCanvas() {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+}
+window.addEventListener('resize', resizeCanvas);
+setTimeout(resizeCanvas, 100);
+
+function setTool(tool) {
+  currentTool = tool;
+  document.getElementById('pen-btn').classList.toggle('active', tool === 'pen');
+  document.getElementById('eraser-btn').classList.toggle('active', tool === 'eraser');
+}
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function getPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  return { x: clientX - rect.left, y: clientY - rect.top };
+}
+
+function startDraw(e) {
+  isDrawing = true;
+  const pos = getPos(e);
+  ctx.beginPath();
+  ctx.moveTo(pos.x, pos.y);
+}
+
+function draw(e) {
+  if (!isDrawing) return;
+  const pos = getPos(e);
+  ctx.lineWidth = currentTool === 'eraser' ? 20 : 2;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = currentTool === 'eraser' ? '#ffffff' : '#000000';
+  ctx.globalCompositeOperation = currentTool === 'eraser' ? 'destination-out' : 'source-over';
+  ctx.lineTo(pos.x, pos.y);
+  ctx.stroke();
+}
+
+function stopDraw() { isDrawing = false; }
+
+canvas.addEventListener('mousedown', startDraw);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDraw);
+canvas.addEventListener('mouseleave', stopDraw);
+
+canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDraw(e); }, { passive: false });
+canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, { passive: false });
+canvas.addEventListener('touchend', stopDraw);
+</script>
+</body>
+</html>
