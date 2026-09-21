@@ -1,0 +1,220 @@
+{
+  "skillTitle": "Solving Inequalities",
+  "keypad": [
+  "x", "<", ">", "/",
+  "7", "8", "9", "-",
+  "4", "5", "6", "≤",
+  "1", "2", "3", "≥",
+  "0", "no solution", "⌫", "Clear"
+],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 8 },
+        "c_raw": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "b": { "type": "randInt", "min": -12, "max": 12, "excludeZero": true },
+        "d": { "type": "randInt", "min": -15, "max": 15, "excludeZero": true },
+        "op_idx": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "c": "scope.c_raw === scope.a ? scope.c_raw + 1 : scope.c_raw",
+        "coeff": "scope.a - scope.c",
+        "const_val": "scope.d - scope.b",
+        "gcd": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.const_val, scope.coeff)",
+        "num": "(scope.const_val / scope.gcd) * (scope.coeff < 0 ? -1 : 1)",
+        "den": "Math.abs(scope.coeff / scope.gcd)",
+        "sym": "['>', '<', '\\\\ge', '\\\\le'][scope.op_idx - 1]",
+        "ans_sym": "scope.coeff < 0 ? ['<', '>', '\\\\le', '\\\\ge'][scope.op_idx - 1] : scope.sym",
+        "lhs": "(scope.a === 1 ? 'x' : (scope.a === -1 ? '-x' : scope.a + 'x')) + (scope.b > 0 ? ' + ' + scope.b : ' - ' + Math.abs(scope.b))",
+        "rhs": "(scope.c === 1 ? 'x' : (scope.c === -1 ? '-x' : (scope.c === 0 ? '' : scope.c + 'x'))) + (scope.d === 0 ? '' : (scope.d > 0 ? (scope.c === 0 ? scope.d.toString() : ' + ' + scope.d) : ' - ' + Math.abs(scope.d)))",
+        "frac_latex": "scope.den === 1 ? scope.num.toString() : (scope.num < 0 ? '-\\\\frac{' + Math.abs(scope.num) + '}{' + scope.den + '}' : '\\\\frac{' + scope.num + '}{' + scope.den + '}')",
+        "ans": "'x ' + scope.ans_sym + ' ' + scope.frac_latex",
+        "step1": "(scope.coeff === 1 ? 'x' : (scope.coeff === -1 ? '-x' : scope.coeff + 'x')) + ' ' + scope.sym + ' ' + scope.const_val"
+      },
+      "questionTemplate": "Solve the inequality:\n\n$$${scope.lhs} ${scope.sym} ${scope.rhs}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Rearrange terms to collect $x$ on one side and constant terms on the other: $$${scope.step1}$$",
+        "Divide by the coefficient of $x$ (reversing the inequality sign if dividing by a negative number): $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "denom1": { "type": "randInt", "min": 2, "max": 5 },
+        "denom2": { "type": "randInt", "min": 2, "max": 5 },
+        "num_a": { "type": "randInt", "min": -4, "max": 5, "excludeZero": true },
+        "num_d": { "type": "randInt", "min": -4, "max": 5, "excludeZero": true },
+        "b_val": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true },
+        "e_val": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true },
+        "op_idx": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "c": "scope.denom1",
+        "f": "scope.denom2 === scope.denom1 ? (scope.denom1 === 5 ? 2 : scope.denom1 + 1) : scope.denom2",
+        "a": "scope.num_a",
+        "d_raw": "scope.num_d",
+        "coeff_check": "scope.f * scope.a - scope.c * scope.d_raw",
+        "d": "scope.coeff_check === 0 ? (scope.d_raw > 0 ? scope.d_raw + 1 : scope.d_raw - 1) : scope.d_raw",
+        "coeff": "scope.f * scope.a - scope.c * scope.d",
+        "const_val": "scope.c * scope.e_val - scope.f * scope.b_val",
+        "gcd": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.const_val, scope.coeff)",
+        "num": "(scope.const_val / scope.gcd) * (scope.coeff < 0 ? -1 : 1)",
+        "den": "Math.abs(scope.coeff / scope.gcd)",
+        "sym": "['\\\\ge', '\\\\le', '>', '<'][scope.op_idx - 1]",
+        "ans_sym": "scope.coeff < 0 ? ['\\\\le', '\\\\ge', '<', '>'][scope.op_idx - 1] : scope.sym",
+        "lhs_num": "(scope.a === 1 ? 'x' : (scope.a === -1 ? '-x' : scope.a + 'x')) + (scope.b_val > 0 ? ' + ' + scope.b_val : ' - ' + Math.abs(scope.b_val))",
+        "rhs_num": "(scope.d === 1 ? 'x' : (scope.d === -1 ? '-x' : scope.d + 'x')) + (scope.e_val > 0 ? ' + ' + scope.e_val : ' - ' + Math.abs(scope.e_val))",
+        "expr": "'\\\\frac{' + scope.lhs_num + '}{' + scope.c + '} ' + scope.sym + ' \\\\frac{' + scope.rhs_num + '}{' + scope.f + '}'",
+        "frac_latex": "scope.den === 1 ? scope.num.toString() : (scope.num < 0 ? '-\\\\frac{' + Math.abs(scope.num) + '}{' + scope.den + '}' : '\\\\frac{' + scope.num + '}{' + scope.den + '}')",
+        "ans": "'x ' + scope.ans_sym + ' ' + scope.frac_latex",
+        "step1": "scope.f + '(' + scope.lhs_num + ') ' + scope.sym + ' ' + scope.c + '(' + scope.rhs_num + ')'",
+        "step2": "(scope.coeff === 1 ? 'x' : (scope.coeff === -1 ? '-x' : scope.coeff + 'x')) + ' ' + scope.sym + ' ' + scope.const_val"
+      },
+      "questionTemplate": "Solve the inequality:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Multiply both sides by the common denominator to eliminate fractions: $$${scope.step1}$$",
+        "Expand brackets and collect like terms: $$${scope.step2}$$",
+        "Solve for $x$: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "x1_raw_num": { "type": "randInt", "min": -12, "max": 2, "excludeZero": true },
+        "x1_raw_den": { "type": "randInt", "min": 1, "max": 3 },
+        "gap": { "type": "randInt", "min": 3, "max": 6 },
+        "m": { "type": "randInt", "min": 2, "max": 4 },
+        "c": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "op1_type": { "type": "randInt", "min": 1, "max": 2 },
+        "op2_type": { "type": "randInt", "min": 1, "max": 2 }
+      },
+      "derived": {
+        "g1": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.x1_raw_num, scope.x1_raw_den)",
+        "x1_num": "(scope.x1_raw_num / scope.g1) * (scope.x1_raw_den < 0 ? -1 : 1)",
+        "x1_den": "Math.abs(scope.x1_raw_den / scope.g1)",
+        "x2_raw_num": "scope.x1_num + scope.gap * scope.x1_den",
+        "g2": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.x2_raw_num, scope.x1_den)",
+        "x2_num": "(scope.x2_raw_num / scope.g2) * (scope.x1_den < 0 ? -1 : 1)",
+        "x2_den": "Math.abs(scope.x1_den / scope.g2)",
+        "a_raw_num": "scope.m * scope.x1_num + scope.c * scope.x1_den",
+        "ga": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.a_raw_num, scope.x1_den)",
+        "a_num": "(scope.a_raw_num / scope.ga) * (scope.x1_den < 0 ? -1 : 1)",
+        "a_den": "Math.abs(scope.x1_den / scope.ga)",
+        "b_raw_num": "scope.m * scope.x2_raw_num + scope.c * scope.x1_den",
+        "gb": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.b_raw_num, scope.x1_den)",
+        "b_num": "(scope.b_raw_num / scope.gb) * (scope.x1_den < 0 ? -1 : 1)",
+        "b_den": "Math.abs(scope.x1_den / scope.gb)",
+        "a_str": "scope.a_den === 1 ? scope.a_num.toString() : (scope.a_num < 0 ? '-\\\\frac{' + Math.abs(scope.a_num) + '}{' + scope.a_den + '}' : '\\\\frac{' + scope.a_num + '}{' + scope.a_den + '}')",
+        "b_str": "scope.b_den === 1 ? scope.b_num.toString() : (scope.b_num < 0 ? '-\\\\frac{' + Math.abs(scope.b_num) + '}{' + scope.b_den + '}' : '\\\\frac{' + scope.b_num + '}{' + scope.b_den + '}')",
+        "x1_str": "scope.x1_den === 1 ? scope.x1_num.toString() : (scope.x1_num < 0 ? '-\\\\frac{' + Math.abs(scope.x1_num) + '}{' + scope.x1_den + '}' : '\\\\frac{' + scope.x1_num + '}{' + scope.x1_den + '}')",
+        "x2_str": "scope.x2_den === 1 ? scope.x2_num.toString() : (scope.x2_num < 0 ? '-\\\\frac{' + Math.abs(scope.x2_num) + '}{' + scope.x2_den + '}' : '\\\\frac{' + scope.x2_num + '}{' + scope.x2_den + '}')",
+        "op1": "scope.op1_type === 1 ? '\\\\le' : '<'",
+        "op2": "scope.op2_type === 1 ? '<' : '\\\\le'",
+        "mid_expr": "(scope.m === 1 ? 'x' : scope.m + 'x') + (scope.c > 0 ? ' + ' + scope.c : ' - ' + Math.abs(scope.c))",
+        "expr": "scope.a_str + ' ' + scope.op1 + ' ' + scope.mid_expr + ' ' + scope.op2 + ' ' + scope.b_str",
+        "ineq1": "scope.mid_expr + ' ' + (scope.op1 === '\\\\le' ? '\\\\ge' : '>') + ' ' + scope.a_str",
+        "ineq2": "scope.mid_expr + ' ' + scope.op2 + ' ' + scope.b_str",
+        "sol1": "'x ' + (scope.op1 === '\\\\le' ? '\\\\ge' : '>') + ' ' + scope.x1_str",
+        "sol2": "'x ' + scope.op2 + ' ' + scope.x2_str",
+        "ans": "scope.x1_str + ' ' + scope.op1 + ' x ' + scope.op2 + ' ' + scope.x2_str",
+        "is_solid1": "scope.op1 === '\\\\le'",
+        "is_solid2": "scope.op2 === '\\\\le'",
+        "lbl1": "scope.x1_den === 1 ? scope.x1_num.toString() : scope.x1_num + '/' + scope.x1_den",
+        "lbl2": "scope.x2_den === 1 ? scope.x2_num.toString() : scope.x2_num + '/' + scope.x2_den",
+        "numline_svg": "'<svg width=\"360\" height=\"100\" viewBox=\"0 0 360 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#fff; font-family:sans-serif;\"><defs><marker id=\"arrow\" viewBox=\"0 0 10 10\" refX=\"5\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#000\"/></marker></defs><rect x=\"110\" y=\"20\" width=\"140\" height=\"55\" fill=\"#e0e0e0\" opacity=\"0.6\"/><line x1=\"20\" y1=\"75\" x2=\"340\" y2=\"75\" stroke=\"#000\" stroke-width=\"2\" marker-start=\"url(#arrow)\" marker-end=\"url(#arrow)\"/><line x1=\"110\" y1=\"70\" x2=\"110\" y2=\"80\" stroke=\"#000\" stroke-width=\"2\"/><text x=\"110\" y=\"95\" font-size=\"13\" text-anchor=\"middle\">' + scope.lbl1 + '</text><line x1=\"250\" y1=\"70\" x2=\"250\" y2=\"80\" stroke=\"#000\" stroke-width=\"2\"/><text x=\"250\" y=\"95\" font-size=\"13\" text-anchor=\"middle\">' + scope.lbl2 + '</text><line x1=\"110\" y1=\"30\" x2=\"110\" y2=\"75\" stroke=\"#888\" stroke-dasharray=\"4,4\"/><line x1=\"250\" y1=\"48\" x2=\"250\" y2=\"75\" stroke=\"#888\" stroke-dasharray=\"4,4\"/><line x1=\"110\" y1=\"30\" x2=\"330\" y2=\"30\" stroke=\"#000\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/><circle cx=\"110\" cy=\"30\" r=\"5\" fill=\"' + (scope.is_solid1 ? '#000' : '#fff') + '\" stroke=\"#000\" stroke-width=\"2\"/><line x1=\"250\" y1=\"48\" x2=\"30\" y2=\"48\" stroke=\"#000\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/><circle cx=\"250\" cy=\"48\" r=\"5\" fill=\"' + (scope.is_solid2 ? '#000' : '#fff') + '\" stroke=\"#000\" stroke-width=\"2\"/></svg>'"
+      },
+      "questionTemplate": "Solve the inequality:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Split into two separate inequalities connected by \"and\": $$${scope.ineq1} \\quad \\text{and} \\quad ${scope.ineq2}$$",
+        "Solve each inequality independently: $$${scope.sol1} \\quad \\text{and} \\quad ${scope.sol2}$$",
+        "Represent both solutions on a number line to find their intersection:\n\n${scope.numline_svg}",
+        "Combine the overlapping region to state the final answer: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "p1": { "type": "randInt", "min": 2, "max": 4 },
+        "a1": { "type": "randInt", "min": 2, "max": 5 },
+        "b1": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "q1": { "type": "randInt", "min": 2, "max": 4 },
+        "c1": { "type": "randInt", "min": 1, "max": 4 },
+        "d1": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "p2": { "type": "randInt", "min": 2, "max": 4 },
+        "a2": { "type": "randInt", "min": 2, "max": 5 },
+        "b2": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "q2": { "type": "randInt", "min": 2, "max": 4 },
+        "c2": { "type": "randInt", "min": 1, "max": 4 },
+        "d2": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "op1_idx": { "type": "randInt", "min": 1, "max": 2 },
+        "op2_idx": { "type": "randInt", "min": 1, "max": 2 }
+      },
+      "derived": {
+        "coeff1": "scope.p1 * scope.a1 - scope.q1 * scope.c1",
+        "adj_c1": "scope.coeff1 === 0 ? scope.c1 + 1 : scope.c1",
+        "eff_coeff1": "scope.p1 * scope.a1 - scope.q1 * scope.adj_c1",
+        "const1": "scope.q1 * scope.d1 - scope.p1 * scope.b1",
+        "gcd1": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.const1, scope.eff_coeff1)",
+        "num1": "(scope.const1 / scope.gcd1) * (scope.eff_coeff1 < 0 ? -1 : 1)",
+        "den1": "Math.abs(scope.eff_coeff1 / scope.gcd1)",
+        "sym1": "scope.op1_idx === 1 ? '\\\\ge' : '>'",
+        "ans_sym1": "scope.eff_coeff1 < 0 ? (scope.sym1 === '\\\\ge' ? '\\\\le' : '<') : scope.sym1",
+        "val1_str": "scope.den1 === 1 ? scope.num1.toString() : (scope.num1 < 0 ? '-\\\\frac{' + Math.abs(scope.num1) + '}{' + scope.den1 + '}' : '\\\\frac{' + scope.num1 + '}{' + scope.den1 + '}')",
+        "v1": "scope.num1 / scope.den1",
+        "coeff2": "scope.p2 * scope.a2 - scope.q2 * scope.c2",
+        "adj_c2": "scope.coeff2 === 0 ? scope.c2 + 1 : scope.c2",
+        "eff_coeff2": "scope.p2 * scope.a2 - scope.q2 * scope.adj_c2",
+        "const2": "scope.q2 * scope.d2 - scope.p2 * scope.b2",
+        "gcd2": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.const2, scope.eff_coeff2)",
+        "num2_raw": "(scope.const2 / scope.gcd2) * (scope.eff_coeff2 < 0 ? -1 : 1)",
+        "den2_raw": "Math.abs(scope.eff_coeff2 / scope.gcd2)",
+        "v2_raw": "scope.num2_raw / scope.den2_raw",
+        "num2": "scope.v2_raw <= scope.v1 ? scope.num1 + 3 * scope.den1 : scope.num2_raw",
+        "den2": "scope.v2_raw <= scope.v1 ? scope.den1 : scope.den2_raw",
+        "sym2": "scope.op2_idx === 1 ? '\\\\le' : '<'",
+        "ans_sym2": "scope.eff_coeff2 < 0 ? (scope.sym2 === '\\\\le' ? '\\\\ge' : '>') : scope.sym2",
+        "val2_str": "scope.den2 === 1 ? scope.num2.toString() : (scope.num2 < 0 ? '-\\\\frac{' + Math.abs(scope.num2) + '}{' + scope.den2 + '}' : '\\\\frac{' + scope.num2 + '}{' + scope.den2 + '}')",
+        "expr1_lhs": "scope.p1 + '(' + (scope.a1 === 1 ? 'x' : scope.a1 + 'x') + (scope.b1 > 0 ? ' + ' + scope.b1 : ' - ' + Math.abs(scope.b1)) + ')'",
+        "expr1_rhs": "scope.q1 + '(' + (scope.adj_c1 === 1 ? 'x' : scope.adj_c1 + 'x') + (scope.d1 > 0 ? ' + ' + scope.d1 : ' - ' + Math.abs(scope.d1)) + ')'",
+        "expr1": "scope.expr1_lhs + ' ' + scope.sym1 + ' ' + scope.expr1_rhs",
+        "expr2_lhs": "scope.p2 + '(' + (scope.a2 === 1 ? 'x' : scope.a2 + 'x') + (scope.b2 > 0 ? ' + ' + scope.b2 : ' - ' + Math.abs(scope.b2)) + ')'",
+        "expr2_rhs": "scope.q2 + '(' + (scope.adj_c2 === 1 ? 'x' : scope.adj_c2 + 'x') + (scope.d2 > 0 ? ' + ' + scope.d2 : ' - ' + Math.abs(scope.d2)) + ')'",
+        "expr2": "scope.expr2_lhs + ' ' + scope.sym2 + ' ' + scope.expr2_rhs",
+        "sol1": "'x ' + scope.ans_sym1 + ' ' + scope.val1_str",
+        "sol2": "'x ' + scope.ans_sym2 + ' ' + scope.val2_str",
+        "left_op": "scope.ans_sym1 === '\\\\ge' ? '\\\\le' : '<'",
+        "ans": "scope.eff_coeff1 > 0 && scope.eff_coeff2 > 0 ? (scope.val1_str + ' ' + scope.left_op + ' x ' + scope.ans_sym2 + ' ' + scope.val2_str) : (scope.eff_coeff1 < 0 && scope.eff_coeff2 < 0 ? 'no solution' : (scope.eff_coeff1 > 0 ? scope.sol2 : scope.sol1))",
+        "ans_latex": "scope.ans === 'no solution' ? '\\\\text{no solution}' : scope.ans",
+        "is_solid1": "scope.sym1 === '\\\\ge'",
+        "is_solid2": "scope.sym2 === '\\\\le'",
+        "lbl1": "scope.den1 === 1 ? scope.num1.toString() : scope.num1 + '/' + scope.den1",
+        "lbl2": "scope.den2 === 1 ? scope.num2.toString() : scope.num2 + '/' + scope.den2",
+        "x_target1": "scope.eff_coeff1 > 0 ? 330 : 30",
+        "x_target2": "scope.eff_coeff2 > 0 ? 30 : 330",
+        "rect_svg": "scope.eff_coeff1 > 0 && scope.eff_coeff2 > 0 ? '<rect x=\"110\" y=\"20\" width=\"140\" height=\"55\" fill=\"#e0e0e0\" opacity=\"0.6\"/>' : (scope.eff_coeff1 < 0 && scope.eff_coeff2 < 0 ? '' : (scope.eff_coeff1 > 0 ? '<rect x=\"250\" y=\"20\" width=\"90\" height=\"55\" fill=\"#e0e0e0\" opacity=\"0.6\"/>' : '<rect x=\"20\" y=\"20\" width=\"90\" height=\"55\" fill=\"#e0e0e0\" opacity=\"0.6\"/>'))",
+        "numline_svg": "'<svg width=\"360\" height=\"100\" viewBox=\"0 0 360 100\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#fff; font-family:sans-serif;\"><defs><marker id=\"arrow\" viewBox=\"0 0 10 10\" refX=\"5\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#000\"/></marker></defs>' + scope.rect_svg + '<line x1=\"20\" y1=\"75\" x2=\"340\" y2=\"75\" stroke=\"#000\" stroke-width=\"2\" marker-start=\"url(#arrow)\" marker-end=\"url(#arrow)\"/><line x1=\"110\" y1=\"70\" x2=\"110\" y2=\"80\" stroke=\"#000\" stroke-width=\"2\"/><text x=\"110\" y=\"95\" font-size=\"13\" text-anchor=\"middle\">' + scope.lbl1 + '</text><line x1=\"250\" y1=\"70\" x2=\"250\" y2=\"80\" stroke=\"#000\" stroke-width=\"2\"/><text x=\"250\" y=\"95\" font-size=\"13\" text-anchor=\"middle\">' + scope.lbl2 + '</text><line x1=\"110\" y1=\"30\" x2=\"110\" y2=\"75\" stroke=\"#888\" stroke-dasharray=\"4,4\"/><line x1=\"250\" y1=\"48\" x2=\"250\" y2=\"75\" stroke=\"#888\" stroke-dasharray=\"4,4\"/><line x1=\"110\" y1=\"30\" x2=\"' + scope.x_target1 + '\" y2=\"30\" stroke=\"#000\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/><circle cx=\"110\" cy=\"30\" r=\"5\" fill=\"' + (scope.is_solid1 ? '#000' : '#fff') + '\" stroke=\"#000\" stroke-width=\"2\"/><line x1=\"250\" y1=\"48\" x2=\"' + scope.x_target2 + '\" y2=\"48\" stroke=\"#000\" stroke-width=\"2\" marker-end=\"url(#arrow)\"/><circle cx=\"250\" cy=\"48\" r=\"5\" fill=\"' + (scope.is_solid2 ? '#000' : '#fff') + '\" stroke=\"#000\" stroke-width=\"2\"/></svg>'",
+        "step4_text": "scope.ans === 'no solution' ? 'Since the two regions do not overlap, there is no solution:' : 'Combine the intersecting region into the final inequality:'"
+      },
+      "questionTemplate": "Solve the inequalities:\n\n$$${scope.expr1}$$\n$$\\text{and}$$\n$$${scope.expr2}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Solve the first inequality independently: $$${scope.sol1}$$",
+        "Solve the second inequality independently: $$${scope.sol2}$$",
+        "Represent both solutions on a number line to find their intersection:\n\n${scope.numline_svg}",
+        "${scope.step4_text} $${scope.ans_latex}$"
+      ]
+    }
+  ]
+}

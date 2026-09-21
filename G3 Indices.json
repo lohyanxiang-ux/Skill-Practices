@@ -1,0 +1,603 @@
+{
+  "skillTitle": "Indices Mastery Trainer",
+  "keypad": [
+  "a", "b", "m", "n",
+  "p", "q", "x", "y",
+  "7", "8", "9", "/",
+  "4", "5", "6", "+",
+  "1", "2", "3", "-",
+  "0", "^", "⌫", "Clear"
+],
+  "structures": [
+    {
+      "level": 1,
+      "name": "Multiplication Law of Indices",
+      "variables": {
+        "m": { "type": "randInt", "min": 2, "max": 7 },
+        "n": { "type": "randInt", "min": 2, "max": 7 }
+      },
+      "derived": {
+        "sum": "scope.m + scope.n",
+        "ans": "'x^' + scope.sum",
+        "step1": "'x^{' + scope.m + ' + ' + scope.n + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$x^{${scope.m}} \\times x^{${scope.n}}$$ ",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the multiplication law of indices ($x^m \\times x^n = x^{m+n}$): $$${scope.step1}$$",
+        "Simplify the exponent: $$x^{${scope.sum}}$$ "
+      ]
+    },
+    {
+      "level": 1,
+      "name": "Division Law of Indices",
+      "variables": {
+        "m": { "type": "randInt", "min": 6, "max": 12 },
+        "n": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "diff": "scope.m - scope.n",
+        "ans": "'y^' + scope.diff",
+        "step1": "'y^{' + scope.m + ' - ' + scope.n + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$\\frac{y^{${scope.m}}}{y^{${scope.n}}}$$ ",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the division law of indices ($\\frac{y^m}{y^n} = y^{m-n}$): $$${scope.step1}$$",
+        "Simplify the exponent: $$y^{${scope.diff}}$$ "
+      ]
+    },
+    {
+      "level": 1,
+      "name": "Power of a Product Law",
+      "variables": {
+        "c": { "type": "randInt", "min": 2, "max": 4 },
+        "m": { "type": "randInt", "min": 2, "max": 5 },
+        "n": { "type": "randInt", "min": 2, "max": 3 }
+      },
+      "derived": {
+        "c_pow": "Math.pow(scope.c, scope.n)",
+        "m_tot": "scope.m * scope.n",
+        "ans": "scope.c_pow + 'p^' + scope.m_tot",
+        "step1": "scope.c + '^{' + scope.n + '} \\\\times p^{' + scope.m + ' \\\\times ' + scope.n + '}'"
+      },
+      "questionTemplate": "Simplify the expression:\n\n$$(${scope.c}p^{${scope.m}})^{${scope.n}}$$ ",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Raise both the coefficient and variable term to the power of $${scope.n}$: $$${scope.step1}$$",
+        "Simplify: $$${scope.c_pow}p^{${scope.m_tot}}$$ "
+      ]
+    },
+    {
+      "level": 2,
+      "name": "Division with Negative Indices",
+      "variables": {
+        "a_idx": { "type": "randInt", "min": 0, "max": 4 },
+        "b": { "type": "randInt", "min": 2, "max": 5 },
+        "m": { "type": "randInt", "min": 2, "max": 6 },
+        "n": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "a": "[7, 11, 13, 17, 19][scope.a_idx]",
+        "denomExp": "scope.m + scope.n",
+        "ans": "scope.a + '/' + scope.b + 'p^' + scope.denomExp",
+        "step1": "'\\\\frac{' + scope.a + '}{' + scope.b + 'p^{' + scope.n + '} \\\\times p^{' + scope.m + '}}'",
+        "step2": "'\\\\frac{' + scope.a + '}{' + scope.b + 'p^{' + scope.m + ' + ' + scope.n + '}}'"
+      },
+      "questionTemplate": "Simplify the expression, leaving your answer in positive index form:\n\n$$\\frac{-${scope.a}p^{-${scope.m}}}{-${scope.b}p^{${scope.n}}}$$ ",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Cancel negative signs $\\frac{-${scope.a}}{-${scope.b}} = \\frac{${scope.a}}{${scope.b}}$ and move $p^{-${scope.m}}$ into the denominator: $$${scope.step1}$$",
+        "Combine exponents in the denominator: $$${scope.step2}$$",
+        "Final positive index form: $$\\frac{${scope.a}}{${scope.b}p^{${scope.denomExp}}}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "name": "Power with Negative Index",
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 5 },
+        "m": { "type": "randInt", "min": 2, "max": 4 },
+        "n": { "type": "randInt", "min": 2, "max": 3 }
+      },
+      "derived": {
+        "denomCoeff": "Math.pow(scope.a, scope.n)",
+        "denomExp": "scope.m * scope.n",
+        "ans": "'1/' + scope.denomCoeff + 'x^' + scope.denomExp",
+        "step1": "'\\\\frac{1}{(' + scope.a + 'x^{' + scope.m + '})^{' + scope.n + '}}'",
+        "step2": "'\\\\frac{1}{' + scope.denomCoeff + 'x^{' + scope.denomExp + '}}'"
+      },
+      "questionTemplate": "Express the expression using a positive index:\n\n$$(${scope.a}x^{${scope.m}})^{-${scope.n}}$$ ",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the negative index law ($x^{-n} = \\frac{1}{x^n}$): $$${scope.step1}$$",
+        "Simplify the denominator: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "name": "Surd to Fractional Index",
+      "variables": {
+        "n": { "type": "randInt", "min": 3, "max": 6 },
+        "m": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "m_eff": "scope.m === scope.n ? scope.m + 1 : scope.m",
+        "gcd": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.m_eff, scope.n)",
+        "num": "scope.m_eff / scope.gcd",
+        "den": "scope.n / scope.gcd",
+        "ans": "scope.den === 1 ? (scope.num === 1 ? 'y' : 'y^' + scope.num) : 'y^' + scope.num + '/' + scope.den",
+        "step1": "'y^{\\\\frac{' + scope.m_eff + '}{' + scope.n + '}}'",
+        "step2": "'y^{' + (scope.den === 1 ? (scope.num === 1 ? '' : scope.num) : '\\\\frac{' + scope.num + '}{' + scope.den + '}') + '}'"
+      },
+      "questionTemplate": "Express in index form:\n\n$$\\sqrt[${scope.n}]{y^{${scope.m_eff}}}$$ ",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the fractional index law ($\\sqrt[n]{y^m} = y^{\\frac{m}{n}}$): $$${scope.step1}$$",
+        "Simplify the fractional index to lowest terms: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "name": "Exponential Equation - Addition",
+      "variables": {
+        "a_idx": { "type": "randInt", "min": 0, "max": 2 },
+        "k": { "type": "randInt", "min": 2, "max": 4 },
+        "b": { "type": "randInt", "min": 1, "max": 5 }
+      },
+      "derived": {
+        "a": "[2, 3, 5][scope.a_idx]",
+        "c": "Math.pow(scope.a, scope.k)",
+        "ans": "(scope.k - scope.b).toString()",
+        "step1": "scope.a + '^{x + ' + scope.b + '} = ' + scope.a + '^{' + scope.k + '}'",
+        "step2": "'x + ' + scope.b + ' = ' + scope.k"
+      },
+      "questionTemplate": "Solve for $x$ in the exponential equation:\n\n$$${scope.a}^{x + ${scope.b}} = ${scope.c}$$ ",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Express both sides with base ${scope.a}: $$${scope.step1}$$",
+        "Equate the exponents: $$${scope.step2}$$",
+        "Solve for $x$: $$x = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "name": "Exponential Equation - Subtraction",
+      "variables": {
+        "a_idx": { "type": "randInt", "min": 0, "max": 2 },
+        "k": { "type": "randInt", "min": 2, "max": 4 },
+        "b": { "type": "randInt", "min": 1, "max": 5 }
+      },
+      "derived": {
+        "a": "[2, 3, 5][scope.a_idx]",
+        "c": "Math.pow(scope.a, scope.k)",
+        "ans": "(scope.k + scope.b).toString()",
+        "step1": "scope.a + '^{x - ' + scope.b + '} = ' + scope.a + '^{' + scope.k + '}'",
+        "step2": "'x - ' + scope.b + ' = ' + scope.k"
+      },
+      "questionTemplate": "Solve for $x$ in the exponential equation:\n\n$$${scope.a}^{x - ${scope.b}} = ${scope.c}$$ ",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Express both sides with base ${scope.a}: $$${scope.step1}$$",
+        "Equate the exponents: $$${scope.step2}$$",
+        "Solve for $x$: $$x = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "name": "Exponential Equation - Product of Powers",
+      "variables": {
+        "a_idx": { "type": "randInt", "min": 0, "max": 2 },
+        "k": { "type": "randInt", "min": 1, "max": 3 },
+        "m": { "type": "randInt", "min": 4, "max": 6 }
+      },
+      "derived": {
+        "a": "[2, 3, 5][scope.a_idx]",
+        "c": "Math.pow(scope.a, scope.k)",
+        "d": "Math.pow(scope.a, scope.m)",
+        "ans": "(scope.m - scope.k).toString()",
+        "step1": "scope.a + '^x \\\\times ' + scope.a + '^{' + scope.k + '} = ' + scope.a + '^{' + scope.m + '}'",
+        "step2": "scope.a + '^{x + ' + scope.k + '} = ' + scope.a + '^{' + scope.m + '}'",
+        "step3": "'x + ' + scope.k + ' = ' + scope.m"
+      },
+      "questionTemplate": "Solve for $x$ in the exponential equation:\n\n$$${scope.a}^x \\times ${scope.c} = ${scope.d}$$ ",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Express all numbers with base ${scope.a}: $$${scope.step1}$$",
+        "Apply the multiplication law of indices: $$${scope.step2}$$",
+        "Equate exponents: $$${scope.step3}$$",
+        "Solve for $x$: $$x = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "name": "Exponential Equation - Bases on Both Sides",
+      "variables": {
+        "base_idx": { "type": "randInt", "min": 0, "max": 1 },
+        "p": { "type": "randInt", "min": 2, "max": 3 },
+        "b": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "base": "[2, 5][scope.base_idx]",
+        "q": "scope.p === 2 ? 3 : 2",
+        "lhsBase": "Math.pow(scope.base, scope.p)",
+        "rhsBase": "Math.pow(scope.base, scope.q)",
+        "ans": "((scope.p * scope.b) / (scope.p - scope.q)).toString()",
+        "step1": "'(' + scope.base + '^{' + scope.p + '})^{x - ' + scope.b + '} = (' + scope.base + '^{' + scope.q + '})^x'",
+        "step2": "scope.base + '^{' + scope.p + '(x - ' + scope.b + ')} = ' + scope.base + '^{' + scope.q + 'x}'",
+        "step3": "scope.p + '(x - ' + scope.b + ') = ' + scope.q + 'x'"
+      },
+      "questionTemplate": "Solve for $x$ in the exponential equation:\n\n$$${scope.lhsBase}^{x - ${scope.b}} = ${scope.rhsBase}^x$$ ",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Rewrite both sides with base ${scope.base}: $$${scope.step1}$$",
+        "Apply the power of a power law: $$${scope.step2}$$",
+        "Equate exponents: $$${scope.step3}$$",
+        "Solve for $x$: $$x = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "name": "Exponential Equation - Reciprocal Exponent",
+      "variables": {
+        "base_idx": { "type": "randInt", "min": 0, "max": 1 },
+        "k": { "type": "randInt", "min": 1, "max": 2 },
+        "mult": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "base": "[3, 5][scope.base_idx]",
+        "b": "scope.mult * (1 + scope.k)",
+        "denomBase": "Math.pow(scope.base, scope.k)",
+        "ans": "(-scope.mult).toString()",
+        "rhs_expr": "scope.k === 1 ? scope.base + '^x' : Math.pow(scope.base, 2) + '^x'",
+        "step1": "scope.base + '^{x + ' + scope.b + '} = \\\\frac{1}{(' + scope.base + '^{' + scope.k + '})^x}'",
+        "step2": "scope.base + '^{x + ' + scope.b + '} = ' + scope.base + '^{-' + (scope.k === 1 ? '' : scope.k) + 'x}'",
+        "step3": "'x + ' + scope.b + ' = -' + (scope.k === 1 ? '' : scope.k) + 'x'"
+      },
+      "questionTemplate": "Solve for $x$ in the exponential equation:\n\n$$${scope.base}^{x + ${scope.b}} = \\frac{1}{${scope.rhs_expr}}$$ ",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Express the denominator on the RHS using base ${scope.base}: $$${scope.step1}$$",
+        "Apply negative index law: $$${scope.step2}$$",
+        "Equate exponents: $$${scope.step3}$$",
+        "Solve for $x$: $$x = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "name": "Exponential Equation - Repeated Addition",
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 5 },
+        "m": { "type": "randInt", "min": 10, "max": 45 }
+      },
+      "derived": {
+        "ans": "(scope.m + 1).toString()",
+        "term": "scope.a + '^{' + scope.m + '}'",
+        "terms": "Array(scope.a).fill(scope.term).join(' + ')",
+        "step1": "scope.a + ' \\\\times ' + scope.a + '^{' + scope.m + '} = ' + scope.a + '^x'",
+        "step2": "scope.a + '^{1 + ' + scope.m + '} = ' + scope.a + '^x'",
+        "step3": "scope.a + '^{' + (scope.m + 1) + '} = ' + scope.a + '^x'"
+      },
+      "questionTemplate": "Solve for $x$ in the exponential equation:\n\n$$${scope.terms} = ${scope.a}^x$$ ",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Combine the repeated addition of ${scope.a} identical terms into multiplication: $$${scope.step1}$$",
+        "Apply the multiplication law of indices ($x^1 \\times x^m = x^{1+m}$): $$${scope.step2}$$",
+        "Simplify the exponent: $$${scope.step3}$$",
+        "Equate exponents: $$x = ${scope.ans}$$"
+      ]
+    },
+{
+  "level": 3,
+  "name": "Surd Division with Fractional Indices",
+  "variables": {
+    "p": { "type": "randInt", "min": 3, "max": 5 },
+    "m": { "type": "randInt", "min": 1, "max": 4 },
+    "q": { "type": "randInt", "min": 2, "max": 4 },
+    "n": { "type": "randInt", "min": 3, "max": 5 }
+  },
+  "derived": {
+    "rad2": "scope.q === 2 ? '\\\\sqrt{a^{' + scope.n + '}}' : '\\\\sqrt[' + scope.q + ']{a^{' + scope.n + '}}'",
+    "raw_num": "scope.m * scope.q - scope.n * scope.p",
+    "raw_den": "scope.p * scope.q",
+    "gcd": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.raw_num, scope.raw_den)",
+    "num": "scope.raw_num / scope.gcd",
+    "den": "scope.raw_den / scope.gcd",
+    "ans": "scope.den === 1 ? 'a^' + scope.num : 'a^(' + scope.num + '/' + scope.den + ')'",
+    "step1": "'a^{\\\\frac{' + scope.m + '}{' + scope.p + '}} \\\\div a^{\\\\frac{' + scope.n + '}{' + scope.q + '}}'",
+    "step2": "'a^{\\\\frac{' + scope.m + '}{' + scope.p + '} - \\\\frac{' + scope.n + '}{' + scope.q + '}}'",
+    "step3": "'a^{' + (scope.den === 1 ? scope.num : (scope.num < 0 ? '-\\\\frac{' + Math.abs(scope.num) + '}{' + scope.den + '}' : '\\\\frac{' + scope.num + '}{' + scope.den + '}')) + '}'"
+  },
+  "questionTemplate": "Simplify the following, expressing your answer in index form:\n\n$$\\sqrt[${scope.p}]{a^{${scope.m}}} \\div ${scope.rad2}$$ ",
+  "inputs": [
+    {
+      "label": "=",
+      "answer": "${scope.ans}"
+    }
+  ],
+  "steps": [
+    "Convert surds into fractional index form: $$${scope.step1}$$",
+    "Apply the division law of indices ($a^m \\div a^n = a^{m-n}$): $$${scope.step2}$$",
+    "Simplify the fractional exponent: $$${scope.step3}$$"
+  ]
+},
+    {
+      "level": 3,
+      "name": "Product of Power with Radical and Fractional Exponent",
+      "variables": {
+        "c_base": { "type": "randInt", "min": 2, "max": 3 },
+        "k": { "type": "randInt", "min": 2, "max": 3 },
+        "d_base": { "type": "randInt", "min": 2, "max": 4 },
+        "p": { "type": "randInt", "min": 2, "max": 4 },
+        "m": { "type": "randInt", "min": 1, "max": 5 }
+      },
+      "derived": {
+        "c": "Math.pow(scope.c_base, scope.k)",
+        "d": "Math.pow(scope.d_base, scope.p)",
+        "coeff_gcd": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.d_base, scope.c_base)",
+        "coeff_num": "scope.d_base / scope.coeff_gcd",
+        "coeff_den": "scope.c_base / scope.coeff_gcd",
+        "coeff_str": "scope.coeff_den === 1 ? scope.coeff_num.toString() : scope.coeff_num + '/' + scope.coeff_den",
+        "coeff_latex": "scope.coeff_den === 1 ? (scope.coeff_num === 1 ? '' : scope.coeff_num.toString()) : '\\\\frac{' + scope.coeff_num + '}{' + scope.coeff_den + '}'",
+        "exp_num_raw": "-scope.p - scope.m * scope.k",
+        "exp_den_raw": "scope.k * scope.p",
+        "exp_gcd": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.exp_num_raw, scope.exp_den_raw)",
+        "exp_num": "scope.exp_num_raw / scope.exp_gcd",
+        "exp_den": "scope.exp_den_raw / scope.exp_gcd",
+        "exp_str": "scope.exp_den === 1 ? 'a^{' + scope.exp_num + '}' : 'a^{-\\\\frac{' + Math.abs(scope.exp_num) + '}{' + scope.exp_den + '}}'",
+        "ans": "scope.coeff_str + 'a^' + scope.exp_num + '/' + scope.exp_den",
+        "step1": "'\\\\frac{1}{' + scope.c_base + '} a^{-\\\\frac{1}{' + scope.k + '}} \\\\times \\\\frac{' + scope.d_base + '}{a^{\\\\frac{' + scope.m + '}{' + scope.p + '}}}'",
+        "step2": "(scope.coeff_latex ? scope.coeff_latex + ' ' : '') + 'a^{-\\\\frac{1}{' + scope.k + '} - \\\\frac{' + scope.m + '}{' + scope.p + '}}'",
+        "step3": "(scope.coeff_latex ? scope.coeff_latex + ' ' : '') + scope.exp_str"
+      },
+      "questionTemplate": "Simplify the following, expressing your answer in index form:\n\n$$(${scope.c}a)^{-\\frac{1}{${scope.k}}} \\times \\sqrt[${scope.p}]{\\frac{${scope.d}}{a^{${scope.m}}}}$$ ",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Evaluate numerical roots and convert surds to fractional index form: $$${scope.step1}$$",
+        "Multiply numerical coefficients and combine powers of $a$: $$${scope.step2}$$",
+        "Simplify the exponent: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "name": "Multivariable Fractional Indices with Powers",
+      "variables": {
+        "a1": { "type": "randInt", "min": -2, "max": -1 },
+        "b1": { "type": "randInt", "min": 1, "max": 3 },
+        "c1": { "type": "randInt", "min": 2, "max": 3 },
+        "p1": { "type": "randInt", "min": 2, "max": 4 },
+        "a2": { "type": "randInt", "min": -3, "max": -1 },
+        "b2": { "type": "randInt", "min": -4, "max": -2 },
+        "c2": { "type": "randInt", "min": 3, "max": 5 },
+        "p2_num": { "type": "randInt", "min": -1, "max": -1 },
+        "p2_den": { "type": "randInt", "min": 2, "max": 2 }
+      },
+      "derived": {
+        "m_exp_raw_num": "scope.a1 * scope.p1 * scope.p2_den + scope.a2 * scope.p2_num",
+        "m_exp_raw_den": "scope.p2_den",
+        "m_gcd": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.m_exp_raw_num, scope.m_exp_raw_den)",
+        "m_num": "scope.m_exp_raw_num / scope.m_gcd",
+        "m_den": "scope.m_exp_raw_den / scope.m_gcd",
+        "m_str": "scope.m_den === 1 ? (scope.m_num === 1 ? 'm' : (scope.m_num === 0 ? '' : 'm^{' + scope.m_num + '}')) : 'm^{' + (scope.m_num < 0 ? '-\\\\frac{' + Math.abs(scope.m_num) + '}{' + scope.m_den + '}' : '\\\\frac{' + scope.m_num + '}{' + scope.m_den + '}') + '}'",
+        "n_exp_raw_num": "scope.b1 * scope.p1 * scope.c2 * scope.p2_den + scope.b2 * scope.p2_num * scope.c1",
+        "n_exp_raw_den": "scope.c1 * scope.c2 * scope.p2_den",
+        "n_gcd": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.n_exp_raw_num, scope.n_exp_raw_den)",
+        "n_num": "scope.n_exp_raw_num / scope.n_gcd",
+        "n_den": "scope.n_exp_raw_den / scope.n_gcd",
+        "n_str": "scope.n_den === 1 ? (scope.n_num === 1 ? 'n' : (scope.n_num === 0 ? '' : 'n^{' + scope.n_num + '}')) : 'n^{' + (scope.n_num < 0 ? '-\\\\frac{' + Math.abs(scope.n_num) + '}{' + scope.n_den + '}' : '\\\\frac{' + scope.n_num + '}{' + scope.n_den + '}') + '}'",
+        "ans": "scope.m_str + scope.n_str",
+        "step1": "'(m^{' + (scope.a1 * scope.p1) + '} n^{\\\\frac{' + (scope.b1 * scope.p1) + '}{' + scope.c1 + '}})(m^{' + (scope.a2 * scope.p2_num % scope.p2_den === 0 ? (scope.a2 * scope.p2_num / scope.p2_den).toString() : '\\\\frac{' + (scope.a2 * scope.p2_num) + '}{' + scope.p2_den + '}') + '} n^{\\\\frac{' + (scope.b2 * scope.p2_num) + '}{' + (scope.c2 * scope.p2_den) + '}})'"
+      },
+      "questionTemplate": "Simplify the following, expressing your answer in index form:\n\n$$(m^{${scope.a1}} n^{\\frac{${scope.b1}}{${scope.c1}}})^{${scope.p1}} (m^{${scope.a2}} n^{\\frac{${scope.b2}}{${scope.c2}}})^{\\frac{${scope.p2_num}}{${scope.p2_den}}}$$ ",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply power of a power law to expand brackets: $$${scope.step1}$$",
+        "Combine like bases by adding exponents: $$${scope.m_str}${scope.n_str}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "name": "Multivariable Product in Positive Index Form",
+      "variables": {
+        "m1": { "type": "randInt", "min": 2, "max": 5 },
+        "n1": { "type": "randInt", "min": 1, "max": 4 },
+        "m2": { "type": "randInt", "min": 2, "max": 5 },
+        "n2": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "m_sum": "scope.m1 + scope.m2",
+        "n_sum": "scope.n1 + scope.n2",
+        "ans": "'x^' + scope.m_sum + 'y^' + scope.n_sum",
+        "step1": "'x^{' + scope.m1 + ' + ' + scope.m2 + '} y^{' + scope.n1 + ' + ' + scope.n2 + '}'"
+      },
+      "questionTemplate": "Simplify the following, expressing your answer in positive index form:\n\n$$(x^{${scope.m1}} y^{${scope.n1}})(x^{${scope.m2}} y^{${scope.n2}})$$ ",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the multiplication law ($x^a \\times x^b = x^{a+b}$): $$${scope.step1}$$",
+        "Simplify exponents: $$x^{${scope.m_sum}} y^{${scope.n_sum}}$$ "
+      ]
+    },
+    {
+      "level": 3,
+      "name": "Multivariable Quotient in Positive Index Form",
+      "variables": {
+        "m1": { "type": "randInt", "min": 4, "max": 7 },
+        "n1": { "type": "randInt", "min": 2, "max": 5 },
+        "m2": { "type": "randInt", "min": 1, "max": 3 },
+        "n2": { "type": "randInt", "min": 6, "max": 9 }
+      },
+      "derived": {
+        "m_diff": "scope.m1 - scope.m2",
+        "n_diff": "scope.n1 - scope.n2",
+        "n_pos": "Math.abs(scope.n_diff)",
+        "ans": "'a^' + scope.m_diff + '/b^' + scope.n_pos",
+        "step1": "'a^{' + scope.m1 + ' - ' + scope.m2 + '} b^{' + scope.n1 + ' - ' + scope.n2 + '}'",
+        "step2": "'a^{' + scope.m_diff + '} b^{-' + scope.n_pos + '}'"
+      },
+      "questionTemplate": "Simplify the following, expressing your answer in positive index form:\n\n$$(a^{${scope.m1}} b^{${scope.n1}}) \\div (a^{${scope.m2}} b^{${scope.n2}})$$ ",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the division law ($a^m \\div a^n = a^{m-n}$): $$${scope.step1}$$",
+        "Simplify exponents: $$${scope.step2}$$",
+        "Convert negative exponent to positive index form: $$\\frac{a^{${scope.m_diff}}}{b^{${scope.n_pos}}}$$ "
+      ]
+    },
+    {
+      "level": 3,
+      "name": "Power of Multivariable Product",
+      "variables": {
+        "c": { "type": "randInt", "min": 2, "max": 4 },
+        "m": { "type": "randInt", "min": 2, "max": 4 },
+        "n": { "type": "randInt", "min": 2, "max": 5 },
+        "k": { "type": "randInt", "min": 2, "max": 3 }
+      },
+      "derived": {
+        "c_pow": "Math.pow(scope.c, scope.k)",
+        "m_tot": "scope.m * scope.k",
+        "n_tot": "scope.n * scope.k",
+        "ans": "scope.c_pow + 'a^' + scope.m_tot + 'b^' + scope.n_tot",
+        "step1": "scope.c + '^{' + scope.k + '} a^{' + scope.m + ' \\\\times ' + scope.k + '} b^{' + scope.n + ' \\\\times ' + scope.k + '}'"
+      },
+      "questionTemplate": "Simplify the following, expressing your answer in positive index form:\n\n$$(${scope.c}a^{${scope.m}} b^{${scope.n}})^{${scope.k}}$$ ",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply power of a product law to coefficient and each variable: $$${scope.step1}$$",
+        "Simplify: $$${scope.c_pow}a^{${scope.m_tot}}b^{${scope.n_tot}}$$ "
+      ]
+    },
+{
+  "level": 3,
+  "name": "Complex Rational Expression with Powers",
+  "variables": {
+    "c1": { "type": "randInt", "min": -3, "max": -2 },
+    "m1": { "type": "randInt", "min": 2, "max": 4 },
+    "n1": { "type": "randInt", "min": 2, "max": 3 },
+    "k1": { "type": "randInt", "min": 2, "max": 2 },
+    "c2": { "type": "randInt", "min": 2, "max": 4 },
+    "m2": { "type": "randInt", "min": 2, "max": 4 },
+    "n2": { "type": "randInt", "min": 4, "max": 6 },
+    "k2": { "type": "randInt", "min": 2, "max": 3 }
+  },
+  "derived": {
+    "c1_k1": "Math.pow(scope.c1, scope.k1)",
+    "c2_k2": "Math.pow(scope.c2, scope.k2)",
+    "c_gcd": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.c1_k1, scope.c2_k2)",
+    "c_num": "scope.c1_k1 / scope.c_gcd",
+    "c_den": "scope.c2_k2 / scope.c_gcd",
+    "p_num_exp": "scope.m1 * scope.k1",
+    "p_den_exp": "scope.m2 * scope.k2",
+    "p_diff": "scope.p_num_exp - scope.p_den_exp",
+    "q_num_exp": "scope.n1 * scope.k1",
+    "q_den_exp": "scope.n2 * scope.k2",
+    "q_diff": "scope.q_num_exp - scope.q_den_exp",
+    "p_top": "scope.p_diff > 0 ? (scope.p_diff === 1 ? 'p' : 'p^{' + scope.p_diff + '}') : ''",
+    "p_bot": "scope.p_diff < 0 ? (scope.p_diff === -1 ? 'p' : 'p^{' + Math.abs(scope.p_diff) + '}') : ''",
+    "q_top": "scope.q_diff > 0 ? (scope.q_diff === 1 ? 'q' : 'q^{' + scope.q_diff + '}') : ''",
+    "q_bot": "scope.q_diff < 0 ? (scope.q_diff === -1 ? 'q' : 'q^{' + Math.abs(scope.q_diff) + '}') : ''",
+    "top_coeff": "scope.c_num === 1 && (scope.p_top || scope.q_top) ? '' : scope.c_num",
+    "bot_coeff": "scope.c_den === 1 && (scope.p_bot || scope.q_bot) ? '' : scope.c_den",
+    "top_str": "scope.top_coeff + scope.p_top + scope.q_top",
+    "bot_str": "scope.bot_coeff + scope.p_bot + scope.q_bot",
+    "ans": "scope.bot_str ? (scope.top_str || '1') + '/' + scope.bot_str : scope.top_str",
+    "step1": "'\\\\frac{' + scope.c1_k1 + ' p^{' + scope.p_num_exp + '} q^{' + scope.q_num_exp + '}}{' + scope.c2_k2 + ' p^{' + scope.p_den_exp + '} q^{' + scope.q_den_exp + '}}'",
+    "step2": "'\\\\frac{' + (scope.top_str || '1') + '}{' + (scope.bot_str || '1') + '}'"
+  },
+  "questionTemplate": "Simplify the following, expressing your answer in positive index form:\n\n$$\\frac{(${scope.c1}p^{${scope.m1}} q^{${scope.n1}})^{${scope.k1}}}{(${scope.c2}p^{${scope.m2}} q^{${scope.n2}})^{${scope.k2}}}$$ ",
+  "inputs": [
+    {
+      "label": "=",
+      "answer": "${scope.ans}"
+    }
+  ],
+  "steps": [
+    "Expand powers in numerator and denominator: $$${scope.step1}$$",
+    "Simplify numerical coefficients and move negative indices: $$${scope.step2}$$"
+  ]
+}
+  ]
+}

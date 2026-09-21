@@ -1,0 +1,206 @@
+{
+  "skillTitle": "Solving Fractional Equations",
+  "keypad": [
+  "x", "=", ".", "/",
+  "7", "8", "9", "+",
+  "4", "5", "6", "-",
+  "1", "2", "3", "0",
+  "(", ")", "⌫", "Clear"
+],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "r1": { "type": "randInt", "min": 2, "max": 6 },
+        "r2": { "type": "randInt", "min": -6, "max": -2 }
+      },
+      "derived": {
+        "r1_val": "scope.r1",
+        "r2_val": "(scope.r1 + scope.r2 === 0) ? scope.r2 - 1 : scope.r2",
+        "a": "scope.r1_val",
+        "d": "scope.r2_val",
+        "c": "scope.r1_val + scope.r2_val",
+        "ans1": "Math.min(scope.r1_val, scope.r2_val).toString()",
+        "ans2": "Math.max(scope.r1_val, scope.r2_val).toString()",
+        "a_str": "scope.a > 0 ? '+ ' + scope.a : '- ' + Math.abs(scope.a)",
+        "d_str": "scope.d > 0 ? '+ ' + scope.d : '- ' + Math.abs(scope.d)",
+        "c_str": "scope.c === 1 ? '' : (scope.c === -1 ? '-' : scope.c.toString())",
+        "lhs_frac": "'\\\\frac{x ' + scope.a_str + '}{2}'",
+        "rhs_frac": "'\\\\frac{' + scope.c_str + 'x}{x ' + scope.d_str + '}'",
+        "eq": "scope.lhs_frac + ' = ' + scope.rhs_frac",
+        "step1_cross": "'(x ' + scope.a_str + ')(x ' + scope.d_str + ') = 2(' + scope.c_str + 'x)'",
+        "sum_ad": "scope.a + scope.d",
+        "prod_ad": "scope.a * scope.d",
+        "sum_ad_str": "scope.sum_ad > 0 ? '+ ' + scope.sum_ad + 'x' : (scope.sum_ad < 0 ? '- ' + Math.abs(scope.sum_ad) + 'x' : '')",
+        "prod_ad_str": "scope.prod_ad > 0 ? '+ ' + scope.prod_ad : '- ' + Math.abs(scope.prod_ad)",
+        "rhs_exp": "(2 * scope.c) + 'x'",
+        "step2_expand": "'x^2 ' + scope.sum_ad_str + ' ' + scope.prod_ad_str + ' = ' + scope.rhs_exp",
+        "b_quad": "-(scope.r1_val + scope.r2_val)",
+        "b_quad_str": "scope.b_quad === 1 ? '+ x' : (scope.b_quad === -1 ? '- x' : (scope.b_quad > 0 ? '+ ' + scope.b_quad + 'x' : (scope.b_quad < 0 ? '- ' + Math.abs(scope.b_quad) + 'x' : '')))",
+        "step3_quad": "'x^2 ' + scope.b_quad_str + ' ' + scope.prod_ad_str + ' = 0'",
+        "f1": "-scope.r1_val",
+        "f2": "-scope.r2_val",
+        "f1_str": "scope.f1 > 0 ? '+ ' + scope.f1 : '- ' + Math.abs(scope.f1)",
+        "f2_str": "scope.f2 > 0 ? '+ ' + scope.f2 : '- ' + Math.abs(scope.f2)",
+        "step4_factor": "'(x ' + scope.f1_str + ')(x ' + scope.f2_str + ') = 0'"
+      },
+      "questionTemplate": "Solve the fractional equation:\n\n$$${scope.eq}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Cross-multiply to remove the denominators: $$${scope.step1_cross}$$",
+        "Expand terms on both sides: $$${scope.step2_expand}$$",
+        "Rearrange into a standard quadratic equation ($$ax^2 + bx + c = 0$$): $$${scope.step3_quad}$$",
+        "Factorise the quadratic expression: $$${scope.step4_factor}$$",
+        "Solve for $$x$$: $$x = ${scope.ans1}$$ or $$x = ${scope.ans2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "r1": { "type": "randInt", "min": 3, "max": 7 },
+        "r2": { "type": "randInt", "min": -6, "max": -2 },
+        "b": { "type": "randInt", "min": 1, "max": 3 }
+      },
+      "derived": {
+        "r2_eff": "(scope.r2 === -scope.b || scope.r1 + scope.r2 === 0) ? scope.r2 - 1 : scope.r2",
+        "sumR": "scope.r1 + scope.r2_eff",
+        "prodR": "scope.r1 * scope.r2_eff",
+        "c": "scope.b + scope.sumR",
+        "a": "scope.prodR + scope.b * scope.c",
+        "ans1": "Math.min(scope.r1, scope.r2_eff).toString()",
+        "ans2": "Math.max(scope.r1, scope.r2_eff).toString()",
+        "b_str": "'+ ' + scope.b",
+        "a_abs": "Math.abs(scope.a)",
+        "frac_part": "(scope.a > 0 ? '+ ' : '- ') + '\\\\frac{' + scope.a_abs + '}{x ' + scope.b_str + '}'",
+        "eq": "'x ' + scope.frac_part + ' = ' + scope.c",
+        "comb_num_exp": "'x^2 + ' + scope.b + 'x ' + (scope.a > 0 ? '+ ' + scope.a : '- ' + Math.abs(scope.a))",
+        "step1_single": "'\\\\frac{' + scope.comb_num_exp + '}{x ' + scope.b_str + '} = ' + scope.c",
+        "step2_cross": "scope.comb_num_exp + ' = ' + scope.c + '(x ' + scope.b_str + ')'",
+        "bc_val": "scope.b * scope.c",
+        "step2_expand": "scope.comb_num_exp + ' = ' + scope.c + 'x + ' + scope.bc_val",
+        "b_quad": "-scope.sumR",
+        "b_quad_str": "scope.b_quad === 1 ? '+ x' : (scope.b_quad === -1 ? '- x' : (scope.b_quad > 0 ? '+ ' + scope.b_quad + 'x' : (scope.b_quad < 0 ? '- ' + Math.abs(scope.b_quad) + 'x' : '')))",
+        "c_quad_str": "scope.prodR > 0 ? '+ ' + scope.prodR : '- ' + Math.abs(scope.prodR)",
+        "step3_quad": "'x^2 ' + scope.b_quad_str + ' ' + scope.c_quad_str + ' = 0'",
+        "f1": "-scope.r1",
+        "f2": "-scope.r2_eff",
+        "f1_str": "scope.f1 > 0 ? '+ ' + scope.f1 : '- ' + Math.abs(scope.f1)",
+        "f2_str": "scope.f2 > 0 ? '+ ' + scope.f2 : '- ' + Math.abs(scope.f2)",
+        "step4_factor": "'(x ' + scope.f1_str + ')(x ' + scope.f2_str + ') = 0'"
+      },
+      "questionTemplate": "Solve the fractional equation:\n\n$$${scope.eq}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Combine the terms on the left-hand side into a single fraction: $$${scope.step1_single}$$",
+        "Cross-multiply to remove the denominator: $$${scope.step2_cross}$$",
+        "Expand terms: $$${scope.step2_expand}$$",
+        "Rearrange into a standard quadratic equation ($$ax^2 + bx + c = 0$$): $$${scope.step3_quad}$$",
+        "Factorise the quadratic expression: $$${scope.step4_factor}$$",
+        "Solve for $$x$$: $$x = ${scope.ans1}$$ or $$x = ${scope.ans2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k1": { "type": "randInt", "min": 1, "max": 3 },
+        "k2": { "type": "randInt", "min": 1, "max": 3 }
+      },
+      "derived": {
+        "r1": "2 * scope.k1 + 1",
+        "r2": "-(2 * scope.k2 + 1)",
+        "A": "((1 + scope.r1) * (1 + scope.r2)) / 2",
+        "B": "scope.r1 + scope.r2 - scope.A",
+        "ans1": "Math.min(scope.r1, scope.r2).toString()",
+        "ans2": "Math.max(scope.r1, scope.r2).toString()",
+        "frac1_str": "(scope.A > 0 ? '' : '-') + '\\\\frac{' + Math.abs(scope.A) + '}{x + 1}'",
+        "frac2_str": "(scope.B > 0 ? '+ ' : '- ') + '\\\\frac{' + Math.abs(scope.B) + '}{x - 1}'",
+        "eq": "scope.frac1_str + ' ' + scope.frac2_str + ' = 1'",
+        "coeffX_lhs": "scope.A + scope.B",
+        "const_lhs": "scope.B - scope.A",
+        "coeffX_lhs_str": "scope.coeffX_lhs === 0 ? '' : (scope.coeffX_lhs === 1 ? 'x' : (scope.coeffX_lhs === -1 ? '-x' : scope.coeffX_lhs + 'x'))",
+        "const_lhs_str": "scope.const_lhs > 0 ? (scope.coeffX_lhs === 0 ? scope.const_lhs.toString() : '+ ' + scope.const_lhs) : (scope.const_lhs < 0 ? '- ' + Math.abs(scope.const_lhs) : '')",
+        "num_combined": "scope.coeffX_lhs_str + (scope.const_lhs_str ? ' ' + scope.const_lhs_str : '')",
+        "step1_comb": "'\\\\frac{' + scope.num_combined + '}{x^2 - 1} = 1'",
+        "step2_cross": "scope.num_combined + ' = x^2 - 1'",
+        "b_quad": "-(scope.r1 + scope.r2)",
+        "c_quad": "scope.r1 * scope.r2",
+        "b_quad_str": "scope.b_quad === 1 ? '+ x' : (scope.b_quad === -1 ? '- x' : (scope.b_quad > 0 ? '+ ' + scope.b_quad + 'x' : (scope.b_quad < 0 ? '- ' + Math.abs(scope.b_quad) + 'x' : '')))",
+        "c_quad_str": "scope.c_quad > 0 ? '+ ' + scope.c_quad : '- ' + Math.abs(scope.c_quad)",
+        "step3_quad": "'x^2 ' + scope.b_quad_str + ' ' + scope.c_quad_str + ' = 0'",
+        "f1": "-scope.r1",
+        "f2": "-scope.r2",
+        "f1_str": "scope.f1 > 0 ? '+ ' + scope.f1 : '- ' + Math.abs(scope.f1)",
+        "f2_str": "scope.f2 > 0 ? '+ ' + scope.f2 : '- ' + Math.abs(scope.f2)",
+        "step4_factor": "'(x ' + scope.f1_str + ')(x ' + scope.f2_str + ') = 0'"
+      },
+      "questionTemplate": "Solve the fractional equation:\n\n$$${scope.eq}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Combine the algebraic fractions on the left-hand side into a single fraction: $$${scope.step1_comb}$$",
+        "Cross-multiply to remove the denominator: $$${scope.step2_cross}$$",
+        "Rearrange terms into standard quadratic form ($$ax^2 + bx + c = 0$$): $$${scope.step3_quad}$$",
+        "Factorise the quadratic expression: $$${scope.step4_factor}$$",
+        "Solve for $$x$$: $$x = ${scope.ans1}$$ or $$x = ${scope.ans2}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "r1_choice": { "type": "randInt", "min": 0, "max": 1 },
+        "r2_choice": { "type": "randInt", "min": 0, "max": 2 }
+      },
+      "derived": {
+        "r1": "scope.r1_choice === 0 ? 5 : 8",
+        "r2": "scope.r2_choice === 0 ? -5 : (scope.r2_choice === 1 ? -4 : -2)",
+        "a": "1 + ((1 + scope.r1) * (1 + scope.r2)) / 3",
+        "c": "-2 + scope.r1 + scope.r2 - scope.a",
+        "ans1": "Math.min(scope.r1, scope.r2).toString()",
+        "ans2": "Math.max(scope.r1, scope.r2).toString()",
+        "a_str": "scope.a > 0 ? '+ ' + scope.a : '- ' + Math.abs(scope.a)",
+        "c_str": "scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c)",
+        "frac1": "'\\\\frac{x ' + scope.a_str + '}{x + 1}'",
+        "frac2": "'\\\\frac{x ' + scope.c_str + '}{x - 2}'",
+        "eq": "scope.frac1 + ' + ' + scope.frac2 + ' = 3'",
+        "coeffX_num": "scope.a + scope.c - 1",
+        "const_num": "scope.c - 2 * scope.a",
+        "coeffX_num_str": "scope.coeffX_num === 0 ? '' : (scope.coeffX_num === 1 ? '+ x' : (scope.coeffX_num === -1 ? '- x' : (scope.coeffX_num > 0 ? '+ ' + scope.coeffX_num + 'x' : '- ' + Math.abs(scope.coeffX_num) + 'x')))",
+        "const_num_str": "scope.const_num > 0 ? '+ ' + scope.const_num : '- ' + Math.abs(scope.const_num)",
+        "lhs_single": "'\\\\frac{2x^2 ' + scope.coeffX_num_str + ' ' + scope.const_num_str + '}{x^2 - x - 2} = 3'",
+        "step2_cross": "'2x^2 ' + scope.coeffX_num_str + ' ' + scope.const_num_str + ' = 3(x^2 - x - 2)'",
+        "step2_expand": "'2x^2 ' + scope.coeffX_num_str + ' ' + scope.const_num_str + ' = 3x^2 - 3x - 6'",
+        "b_quad": "-(scope.r1 + scope.r2)",
+        "c_quad": "scope.r1 * scope.r2",
+        "b_quad_str": "scope.b_quad === 1 ? '+ x' : (scope.b_quad === -1 ? '- x' : (scope.b_quad > 0 ? '+ ' + scope.b_quad + 'x' : '- ' + Math.abs(scope.b_quad) + 'x'))",
+        "c_quad_str": "scope.c_quad > 0 ? '+ ' + scope.c_quad : '- ' + Math.abs(scope.c_quad)",
+        "step3_quad": "'x^2 ' + scope.b_quad_str + ' ' + scope.c_quad_str + ' = 0'",
+        "f1": "-scope.r1",
+        "f2": "-scope.r2",
+        "f1_str": "scope.f1 > 0 ? '+ ' + scope.f1 : '- ' + Math.abs(scope.f1)",
+        "f2_str": "scope.f2 > 0 ? '+ ' + scope.f2 : '- ' + Math.abs(scope.f2)",
+        "step4_factor": "'(x ' + scope.f1_str + ')(x ' + scope.f2_str + ') = 0'"
+      },
+      "questionTemplate": "Solve the fractional equation:\n\n$$${scope.eq}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Combine the two algebraic fractions on the left-hand side into a single fraction over a common denominator: $$${scope.lhs_single}$$",
+        "Cross-multiply to remove the denominator: $$${scope.step2_cross}$$",
+        "Expand the terms on the right-hand side: $$${scope.step2_expand}$$",
+        "Rearrange terms into standard quadratic form ($$ax^2 + bx + c = 0$$): $$${scope.step3_quad}$$",
+        "Factorise the quadratic expression: $$${scope.step4_factor}$$",
+        "Solve for $$x$$: $$x = ${scope.ans1}$$ or $$x = ${scope.ans2}$$"
+      ]
+    }
+  ]
+}

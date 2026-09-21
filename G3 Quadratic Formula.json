@@ -1,0 +1,192 @@
+{
+  "skillTitle": "Solve Quadratic Equations using Quadratic Formula",
+  "keypad": [
+  "x", "=", "or", "/",
+  "7", "8", "9", "+",
+  "4", "5", "6", "-",
+  "1", "2", "3", "0",
+  ".", "(", "⌫", "Clear"
+],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 6 },
+        "b": { "type": "randInt", "min": -9, "max": 9, "excludeZero": true },
+        "c": { "type": "randInt", "min": -9, "max": -1 }
+      },
+      "derived": {
+        "a_quad": "scope.a",
+        "b_quad": "scope.b",
+        "c_quad": "scope.c",
+        "a_str": "scope.a === 1 ? 'x^2' : scope.a + 'x^2'",
+        "b_str": "scope.b === 1 ? ' + x' : (scope.b === -1 ? ' - x' : (scope.b > 0 ? ' + ' + scope.b + 'x' : ' - ' + Math.abs(scope.b) + 'x'))",
+        "c_str": "scope.c > 0 ? ' + ' + scope.c : ' - ' + Math.abs(scope.c)",
+        "eq": "scope.a_str + scope.b_str + scope.c_str + ' = 0'",
+        "disc": "scope.b_quad * scope.b_quad - 4 * scope.a_quad * scope.c_quad",
+        "x1_val": "(-scope.b_quad + Math.sqrt(scope.disc)) / (2 * scope.a_quad)",
+        "x2_val": "(-scope.b_quad - Math.sqrt(scope.disc)) / (2 * scope.a_quad)",
+        "ans1": "Math.min(parseFloat(scope.x1_val.toPrecision(3)), parseFloat(scope.x2_val.toPrecision(3))).toString()",
+        "ans2": "Math.max(parseFloat(scope.x1_val.toPrecision(3)), parseFloat(scope.x2_val.toPrecision(3))).toString()",
+        "step1": "'a = ' + scope.a_quad + ', \\\\ b = ' + scope.b_quad + ', \\\\ c = ' + scope.c_quad",
+        "step2": "'x = \\\\frac{-(' + (scope.b_quad < 0 ? '(' + scope.b_quad + ')' : scope.b_quad) + ') \\\\pm \\\\sqrt{(' + scope.b_quad + ')^2 - 4(' + scope.a_quad + ')(' + (scope.c_quad < 0 ? '(' + scope.c_quad + ')' : scope.c_quad) + ')}}{2(' + scope.a_quad + ')}'",
+        "step3": "'x = ' + scope.ans1 + ' \\\\text{ or } x = ' + scope.ans2"
+      },
+      "questionTemplate": "Solve the following equation using the quadratic formula. Give your answers correct to 3 significant figures.\n\n$$${scope.eq}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or  x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Identify the coefficients $a$, $b$, and $c$ from $ax^2 + bx + c = 0$: $$${scope.step1}$$",
+        "Substitute $a$, $b$, and $c$ into the quadratic formula $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$: $$${scope.step2}$$",
+        "Evaluate using a calculator (rounding to 3 significant figures): $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 5 },
+        "b_raw": { "type": "randInt", "min": 6, "max": 10 },
+        "c": { "type": "randInt", "min": 1, "max": 3 }
+      },
+      "derived": {
+        "b_eff": "scope.b_raw * scope.b_raw <= 4 * scope.a * scope.c ? Math.ceil(Math.sqrt(4 * scope.a * scope.c)) + 3 : scope.b_raw",
+        "a_quad": "scope.a",
+        "b_quad": "scope.b_eff",
+        "c_quad": "scope.c",
+        "a_str": "scope.a + 'x^2'",
+        "b_str": "' + ' + scope.b_eff + 'x'",
+        "c_str": "' + ' + scope.c",
+        "eq": "scope.a_str + scope.b_str + scope.c_str + ' = 0'",
+        "disc": "scope.b_quad * scope.b_quad - 4 * scope.a_quad * scope.c_quad",
+        "x1_val": "(-scope.b_quad + Math.sqrt(scope.disc)) / (2 * scope.a_quad)",
+        "x2_val": "(-scope.b_quad - Math.sqrt(scope.disc)) / (2 * scope.a_quad)",
+        "ans1": "Math.min(parseFloat(scope.x1_val.toPrecision(3)), parseFloat(scope.x2_val.toPrecision(3))).toString()",
+        "ans2": "Math.max(parseFloat(scope.x1_val.toPrecision(3)), parseFloat(scope.x2_val.toPrecision(3))).toString()",
+        "step1": "'a = ' + scope.a_quad + ', \\\\ b = ' + scope.b_quad + ', \\\\ c = ' + scope.c_quad",
+        "step2": "'x = \\\\frac{-(' + scope.b_quad + ') \\\\pm \\\\sqrt{(' + scope.b_quad + ')^2 - 4(' + scope.a_quad + ')(' + scope.c_quad + ')}}{2(' + scope.a_quad + ')}'",
+        "step3": "'x = ' + scope.ans1 + ' \\\\text{ or } x = ' + scope.ans2"
+      },
+      "questionTemplate": "Solve the following equation using the quadratic formula. Give your answers correct to 3 significant figures.\n\n$$${scope.eq}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or  x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Identify the coefficients $a$, $b$, and $c$: $$${scope.step1}$$",
+        "Substitute into the quadratic formula $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$: $$${scope.step2}$$",
+        "Evaluate using a calculator to find the roots rounded to 3 significant figures: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 5 },
+        "b": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "c": { "type": "randInt", "min": 3, "max": 12 }
+      },
+      "derived": {
+        "eq": "'x(' + scope.a + 'x ' + (scope.b > 0 ? '+ ' + scope.b : '- ' + Math.abs(scope.b)) + ') = ' + scope.c",
+        "a_quad": "scope.a",
+        "b_quad": "scope.b",
+        "c_quad": "-scope.c",
+        "std_eq": "scope.a + 'x^2 ' + (scope.b > 0 ? '+ ' + scope.b + 'x' : '- ' + Math.abs(scope.b) + 'x') + ' - ' + scope.c + ' = 0'",
+        "disc": "scope.b_quad * scope.b_quad - 4 * scope.a_quad * scope.c_quad",
+        "x1_val": "(-scope.b_quad + Math.sqrt(scope.disc)) / (2 * scope.a_quad)",
+        "x2_val": "(-scope.b_quad - Math.sqrt(scope.disc)) / (2 * scope.a_quad)",
+        "ans1": "Math.min(parseFloat(scope.x1_val.toPrecision(3)), parseFloat(scope.x2_val.toPrecision(3))).toString()",
+        "ans2": "Math.max(parseFloat(scope.x1_val.toPrecision(3)), parseFloat(scope.x2_val.toPrecision(3))).toString()",
+        "step1": "scope.std_eq",
+        "step2": "'a = ' + scope.a_quad + ', \\\\ b = ' + scope.b_quad + ', \\\\ c = ' + scope.c_quad",
+        "step3": "'x = \\\\frac{-(' + (scope.b_quad < 0 ? '(' + scope.b_quad + ')' : scope.b_quad) + ') \\\\pm \\\\sqrt{(' + scope.b_quad + ')^2 - 4(' + scope.a_quad + ')(' + (scope.c_quad < 0 ? '(' + scope.c_quad + ')' : scope.c_quad) + ')}}{2(' + scope.a_quad + ')}'",
+        "step4": "'x = ' + scope.ans1 + ' \\\\text{ or } x = ' + scope.ans2"
+      },
+      "questionTemplate": "Solve the following equation using the quadratic formula. Give your answers correct to 3 significant figures.\n\n$$${scope.eq}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or  x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Expand the brackets and express the equation in standard form $ax^2 + bx + c = 0$: $$${scope.step1}$$",
+        "State $a$, $b$, and $c$: $$${scope.step2}$$",
+        "Substitute values into $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$: $$${scope.step3}$$",
+        "Evaluate using a calculator (rounding to 3 significant figures): $$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "m": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "n": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "k": { "type": "randInt", "min": 5, "max": 15 }
+      },
+      "derived": {
+        "a_quad": "1",
+        "b_quad": "scope.m + scope.n",
+        "c_quad": "scope.m * scope.n - scope.k",
+        "eq": "'(x ' + (scope.m > 0 ? '+ ' + scope.m : '- ' + Math.abs(scope.m)) + ')(x ' + (scope.n > 0 ? '+ ' + scope.n : '- ' + Math.abs(scope.n)) + ') = ' + scope.k",
+        "b_str": "scope.b_quad === 0 ? '' : (scope.b_quad === 1 ? ' + x' : (scope.b_quad === -1 ? ' - x' : (scope.b_quad > 0 ? ' + ' + scope.b_quad + 'x' : ' - ' + Math.abs(scope.b_quad) + 'x')))",
+        "c_str": "scope.c_quad > 0 ? ' + ' + scope.c_quad : ' - ' + Math.abs(scope.c_quad)",
+        "std_eq": "'x^2' + scope.b_str + scope.c_str + ' = 0'",
+        "disc": "scope.b_quad * scope.b_quad - 4 * scope.a_quad * scope.c_quad",
+        "x1_val": "(-scope.b_quad + Math.sqrt(scope.disc)) / (2 * scope.a_quad)",
+        "x2_val": "(-scope.b_quad - Math.sqrt(scope.disc)) / (2 * scope.a_quad)",
+        "ans1": "Math.min(parseFloat(scope.x1_val.toPrecision(3)), parseFloat(scope.x2_val.toPrecision(3))).toString()",
+        "ans2": "Math.max(parseFloat(scope.x1_val.toPrecision(3)), parseFloat(scope.x2_val.toPrecision(3))).toString()",
+        "step1": "scope.std_eq",
+        "step2": "'a = ' + scope.a_quad + ', \\\\ b = ' + scope.b_quad + ', \\\\ c = ' + scope.c_quad",
+        "step3": "'x = \\\\frac{-(' + (scope.b_quad < 0 ? '(' + scope.b_quad + ')' : scope.b_quad) + ') \\\\pm \\\\sqrt{(' + scope.b_quad + ')^2 - 4(' + scope.a_quad + ')(' + (scope.c_quad < 0 ? '(' + scope.c_quad + ')' : scope.c_quad) + ')}}{2(' + scope.a_quad + ')}'",
+        "step4": "'x = ' + scope.ans1 + ' \\\\text{ or } x = ' + scope.ans2"
+      },
+      "questionTemplate": "Solve the following equation using the quadratic formula. Give your answers correct to 3 significant figures.\n\n$$${scope.eq}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or  x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Expand using a multiplication frame and rearrange to standard form $ax^2 + bx + c = 0$: $$${scope.step1}$$",
+        "Identify $a$, $b$, and $c$: $$${scope.step2}$$",
+        "Substitute values into the quadratic formula: $$${scope.step3}$$",
+        "Evaluate using a calculator (rounding to 3 significant figures): $$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "m": { "type": "randInt", "min": 2, "max": 6 },
+        "n": { "type": "randInt", "min": 1, "max": 4 },
+        "p": { "type": "randInt", "min": 2, "max": 5 },
+        "q": { "type": "randInt", "min": 10, "max": 30 }
+      },
+      "derived": {
+        "a_quad": "scope.m",
+        "b_quad": "scope.p - 1 - scope.m * scope.n",
+        "c_quad": "-scope.q",
+        "eq": "'x + ' + scope.m + 'x(' + scope.n + ' - x) = ' + scope.p + 'x - ' + scope.q",
+        "b_str": "scope.b_quad === 0 ? '' : (scope.b_quad === 1 ? ' + x' : (scope.b_quad === -1 ? ' - x' : (scope.b_quad > 0 ? ' + ' + scope.b_quad + 'x' : ' - ' + Math.abs(scope.b_quad) + 'x')))",
+        "std_eq": "scope.a_quad + 'x^2' + scope.b_str + ' - ' + scope.q + ' = 0'",
+        "disc": "scope.b_quad * scope.b_quad - 4 * scope.a_quad * scope.c_quad",
+        "x1_val": "(-scope.b_quad + Math.sqrt(scope.disc)) / (2 * scope.a_quad)",
+        "x2_val": "(-scope.b_quad - Math.sqrt(scope.disc)) / (2 * scope.a_quad)",
+        "ans1": "Math.min(parseFloat(scope.x1_val.toPrecision(3)), parseFloat(scope.x2_val.toPrecision(3))).toString()",
+        "ans2": "Math.max(parseFloat(scope.x1_val.toPrecision(3)), parseFloat(scope.x2_val.toPrecision(3))).toString()",
+        "step1": "scope.std_eq",
+        "step2": "'a = ' + scope.a_quad + ', \\\\ b = ' + scope.b_quad + ', \\\\ c = ' + scope.c_quad",
+        "step3": "'x = \\\\frac{-(' + (scope.b_quad < 0 ? '(' + scope.b_quad + ')' : scope.b_quad) + ') \\\\pm \\\\sqrt{(' + scope.b_quad + ')^2 - 4(' + scope.a_quad + ')(' + (scope.c_quad < 0 ? '(' + scope.c_quad + ')' : scope.c_quad) + ')}}{2(' + scope.a_quad + ')}'",
+        "step4": "'x = ' + scope.ans1 + ' \\\\text{ or } x = ' + scope.ans2"
+      },
+      "questionTemplate": "Solve the equation using the quadratic formula. Give your answers correct to 3 significant figures.\n\n$$${scope.eq}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or  x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Expand all terms, collect like terms, and rearrange to $ax^2 + bx + c = 0$: $$${scope.step1}$$",
+        "State $a$, $b$, and $c$: $$${scope.step2}$$",
+        "Substitute into the quadratic formula: $$${scope.step3}$$",
+        "Evaluate using a calculator (rounding to 3 significant figures): $$${scope.step4}$$"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "skillTitle": "Length of Line Segment",
+  "keypad": [
+  "(", ")", ",", "^",
+  "7", "8", "9", "/",
+  "4", "5", "6", "+",
+  "1", "2", "3", "-",
+  "0", ".", "⌫", "Clear"
+],
+  "structures": [
+    {
+  "level": 1,
+  "variables": {
+    "x1": { "type": "randInt", "min": -8, "max": 8 },
+    "y1": { "type": "randInt", "min": -8, "max": 8 },
+    "dx_raw": { "type": "randInt", "min": -8, "max": 8 },
+    "dy_raw": { "type": "randInt", "min": -8, "max": 8 }
+  },
+  "derived": {
+    "dx": "scope.dx_raw === 0 && scope.dy_raw === 0 ? 3 : scope.dx_raw",
+    "dy": "scope.dy_raw",
+    "x2": "scope.x1 + scope.dx",
+    "y2": "scope.y1 + scope.dy",
+    "sum_sq": "scope.dx * scope.dx + scope.dy * scope.dy",
+    "dist": "Math.sqrt(scope.sum_sq)",
+    "isExact": "Number.isInteger(scope.dist)",
+    "ans": "scope.isExact ? scope.dist.toString() : scope.dist.toPrecision(3)",
+    "step1": "'AB = \\\\sqrt{(' + scope.x2 + ' - ' + (scope.x1 < 0 ? '(' + scope.x1 + ')' : scope.x1) + ')^2 + (' + scope.y2 + ' - ' + (scope.y1 < 0 ? '(' + scope.y1 + ')' : scope.y1) + ')^2}'",
+    "step2": "'AB = ' + scope.ans + (scope.isExact ? '' : ' \\\\text{ (to 3 s.f.)}')"
+  },
+  "questionTemplate": "Find the length of the line segment joining the points $A(${scope.x1}, ${scope.y1})$ and $B(${scope.x2}, ${scope.y2})$.",
+  "inputs": [
+    { "label": "AB =", "answer": "${scope.ans}" }
+  ],
+  "steps": [
+    "Use the distance formula: $$AB = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$",
+    "Substitute the coordinates into the formula: $$${scope.step1}$$",
+    "Evaluate using a calculator: $$${scope.step2}$$"
+  ]
+},
+    {
+      "level": 2,
+      "variables": {
+        "x1": { "type": "randInt", "min": -5, "max": 5 },
+        "y1": { "type": "randInt", "min": -5, "max": 5 },
+        "s_dx": { "type": "randInt", "min": 0, "max": 1 },
+        "m": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "dx": "scope.m === 1 ? 3 : (scope.m === 2 ? 4 : (scope.m === 3 ? 6 : 5))",
+        "r": "scope.m === 1 ? 4 : (scope.m === 2 ? 3 : (scope.m === 3 ? 8 : 12))",
+        "d": "scope.m === 1 ? 5 : (scope.m === 2 ? 5 : (scope.m === 3 ? 10 : 13))",
+        "sign_dx": "scope.s_dx === 0 ? -1 : 1",
+        "x2": "scope.x1 + scope.sign_dx * scope.dx",
+        "dx_sq": "scope.dx * scope.dx",
+        "d_sq": "scope.d * scope.d",
+        "r_sq": "scope.r * scope.r",
+        "k1": "scope.y1 + scope.r",
+        "k2": "scope.y1 - scope.r",
+        "ans": "scope.k1 + ' or ' + scope.k2",
+        "k_term": "scope.y1 === 0 ? 'k' : (scope.y1 > 0 ? '(k - ' + scope.y1 + ')' : '(k + ' + Math.abs(scope.y1) + ')')",
+        "step1": "'PQ = \\\\sqrt{(' + scope.x2 + ' - ' + (scope.x1 < 0 ? '(' + scope.x1 + ')' : scope.x1) + ')^2 + (k - ' + (scope.y1 < 0 ? '(' + scope.y1 + ')' : scope.y1) + ')^2} = ' + scope.d",
+        "step2": "'(' + (scope.sign_dx * scope.dx) + ')^2 + ' + scope.k_term + '^2 = ' + scope.d_sq",
+        "step3": "scope.dx_sq + ' + ' + scope.k_term + '^2 = ' + scope.d_sq + ' \\\\implies ' + scope.k_term + '^2 = ' + scope.r_sq",
+        "step4": "scope.k_term + ' = \\\\pm ' + scope.r",
+        "step5": "'k = ' + scope.k1 + ' \\\\text{ or } k = ' + scope.k2"
+      },
+      "questionTemplate": "The distance between the points $P(${scope.x1}, ${scope.y1})$ and $Q(${scope.x2}, k)$ is $${scope.d}$ units. Find the possible values of $k$.",
+      "inputs": [
+        { "label": "k =", "answer": "${scope.k1}" },
+        { "label": "or k =", "answer": "${scope.k2}" }
+      ],
+      "steps": [
+        "Apply the distance formula for $PQ$: $$${scope.step1}$$",
+        "Square both sides to eliminate the radical: $$${scope.step2}$$",
+        "Isolate the squared term: $$${scope.step3}$$",
+        "Take the square root of both sides: $$${scope.step4}$$",
+        "Solve for $k$: $$${scope.step5}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "x_ans": { "type": "randInt", "min": -3, "max": 3 },
+        "type_sel": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "dx1": "scope.type_sel === 1 ? 3 : (scope.type_sel === 2 ? 2 : (scope.type_sel === 3 ? 1 : 4))",
+        "y1": "scope.type_sel === 1 ? 4 : (scope.type_sel === 2 ? 4 : (scope.type_sel === 3 ? 7 : 2))",
+        "k_val": "scope.type_sel === 1 ? 4 : (scope.type_sel === 2 ? 4 : (scope.type_sel === 3 ? 5 : 2))",
+        "y2": "scope.type_sel === 1 ? 3 : (scope.type_sel === 2 ? 2 : (scope.type_sel === 3 ? 5 : 4))",
+        "x1": "scope.x_ans - scope.dx1",
+        "x2": "scope.x_ans + scope.k_val",
+        "c1": "scope.x1 * scope.x1 + scope.y1 * scope.y1",
+        "c2": "scope.x2 * scope.x2 + scope.y2 * scope.y2",
+        "coeffL": "-2 * scope.x1",
+        "coeffR": "-2 * scope.x2",
+        "ans": "'(' + scope.x_ans + ', 0)'",
+        "step1": "'(x - ' + (scope.x1 < 0 ? '(' + scope.x1 + ')' : scope.x1) + ')^2 + (' + scope.y1 + ')^2 = (x - ' + (scope.x2 < 0 ? '(' + scope.x2 + ')' : scope.x2) + ')^2 + (' + scope.y2 + ')^2'",
+        "step2": "'x^2 ' + (scope.coeffL >= 0 ? '+ ' + scope.coeffL : '- ' + Math.abs(scope.coeffL)) + 'x + ' + scope.c1 + ' = x^2 ' + (scope.coeffR >= 0 ? '+ ' + scope.coeffR : '- ' + Math.abs(scope.coeffR)) + 'x + ' + scope.c2",
+        "step3": "(scope.coeffL >= 0 ? scope.coeffL : '- ' + Math.abs(scope.coeffL)) + 'x + ' + scope.c1 + ' = ' + (scope.coeffR >= 0 ? scope.coeffR : '- ' + Math.abs(scope.coeffR)) + 'x + ' + scope.c2 + ' \\\\implies x = ' + scope.x_ans"
+      },
+      "questionTemplate": "Find the coordinates of a point $C$ on the $x$-axis which is equidistant from $A(${scope.x1}, ${scope.y1})$ and $B(${scope.x2}, ${scope.y2})$.",
+      "inputs": [
+        { "label": "C =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Since point $C$ lies on the $x$-axis, its coordinates are $(x, 0)$.",
+        "Set $AC^2 = BC^2$ using the distance formula: $$${scope.step1}$$",
+        "Expand both sides of the equation: $$${scope.step2}$$",
+        "Simplify and solve for $x$: $$${scope.step3}$$",
+        "Therefore, the coordinates of $C$ are $${scope.ans}$."
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "y_ans": { "type": "randInt", "min": -3, "max": 3 },
+        "type_sel": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "dy1": "scope.type_sel === 1 ? 3 : (scope.type_sel === 2 ? 2 : (scope.type_sel === 3 ? 1 : 4))",
+        "x1": "scope.type_sel === 1 ? 4 : (scope.type_sel === 2 ? 4 : (scope.type_sel === 3 ? 7 : 2))",
+        "k_val": "scope.type_sel === 1 ? 4 : (scope.type_sel === 2 ? 4 : (scope.type_sel === 3 ? 5 : 2))",
+        "x2": "scope.type_sel === 1 ? 3 : (scope.type_sel === 2 ? 2 : (scope.type_sel === 3 ? 5 : 4))",
+        "y1": "scope.y_ans - scope.dy1",
+        "y2": "scope.y_ans + scope.k_val",
+        "c1": "scope.x1 * scope.x1 + scope.y1 * scope.y1",
+        "c2": "scope.x2 * scope.x2 + scope.y2 * scope.y2",
+        "coeffL": "-2 * scope.y1",
+        "coeffR": "-2 * scope.y2",
+        "ans": "'(0, ' + scope.y_ans + ')'",
+        "step1": "'(' + scope.x1 + ')^2 + (y - ' + (scope.y1 < 0 ? '(' + scope.y1 + ')' : scope.y1) + ')^2 = (' + scope.x2 + ')^2 + (y - ' + (scope.y2 < 0 ? '(' + scope.y2 + ')' : scope.y2) + ')^2'",
+        "step2": "'y^2 ' + (scope.coeffL >= 0 ? '+ ' + scope.coeffL : '- ' + Math.abs(scope.coeffL)) + 'y + ' + scope.c1 + ' = y^2 ' + (scope.coeffR >= 0 ? '+ ' + scope.coeffR : '- ' + Math.abs(scope.coeffR)) + 'y + ' + scope.c2",
+        "step3": "(scope.coeffL >= 0 ? scope.coeffL : '- ' + Math.abs(scope.coeffL)) + 'y + ' + scope.c1 + ' = ' + (scope.coeffR >= 0 ? scope.coeffR : '- ' + Math.abs(scope.coeffR)) + 'y + ' + scope.c2 + ' \\\\implies y = ' + scope.y_ans"
+      },
+      "questionTemplate": "Two points $A(${scope.x1}, ${scope.y1})$ and $B(${scope.x2}, ${scope.y2})$ are given. Find the coordinates of point $C$ on the $y$-axis which is equidistant from $A$ and $B$.",
+      "inputs": [
+        { "label": "C =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Since point $C$ lies on the $y$-axis, its coordinates are $(0, y)$.",
+        "Set $AC^2 = BC^2$ using the distance formula: $$${scope.step1}$$",
+        "Expand both sides of the equation: $$${scope.step2}$$",
+        "Simplify and solve for $y$: $$${scope.step3}$$",
+        "Therefore, the coordinates of $C$ are $${scope.ans}$."
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "p_sel": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "n": "scope.p_sel === 3 ? 3 : 2",
+        "x1": "scope.p_sel === 1 ? -2 : (scope.p_sel === 2 ? -6 : (scope.p_sel === 3 ? -8 : -9))",
+        "x2": "scope.p_sel === 1 ? 4 : (scope.p_sel === 2 ? 2 : (scope.p_sel === 3 ? 1 : 3))",
+        "y2": "scope.p_sel === 1 ? 5 : (scope.p_sel === 2 ? 3 : (scope.p_sel === 3 ? 2 : 1))",
+        "x3": "scope.p_sel === 1 ? 0 : (scope.p_sel === 2 ? -1 : (scope.p_sel === 3 ? -2 : -3))",
+        "y3": "scope.p_sel === 1 ? 2 : (scope.p_sel === 2 ? -1 : (scope.p_sel === 3 ? -2 : -7))",
+        "dxR": "scope.x2 - scope.x3",
+        "dyR": "scope.y2 - scope.y3",
+        "QR_sq": "scope.dxR * scope.dxR + scope.dyR * scope.dyR",
+        "QR_val": "Math.round(Math.sqrt(scope.QR_sq))",
+        "target_dist": "scope.n * scope.QR_val",
+        "target_sq": "scope.target_dist * scope.target_dist",
+        "dxP": "Math.abs(scope.x2 - scope.x1)",
+        "dxP_sq": "scope.dxP * scope.dxP",
+        "rem_sq": "scope.target_sq - scope.dxP_sq",
+        "M": "Math.round(Math.sqrt(scope.rem_sq))",
+        "k1": "scope.y2 + scope.M",
+        "k2": "scope.y2 - scope.M",
+        "ans": "scope.k1 + ' or ' + scope.k2",
+        "step1": "'QR = \\\\sqrt{(' + scope.x2 + ' - ' + (scope.x3 < 0 ? '(' + scope.x3 + ')' : scope.x3) + ')^2 + (' + scope.y2 + ' - ' + (scope.y3 < 0 ? '(' + scope.y3 + ')' : scope.y3) + ')^2} = \\\\sqrt{' + scope.QR_sq + '} = ' + scope.QR_val",
+        "step2": "'PQ = ' + scope.n + ' \\\\times ' + scope.QR_val + ' = ' + scope.target_dist",
+        "step3": "'\\\\sqrt{(' + scope.x2 + ' - ' + (scope.x1 < 0 ? '(' + scope.x1 + ')' : scope.x1) + ')^2 + (k - ' + (scope.y2 < 0 ? '(' + scope.y2 + ')' : scope.y2) + ')^2} = ' + scope.target_dist",
+        "step4": "'(' + scope.dxP + ')^2 + (k - ' + scope.y2 + ')^2 = ' + scope.target_sq",
+        "step5": "'(' + scope.dxP_sq + ') + (k - ' + scope.y2 + ')^2 = ' + scope.target_sq + ' \\\\implies (k - ' + scope.y2 + ')^2 = ' + scope.rem_sq",
+        "step6": "'k - ' + scope.y2 + ' = \\\\pm ' + scope.M + ' \\\\implies k = ' + scope.k1 + ' \\\\text{ or } k = ' + scope.k2"
+      },
+      "questionTemplate": "The points $P(${scope.x1}, k)$, $Q(${scope.x2}, ${scope.y2})$, and $R(${scope.x3}, ${scope.y3})$ are such that $PQ = ${scope.n}QR$. Find the possible values of $k$.",
+      "inputs": [
+        { "label": "k =", "answer": "${scope.k1}" },
+        { "label": "or k =", "answer": "${scope.k2}" }
+      ],
+      "steps": [
+        "Calculate the length of line segment $QR$: $$${scope.step1}$$",
+        "Use the condition $PQ = ${scope.n}QR$: $$${scope.step2}$$",
+        "Apply the distance formula for $PQ$: $$${scope.step3}$$",
+        "Square both sides and simplify: $$${scope.step4}$$",
+        "Isolate the squared term: $$${scope.step5}$$",
+        "Solve for $k$: $$${scope.step6}$$"
+      ]
+    }
+  ]
+}

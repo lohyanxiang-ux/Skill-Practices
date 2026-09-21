@@ -1,0 +1,263 @@
+{
+  "skillTitle": "Gradient of Straight Line",
+  "keypad": [
+  "k", "undefined", ".", "/",
+  "7", "8", "9", "+",
+  "4", "5", "6", "-",
+  "1", "2", "3", "0",
+  "(", ")", "⌫", "Clear"
+],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "x1": {
+          "type": "randInt",
+          "min": -6,
+          "max": 6
+        },
+        "y1": {
+          "type": "randInt",
+          "min": -6,
+          "max": 6
+        },
+        "dx_raw": {
+          "type": "randInt",
+          "min": -5,
+          "max": 5,
+          "excludeZero": true
+        },
+        "dy_raw": {
+          "type": "randInt",
+          "min": -8,
+          "max": 8,
+          "excludeZero": true
+        }
+      },
+      "derived": {
+        "x2": "scope.x1 + scope.dx_raw",
+        "y2": "scope.y1 + scope.dy_raw",
+        "dx": "scope.x2 - scope.x1",
+        "dy": "scope.y2 - scope.y1",
+        "gcd": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.dy, scope.dx)",
+        "num": "(scope.dx < 0 ? -scope.dy : scope.dy) / scope.gcd",
+        "den": "Math.abs(scope.dx) / scope.gcd",
+        "ans": "scope.den === 1 ? scope.num.toString() : scope.num + '/' + scope.den",
+        "ans_latex": "scope.den === 1 ? scope.num.toString() : '\\\\frac{' + scope.num + '}{' + scope.den + '}'",
+        "y1_str": "scope.y1 < 0 ? '(' + scope.y1 + ')' : scope.y1.toString()",
+        "x1_str": "scope.x1 < 0 ? '(' + scope.x1 + ')' : scope.x1.toString()",
+        "step1": "'m = \\\\frac{' + scope.y2 + ' - ' + scope.y1_str + '}{' + scope.x2 + ' - ' + scope.x1_str + '}'",
+        "step2": "'m = \\\\frac{' + scope.dy + '}{' + scope.dx + '}'"
+      },
+      "questionTemplate": "Find the gradient of the line passing through the points $A(${scope.x1}, ${scope.y1})$ and $B(${scope.x2}, ${scope.y2})$.",
+      "inputs": [
+        {
+          "label": "m =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the gradient formula $$m = \\frac{y_2 - y_1}{x_2 - x_1}$$",
+        "Substitute the coordinates: $$${scope.step1}$$",
+        "Simplify: $$${scope.step2} = ${scope.ans_latex}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "type": {
+          "type": "randInt",
+          "min": 0,
+          "max": 1
+        },
+        "c1": {
+          "type": "randInt",
+          "min": -7,
+          "max": 7
+        },
+        "c2": {
+          "type": "randInt",
+          "min": -7,
+          "max": 7
+        },
+        "diff": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        }
+      },
+      "derived": {
+        "x1": "scope.type === 0 ? scope.c1 : scope.c2",
+        "y1": "scope.type === 0 ? scope.c2 : scope.c1",
+        "x2": "scope.type === 0 ? scope.c1 + scope.diff : scope.c2",
+        "y2": "scope.type === 0 ? scope.c2 : scope.c1 + scope.diff",
+        "ans": "scope.type === 0 ? '0' : 'undefined'",
+        "lineType": "scope.type === 0 ? 'horizontal' : 'vertical'",
+        "dy": "scope.y2 - scope.y1",
+        "dx": "scope.x2 - scope.x1",
+        "y1_str": "scope.y1 < 0 ? '(' + scope.y1 + ')' : scope.y1.toString()",
+        "x1_str": "scope.x1 < 0 ? '(' + scope.x1 + ')' : scope.x1.toString()",
+        "step1": "scope.type === 0 ? 'm = \\\\frac{' + scope.y2 + ' - ' + scope.y1_str + '}{' + scope.x2 + ' - ' + scope.x1_str + '} = \\\\frac{0}{' + scope.dx + '} = 0' : 'm = \\\\frac{' + scope.y2 + ' - ' + scope.y1_str + '}{' + scope.x2 + ' - ' + scope.x1_str + '} = \\\\frac{' + scope.dy + '}{0}'"
+      },
+      "questionTemplate": "Find the gradient of the line passing through the points $P(${scope.x1}, ${scope.y1})$ and $Q(${scope.x2}, ${scope.y2})$.",
+      "inputs": [
+        {
+          "label": "m =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the gradient formula $$m = \\frac{y_2 - y_1}{x_2 - x_1}$$",
+        "Substitute the coordinates: $$${scope.step1}$$",
+        "Since division by zero is undefined for vertical lines, its gradient is $$${scope.ans}$$."
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "x1": {
+          "type": "randInt",
+          "min": -6,
+          "max": 6
+        },
+        "y1": {
+          "type": "randInt",
+          "min": -6,
+          "max": 6
+        },
+        "m": {
+          "type": "randInt",
+          "min": -4,
+          "max": 4,
+          "excludeZero": true
+        },
+        "mult": {
+          "type": "randInt",
+          "min": -5,
+          "max": 5,
+          "excludeZero": true
+        }
+      },
+      "derived": {
+        "dy": "scope.m * scope.mult",
+        "y2": "scope.y1 + scope.dy",
+        "ans_val": "scope.x1 + scope.mult",
+        "ans": "scope.ans_val.toString()",
+        "y1_str": "scope.y1 < 0 ? '(' + scope.y1 + ')' : scope.y1.toString()",
+        "x1_str": "scope.x1 < 0 ? '(' + scope.x1 + ')' : scope.x1.toString()",
+        "x1_sub": "scope.x1 < 0 ? 'k + ' + Math.abs(scope.x1) : (scope.x1 === 0 ? 'k' : 'k - ' + scope.x1)",
+        "step1": "'\\\\frac{' + scope.y2 + ' - ' + scope.y1_str + '}{k - ' + scope.x1_str + '} = ' + scope.m",
+        "step2": "'\\\\frac{' + scope.dy + '}{' + scope.x1_sub + '} = ' + scope.m",
+        "step3": "scope.dy + ' = ' + scope.m + '(' + scope.x1_sub + ')'"
+      },
+      "questionTemplate": "The gradient of the line passing through $A(${scope.x1}, ${scope.y1})$ and $B(k, ${scope.y2})$ is ${scope.m}.\n\nFind the value of $k$.",
+      "inputs": [
+        {
+          "label": "k =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Set up the equation using the gradient formula $$m = \\frac{y_2 - y_1}{x_2 - x_1}$$",
+        "Substitute the known values: $$${scope.step1}$$",
+        "Simplify the numerator: $$${scope.step2}$$",
+        "Multiply both sides by the denominator: $$${scope.step3}$$",
+        "Solve for $k$: $$k = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "m": {
+          "type": "randInt",
+          "min": -3,
+          "max": 3,
+          "excludeZero": true
+        },
+        "x1": {
+          "type": "randInt",
+          "min": -5,
+          "max": 2
+        },
+        "dx1": {
+          "type": "randInt",
+          "min": 1,
+          "max": 4
+        },
+        "dx2": {
+          "type": "randInt",
+          "min": 1,
+          "max": 4
+        },
+        "y1": {
+          "type": "randInt",
+          "min": -5,
+          "max": 5
+        }
+      },
+      "derived": {
+        "x2": "scope.x1 + scope.dx1",
+        "x3": "scope.x2 + scope.dx2",
+        "k_val": "scope.y1 + scope.m * scope.dx1",
+        "y3": "scope.y1 + scope.m * (scope.dx1 + scope.dx2)",
+        "ans": "scope.k_val.toString()",
+        "dy_AC": "scope.y3 - scope.y1",
+        "dx_AC": "scope.x3 - scope.x1",
+        "y1_str": "scope.y1 < 0 ? '(' + scope.y1 + ')' : scope.y1.toString()",
+        "x1_str": "scope.x1 < 0 ? '(' + scope.x1 + ')' : scope.x1.toString()",
+        "step1": "'m_{AC} = \\\\frac{' + scope.y3 + ' - ' + scope.y1_str + '}{' + scope.x3 + ' - ' + scope.x1_str + '} = \\\\frac{' + scope.dy_AC + '}{' + scope.dx_AC + '} = ' + scope.m",
+        "step2": "'m_{AB} = \\\\frac{k - ' + scope.y1_str + '}{' + scope.x2 + ' - ' + scope.x1_str + '} = ' + scope.m"
+      },
+      "questionTemplate": "The points $A(${scope.x1}, ${scope.y1})$, $B(${scope.x2}, k)$, and $C(${scope.x3}, ${scope.y3})$ lie on a straight line.\n\nFind the value of $k$.",
+      "inputs": [
+        {
+          "label": "k =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Since $A$, $B$, and $C$ lie on the same straight line, $m_{AB} = m_{AC}$ using $m = \\frac{y_2 - y_1}{x_2 - x_1}$.",
+        "Find the gradient of $AC$: $$${scope.step1}$$",
+        "Equate $m_{AB}$ to $m_{AC}$: $$${scope.step2}$$",
+        "Solve for $k$: $$k = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": {
+          "type": "randInt",
+          "min": 1,
+          "max": 4
+        }
+      },
+      "derived": {
+        "C": "scope.a * (scope.a + 1)",
+        "r1": "scope.a",
+        "r2": "-(scope.a + 1)",
+        "ans1": "scope.r1.toString()",
+        "ans2": "scope.r2.toString()",
+        "step1": "'\\\\frac{' + scope.C + ' - k}{k - 0} = k'",
+        "step2": "scope.C + ' - k = k^2 \\\\implies k^2 + k - ' + scope.C + ' = 0'",
+        "step3": "'(k - ' + scope.r1 + ')(k + ' + (scope.a + 1) + ') = 0'"
+      },
+      "questionTemplate": "The gradient of a line joining the points $(0, k)$ and $(k, ${scope.C})$ is $k$.\n\nFind the possible values of $k$.",
+      "inputs": [
+        {
+          "label": "k =",
+          "answer": "${scope.ans1}"
+        },
+        {
+          "label": "or k =",
+          "answer": "${scope.ans2}"
+        }
+      ],
+      "steps": [
+        "Apply the gradient formula $$m = \\frac{y_2 - y_1}{x_2 - x_1}$$: $$${scope.step1}$$",
+        "Rearrange into a quadratic equation: $$${scope.step2}$$",
+        "Factorise the quadratic expression: $$${scope.step3}$$",
+        "Solve for $k$: $$k = ${scope.r1} \\quad \\text{or} \\quad k = ${scope.r2}$$"
+      ]
+    }
+  ]
+}

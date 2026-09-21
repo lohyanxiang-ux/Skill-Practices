@@ -1,0 +1,214 @@
+{
+  "skillTitle": "Equation of Straight Lines",
+  "keypad": [
+  "x", "y", "=", "/",
+  "7", "8", "9", "+",
+  "4", "5", "6", "-",
+  "1", "2", "3", "0",
+  "(", ")", "⌫", "Clear"
+],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "m": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "c": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true }
+      },
+      "derived": {
+        "mx_term": "scope.m === 1 ? 'x' : (scope.m === -1 ? '-x' : scope.m + 'x')",
+        "c_term": "scope.c > 0 ? '+' + scope.c : scope.c.toString()",
+        "c_term_spaced": "scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c)",
+        "ans": "'y=' + scope.mx_term + scope.c_term",
+        "step1": "'y = mx + c'",
+        "step2": "'y = (' + scope.m + ')x + (' + scope.c + ')'",
+        "step3": "'y = ' + scope.mx_term + ' ' + scope.c_term_spaced"
+      },
+      "questionTemplate": "Find the equation of the line with gradient $m = ${scope.m}$ and $y$-intercept $c = ${scope.c}$.",
+      "inputs": [
+        { "label": "", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Recall the gradient-intercept form of a straight line equation: $$${scope.step1}$$",
+        "Substitute $m = ${scope.m}$ and $c = ${scope.c}$ into the equation: $$${scope.step2}$$",
+        "Simplify to obtain the final equation: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "m": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true },
+        "c": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "b": { "type": "randInt", "min": 1, "max": 3 }
+      },
+      "derived": {
+        "a": "-scope.m * scope.b",
+        "c0": "-scope.c * scope.b",
+        "a_term": "scope.a === 1 ? 'x' : (scope.a === -1 ? '-x' : scope.a + 'x')",
+        "b_term": "scope.b === 1 ? '+ y' : '+ ' + scope.b + 'y'",
+        "c0_term": "scope.c0 > 0 ? '+ ' + scope.c0 : '- ' + Math.abs(scope.c0)",
+        "eq_str": "scope.a_term + ' ' + scope.b_term + ' ' + scope.c0_term + ' = 0'",
+        "by_lhs": "scope.b === 1 ? 'y' : scope.b + 'y'",
+        "rhs_a": "-scope.a",
+        "rhs_c0": "-scope.c0",
+        "rhs_mx": "scope.rhs_a === 1 ? 'x' : (scope.rhs_a === -1 ? '-x' : scope.rhs_a + 'x')",
+        "rhs_c_spaced": "scope.rhs_c0 > 0 ? '+ ' + scope.rhs_c0 : '- ' + Math.abs(scope.rhs_c0)",
+        "step_rearrange": "scope.by_lhs + ' = ' + scope.rhs_mx + ' ' + scope.rhs_c_spaced",
+        "mx_term": "scope.m === 1 ? 'x' : (scope.m === -1 ? '-x' : scope.m + 'x')",
+        "c_term_spaced": "scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c)",
+        "step_final_eq": "'y = ' + scope.mx_term + ' ' + scope.c_term_spaced",
+        "ans_m": "scope.m.toString()",
+        "ans_c": "scope.c.toString()"
+      },
+      "questionTemplate": "For the linear equation $$${scope.eq_str}$$ find the gradient and the $y$-intercept of the line.",
+      "inputs": [
+        { "label": "Gradient, m =", "answer": "${scope.ans_m}" },
+        { "label": "y-intercept, c =", "answer": "${scope.ans_c}" }
+      ],
+      "steps": [
+        "Rearrange the given equation into gradient-intercept form $y = mx + c$.",
+        "Isolate the $y$-term on one side: $$${scope.step_rearrange}$$",
+        "Divide all terms by the coefficient of $y$: $$${scope.step_final_eq}$$",
+        "Compare with $y = mx + c$ to read off the values:\nGradient $m = ${scope.ans_m}$, $y$-intercept $c = ${scope.ans_c}$."
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "line_type": { "type": "randInt", "min": 1, "max": 2 },
+        "val1": { "type": "randInt", "min": -7, "max": 7 },
+        "val2": { "type": "randInt", "min": -7, "max": 7 },
+        "val3": { "type": "randInt", "min": -7, "max": 7 }
+      },
+      "derived": {
+        "val3_eff": "scope.val3 === scope.val2 ? (scope.val2 === 7 ? scope.val2 - 1 : scope.val2 + 1) : scope.val3",
+        "x1": "scope.line_type === 1 ? scope.val2 : scope.val1",
+        "y1": "scope.line_type === 1 ? scope.val1 : scope.val2",
+        "x2": "scope.line_type === 1 ? scope.val3_eff : scope.val1",
+        "y2": "scope.line_type === 1 ? scope.val1 : scope.val3_eff",
+        "dy": "scope.y2 - scope.y1",
+        "dx": "scope.x2 - scope.x1",
+        "y1_fmt": "scope.y1 < 0 ? '(' + scope.y1 + ')' : scope.y1",
+        "x1_fmt": "scope.x1 < 0 ? '(' + scope.x1 + ')' : scope.x1",
+        "pA": "'(' + scope.x1 + ', ' + scope.y1 + ')'",
+        "pB": "'(' + scope.x2 + ', ' + scope.y2 + ')'",
+        "ans": "scope.line_type === 1 ? 'y=' + scope.val1 : 'x=' + scope.val1",
+        "step_m": "scope.line_type === 1 ? ('m = \\\\frac{' + scope.y2 + ' - ' + scope.y1_fmt + '}{' + scope.x2 + ' - ' + scope.x1_fmt + '} = \\\\frac{0}{' + scope.dx + '} = 0') : ('m = \\\\frac{' + scope.y2 + ' - ' + scope.y1_fmt + '}{' + scope.x2 + ' - ' + scope.x1_fmt + '} = \\\\frac{' + scope.dy + '}{0} \\\\text{ (undefined)}')",
+        "step_reason": "scope.line_type === 1 ? 'Since the gradient is $0$, the line is horizontal and has the form $y = a$, where $a$ is the $y$-intercept.' : 'Since the gradient is undefined, the line is vertical and has the form $x = b$, where $b$ is the $x$-intercept.'",
+        "svg_diagram": "scope.line_type === 1 ? ('<svg viewBox=\"0 0 300 200\" width=\"100%\" style=\"max-width:300px; display:block; margin:10px auto;\"><defs><marker id=\"ah\" viewBox=\"0 0 10 10\" refX=\"5\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#6b7280\"/></marker></defs><line x1=\"20\" y1=\"95\" x2=\"280\" y2=\"95\" stroke=\"#9ca3af\" stroke-width=\"1.5\" marker-end=\"url(#ah)\"/><line x1=\"150\" y1=\"185\" x2=\"150\" y2=\"15\" stroke=\"#9ca3af\" stroke-width=\"1.5\" marker-end=\"url(#ah)\"/><text x=\"285\" y=\"99\" font-size=\"12\" font-weight=\"bold\" fill=\"#4b5563\" font-family=\"sans-serif\">x</text><text x=\"150\" y=\"10\" font-size=\"12\" font-weight=\"bold\" fill=\"#4b5563\" text-anchor=\"middle\" font-family=\"sans-serif\">y</text><line x1=\"20\" y1=\"' + (95 - 9 * scope.val1) + '\" x2=\"280\" y2=\"' + (95 - 9 * scope.val1) + '\" stroke=\"#2563eb\" stroke-width=\"2.5\"/><circle cx=\"' + (150 + 9 * scope.x1) + '\" cy=\"' + (95 - 9 * scope.val1) + '\" r=\"4.5\" fill=\"#dc2626\"/><text x=\"' + (150 + 9 * scope.x1) + '\" y=\"' + (95 - 9 * scope.val1 - 10) + '\" font-size=\"11\" font-weight=\"bold\" text-anchor=\"middle\" fill=\"#dc2626\" font-family=\"sans-serif\" paint-order=\"stroke fill\" stroke=\"#ffffff\" stroke-width=\"3\" stroke-linejoin=\"round\">A' + scope.pA + '</text><circle cx=\"' + (150 + 9 * scope.x2) + '\" cy=\"' + (95 - 9 * scope.val1) + '\" r=\"4.5\" fill=\"#dc2626\"/><text x=\"' + (150 + 9 * scope.x2) + '\" y=\"' + (95 - 9 * scope.val1 + 18) + '\" font-size=\"11\" font-weight=\"bold\" text-anchor=\"middle\" fill=\"#dc2626\" font-family=\"sans-serif\" paint-order=\"stroke fill\" stroke=\"#ffffff\" stroke-width=\"3\" stroke-linejoin=\"round\">B' + scope.pB + '</text><circle cx=\"150\" cy=\"' + (95 - 9 * scope.val1) + '\" r=\"4.5\" fill=\"#16a34a\"/><text x=\"138\" y=\"' + (95 - 9 * scope.val1 + 4) + '\" font-size=\"11\" font-weight=\"bold\" text-anchor=\"end\" fill=\"#16a34a\" font-family=\"sans-serif\" paint-order=\"stroke fill\" stroke=\"#ffffff\" stroke-width=\"3\" stroke-linejoin=\"round\">y-int: (0, ' + scope.val1 + ')</text></svg>') : ('<svg viewBox=\"0 0 300 200\" width=\"100%\" style=\"max-width:300px; display:block; margin:10px auto;\"><defs><marker id=\"ah\" viewBox=\"0 0 10 10\" refX=\"5\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#6b7280\"/></marker></defs><line x1=\"20\" y1=\"95\" x2=\"280\" y2=\"95\" stroke=\"#9ca3af\" stroke-width=\"1.5\" marker-end=\"url(#ah)\"/><line x1=\"150\" y1=\"185\" x2=\"150\" y2=\"15\" stroke=\"#9ca3af\" stroke-width=\"1.5\" marker-end=\"url(#ah)\"/><text x=\"285\" y=\"99\" font-size=\"12\" font-weight=\"bold\" fill=\"#4b5563\" font-family=\"sans-serif\">x</text><text x=\"150\" y=\"10\" font-size=\"12\" font-weight=\"bold\" fill=\"#4b5563\" text-anchor=\"middle\" font-family=\"sans-serif\">y</text><line x1=\"' + (150 + 9 * scope.val1) + '\" y1=\"15\" x2=\"' + (150 + 9 * scope.val1) + '\" y2=\"185\" stroke=\"#2563eb\" stroke-width=\"2.5\"/><circle cx=\"' + (150 + 9 * scope.val1) + '\" cy=\"' + (95 - 9 * scope.y1) + '\" r=\"4.5\" fill=\"#dc2626\"/><text x=\"' + (150 + 9 * scope.val1 - 8) + '\" y=\"' + (95 - 9 * scope.y1 + 4) + '\" font-size=\"11\" font-weight=\"bold\" text-anchor=\"end\" fill=\"#dc2626\" font-family=\"sans-serif\" paint-order=\"stroke fill\" stroke=\"#ffffff\" stroke-width=\"3\" stroke-linejoin=\"round\">A' + scope.pA + '</text><circle cx=\"' + (150 + 9 * scope.val1) + '\" cy=\"' + (95 - 9 * scope.y2) + '\" r=\"4.5\" fill=\"#dc2626\"/><text x=\"' + (150 + 9 * scope.val1 + 8) + '\" y=\"' + (95 - 9 * scope.y2 + 4) + '\" font-size=\"11\" font-weight=\"bold\" text-anchor=\"start\" fill=\"#dc2626\" font-family=\"sans-serif\" paint-order=\"stroke fill\" stroke=\"#ffffff\" stroke-width=\"3\" stroke-linejoin=\"round\">B' + scope.pB + '</text><circle cx=\"' + (150 + 9 * scope.val1) + '\" cy=\"95\" r=\"4.5\" fill=\"#16a34a\"/><text x=\"' + (150 + 9 * scope.val1) + '\" y=\"' + (scope.val1 >= 0 ? 112 : 80) + '\" font-size=\"11\" font-weight=\"bold\" text-anchor=\"middle\" fill=\"#16a34a\" font-family=\"sans-serif\" paint-order=\"stroke fill\" stroke=\"#ffffff\" stroke-width=\"3\" stroke-linejoin=\"round\">x-int: (' + scope.val1 + ', 0)</text></svg>')",
+        "step_eq": "scope.line_type === 1 ? 'y = ' + scope.val1 : 'x = ' + scope.val1"
+      },
+      "questionTemplate": "Find the equation of the line that passes through the two points $A${scope.pA}$ and $B${scope.pB}$.",
+      "inputs": [
+        { "label": "", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Calculate the gradient $m$ using $m = \\frac{y_2 - y_1}{x_2 - x_1}$: $$${scope.step_m}$$",
+        "${scope.step_reason}\n\n${scope.svg_diagram}",
+        "Write the equation of the line: $$${scope.step_eq}$$"
+      ]
+    },
+    {
+  "level": 2,
+  "variables": {
+    "m": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true },
+    "x1": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+    "y1": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+  },
+  "derived": {
+    "c": "scope.y1 - scope.m * scope.x1",
+    "mx1": "scope.m * scope.x1",
+    "mx_term": "scope.m === 1 ? 'x' : (scope.m === -1 ? '-x' : scope.m + 'x')",
+    "c_term": "scope.c === 0 ? '' : (scope.c > 0 ? '+' + scope.c : scope.c.toString())",
+    "c_term_spaced": "scope.c === 0 ? '' : (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+    "ans": "'y=' + scope.mx_term + scope.c_term",
+    "step1": "'\\\\begin{aligned} y &= mx + c \\\\\\\\ ' + scope.y1 + ' &= (' + scope.m + ')(' + scope.x1 + ') + c \\\\end{aligned}'",
+    "step2": "'c = ' + scope.c",
+    "step3": "'y = ' + scope.mx_term + (scope.c_term_spaced ? ' ' + scope.c_term_spaced : '')"
+  },
+  "questionTemplate": "Find the equation of the line that passes through the point $A(${scope.x1}, ${scope.y1})$ and has gradient $m = ${scope.m}$.",
+  "inputs": [
+    { "label": "", "answer": "${scope.ans}" }
+  ],
+  "steps": [
+    "Substitute $m = ${scope.m}$ and point $A(${scope.x1}, ${scope.y1})$ into $y = mx + c$: $$${scope.step1}$$",
+    "Solve for $c$: $$${scope.step2}$$",
+    "Write the final equation: $$${scope.step3}$$"
+  ]
+},
+{
+  "level": 2,
+  "variables": {
+    "m": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true },
+    "x1": { "type": "randInt", "min": -4, "max": 4 },
+    "dx": { "type": "randInt", "min": 1, "max": 4 },
+    "c": { "type": "randInt", "min": -6, "max": 6 }
+  },
+  "derived": {
+    "x2": "scope.x1 + scope.dx",
+    "y1": "scope.m * scope.x1 + scope.c",
+    "y2": "scope.m * scope.x2 + scope.c",
+    "dy": "scope.y2 - scope.y1",
+    "mx_term": "scope.m === 1 ? 'x' : (scope.m === -1 ? '-x' : scope.m + 'x')",
+    "c_term": "scope.c === 0 ? '' : (scope.c > 0 ? '+' + scope.c : scope.c.toString())",
+    "c_term_spaced": "scope.c === 0 ? '' : (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+    "ans": "'y=' + scope.mx_term + scope.c_term",
+    "y1_fmt": "scope.y1 < 0 ? '(' + scope.y1 + ')' : scope.y1",
+    "x1_fmt": "scope.x1 < 0 ? '(' + scope.x1 + ')' : scope.x1",
+    "step_m": "'\\\\begin{aligned} m &= \\\\frac{y_2 - y_1}{x_2 - x_1} \\\\\\\\ &= \\\\frac{' + scope.y2 + ' - ' + scope.y1_fmt + '}{' + scope.x2 + ' - ' + scope.x1_fmt + '} \\\\\\\\ &= \\\\frac{' + scope.dy + '}{' + scope.dx + '} = ' + scope.m + '\\\\end{aligned}'",
+    "step_c": "'\\\\begin{aligned} y &= mx + c \\\\\\\\ ' + scope.y1 + ' &= (' + scope.m + ')(' + scope.x1 + ') + c \\\\\\\\ c &= ' + scope.c + '\\\\end{aligned}'",
+    "step_eq": "'y = ' + scope.mx_term + (scope.c_term_spaced ? ' ' + scope.c_term_spaced : '')"
+  },
+  "questionTemplate": "Find the equation of the line that passes through the two points $A(${scope.x1}, ${scope.y1})$ and $B(${scope.x2}, ${scope.y2})$.",
+  "inputs": [
+    { "label": "", "answer": "${scope.ans}" }
+  ],
+  "steps": [
+    "Calculate the gradient $m$ using $m = \\frac{y_2 - y_1}{x_2 - x_1}$: $$${scope.step_m}$$",
+    "Substitute $m = ${scope.m}$ and $A(${scope.x1}, ${scope.y1})$ into $y = mx + c$ to find $c$: $$${scope.step_c}$$",
+    "Write the line equation: $$${scope.step_eq}$$"
+  ]
+},
+{
+  "level": 3,
+  "variables": {
+    "m": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true },
+    "b": { "type": "randInt", "min": 1, "max": 3 },
+    "x1": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+    "y1": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+    "c_orig": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true }
+  },
+  "derived": {
+    "a": "-scope.m * scope.b",
+    "c0": "-scope.c_orig * scope.b",
+    "c2": "scope.y1 - scope.m * scope.x1",
+    "a_term": "scope.a === 1 ? 'x' : (scope.a === -1 ? '-x' : scope.a + 'x')",
+    "b_term": "scope.b === 1 ? '+ y' : '+ ' + scope.b + 'y'",
+    "c0_term": "scope.c0 > 0 ? '+ ' + scope.c0 : '- ' + Math.abs(scope.c0)",
+    "eq_L2": "scope.a_term + ' ' + scope.b_term + ' ' + scope.c0_term + ' = 0'",
+    "by_lhs": "scope.b === 1 ? 'y' : scope.b + 'y'",
+    "rhs_a": "-scope.a",
+    "rhs_c0": "-scope.c0",
+    "rhs_mx": "scope.rhs_a === 1 ? 'x' : (scope.rhs_a === -1 ? '-x' : scope.rhs_a + 'x')",
+    "rhs_c_spaced": "scope.rhs_c0 > 0 ? '+ ' + scope.rhs_c0 : '- ' + Math.abs(scope.rhs_c0)",
+    "mx_term": "scope.m === 1 ? 'x' : (scope.m === -1 ? '-x' : scope.m + 'x')",
+    "orig_c_spaced": "scope.c_orig > 0 ? '+ ' + scope.c_orig : '- ' + Math.abs(scope.c_orig)",
+    "step_rearrange_full": "scope.b === 1 ? (scope.by_lhs + ' = ' + scope.rhs_mx + ' ' + scope.rhs_c_spaced) : ('\\\\begin{aligned} ' + scope.by_lhs + ' &= ' + scope.rhs_mx + ' ' + scope.rhs_c_spaced + ' \\\\\\\\ y &= ' + scope.mx_term + ' ' + scope.orig_c_spaced + '\\\\end{aligned}')",
+    "c2_term": "scope.c2 === 0 ? '' : (scope.c2 > 0 ? '+' + scope.c2 : scope.c2.toString())",
+    "c2_term_spaced": "scope.c2 === 0 ? '' : (scope.c2 > 0 ? '+ ' + scope.c2 : '- ' + Math.abs(scope.c2))",
+    "ans": "'y=' + scope.mx_term + scope.c2_term",
+    "step_c2": "'\\\\begin{aligned} y &= mx + c \\\\\\\\ ' + scope.y1 + ' &= (' + scope.m + ')(' + scope.x1 + ') + c \\\\\\\\ c &= ' + scope.c2 + '\\\\end{aligned}'",
+    "step_eq": "'y = ' + scope.mx_term + (scope.c2_term_spaced ? ' ' + scope.c2_term_spaced : '')"
+  },
+  "questionTemplate": "A line $L_1$ passes through the point $P(${scope.x1}, ${scope.y1})$. The gradient of $L_1$ is equal to that of the line $L_2$ with equation $$${scope.eq_L2}$$ Find the equation of the line $L_1$.",
+  "inputs": [
+    { "label": "", "answer": "${scope.ans}" }
+  ],
+  "steps": [
+    "Rearrange $L_2$ into $y = mx + c$ form: $$${scope.step_rearrange_full}$$",
+    "Thus, the gradient of $L_2$ is $m = ${scope.m}$. Since $L_1$ is parallel to $L_2$, $L_1$ also has gradient $m = ${scope.m}$.",
+    "Substitute $m = ${scope.m}$ and point $P(${scope.x1}, ${scope.y1})$ into $y = mx + c$ to find $c$: $$${scope.step_c2}$$",
+    "Write the equation for line $L_1$: $$${scope.step_eq}$$"
+  ]
+}
+  ]
+}

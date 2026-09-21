@@ -1,0 +1,111 @@
+{
+  "skillTitle": "Completing the Square Trainer",
+"keypad": [
+  "x", "^2", "a/b", "+",
+  "7", "8", "9", "-",
+  "4", "5", "6", "(",
+  "1", "2", "3", ")",
+  "0", ".", "⌫", "Clear"
+],  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "k": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "c": { "type": "randInt", "min": -10, "max": 10, "excludeZero": true }
+      },
+      "derived": {
+        "b": "2 * scope.k",
+        "q": "scope.c - (scope.k * scope.k)",
+        "poly": "'x^2 ' + (scope.b > 0 ? '+ ' + (scope.b === 1 ? '' : scope.b) : '- ' + (Math.abs(scope.b) === 1 ? '' : Math.abs(scope.b))) + 'x ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+        "step2": "'(x ' + (scope.k > 0 ? '+ ' + scope.k : '- ' + Math.abs(scope.k)) + ')^2 - ' + (scope.k * scope.k) + ' ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+        "step3": "'(x ' + (scope.k > 0 ? '+ ' + scope.k : '- ' + Math.abs(scope.k)) + ')^2 ' + (scope.q > 0 ? '+ ' + scope.q : (scope.q < 0 ? '- ' + Math.abs(scope.q) : ''))",
+        "ans": "(scope.k > 0 ? '(x+' + scope.k + ')' : '(x' + scope.k + ')') + '^2' + (scope.q > 0 ? '+' + scope.q : (scope.q < 0 ? scope.q : ''))"
+      },
+      "questionTemplate": "Express $${scope.poly}$ in completed square form:",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Given expression: $${scope.poly}$",
+        "Apply completing the square: $${scope.step2}$",
+        "Simplify the expression: $${scope.step3}$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "b_raw": { "type": "randInt", "min": -9, "max": 9, "excludeZero": true },
+        "c": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true }
+      },
+      "derived": {
+        "b": "scope.b_raw % 2 === 0 ? scope.b_raw + 1 : scope.b_raw",
+        "pFrac": "simplifyFrac(scope.b, 2)",
+        "qFrac": "simplifyFrac(4 * scope.c - scope.b * scope.b, 4)",
+        "poly": "'x^2 ' + (scope.b > 0 ? '+ ' + (scope.b === 1 ? '' : scope.b) : '- ' + (Math.abs(scope.b) === 1 ? '' : Math.abs(scope.b))) + 'x ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+        "step2": "'(x ' + (scope.b > 0 ? '+ ' : '- ') + '\\\\frac{' + Math.abs(scope.b) + '}{2})^2 - \\\\frac{' + (scope.b * scope.b) + '}{4} ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+        "step3": "'(x ' + (scope.pFrac.num > 0 ? '+ ' : '- ') + (scope.pFrac.den === 1 ? Math.abs(scope.pFrac.num) : '\\\\frac{' + Math.abs(scope.pFrac.num) + '}{' + scope.pFrac.den + '}') + ')^2 ' + (scope.qFrac.num > 0 ? '+ ' : '- ') + (scope.qFrac.den === 1 ? Math.abs(scope.qFrac.num) : '\\\\frac{' + Math.abs(scope.qFrac.num) + '}{' + scope.qFrac.den + '}')",
+        "ans": "'(x' + (scope.pFrac.num > 0 ? '+' + scope.pFrac.str : scope.pFrac.str) + ')^2' + (scope.qFrac.num > 0 ? '+' + scope.qFrac.str : (scope.qFrac.num < 0 ? scope.qFrac.str : ''))"
+      },
+      "questionTemplate": "Express $${scope.poly}$ in completed square form:",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Given expression: $${scope.poly}$",
+        "Apply completing the square: $${scope.step2}$",
+        "Simplify the expression: $${scope.step3}$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "k": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "c": { "type": "randInt", "min": -10, "max": 10, "excludeZero": true }
+      },
+      "derived": {
+        "b": "2 * scope.k",
+        "q": "scope.c + (scope.k * scope.k)",
+        "poly": "'-x^2 ' + (scope.b > 0 ? '+ ' + (scope.b === 1 ? '' : scope.b) : '- ' + (Math.abs(scope.b) === 1 ? '' : Math.abs(scope.b))) + 'x ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+        "step2": "'- (x^2 ' + (scope.b > 0 ? '- ' + (scope.b === 1 ? '' : scope.b) : '+ ' + (Math.abs(scope.b) === 1 ? '' : Math.abs(scope.b))) + 'x) ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+        "step3": "'- [(x ' + (-scope.k > 0 ? '+ ' + (-scope.k) : '- ' + Math.abs(scope.k)) + ')^2 - ' + (scope.k * scope.k) + '] ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+        "step4": "'- (x ' + (-scope.k > 0 ? '+ ' + (-scope.k) : '- ' + Math.abs(scope.k)) + ')^2 ' + (scope.q > 0 ? '+ ' + scope.q : (scope.q < 0 ? '- ' + Math.abs(scope.q) : ''))",
+        "ans": "'-' + (-scope.k > 0 ? '(x+' + (-scope.k) + ')' : '(x' + (-scope.k) + ')') + '^2' + (scope.q > 0 ? '+' + scope.q : (scope.q < 0 ? scope.q : ''))"
+      },
+      "questionTemplate": "Express $${scope.poly}$ in completed square form:",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Factorise out -1 from $x$ terms: $${scope.step2}$",
+        "Apply completing the square inside brackets: $${scope.step3}$",
+        "Expand brackets and simplify: $${scope.step4}$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "b_raw": { "type": "randInt", "min": -9, "max": 9, "excludeZero": true },
+        "c": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true }
+      },
+      "derived": {
+        "b": "scope.b_raw % 2 === 0 ? scope.b_raw + 1 : scope.b_raw",
+        "pFrac": "simplifyFrac(-scope.b, 2)",
+        "qFrac": "simplifyFrac(4 * scope.c + scope.b * scope.b, 4)",
+        "poly": "'-x^2 ' + (scope.b > 0 ? '+ ' + (scope.b === 1 ? '' : scope.b) : '- ' + (Math.abs(scope.b) === 1 ? '' : Math.abs(scope.b))) + 'x ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+        "step2": "'- (x^2 ' + (scope.b > 0 ? '- ' + (scope.b === 1 ? '' : scope.b) : '+ ' + (Math.abs(scope.b) === 1 ? '' : Math.abs(scope.b))) + 'x) ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+        "step3": "'- [(x ' + (-scope.b > 0 ? '+ ' : '- ') + '\\\\frac{' + Math.abs(scope.b) + '}{2})^2 - \\\\frac{' + (scope.b * scope.b) + '}{4}] ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+        "step4": "'- (x ' + (scope.pFrac.num > 0 ? '+ ' : '- ') + (scope.pFrac.den === 1 ? Math.abs(scope.pFrac.num) : '\\\\frac{' + Math.abs(scope.pFrac.num) + '}{' + scope.pFrac.den + '}') + ')^2 ' + (scope.qFrac.num > 0 ? '+ ' : '- ') + (scope.qFrac.den === 1 ? Math.abs(scope.qFrac.num) : '\\\\frac{' + Math.abs(scope.qFrac.num) + '}{' + scope.qFrac.den + '}')",
+        "ans": "'-' + '(x' + (scope.pFrac.num > 0 ? '+' + scope.pFrac.str : scope.pFrac.str) + ')^2' + (scope.qFrac.num > 0 ? '+' + scope.qFrac.str : (scope.qFrac.num < 0 ? scope.qFrac.str : ''))"
+      },
+      "questionTemplate": "Express $${scope.poly}$ in completed square form:",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Factorise out -1 from $x$ terms: $${scope.step2}$",
+        "Apply completing the square inside brackets: $${scope.step3}$",
+        "Expand brackets and simplify: $${scope.step4}$"
+      ]
+    }
+  ]
+}
