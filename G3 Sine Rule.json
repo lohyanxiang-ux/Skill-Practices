@@ -1,0 +1,498 @@
+{
+  "skillTitle": "Sine Rule",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "+",
+    "4",
+    "5",
+    "6",
+    "-",
+    "1",
+    "2",
+    "3",
+     "/",
+    ".",
+    "0"
+      ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "b": {
+          "type": "randInt",
+          "min": 8,
+          "max": 25
+        },
+        "degA": {
+          "type": "randInt",
+          "min": 30,
+          "max": 75
+        },
+        "degB": {
+          "type": "randInt",
+          "min": 40,
+          "max": 80,
+          "notEqual": "degA"
+        }
+      },
+      "derived": {
+        "degC": "180 - scope.degA - scope.degB",
+        "radA": "scope.degA * Math.PI / 180",
+        "radB": "scope.degB * Math.PI / 180",
+        "radC": "scope.degC * Math.PI / 180",
+        "ansVal": "Math.round((scope.b * Math.sin(scope.radA) / Math.sin(scope.radB)) * 10) / 10",
+        "ans": "scope.ansVal.toFixed(1)",
+        "step1": "'\\\\frac{a}{\\\\sin ' + scope.degA + '^\\\\circ} = \\\\frac{' + scope.b + '}{\\\\sin ' + scope.degB + '^\\\\circ}'",
+        "step2": "'a = \\\\frac{' + scope.b + ' \\\\times \\\\sin ' + scope.degA + '^\\\\circ}{\\\\sin ' + scope.degB + '^\\\\circ} \\\\approx ' + scope.ans + '\\\\text{ cm}'",
+        "c_draw": "160 * Math.sin(scope.radC) / Math.sin(scope.radB)",
+        "bx_raw": "scope.c_draw * Math.cos(scope.radA)",
+        "by_raw": "-scope.c_draw * Math.sin(scope.radA)",
+        "xmin": "Math.min(0, scope.bx_raw)",
+        "xmax": "Math.max(160, scope.bx_raw)",
+        "width": "scope.xmax - scope.xmin",
+        "height": "scope.c_draw * Math.sin(scope.radA)",
+        "scale": "Math.min(200 / scope.width, 110 / scope.height)",
+        "ax": "Math.round(60 + (0 - scope.xmin) * scope.scale)",
+        "cx": "Math.round(60 + (160 - scope.xmin) * scope.scale)",
+        "bx": "Math.round(60 + (scope.bx_raw - scope.xmin) * scope.scale)",
+        "ay": "170",
+        "cy": "170",
+        "by": "Math.round(170 - scope.height * scope.scale)",
+        "label_b_x": "Math.round((scope.ax + scope.cx) / 2)",
+        "label_a_x": "Math.round((scope.bx + scope.cx) / 2 + 15)",
+        "label_a_y": "Math.round((scope.by + 170) / 2)",
+        "arcA_x": "Math.round(scope.ax + 22 * Math.cos(scope.radA))",
+        "arcA_y": "Math.round(170 - 22 * Math.sin(scope.radA))",
+        "arcB1_x": "Math.round(scope.bx - 22 * Math.cos(scope.radA))",
+        "arcB1_y": "Math.round(scope.by + 22 * Math.sin(scope.radA))",
+        "arcB2_x": "Math.round(scope.bx + 22 * Math.cos(scope.radC))",
+        "arcB2_y": "Math.round(scope.by + 22 * Math.sin(scope.radC))"
+      },
+      "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='${scope.ax},${scope.ay} ${scope.bx},${scope.by} ${scope.cx},${scope.cy}' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M ${scope.ax + 22} 170 A 22 22 0 0 0 ${scope.arcA_x} ${scope.arcA_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M ${scope.arcB1_x} ${scope.arcB1_y} A 22 22 0 0 0 ${scope.arcB2_x} ${scope.arcB2_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='${scope.ax - 15}' y='${scope.ay + 15}' font-size='14' font-weight='bold'>A</text><text x='${scope.bx}' y='${scope.by - 10}' font-size='14' font-weight='bold' text-anchor='middle'>B</text><text x='${scope.cx + 10}' y='${scope.cy + 15}' font-size='14' font-weight='bold'>C</text><text x='${scope.label_b_x}' y='195' font-size='13' text-anchor='middle' fill='#1d3557'>b = ${scope.b} cm</text><text x='${scope.label_a_x}' y='${scope.label_a_y}' font-size='13' fill='#e63946' font-weight='bold'>a = ?</text><text x='${scope.ax + 28}' y='${scope.ay - 5}' font-size='12' fill='#e63946'>${scope.degA}°</text><text x='${scope.bx}' y='${scope.by + 25}' font-size='12' fill='#e63946' text-anchor='middle'>${scope.degB}°</text></svg>\n\nIn $\\triangle ABC$, $b = ${scope.b}\\text{ cm}$, $\\angle A = ${scope.degA}^\\circ$, and $\\angle B = ${scope.degB}^\\circ$.\n\nFind the length of side $a$. (Give your answer correct to 1 decimal place.)",
+      "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='${scope.ax},${scope.ay} ${scope.bx},${scope.by} ${scope.cx},${scope.cy}' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M ${scope.ax + 22} 170 A 22 22 0 0 0 ${scope.arcA_x} ${scope.arcA_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M ${scope.arcB1_x} ${scope.arcB1_y} A 22 22 0 0 0 ${scope.arcB2_x} ${scope.arcB2_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='${scope.ax - 15}' y='${scope.ay + 15}' font-size='14' font-weight='bold'>A</text><text x='${scope.bx}' y='${scope.by - 10}' font-size='14' font-weight='bold' text-anchor='middle'>B</text><text x='${scope.cx + 10}' y='${scope.cy + 15}' font-size='14' font-weight='bold'>C</text><text x='${scope.label_b_x}' y='195' font-size='13' text-anchor='middle' fill='#1d3557'>b = ${scope.b} cm</text><text x='${scope.label_a_x}' y='${scope.label_a_y}' font-size='13' fill='#e63946' font-weight='bold'>a = ?</text><text x='${scope.ax + 28}' y='${scope.ay - 5}' font-size='12' fill='#e63946'>${scope.degA}°</text><text x='${scope.bx}' y='${scope.by + 25}' font-size='12' fill='#e63946' text-anchor='middle'>${scope.degB}°</text></svg>",
+      "inputs": [
+        {
+          "label": "a =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the Sine Rule for sides: $$${scope.step1}$$",
+        "Rearrange and evaluate: $$${scope.step2}$$"
+      ]
+    },
+    {
+  "level": 1,
+  "variables": {
+    "b": {
+      "type": "randInt",
+      "min": 12,
+      "max": 22
+    },
+    "degB": {
+      "type": "randInt",
+      "min": 35,
+      "max": 60
+    },
+    "a": {
+      "type": "randInt",
+      "min": 6,
+      "max": 11
+    }
+  },
+  "derived": {
+    "radB": "scope.degB * Math.PI / 180",
+    "sinA": "(scope.a * Math.sin(scope.radB)) / scope.b",
+    "radA": "Math.asin(scope.sinA)",
+    "degA": "Math.round((scope.radA * 180 / Math.PI) * 10) / 10",
+    "degC": "180 - scope.degA - scope.degB",
+    "radC": "scope.degC * Math.PI / 180",
+    "ans": "scope.degA.toFixed(1)",
+    "sinA_str": "scope.sinA.toFixed(4)",
+    "step1": "'\\\\frac{\\\\sin \\\\theta}{' + scope.a + '} = \\\\frac{\\\\sin ' + scope.degB + '^\\\\circ}{' + scope.b + '}'",
+    "step2": "'\\\\sin \\\\theta = \\\\frac{' + scope.a + ' \\\\times \\\\sin ' + scope.degB + '^\\\\circ}{' + scope.b + '} \\\\approx ' + scope.sinA_str",
+    "step3": "'\\\\theta = \\\\sin^{-1}(' + scope.sinA_str + ') \\\\approx ' + scope.ans + '^\\\\circ'",
+    "c_draw": "100 * Math.sin(scope.radC) / Math.sin(scope.radA)",
+    "ax_raw": "scope.c_draw * Math.cos(scope.radB)",
+    "ay_raw": "-scope.c_draw * Math.sin(scope.radB)",
+    "xmin": "Math.min(0, scope.ax_raw)",
+    "xmax": "Math.max(100, scope.ax_raw)",
+    "width": "scope.xmax - scope.xmin",
+    "height": "scope.c_draw * Math.sin(scope.radB)",
+    "scale": "Math.min(200 / scope.width, 110 / scope.height)",
+    "bx": "Math.round(60 + (0 - scope.xmin) * scope.scale)",
+    "cx": "Math.round(60 + (100 - scope.xmin) * scope.scale)",
+    "ax": "Math.round(60 + (scope.ax_raw - scope.xmin) * scope.scale)",
+    "by": "170",
+    "cy": "170",
+    "ay": "Math.round(170 - scope.height * scope.scale)",
+    "label_a_x": "Math.round((scope.bx + scope.cx) / 2)",
+    "label_b_x": "Math.round((scope.ax + scope.cx) / 2 + 15)",
+    "label_b_y": "Math.round((scope.ay + 170) / 2)",
+    "arcB_x": "Math.round(scope.bx + 22 * Math.cos(scope.radB))",
+    "arcB_y": "Math.round(170 - 22 * Math.sin(scope.radB))",
+    "len_AB": "Math.hypot(scope.bx - scope.ax, scope.by - scope.ay)",
+    "len_AC": "Math.hypot(scope.cx - scope.ax, scope.cy - scope.ay)",
+    "arcA_bx": "Math.round(scope.ax + 22 * (scope.bx - scope.ax) / scope.len_AB)",
+    "arcA_by": "Math.round(scope.ay + 22 * (scope.by - scope.ay) / scope.len_AB)",
+    "arcA_cx": "Math.round(scope.ax + 22 * (scope.cx - scope.ax) / scope.len_AC)",
+    "arcA_cy": "Math.round(scope.ay + 22 * (scope.cy - scope.ay) / scope.len_AC)"
+  },
+  "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='${scope.ax},${scope.ay} ${scope.bx},${scope.by} ${scope.cx},${scope.cy}' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M ${scope.bx + 22} 170 A 22 22 0 0 0 ${scope.arcB_x} ${scope.arcB_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M ${scope.arcA_bx} ${scope.arcA_by} A 22 22 0 0 0 ${scope.arcA_cx} ${scope.arcA_cy}' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='${scope.ax}' y='${scope.ay - 10}' font-size='14' font-weight='bold' text-anchor='middle'>A</text><text x='${scope.bx - 15}' y='${scope.by + 15}' font-size='14' font-weight='bold'>B</text><text x='${scope.cx + 10}' y='${scope.cy + 15}' font-size='14' font-weight='bold'>C</text><text x='${scope.label_a_x}' y='195' font-size='13' text-anchor='middle' fill='#1d3557'>a = ${scope.a} cm</text><text x='${scope.label_b_x}' y='${scope.label_b_y}' font-size='13' fill='#1d3557'>b = ${scope.b} cm</text><text x='${scope.bx + 28}' y='${scope.by - 5}' font-size='12' fill='#e63946'>${scope.degB}°</text><text x='${scope.ax}' y='${scope.ay + 38}' font-size='13' fill='#e63946' font-weight='bold' text-anchor='middle'>θ = ?</text></svg>\n\nIn $\\triangle ABC$, $a = ${scope.a}\\text{ cm}$, $b = ${scope.b}\\text{ cm}$, and $\\angle B = ${scope.degB}^\\circ$.\n\nFind the acute angle $\\theta = \\angle A$. (Give your answer in degrees correct to 1 decimal place.)",
+  "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='${scope.ax},${scope.ay} ${scope.bx},${scope.by} ${scope.cx},${scope.cy}' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M ${scope.bx + 22} 170 A 22 22 0 0 0 ${scope.arcB_x} ${scope.arcB_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M ${scope.arcA_bx} ${scope.arcA_by} A 22 22 0 0 0 ${scope.arcA_cx} ${scope.arcA_cy}' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='${scope.ax}' y='${scope.ay - 10}' font-size='14' font-weight='bold' text-anchor='middle'>A</text><text x='${scope.bx - 15}' y='${scope.by + 15}' font-size='14' font-weight='bold'>B</text><text x='${scope.cx + 10}' y='${scope.cy + 15}' font-size='14' font-weight='bold'>C</text><text x='${scope.label_a_x}' y='195' font-size='13' text-anchor='middle' fill='#1d3557'>a = ${scope.a} cm</text><text x='${scope.label_b_x}' y='${scope.label_b_y}' font-size='13' fill='#1d3557'>b = ${scope.b} cm</text><text x='${scope.bx + 28}' y='${scope.by - 5}' font-size='12' fill='#e63946'>${scope.degB}°</text><text x='${scope.ax}' y='${scope.ay + 38}' font-size='13' fill='#e63946' font-weight='bold' text-anchor='middle'>θ = ?</text></svg>",
+  "inputs": [
+    {
+      "label": "\\theta =",
+      "answer": "${scope.ans}"
+    }
+  ],
+  "steps": [
+    "Apply the Sine Rule for angles: $$${scope.step1}$$",
+    "Solve for $\\sin \\theta$: $$${scope.step2}$$",
+    "Take the inverse sine: $$${scope.step3}$$"
+  ]
+},
+    {
+  "level": 1,
+  "variables": {
+    "c": {
+      "type": "randInt",
+      "min": 12,
+      "max": 22
+    },
+    "degC": {
+      "type": "randInt",
+      "min": 35,
+      "max": 60
+    },
+    "b": {
+      "type": "randInt",
+      "min": 6,
+      "max": 11
+    }
+  },
+  "derived": {
+    "radC": "scope.degC * Math.PI / 180",
+    "sinB": "(scope.b * Math.sin(scope.radC)) / scope.c",
+    "radB": "Math.asin(scope.sinB)",
+    "degB": "Math.round((scope.radB * 180 / Math.PI) * 10) / 10",
+    "degA": "180 - scope.degB - scope.degC",
+    "radA": "scope.degA * Math.PI / 180",
+    "ans": "scope.degB.toFixed(1)",
+    "sinB_str": "scope.sinB.toFixed(4)",
+    "step1": "'\\\\frac{\\\\sin \\\\theta}{' + scope.b + '} = \\\\frac{\\\\sin ' + scope.degC + '^\\\\circ}{' + scope.c + '}'",
+    "step2": "'\\\\sin \\\\theta = \\\\frac{' + scope.b + ' \\\\times \\\\sin ' + scope.degC + '^\\\\circ}{' + scope.c + '} \\\\approx ' + scope.sinB_str",
+    "step3": "'\\\\theta = \\\\sin^{-1}(' + scope.sinB_str + ') \\\\approx ' + scope.ans + '^\\\\circ'",
+    "a_draw": "100 * Math.sin(scope.radA) / Math.sin(scope.radB)",
+    "bx_raw": "scope.a_draw * Math.cos(scope.radC)",
+    "by_raw": "-scope.a_draw * Math.sin(scope.radC)",
+    "xmin": "Math.min(0, scope.bx_raw)",
+    "xmax": "Math.max(100, scope.bx_raw)",
+    "width": "scope.xmax - scope.xmin",
+    "height": "scope.a_draw * Math.sin(scope.radC)",
+    "scale": "Math.min(200 / scope.width, 110 / scope.height)",
+    "cx": "Math.round(60 + (0 - scope.xmin) * scope.scale)",
+    "ax": "Math.round(60 + (100 - scope.xmin) * scope.scale)",
+    "bx": "Math.round(60 + (scope.bx_raw - scope.xmin) * scope.scale)",
+    "cy": "170",
+    "ay": "170",
+    "by": "Math.round(170 - scope.height * scope.scale)",
+    "label_b_x": "Math.round((scope.ax + scope.cx) / 2)",
+    "label_c_x": "Math.round((scope.bx + scope.ax) / 2 + 15)",
+    "label_c_y": "Math.round((scope.by + 170) / 2)",
+    "arcC_x": "Math.round(scope.cx + 22 * Math.cos(scope.radC))",
+    "arcC_y": "Math.round(170 - 22 * Math.sin(scope.radC))",
+    "len_BA": "Math.hypot(scope.ax - scope.bx, scope.ay - scope.by)",
+    "len_BC": "Math.hypot(scope.cx - scope.bx, scope.cy - scope.by)",
+    "arcB_ax": "Math.round(scope.bx + 22 * (scope.ax - scope.bx) / scope.len_BA)",
+    "arcB_ay": "Math.round(scope.by + 22 * (scope.ay - scope.by) / scope.len_BA)",
+    "arcB_cx": "Math.round(scope.bx + 22 * (scope.cx - scope.bx) / scope.len_BC)",
+    "arcB_cy": "Math.round(scope.by + 22 * (scope.cy - scope.by) / scope.len_BC)"
+  },
+  "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='${scope.ax},${scope.ay} ${scope.bx},${scope.by} ${scope.cx},${scope.cy}' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M ${scope.cx + 22} 170 A 22 22 0 0 0 ${scope.arcC_x} ${scope.arcC_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M ${scope.arcB_ax} ${scope.arcB_ay} A 22 22 0 0 1 ${scope.arcB_cx} ${scope.arcB_cy}' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='${scope.ax + 10}' y='${scope.ay + 15}' font-size='14' font-weight='bold'>A</text><text x='${scope.bx}' y='${scope.by - 10}' font-size='14' font-weight='bold' text-anchor='middle'>B</text><text x='${scope.cx - 15}' y='${scope.cy + 15}' font-size='14' font-weight='bold'>C</text><text x='${scope.label_b_x}' y='195' font-size='13' text-anchor='middle' fill='#1d3557'>b = ${scope.b} cm</text><text x='${scope.label_c_x}' y='${scope.label_c_y}' font-size='13' fill='#1d3557'>c = ${scope.c} cm</text><text x='${scope.cx + 28}' y='${scope.cy - 5}' font-size='12' fill='#e63946'>${scope.degC}°</text><text x='${scope.bx}' y='${scope.by + 38}' font-size='13' fill='#e63946' font-weight='bold' text-anchor='middle'>θ = ?</text></svg>\n\nIn $\\triangle ABC$, $b = ${scope.b}\\text{ cm}$, $c = ${scope.c}\\text{ cm}$, and $\\angle C = ${scope.degC}^\\circ$.\n\nFind the acute angle $\\theta = \\angle B$. (Give your answer in degrees correct to 1 decimal place.)",
+  "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='${scope.ax},${scope.ay} ${scope.bx},${scope.by} ${scope.cx},${scope.cy}' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M ${scope.cx + 22} 170 A 22 22 0 0 0 ${scope.arcC_x} ${scope.arcC_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M ${scope.arcB_ax} ${scope.arcB_ay} A 22 22 0 0 1 ${scope.arcB_cx} ${scope.arcB_cy}' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='${scope.ax + 10}' y='${scope.ay + 15}' font-size='14' font-weight='bold'>A</text><text x='${scope.bx}' y='${scope.by - 10}' font-size='14' font-weight='bold' text-anchor='middle'>B</text><text x='${scope.cx - 15}' y='${scope.cy + 15}' font-size='14' font-weight='bold'>C</text><text x='${scope.label_b_x}' y='195' font-size='13' text-anchor='middle' fill='#1d3557'>b = ${scope.b} cm</text><text x='${scope.label_c_x}' y='${scope.label_c_y}' font-size='13' fill='#1d3557'>c = ${scope.c} cm</text><text x='${scope.cx + 28}' y='${scope.cy - 5}' font-size='12' fill='#e63946'>${scope.degC}°</text><text x='${scope.bx}' y='${scope.by + 38}' font-size='13' fill='#e63946' font-weight='bold' text-anchor='middle'>θ = ?</text></svg>",
+  "inputs": [
+    {
+      "label": "\\theta =",
+      "answer": "${scope.ans}"
+    }
+  ],
+  "steps": [
+    "Apply the Sine Rule for angles: $$${scope.step1}$$",
+    "Solve for $\\sin \\theta$: $$${scope.step2}$$",
+    "Take the inverse sine: $$${scope.step3}$$"
+  ]
+},
+    {
+  "level": 2,
+  "variables": {
+    "c": {
+      "type": "randInt",
+      "min": 10,
+      "max": 25
+    },
+    "degP": {
+      "type": "randInt",
+      "min": 20,
+      "max": 50
+    },
+    "degQ": {
+      "type": "randInt",
+      "min": 95,
+      "max": 120
+    }
+  },
+  "derived": {
+    "degR": "180 - scope.degP - scope.degQ",
+    "radP": "scope.degP * Math.PI / 180",
+    "radQ": "scope.degQ * Math.PI / 180",
+    "radR": "scope.degR * Math.PI / 180",
+    "ansVal": "Math.round((scope.c * Math.sin(scope.radQ) / Math.sin(scope.radR)) * 10) / 10",
+    "ans": "scope.ansVal.toFixed(1)",
+    "step1": "'\\\\angle PRQ = 180^\\\\circ - ' + scope.degP + '^\\\\circ - ' + scope.degQ + '^\\\\circ = ' + scope.degR + '^\\\\circ'",
+    "step2": "'\\\\frac{PR}{\\\\sin ' + scope.degQ + '^\\\\circ} = \\\\frac{' + scope.c + '}{\\\\sin ' + scope.degR + '^\\\\circ}'",
+    "step3": "'PR = \\\\frac{' + scope.c + ' \\\\times \\\\sin ' + scope.degQ + '^\\\\circ}{\\\\sin ' + scope.degR + '^\\\\circ} \\\\approx ' + scope.ans + '\\\\text{ cm}'",
+    "pr_draw": "100 * Math.sin(scope.radQ) / Math.sin(scope.radR)",
+    "rx_raw": "scope.pr_draw * Math.cos(scope.radP)",
+    "ry_raw": "-scope.pr_draw * Math.sin(scope.radP)",
+    "xmin": "Math.min(0, scope.rx_raw)",
+    "xmax": "Math.max(100, scope.rx_raw)",
+    "width": "scope.xmax - scope.xmin",
+    "height": "scope.pr_draw * Math.sin(scope.radP)",
+    "scale": "Math.min(200 / scope.width, 110 / scope.height)",
+    "px": "Math.round(60 + (0 - scope.xmin) * scope.scale)",
+    "qx": "Math.round(60 + (100 - scope.xmin) * scope.scale)",
+    "rx": "Math.round(60 + (scope.rx_raw - scope.xmin) * scope.scale)",
+    "py": "170",
+    "qy": "170",
+    "ry": "Math.round(170 - scope.height * scope.scale)",
+    "label_pr_x": "Math.round((scope.px + scope.rx) / 2 - 15)",
+    "label_pr_y": "Math.round((scope.py + scope.ry) / 2 - 5)",
+    "arcP_x": "Math.round(scope.px + 22 * Math.cos(scope.radP))",
+    "arcP_y": "Math.round(170 - 22 * Math.sin(scope.radP))",
+    "len_QR": "Math.hypot(scope.rx - scope.qx, scope.ry - scope.qy)",
+    "arcQ_px": "scope.qx - 22",
+    "arcQ_rx": "Math.round(scope.qx + 22 * (scope.rx - scope.qx) / scope.len_QR)",
+    "arcQ_ry": "Math.round(scope.qy + 22 * (scope.ry - scope.qy) / scope.len_QR)"
+  },
+  "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='${scope.px},${scope.py} ${scope.qx},${scope.qy} ${scope.rx},${scope.ry}' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M ${scope.px + 22} 170 A 22 22 0 0 0 ${scope.arcP_x} ${scope.arcP_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M ${scope.arcQ_px} 170 A 22 22 0 0 1 ${scope.arcQ_rx} ${scope.arcQ_ry}' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='${scope.px - 15}' y='${scope.py + 15}' font-size='14' font-weight='bold'>P</text><text x='${scope.qx + 10}' y='${scope.qy + 15}' font-size='14' font-weight='bold'>Q</text><text x='${scope.rx}' y='${scope.ry - 10}' font-size='14' font-weight='bold' text-anchor='middle'>R</text><text x='${Math.round((scope.px + scope.qx)/2)}' y='195' font-size='13' text-anchor='middle' fill='#1d3557'>${scope.c} cm</text><text x='${scope.label_pr_x}' y='${scope.label_pr_y}' font-size='13' fill='#e63946' font-weight='bold'>PR = ?</text><text x='${scope.px + 28}' y='${scope.py - 5}' font-size='12' fill='#e63946'>${scope.degP}°</text><text x='${scope.qx - 25}' y='${scope.qy - 15}' font-size='12' fill='#e63946'>${scope.degQ}°</text></svg>\n\nIn $\\triangle PQR$, $PQ = ${scope.c}\\text{ cm}$, $\\angle QPR = ${scope.degP}^\\circ$, and $\\angle PQR = ${scope.degQ}^\\circ$.\n\nFind the length of $PR$. (Give your answer correct to 1 decimal place.)",
+  "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='${scope.px},${scope.py} ${scope.qx},${scope.qy} ${scope.rx},${scope.ry}' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M ${scope.px + 22} 170 A 22 22 0 0 0 ${scope.arcP_x} ${scope.arcP_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M ${scope.arcQ_px} 170 A 22 22 0 0 1 ${scope.arcQ_rx} ${scope.arcQ_ry}' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='${scope.px - 15}' y='${scope.py + 15}' font-size='14' font-weight='bold'>P</text><text x='${scope.qx + 10}' y='${scope.qy + 15}' font-size='14' font-weight='bold'>Q</text><text x='${scope.rx}' y='${scope.ry - 10}' font-size='14' font-weight='bold' text-anchor='middle'>R</text><text x='${Math.round((scope.px + scope.qx)/2)}' y='195' font-size='13' text-anchor='middle' fill='#1d3557'>${scope.c} cm</text><text x='${scope.label_pr_x}' y='${scope.label_pr_y}' font-size='13' fill='#e63946' font-weight='bold'>PR = ?</text><text x='${scope.px + 28}' y='${scope.py - 5}' font-size='12' fill='#e63946'>${scope.degP}°</text><text x='${scope.qx - 25}' y='${scope.qy - 15}' font-size='12' fill='#e63946'>${scope.degQ}°</text></svg>",
+  "inputs": [
+    {
+      "label": "PR =",
+      "answer": "${scope.ans}"
+    }
+  ],
+  "steps": [
+    "Find the third angle opposite $PQ$: $$${scope.step1}$$",
+    "Set up the Sine Rule: $$${scope.step2}$$",
+    "Calculate $PR$: $$${scope.step3}$$"
+  ]
+},
+    {
+      "level": 2,
+      "variables": {
+        "bc": {
+          "type": "randInt",
+          "min": 18,
+          "max": 30
+        },
+        "degB": {
+          "type": "randInt",
+          "min": 55,
+          "max": 75
+        },
+        "degC": {
+          "type": "randInt",
+          "min": 35,
+          "max": 50
+        }
+      },
+      "derived": {
+        "degA": "180 - scope.degB - scope.degC",
+        "radA": "scope.degA * Math.PI / 180",
+        "radB": "scope.degB * Math.PI / 180",
+        "radC": "scope.degC * Math.PI / 180",
+        "acVal": "scope.bc * Math.sin(scope.radB) / Math.sin(scope.radA)",
+        "acStr": "(Math.round(scope.acVal * 100) / 100).toFixed(2)",
+        "adVal": "Math.round((scope.acVal * Math.sin(scope.radC)) * 10) / 10",
+        "ans": "scope.adVal.toFixed(1)",
+        "step1": "'\\\\angle BAC = 180^\\\\circ - ' + scope.degB + '^\\\\circ - ' + scope.degC + '^\\\\circ = ' + scope.degA + '^\\\\circ'",
+        "step2": "'\\\\frac{AC}{\\\\sin ' + scope.degB + '^\\\\circ} = \\\\frac{' + scope.bc + '}{\\\\sin ' + scope.degA + '^\\\\circ} \\\\implies AC \\\\approx ' + scope.acStr + '\\\\text{ cm}'",
+        "step3": "'AD = ' + scope.acStr + ' \\\\times \\\\sin ' + scope.degC + '^\\\\circ \\\\approx ' + scope.ans + '\\\\text{ cm}'",
+        "ac_draw": "180 * Math.sin(scope.radB) / Math.sin(scope.radA)",
+        "ax_raw": "180 - scope.ac_draw * Math.cos(scope.radC)",
+        "ay_raw": "-scope.ac_draw * Math.sin(scope.radC)",
+        "xmin": "Math.min(0, scope.ax_raw)",
+        "xmax": "Math.max(180, scope.ax_raw)",
+        "width": "scope.xmax - scope.xmin",
+        "height": "scope.ac_draw * Math.sin(scope.radC)",
+        "scale": "Math.min(200 / scope.width, 110 / scope.height)",
+        "bx": "Math.round(60 + (0 - scope.xmin) * scope.scale)",
+        "cx": "Math.round(60 + (180 - scope.xmin) * scope.scale)",
+        "ax": "Math.round(60 + (scope.ax_raw - scope.xmin) * scope.scale)",
+        "dx": "scope.ax",
+        "by": "170",
+        "cy": "170",
+        "dy": "170",
+        "ay": "Math.round(170 - scope.height * scope.scale)",
+        "label_ad_y": "Math.round((scope.ay + 170) / 2)",
+        "arcB_x": "Math.round(scope.bx + 22 * Math.cos(scope.radB))",
+        "arcB_y": "Math.round(170 - 22 * Math.sin(scope.radB))",
+        "arcC_x": "Math.round(scope.cx - 22 * Math.cos(scope.radC))",
+        "arcC_y": "Math.round(170 - 22 * Math.sin(scope.radC))"
+      },
+      "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='${scope.ax},${scope.ay} ${scope.bx},${scope.by} ${scope.cx},${scope.cy}' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='${scope.ax}' y1='${scope.ay}' x2='${scope.ax}' y2='170' stroke='#2b2b2b' stroke-width='1.5' stroke-dasharray='4,4'/><path d='M ${scope.ax - 10} 170 L ${scope.ax - 10} 160 L ${scope.ax} 160' fill='none' stroke='#2b2b2b' stroke-width='1.2'/><path d='M ${scope.bx + 22} 170 A 22 22 0 0 0 ${scope.arcB_x} ${scope.arcB_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M ${scope.cx - 22} 170 A 22 22 0 0 1 ${scope.arcC_x} ${scope.arcC_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='${scope.ax}' y='${scope.ay - 10}' font-size='14' font-weight='bold' text-anchor='middle'>A</text><text x='${scope.bx - 15}' y='${scope.by + 15}' font-size='14' font-weight='bold'>B</text><text x='${scope.cx + 10}' y='${scope.cy + 15}' font-size='14' font-weight='bold'>C</text><text x='${scope.ax}' y='185' font-size='13' text-anchor='middle'>D</text><text x='160' y='205' font-size='13' text-anchor='middle' fill='#1d3557'>BC = ${scope.bc} cm</text><text x='${scope.ax + 8}' y='${scope.label_ad_y}' font-size='13' fill='#e63946' font-weight='bold'>AD = ?</text><text x='${scope.bx + 28}' y='${scope.by - 5}' font-size='12' fill='#e63946'>${scope.degB}°</text><text x='${scope.cx - 35}' y='${scope.cy - 5}' font-size='12' fill='#e63946'>${scope.degC}°</text></svg>\n\nIn $\\triangle ABC$, $BC = ${scope.bc}\\text{ cm}$, $\\angle ABC = ${scope.degB}^\\circ$, $\\angle ACB = ${scope.degC}^\\circ$, and $AD \\perp BC$ with $D$ lying on $BC$.\n\nFind the perpendicular height $AD$. (Give your answer correct to 1 decimal place.)",
+      "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='${scope.ax},${scope.ay} ${scope.bx},${scope.by} ${scope.cx},${scope.cy}' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='${scope.ax}' y1='${scope.ay}' x2='${scope.ax}' y2='170' stroke='#2b2b2b' stroke-width='1.5' stroke-dasharray='4,4'/><path d='M ${scope.ax - 10} 170 L ${scope.ax - 10} 160 L ${scope.ax} 160' fill='none' stroke='#2b2b2b' stroke-width='1.2'/><path d='M ${scope.bx + 22} 170 A 22 22 0 0 0 ${scope.arcB_x} ${scope.arcB_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M ${scope.cx - 22} 170 A 22 22 0 0 1 ${scope.arcC_x} ${scope.arcC_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='${scope.ax}' y='${scope.ay - 10}' font-size='14' font-weight='bold' text-anchor='middle'>A</text><text x='${scope.bx - 15}' y='${scope.by + 15}' font-size='14' font-weight='bold'>B</text><text x='${scope.cx + 10}' y='${scope.cy + 15}' font-size='14' font-weight='bold'>C</text><text x='${scope.ax}' y='185' font-size='13' text-anchor='middle'>D</text><text x='160' y='205' font-size='13' text-anchor='middle' fill='#1d3557'>BC = ${scope.bc} cm</text><text x='${scope.ax + 8}' y='${scope.label_ad_y}' font-size='13' fill='#e63946' font-weight='bold'>AD = ?</text><text x='${scope.bx + 28}' y='${scope.by - 5}' font-size='12' fill='#e63946'>${scope.degB}°</text><text x='${scope.cx - 35}' y='${scope.cy - 5}' font-size='12' fill='#e63946'>${scope.degC}°</text></svg>",
+      "inputs": [
+        {
+          "label": "AD =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Find $\\angle BAC$ using the angle sum of a triangle: $$${scope.step1}$$",
+        "Use Sine Rule to find side $AC$: $$${scope.step2}$$",
+        "Calculate $AD$ using right-angled trigonometry $AD = AC \\sin C$: $$${scope.step3}$$"
+      ]
+    },
+    {
+  "level": 3,
+  "variables": {
+    "ab": {
+      "type": "randInt",
+      "min": 12,
+      "max": 20
+    },
+    "degABD": {
+      "type": "randInt",
+      "min": 20,
+      "max": 35
+    },
+    "degCBD": {
+      "type": "randInt",
+      "min": 40,
+      "max": 55
+    },
+    "degBCD": {
+      "type": "randInt",
+      "min": 70,
+      "max": 85
+    }
+  },
+  "derived": {
+    "radABD": "scope.degABD * Math.PI / 180",
+    "radCBD": "scope.degCBD * Math.PI / 180",
+    "radBCD": "scope.degBCD * Math.PI / 180",
+    "radBDC": "(180 - scope.degCBD - scope.degBCD) * Math.PI / 180",
+    "bdVal": "scope.ab / Math.cos(scope.radABD)",
+    "bdStr": "(Math.round(scope.bdVal * 100) / 100).toFixed(2)",
+    "cdVal": "Math.round((scope.bdVal * Math.sin(scope.radCBD) / Math.sin(scope.radBCD)) * 10) / 10",
+    "ans": "scope.cdVal.toFixed(1)",
+    "step1": "'BD = \\\\frac{AB}{\\\\cos ' + scope.degABD + '^\\\\circ} = \\\\frac{' + scope.ab + '}{\\\\cos ' + scope.degABD + '^\\\\circ} \\\\approx ' + scope.bdStr + '\\\\text{ cm}'",
+    "step2": "'\\\\begin{aligned} \\\\frac{CD}{\\\\sin ' + scope.degCBD + '^\\\\circ} &= \\\\frac{BD}{\\\\sin ' + scope.degBCD + '^\\\\circ} \\\\\\\\ \\\\implies CD &= \\\\frac{' + scope.bdStr + ' \\\\times \\\\sin ' + scope.degCBD + '^\\\\circ}{\\\\sin ' + scope.degBCD + '^\\\\circ} \\\\end{aligned}'",
+    "step3": "'CD \\\\approx ' + scope.ans + '\\\\text{ cm}'",
+    "ad_draw": "100 * Math.tan(scope.radABD)",
+    "dx": "Math.round(50 + scope.ad_draw)",
+    "dy": "175",
+    "bd_draw": "100 / Math.cos(scope.radABD)",
+    "bc_draw": "scope.bd_draw * Math.sin(scope.radBDC) / Math.sin(scope.radBCD)",
+    "phi": "(90 - scope.degABD - scope.degCBD) * Math.PI / 180",
+    "cx": "Math.round(50 + scope.bc_draw * Math.cos(scope.phi))",
+    "cy": "Math.round(75 - scope.bc_draw * Math.sin(scope.phi))",
+    "label_cd_x": "Math.round((scope.cx + scope.dx) / 2 + 15)",
+    "label_cd_y": "Math.round((scope.cy + scope.dy) / 2)",
+    "arc1_x": "Math.round(50 + 25 * Math.sin(scope.radABD))",
+    "arc1_y": "Math.round(75 + 25 * Math.cos(scope.radABD))",
+    "arc2_dx": "Math.round(50 + 35 * Math.sin(scope.radABD))",
+    "arc2_dy": "Math.round(75 + 35 * Math.cos(scope.radABD))",
+    "arc2_cx": "Math.round(50 + 35 * Math.cos(scope.phi))",
+    "arc2_cy": "Math.round(75 - 35 * Math.sin(scope.phi))",
+    "cd_len": "Math.hypot(scope.dx - scope.cx, 175 - scope.cy)",
+    "arc3_bx": "Math.round(scope.cx - 20 * Math.cos(scope.phi))",
+    "arc3_by": "Math.round(scope.cy + 20 * Math.sin(scope.phi))",
+    "arc3_dx": "Math.round(scope.cx + 20 * (scope.dx - scope.cx) / scope.cd_len)",
+    "arc3_dy": "Math.round(scope.cy + 20 * (175 - scope.cy) / scope.cd_len)",
+    "lbl1_x": "Math.round(50 + 38 * Math.sin(scope.radABD / 2))",
+    "lbl1_y": "Math.round(75 + 38 * Math.cos(scope.radABD / 2))",
+    "lbl2_x": "Math.round(50 + 52 * Math.sin(scope.radABD + scope.radCBD / 2))",
+    "lbl2_y": "Math.round(75 + 52 * Math.cos(scope.radABD + scope.radCBD / 2))",
+    "ang_CB": "Math.atan2(75 - scope.cy, 50 - scope.cx)",
+    "ang_CD": "Math.atan2(175 - scope.cy, scope.dx - scope.cx)",
+    "bis3": "(scope.ang_CB + scope.ang_CD) / 2",
+    "lbl3_x": "Math.round(scope.cx + 36 * Math.cos(scope.bis3))",
+    "lbl3_y": "Math.round(scope.cy + 36 * Math.sin(scope.bis3))"
+  },
+  "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='50,175 50,75 ${scope.cx},${scope.cy} ${scope.dx},175' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 50,75 L ${scope.dx},175' stroke='#2b2b2b' stroke-width='1.5' stroke-dasharray='4,4'/><rect x='50' y='160' width='15' height='15' fill='none' stroke='#2b2b2b' stroke-width='1.2'/><path d='M 50,100 A 25 25 0 0 0 ${scope.arc1_x},${scope.arc1_y}' fill='none' stroke='#e63946' stroke-width='1.2'/><path d='M ${scope.arc2_dx},${scope.arc2_dy} A 35 35 0 0 0 ${scope.arc2_cx},${scope.arc2_cy}' fill='none' stroke='#e63946' stroke-width='1.2'/><path d='M ${scope.arc3_bx},${scope.arc3_by} A 20 20 0 0 0 ${scope.arc3_dx},${scope.arc3_dy}' fill='none' stroke='#e63946' stroke-width='1.2'/><text x='35' y='185' font-size='14' font-weight='bold'>A</text><text x='35' y='70' font-size='14' font-weight='bold'>B</text><text x='${scope.cx + 10}' y='${scope.cy}' font-size='14' font-weight='bold'>C</text><text x='${scope.dx + 10}' y='185' font-size='14' font-weight='bold'>D</text><text x='20' y='130' font-size='13' fill='#1d3557'>${scope.ab} cm</text><text x='${scope.label_cd_x}' y='${scope.label_cd_y}' font-size='13' fill='#e63946' font-weight='bold'>CD = ?</text><text x='${scope.lbl1_x}' y='${scope.lbl1_y}' font-size='11' fill='#e63946' text-anchor='middle'>${scope.degABD}°</text><text x='${scope.lbl2_x}' y='${scope.lbl2_y}' font-size='11' fill='#e63946' text-anchor='middle'>${scope.degCBD}°</text><text x='${scope.lbl3_x}' y='${scope.lbl3_y}' font-size='11' fill='#e63946' text-anchor='middle'>${scope.degBCD}°</text></svg>\n\nIn quadrilateral $ABCD$, $AB = ${scope.ab}\\text{ cm}$, $\\angle DAB = 90^\\circ$, $\\angle ABD = ${scope.degABD}^\\circ$, $\\angle CBD = ${scope.degCBD}^\\circ$, and $\\angle BCD = ${scope.degBCD}^\\circ$.\n\nFind the length of $CD$. (Give your answer correct to 1 decimal place.)",
+  "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='50,175 50,75 ${scope.cx},${scope.cy} ${scope.dx},175' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 50,75 L ${scope.dx},175' stroke='#2b2b2b' stroke-width='1.5' stroke-dasharray='4,4'/><rect x='50' y='160' width='15' height='15' fill='none' stroke='#2b2b2b' stroke-width='1.2'/><path d='M 50,100 A 25 25 0 0 0 ${scope.arc1_x},${scope.arc1_y}' fill='none' stroke='#e63946' stroke-width='1.2'/><path d='M ${scope.arc2_dx},${scope.arc2_dy} A 35 35 0 0 0 ${scope.arc2_cx},${scope.arc2_cy}' fill='none' stroke='#e63946' stroke-width='1.2'/><path d='M ${scope.arc3_bx},${scope.arc3_by} A 20 20 0 0 0 ${scope.arc3_dx},${scope.arc3_dy}' fill='none' stroke='#e63946' stroke-width='1.2'/><text x='35' y='185' font-size='14' font-weight='bold'>A</text><text x='35' y='70' font-size='14' font-weight='bold'>B</text><text x='${scope.cx + 10}' y='${scope.cy}' font-size='14' font-weight='bold'>C</text><text x='${scope.dx + 10}' y='185' font-size='14' font-weight='bold'>D</text><text x='20' y='130' font-size='13' fill='#1d3557'>${scope.ab} cm</text><text x='${scope.label_cd_x}' y='${scope.label_cd_y}' font-size='13' fill='#e63946' font-weight='bold'>CD = ?</text><text x='${scope.lbl1_x}' y='${scope.lbl1_y}' font-size='11' fill='#e63946' text-anchor='middle'>${scope.degABD}°</text><text x='${scope.lbl2_x}' y='${scope.lbl2_y}' font-size='11' fill='#e63946' text-anchor='middle'>${scope.degCBD}°</text><text x='${scope.lbl3_x}' y='${scope.lbl3_y}' font-size='11' fill='#e63946' text-anchor='middle'>${scope.degBCD}°</text></svg>",
+  "inputs": [
+    {
+      "label": "CD =",
+      "answer": "${scope.ans}"
+    }
+  ],
+  "steps": [
+    "In right-angled $\\triangle ABD$, calculate length $BD$: $$${scope.step1}$$",
+    "In $\\triangle BCD$, apply the Sine Rule: $$${scope.step2}$$",
+    "Evaluate $CD$: $$${scope.step3}$$"
+  ]
+},
+    {
+  "level": 3,
+  "variables": {
+    "cd": {
+      "type": "randInt",
+      "min": 8,
+      "max": 14
+    },
+    "ac": {
+      "type": "randInt",
+      "min": 18,
+      "max": 25
+    },
+    "degADB": {
+      "type": "randInt",
+      "min": 40,
+      "max": 52
+    }
+  },
+  "derived": {
+    "radADB": "scope.degADB * Math.PI / 180",
+    "sinCAD": "(scope.cd * Math.sin(scope.radADB)) / scope.ac",
+    "radCAD": "Math.asin(scope.sinCAD)",
+    "degCAD": "scope.radCAD * 180 / Math.PI",
+    "degACD": "180 - scope.degADB - scope.degCAD",
+    "degACB": "Math.round((180 - scope.degACD) * 10) / 10",
+    "ans": "scope.degACB.toFixed(1)",
+    "sinCAD_str": "scope.sinCAD.toFixed(4)",
+    "degCAD_str": "scope.degCAD.toFixed(1)",
+    "degACD_str": "scope.degACD.toFixed(1)",
+    "step1": "'\\\\begin{aligned} \\\\frac{\\\\sin \\\\angle CAD}{' + scope.cd + '} &= \\\\frac{\\\\sin ' + scope.degADB + '^\\\\circ}{' + scope.ac + '} \\\\\\\\ \\\\angle CAD &\\\\approx ' + scope.degCAD_str + '^\\\\circ \\\\end{aligned}'",
+    "step2": "'\\\\angle ACD = 180^\\\\circ - ' + scope.degADB + '^\\\\circ - ' + scope.degCAD_str + '^\\\\circ = ' + scope.degACD_str + '^\\\\circ'",
+    "step3": "'\\\\begin{aligned} \\\\angle ACB &= 180^\\\\circ - \\\\angle ACD \\\\\\\\ &= 180^\\\\circ - ' + scope.degACD_str + '^\\\\circ = ' + scope.ans + '^\\\\circ \\\\end{aligned}'",
+    "cd_ratio": "scope.cd / (scope.cd + scope.ac * Math.sin(scope.radCAD) / Math.sin(scope.radADB))",
+    "cx": "Math.round(260 - 210 * scope.cd_ratio)",
+    "cy": "175",
+    "arcD_x": "Math.round(260 - 22 * Math.cos(Math.atan2(110, 210)))",
+    "arcD_y": "Math.round(175 - 22 * Math.sin(Math.atan2(110, 210)))",
+    "arcC_x": "Math.round(scope.cx + 20 * Math.cos(Math.atan2(-110, 50 - scope.cx)))",
+    "arcC_y": "Math.round(175 + 20 * Math.sin(Math.atan2(-110, 50 - scope.cx)))"
+  },
+  "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='50,65 50,175 260,175' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='50' y1='65' x2='${scope.cx}' y2='175' stroke='#2b2b2b' stroke-width='2'/><rect x='50' y='160' width='15' height='15' fill='none' stroke='#2b2b2b' stroke-width='1.2'/><path d='M 238 175 A 22 22 0 0 1 ${scope.arcD_x} ${scope.arcD_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M ${scope.cx - 20} 175 A 20 20 0 0 1 ${scope.arcC_x} ${scope.arcC_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='35' y='60' font-size='14' font-weight='bold'>A</text><text x='35' y='190' font-size='14' font-weight='bold'>B</text><text x='${scope.cx}' y='190' font-size='14' font-weight='bold' text-anchor='middle'>C</text><text x='270' y='190' font-size='14' font-weight='bold'>D</text><text x='${Math.round((scope.cx + 260) / 2)}' y='195' font-size='13' text-anchor='middle' fill='#1d3557'>${scope.cd} cm</text><text x='${Math.round((50 + scope.cx) / 2 - 15)}' y='${Math.round((65 + 175) / 2)}' font-size='13' fill='#1d3557'>AC = ${scope.ac} cm</text><text x='220' y='170' font-size='12' fill='#e63946'>${scope.degADB}°</text><text x='${scope.cx - 24}' y='155' font-size='12' fill='#e63946' font-weight='bold' text-anchor='end'>∠ACB = ?</text></svg>\n\nIn $\\triangle ABD$, point $C$ lies on $BD$ such that $CD = ${scope.cd}\\text{ cm}$ and $AC = ${scope.ac}\\text{ cm}$. Given that $\\angle ADB = ${scope.degADB}^\\circ$ and $\\angle ABD = 90^\\circ$, find $\\angle ACB$. (Give your answer in degrees correct to 1 decimal place.)",
+  "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='50,65 50,175 260,175' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='50' y1='65' x2='${scope.cx}' y2='175' stroke='#2b2b2b' stroke-width='2'/><rect x='50' y='160' width='15' height='15' fill='none' stroke='#2b2b2b' stroke-width='1.2'/><path d='M 238 175 A 22 22 0 0 1 ${scope.arcD_x} ${scope.arcD_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M ${scope.cx - 20} 175 A 20 20 0 0 1 ${scope.arcC_x} ${scope.arcC_y}' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='35' y='60' font-size='14' font-weight='bold'>A</text><text x='35' y='190' font-size='14' font-weight='bold'>B</text><text x='${scope.cx}' y='190' font-size='14' font-weight='bold' text-anchor='middle'>C</text><text x='270' y='190' font-size='14' font-weight='bold'>D</text><text x='${Math.round((scope.cx + 260) / 2)}' y='195' font-size='13' text-anchor='middle' fill='#1d3557'>${scope.cd} cm</text><text x='${Math.round((50 + scope.cx) / 2 - 15)}' y='${Math.round((65 + 175) / 2)}' font-size='13' fill='#1d3557'>AC = ${scope.ac} cm</text><text x='220' y='170' font-size='12' fill='#e63946'>${scope.degADB}°</text><text x='${scope.cx - 24}' y='155' font-size='12' fill='#e63946' font-weight='bold' text-anchor='end'>∠ACB = ?</text></svg>",
+  "inputs": [
+    {
+      "label": "\\angle ACB =",
+      "answer": "${scope.ans}"
+    }
+  ],
+  "steps": [
+    "In $\\triangle ACD$, apply the Sine Rule to find $\\angle CAD$: $$${scope.step1}$$",
+    "Calculate $\\angle ACD$ using sum of angles in $\\triangle ACD$: $$${scope.step2}$$",
+    "Find supplementary angle $\\angle ACB$: $$${scope.step3}$$"
+  ]
+}
+  ]
+}

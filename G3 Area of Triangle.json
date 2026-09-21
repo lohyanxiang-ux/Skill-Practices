@@ -1,0 +1,331 @@
+{
+  "skillTitle": "Area of Triangle",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "+",
+    "4",
+    "5",
+    "6",
+    "-",
+    "1",
+    "2",
+    "3",
+     "/",
+    ".",
+    "0"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "b": {
+          "type": "randInt",
+          "min": 5,
+          "max": 12
+        },
+        "c": {
+          "type": "randInt",
+          "min": 8,
+          "max": 15
+        },
+        "degA": {
+          "type": "randInt",
+          "min": 35,
+          "max": 125
+        }
+      },
+      "derived": {
+        "radA": "scope.degA * Math.PI / 180",
+        "areaVal": "0.5 * scope.b * scope.c * Math.sin(scope.radA)",
+        "ansVal": "Number(scope.areaVal.toPrecision(3))",
+        "ans": "scope.ansVal.toString()",
+        "step1": "'\\\\text{Area} = \\\\frac{1}{2} (' + scope.b + ')(' + scope.c + ')\\\\sin ' + scope.degA + '^\\\\circ'",
+        "step2": "'\\\\text{Area} \\\\approx ' + scope.ans + '\\\\text{ cm}^2'"
+      },
+      "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='60,170 240,170 130,60' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 82 170 A 22 22 0 0 0 71 150' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='45' y='185' font-size='14' font-weight='bold'>A</text><text x='250' y='185' font-size='14' font-weight='bold'>B</text><text x='130' y='48' font-size='14' font-weight='bold' text-anchor='middle'>C</text><text x='150' y='192' font-size='13' text-anchor='middle' fill='#1d3557'>c = ${scope.c} cm</text><text x='82' y='110' font-size='13' fill='#1d3557' text-anchor='end'>b = ${scope.b} cm</text><text x='92' y='162' font-size='12' fill='#e63946'>${scope.degA}°</text></svg>\n\nIn $\\triangle ABC$, $AC = ${scope.b}\\text{ cm}$, $AB = ${scope.c}\\text{ cm}$, and $\\angle A = ${scope.degA}^\\circ$.\n\nFind the area of $\\triangle ABC$. (Give your answer correct to 3 significant figures.)",
+      "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='60,170 240,170 130,60' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 82 170 A 22 22 0 0 0 71 150' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='45' y='185' font-size='14' font-weight='bold'>A</text><text x='250' y='185' font-size='14' font-weight='bold'>B</text><text x='130' y='48' font-size='14' font-weight='bold' text-anchor='middle'>C</text><text x='150' y='192' font-size='13' text-anchor='middle' fill='#1d3557'>c = ${scope.c} cm</text><text x='82' y='110' font-size='13' fill='#1d3557' text-anchor='end'>b = ${scope.b} cm</text><text x='92' y='162' font-size='12' fill='#e63946'>${scope.degA}°</text></svg>",
+      "inputs": [
+        {
+          "label": "Area =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the sine area formula: $$\\text{Area} = \\frac{1}{2} b c \\sin A$$",
+        "Substitute the given side lengths and angle: $$${scope.step1}$$",
+        "Calculate the area: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": {
+          "type": "randInt",
+          "min": 6,
+          "max": 14
+        },
+        "c": {
+          "type": "randInt",
+          "min": 7,
+          "max": 15
+        },
+        "degB": {
+          "type": "randInt",
+          "min": 35,
+          "max": 125
+        }
+      },
+      "derived": {
+        "radB": "scope.degB * Math.PI / 180",
+        "areaVal": "0.5 * scope.a * scope.c * Math.sin(scope.radB)",
+        "ansVal": "Number(scope.areaVal.toPrecision(3))",
+        "ans": "scope.ansVal.toString()",
+        "step1": "'\\\\text{Area} = \\\\frac{1}{2} (' + scope.a + ')(' + scope.c + ')\\\\sin ' + scope.degB + '^\\\\circ'",
+        "step2": "'\\\\text{Area} \\\\approx ' + scope.ans + '\\\\text{ cm}^2'"
+      },
+      "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='70,60 50,170 250,170' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 75 170 A 25 25 0 0 0 54 145' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='65' y='48' font-size='14' font-weight='bold' text-anchor='middle'>A</text><text x='35' y='185' font-size='14' font-weight='bold'>B</text><text x='260' y='185' font-size='14' font-weight='bold'>C</text><text x='150' y='192' font-size='13' text-anchor='middle' fill='#1d3557'>a = ${scope.a} cm</text><text x='50' y='110' font-size='13' fill='#1d3557' text-anchor='end'>c = ${scope.c} cm</text><text x='70' y='160' font-size='12' fill='#e63946'>${scope.degB}°</text></svg>\n\nIn $\\triangle ABC$, $BC = ${scope.a}\\text{ cm}$, $AB = ${scope.c}\\text{ cm}$, and $\\angle B = ${scope.degB}^\\circ$.\n\nFind the area of $\\triangle ABC$. (Give your answer correct to 3 significant figures.)",
+      "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='70,60 50,170 250,170' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 75 170 A 25 25 0 0 0 54 145' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='65' y='48' font-size='14' font-weight='bold' text-anchor='middle'>A</text><text x='35' y='185' font-size='14' font-weight='bold'>B</text><text x='260' y='185' font-size='14' font-weight='bold'>C</text><text x='150' y='192' font-size='13' text-anchor='middle' fill='#1d3557'>a = ${scope.a} cm</text><text x='50' y='110' font-size='13' fill='#1d3557' text-anchor='end'>c = ${scope.c} cm</text><text x='70' y='160' font-size='12' fill='#e63946'>${scope.degB}°</text></svg>",
+      "inputs": [
+        {
+          "label": "Area =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the sine area formula: $$\\text{Area} = \\frac{1}{2} a c \\sin B$$",
+        "Substitute the given side lengths and angle: $$${scope.step1}$$",
+        "Calculate the area: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": {
+          "type": "randInt",
+          "min": 6,
+          "max": 14
+        },
+        "b": {
+          "type": "randInt",
+          "min": 5,
+          "max": 13
+        },
+        "degC": {
+          "type": "randInt",
+          "min": 35,
+          "max": 125
+        }
+      },
+      "derived": {
+        "radC": "scope.degC * Math.PI / 180",
+        "areaVal": "0.5 * scope.a * scope.b * Math.sin(scope.radC)",
+        "ansVal": "Number(scope.areaVal.toPrecision(3))",
+        "ans": "scope.ansVal.toString()",
+        "step1": "'\\\\text{Area} = \\\\frac{1}{2} (' + scope.a + ')(' + scope.b + ')\\\\sin ' + scope.degC + '^\\\\circ'",
+        "step2": "'\\\\text{Area} \\\\approx ' + scope.ans + '\\\\text{ cm}^2'"
+      },
+      "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='180,60 60,170 260,170' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 235 170 A 25 25 0 0 1 245 150' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='180' y='48' font-size='14' font-weight='bold' text-anchor='middle'>A</text><text x='45' y='185' font-size='14' font-weight='bold'>B</text><text x='270' y='185' font-size='14' font-weight='bold'>C</text><text x='150' y='192' font-size='13' text-anchor='middle' fill='#1d3557'>a = ${scope.a} cm</text><text x='230' y='110' font-size='13' fill='#1d3557'>b = ${scope.b} cm</text><text x='225' y='160' font-size='12' fill='#e63946'>${scope.degC}°</text></svg>\n\nIn $\\triangle ABC$, $BC = ${scope.a}\\text{ cm}$, $AC = ${scope.b}\\text{ cm}$, and $\\angle C = ${scope.degC}^\\circ$.\n\nFind the area of $\\triangle ABC$. (Give your answer correct to 3 significant figures.)",
+      "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='180,60 60,170 260,170' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 235 170 A 25 25 0 0 1 245 150' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='180' y='48' font-size='14' font-weight='bold' text-anchor='middle'>A</text><text x='45' y='185' font-size='14' font-weight='bold'>B</text><text x='270' y='185' font-size='14' font-weight='bold'>C</text><text x='150' y='192' font-size='13' text-anchor='middle' fill='#1d3557'>a = ${scope.a} cm</text><text x='230' y='110' font-size='13' fill='#1d3557'>b = ${scope.b} cm</text><text x='225' y='160' font-size='12' fill='#e63946'>${scope.degC}°</text></svg>",
+      "inputs": [
+        {
+          "label": "Area =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the sine area formula: $$\\text{Area} = \\frac{1}{2} a b \\sin C$$",
+        "Substitute the given side lengths and angle: $$${scope.step1}$$",
+        "Calculate the area: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "ab": {
+          "type": "randInt",
+          "min": 6,
+          "max": 10
+        },
+        "ac": {
+          "type": "randInt",
+          "min": 5,
+          "max": 8
+        },
+        "degACB": {
+          "type": "randInt",
+          "min": 65,
+          "max": 75
+        },
+        "degECD": {
+          "type": "randInt",
+          "min": 55,
+          "max": 65
+        }
+      },
+      "derived": {
+        "degACE": "180 - scope.degACB - scope.degECD",
+        "radA": "scope.degACE * Math.PI / 180",
+        "areaVal": "0.5 * scope.ab * scope.ac * Math.sin(scope.radA)",
+        "ansVal": "Number(scope.areaVal.toPrecision(3))",
+        "ans": "scope.ansVal.toString()",
+        "step1": "'\\\\angle ACE = 180^\\\\circ - ' + scope.degACB + '^\\\\circ - ' + scope.degECD + '^\\\\circ = ' + scope.degACE + '^\\\\circ'",
+        "step2": "'\\\\text{Since } AB \\\\parallel EC, \\\\angle BAC = \\\\angle ACE = ' + scope.degACE + '^\\\\circ'",
+        "step3": "'\\\\text{Area} = \\\\frac{1}{2}(' + scope.ab + ')(' + scope.ac + ')\\\\sin ' + scope.degACE + '^\\\\circ \\\\approx ' + scope.ans + '\\\\text{ cm}^2'"
+      },
+      "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><line x1='30' y1='180' x2='290' y2='180' stroke='#2b2b2b' stroke-width='2'/><polygon points='70,180 120,50 170,180' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='170' y1='180' x2='230' y2='50' stroke='#2b2b2b' stroke-width='2'/><path d='M -4,-4 L 3,0 L -4,4' fill='none' stroke='#e63946' stroke-width='2' transform='translate(95,115) rotate(-69)'/><path d='M -4,-4 L 3,0 L -4,4' fill='none' stroke='#e63946' stroke-width='2' transform='translate(200,115) rotate(-65.2)'/><path d='M 145 180 A 25 25 0 0 1 160 157' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M 195 180 A 25 25 0 0 0 180 157' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='60' y='198' font-size='14' font-weight='bold'>B</text><text x='115' y='40' font-size='14' font-weight='bold'>A</text><text x='168' y='198' font-size='14' font-weight='bold'>C</text><text x='290' y='198' font-size='14' font-weight='bold'>D</text><text x='235' y='45' font-size='14' font-weight='bold'>E</text><text x='82' y='110' font-size='13' fill='#1d3557' text-anchor='end'>${scope.ab} cm</text><text x='152' y='110' font-size='13' fill='#1d3557'>${scope.ac} cm</text><text x='135' y='170' font-size='11' fill='#e63946'>${scope.degACB}°</text><text x='196' y='170' font-size='11' fill='#e63946'>${scope.degECD}°</text></svg>\n\nIn the diagram, $BCD$ is a straight line and $AB \\parallel EC$. $AB = ${scope.ab}\\text{ cm}$, $AC = ${scope.ac}\\text{ cm}$, $\\angle ACB = ${scope.degACB}^\\circ$, and $\\angle ECD = ${scope.degECD}^\\circ$.\n\nFind the area of $\\triangle ABC$. (Give your answer correct to 3 significant figures.)",
+      "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><line x1='30' y1='180' x2='290' y2='180' stroke='#2b2b2b' stroke-width='2'/><polygon points='70,180 120,50 170,180' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='170' y1='180' x2='230' y2='50' stroke='#2b2b2b' stroke-width='2'/><path d='M -4,-4 L 3,0 L -4,4' fill='none' stroke='#e63946' stroke-width='2' transform='translate(95,115) rotate(-69)'/><path d='M -4,-4 L 3,0 L -4,4' fill='none' stroke='#e63946' stroke-width='2' transform='translate(200,115) rotate(-65.2)'/><path d='M 145 180 A 25 25 0 0 1 160 157' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M 195 180 A 25 25 0 0 0 180 157' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='60' y='198' font-size='14' font-weight='bold'>B</text><text x='115' y='40' font-size='14' font-weight='bold'>A</text><text x='168' y='198' font-size='14' font-weight='bold'>C</text><text x='290' y='198' font-size='14' font-weight='bold'>D</text><text x='235' y='45' font-size='14' font-weight='bold'>E</text><text x='82' y='110' font-size='13' fill='#1d3557' text-anchor='end'>${scope.ab} cm</text><text x='152' y='110' font-size='13' fill='#1d3557'>${scope.ac} cm</text><text x='135' y='170' font-size='11' fill='#e63946'>${scope.degACB}°</text><text x='196' y='170' font-size='11' fill='#e63946'>${scope.degECD}°</text></svg>",
+      "inputs": [
+        {
+          "label": "Area =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Find $\\angle ACE$ on straight line $BCD$: $$${scope.step1}$$",
+        "Use alternate interior angles for $AB \\parallel EC$: $$${scope.step2}$$",
+        "Calculate the area of $\\triangle ABC$: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "ab": {
+          "type": "randInt",
+          "min": 5,
+          "max": 8
+        },
+        "bd": {
+          "type": "randInt",
+          "min": 9,
+          "max": 12
+        },
+        "cd": {
+          "type": "randInt",
+          "min": 6,
+          "max": 10
+        },
+        "degBDC": {
+          "type": "randInt",
+          "min": 45,
+          "max": 65
+        }
+      },
+      "derived": {
+        "ad2": "scope.bd * scope.bd - scope.ab * scope.ab",
+        "ad": "Math.sqrt(scope.ad2)",
+        "ad_str": "Number(scope.ad.toPrecision(3)).toString()",
+        "area1": "0.5 * scope.ab * scope.ad",
+        "radBDC": "scope.degBDC * Math.PI / 180",
+        "area2": "0.5 * scope.cd * scope.bd * Math.sin(scope.radBDC)",
+        "totalArea": "scope.area1 + scope.area2",
+        "ansVal": "Number(scope.totalArea.toPrecision(3))",
+        "ans": "scope.ansVal.toString()",
+        "step1": "'AD = \\\\sqrt{' + scope.bd + '^2 - ' + scope.ab + '^2} = \\\\sqrt{' + scope.ad2 + '} \\\\ \\\\approx ' + scope.ad_str + '\\\\text{ cm}'",
+        "step2": "'\\\\text{Area}(\\\\triangle ABD) = \\\\frac{1}{2} \\\\times ' + scope.ab + ' \\\\times ' + scope.ad_str + ' \\\\ \\\\approx ' + Number(scope.area1.toPrecision(3)) + '\\\\text{ cm}^2'",
+        "step3": "'\\\\begin{aligned}\\\\text{Area}(\\\\triangle BDC) &= \\\\frac{1}{2} \\\\times ' + scope.cd + ' \\\\times ' + scope.bd + ' \\\\times \\\\sin ' + scope.degBDC + '^\\\\circ \\\\\\\\ &\\\\approx ' + Number(scope.area2.toPrecision(3)) + '\\\\text{ cm}^2\\\\end{aligned}'",
+        "step4": "'\\\\text{Total Area} = ' + Number(scope.area1.toPrecision(3)) + ' + ' + Number(scope.area2.toPrecision(3)) + ' \\\\ \\\\approx ' + scope.ans + '\\\\text{ cm}^2'"
+      },
+      "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='80,180 200,180 240,50 80,80' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='80' y1='80' x2='200' y2='180' stroke='#2b2b2b' stroke-width='1.5'/><polyline points='80,165 95,165 95,180' fill='none' stroke='#2b2b2b' stroke-width='1.5'/><path d='M 105 75 A 25 25 0 0 1 99 96' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='65' y='195' font-size='14' font-weight='bold'>A</text><text x='210' y='195' font-size='14' font-weight='bold'>B</text><text x='248' y='45' font-size='14' font-weight='bold'>C</text><text x='65' y='75' font-size='14' font-weight='bold'>D</text><text x='140' y='198' font-size='13' text-anchor='middle' fill='#1d3557'>${scope.ab} cm</text><text x='160' y='50' font-size='13' text-anchor='middle' fill='#1d3557'>${scope.cd} cm</text><text x='145' y='122' font-size='13' fill='#1d3557'>${scope.bd} cm</text><text x='110' y='90' font-size='11' fill='#e63946'>${scope.degBDC}°</text></svg>\n\nIn the quadrilateral $ABCD$, $AB = ${scope.ab}\\text{ cm}$, $CD = ${scope.cd}\\text{ cm}$, $BD = ${scope.bd}\\text{ cm}$, $\\angle BAD = 90^\\circ$, and $\\angle BDC = ${scope.degBDC}^\\circ$.\n\nFind the area of $ABCD$. (Give your answer correct to 3 significant figures.)",
+      "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='80,180 200,180 240,50 80,80' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='80' y1='80' x2='200' y2='180' stroke='#2b2b2b' stroke-width='1.5'/><polyline points='80,165 95,165 95,180' fill='none' stroke='#2b2b2b' stroke-width='1.5'/><path d='M 105 75 A 25 25 0 0 1 99 96' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='65' y='195' font-size='14' font-weight='bold'>A</text><text x='210' y='195' font-size='14' font-weight='bold'>B</text><text x='248' y='45' font-size='14' font-weight='bold'>C</text><text x='65' y='75' font-size='14' font-weight='bold'>D</text><text x='140' y='198' font-size='13' text-anchor='middle' fill='#1d3557'>${scope.ab} cm</text><text x='160' y='50' font-size='13' text-anchor='middle' fill='#1d3557'>${scope.cd} cm</text><text x='145' y='122' font-size='13' fill='#1d3557'>${scope.bd} cm</text><text x='110' y='90' font-size='11' fill='#e63946'>${scope.degBDC}°</text></svg>",
+      "inputs": [
+        {
+          "label": "Area =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Use Pythagoras' Theorem in right $\\triangle ABD$ to find side $AD$: $$${scope.step1}$$",
+        "Find the area of right $\\triangle ABD$: $$${scope.step2}$$",
+        "Find the area of $\\triangle BDC$ using $\\frac{1}{2} ab \\sin C$: $$${scope.step3}$$",
+        "Sum both areas to get the total area of $ABCD$: $$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "x": {
+          "type": "randInt",
+          "min": 4,
+          "max": 10
+        }
+      },
+      "derived": {
+        "k": "1",
+        "areaVal": "0.25 * scope.x * (scope.x + 1)",
+        "c_val": "4 * scope.areaVal",
+        "ans": "scope.x.toString()",
+        "step1": "'\\\\text{Area} = \\\\frac{1}{2} \\\\times x(x + 1) \\\\sin 30^\\\\circ = ' + scope.areaVal",
+        "step2": "'\\\\frac{1}{4}(x^2 + x) = ' + scope.areaVal + ' \\\\implies x^2 + x - ' + scope.c_val + ' = 0'",
+        "step3": "'\\\\begin{aligned}(x - ' + scope.x + ')(x + ' + (scope.x + 1) + ') = 0 \\\\\\\\ \\\\implies x = ' + scope.ans + ' \\\\text{ (since } x > 0\\\\text{)}\\\\end{aligned}'"
+      },
+      "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='50,170 250,170 200,60' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 75 170 A 25 25 0 0 0 68 152' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='35' y='180' font-size='14' font-weight='bold'>A</text><text x='260' y='180' font-size='14' font-weight='bold'>B</text><text x='200' y='48' font-size='14' font-weight='bold' text-anchor='middle'>C</text><text x='150' y='190' font-size='13' text-anchor='middle' fill='#1d3557'>x + 1</text><text x='112' y='110' font-size='13' fill='#1d3557' text-anchor='end'>x</text><text x='82' y='162' font-size='12' fill='#e63946'>30°</text></svg>\n\nIn $\\triangle ABC$, $AB = (x + 1)\\text{ cm}$, $AC = x\\text{ cm}$, and $\\angle BAC = 30^\\circ$.\n\nIf the area of $\\triangle ABC = ${scope.areaVal}\\text{ cm}^2$, find the value of $x$.",
+      "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='50,170 250,170 200,60' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 75 170 A 25 25 0 0 0 68 152' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='35' y='180' font-size='14' font-weight='bold'>A</text><text x='260' y='180' font-size='14' font-weight='bold'>B</text><text x='200' y='48' font-size='14' font-weight='bold' text-anchor='middle'>C</text><text x='150' y='190' font-size='13' text-anchor='middle' fill='#1d3557'>x + 1</text><text x='112' y='110' font-size='13' fill='#1d3557' text-anchor='end'>x</text><text x='82' y='162' font-size='12' fill='#e63946'>30°</text></svg>",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Set up the area equation using $\\sin 30^\\circ = 0.5$: $$${scope.step1}$$",
+        "Formulate a quadratic equation: $$${scope.step2}$$",
+        "Solve for positive value $x$: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "ab": {
+          "type": "randInt",
+          "min": 6,
+          "max": 10
+        },
+        "bd": {
+          "type": "randInt",
+          "min": 10,
+          "max": 14
+        },
+        "cd": {
+          "type": "randInt",
+          "min": 4,
+          "max": 8
+        },
+        "areaABD": {
+          "type": "randInt",
+          "min": 20,
+          "max": 35
+        }
+      },
+      "derived": {
+        "sinABD": "(2 * scope.areaABD) / (scope.ab * scope.bd)",
+        "sinABD_val": "Number(scope.sinABD.toPrecision(3))",
+        "sinABD_ans": "scope.sinABD_val.toString()",
+        "areaBCD": "0.5 * scope.bd * scope.cd * scope.sinABD",
+        "areaBCD_ansVal": "Number(scope.areaBCD.toPrecision(3))",
+        "areaBCD_ans": "scope.areaBCD_ansVal.toString()",
+        "step1": "'\\\\begin{aligned}\\\\text{Area}(\\\\triangle ABD) = \\\\frac{1}{2} (' + scope.ab + ')(' + scope.bd + ') \\\\sin \\\\angle ABD = ' + scope.areaABD + ' \\\\\\\\ \\\\implies \\\\sin \\\\angle ABD \\\\approx ' + scope.sinABD_ans + '\\\\end{aligned}'",
+        "step2": "'\\\\begin{aligned}\\\\text{Since } AB \\\\parallel DC, \\\\angle BDC = \\\\angle ABD \\\\text{ (alt. } \\\\angle\\\\text{s)}, \\\\\\\\ \\\\text{so } \\\\sin \\\\angle BDC = \\\\sin \\\\angle ABD \\\\approx ' + scope.sinABD_ans + '\\\\end{aligned}'",
+        "step3": "'\\\\begin{aligned}\\\\text{Area}(\\\\triangle BCD) &= \\\\frac{1}{2} (' + scope.bd + ')(' + scope.cd + ') \\\\sin \\\\angle BDC \\\\\\\\ &\\\\approx ' + scope.areaBCD_ans + '\\\\text{ cm}^2\\\\end{aligned}'"
+      },
+      "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='60,170 110,60 250,82 210,170' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='110' y1='60' x2='210' y2='170' stroke='#2b2b2b' stroke-width='1.5'/><path d='M -4,-4 L 3,0 L -4,4' fill='none' stroke='#e63946' stroke-width='2' transform='translate(85,115) rotate(-65.55)'/><path d='M -4,-4 L 3,0 L -4,4' fill='none' stroke='#e63946' stroke-width='2' transform='translate(230,126) rotate(-65.55)'/><path d='M 127 78 A 25 25 0 0 1 100 83' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='45' y='180' font-size='14' font-weight='bold'>A</text><text x='105' y='50' font-size='14' font-weight='bold'>B</text><text x='260' y='87' font-size='14' font-weight='bold'>C</text><text x='210' y='188' font-size='14' font-weight='bold'>D</text><text x='72' y='110' font-size='13' fill='#1d3557' text-anchor='end'>${scope.ab} cm</text><text x='150' y='125' font-size='13' fill='#1d3557'>${scope.bd} cm</text><text x='238' y='135' font-size='13' fill='#1d3557'>${scope.cd} cm</text></svg>\n\nIn the diagram, $AB \\parallel DC$, $AB = ${scope.ab}\\text{ cm}$, $BD = ${scope.bd}\\text{ cm}$, and $CD = ${scope.cd}\\text{ cm}$. The area of $\\triangle ABD = ${scope.areaABD}\\text{ cm}^2$.\n\nFind:\n(a) $\\sin \\angle ABD$,\n(b) the area of $\\triangle BCD$.\n\n(Give your answers correct to 3 significant figures.)",
+      "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='60,170 110,60 250,82 210,170' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='110' y1='60' x2='210' y2='170' stroke='#2b2b2b' stroke-width='1.5'/><path d='M -4,-4 L 3,0 L -4,4' fill='none' stroke='#e63946' stroke-width='2' transform='translate(85,115) rotate(-65.55)'/><path d='M -4,-4 L 3,0 L -4,4' fill='none' stroke='#e63946' stroke-width='2' transform='translate(230,126) rotate(-65.55)'/><path d='M 127 78 A 25 25 0 0 1 100 83' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='45' y='180' font-size='14' font-weight='bold'>A</text><text x='105' y='50' font-size='14' font-weight='bold'>B</text><text x='260' y='87' font-size='14' font-weight='bold'>C</text><text x='210' y='188' font-size='14' font-weight='bold'>D</text><text x='72' y='110' font-size='13' fill='#1d3557' text-anchor='end'>${scope.ab} cm</text><text x='150' y='125' font-size='13' fill='#1d3557'>${scope.bd} cm</text><text x='238' y='135' font-size='13' fill='#1d3557'>${scope.cd} cm</text></svg>",
+      "inputs": [
+        {
+          "label": "(a) sin ∠ABD =",
+          "answer": "${scope.sinABD_ans}"
+        },
+        {
+          "label": "(b) Area of triangle BCD =",
+          "answer": "${scope.areaBCD_ans}"
+        }
+      ],
+      "steps": [
+        "Use area formula in $\\triangle ABD$ to solve for $\\sin \\angle ABD$: $$${scope.step1}$$",
+        "Apply parallel line properties to conclude $\\sin \\angle BDC = \\sin \\angle ABD$: $$${scope.step2}$$",
+        "Calculate the area of $\\triangle BCD$: $$${scope.step3}$$"
+      ]
+    }
+  ]
+}

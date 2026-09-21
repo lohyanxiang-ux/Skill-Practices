@@ -1,0 +1,330 @@
+{
+  "skillTitle": "Cosine Rule",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "+",
+    "4",
+    "5",
+    "6",
+    "-",
+    "1",
+    "2",
+    "3",
+     "/",
+    ".",
+    "0"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "b": {
+          "type": "randInt",
+          "min": 6,
+          "max": 12
+        },
+        "c": {
+          "type": "randInt",
+          "min": 10,
+          "max": 16
+        },
+        "degA": {
+          "type": "randInt",
+          "min": 35,
+          "max": 75
+        }
+      },
+      "derived": {
+        "radA": "scope.degA * Math.PI / 180",
+        "x2": "scope.b * scope.b + scope.c * scope.c - 2 * scope.b * scope.c * Math.cos(scope.radA)",
+        "xVal": "Math.sqrt(scope.x2)",
+        "ansVal": "Math.round(scope.xVal * 10) / 10",
+        "ans": "scope.ansVal.toFixed(1)",
+        "x2_str": "scope.x2.toFixed(2)",
+        "step1": "'x^2 = ' + scope.b + '^2 + ' + scope.c + '^2 - 2(' + scope.b + ')(' + scope.c + ')\\\\cos ' + scope.degA + '^\\\\circ'",
+        "step2": "'x^2 \\\\approx ' + scope.x2_str",
+        "step3": "'x = \\\\sqrt{' + scope.x2_str + '} \\\\approx ' + scope.ans + '\\\\text{ cm}'"
+      },
+      "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='60,170 240,170 130,60' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 82 170 A 22 22 0 0 0 71 150' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='45' y='185' font-size='14' font-weight='bold'>A</text><text x='250' y='185' font-size='14' font-weight='bold'>B</text><text x='130' y='48' font-size='14' font-weight='bold' text-anchor='middle'>C</text><text x='150' y='192' font-size='13' text-anchor='middle' fill='#1d3557'>c = ${scope.c} cm</text><text x='82' y='110' font-size='13' fill='#1d3557' text-anchor='end'>b = ${scope.b} cm</text><text x='195' y='110' font-size='13' fill='#e63946' font-weight='bold'>x = ?</text><text x='92' y='162' font-size='12' fill='#e63946'>${scope.degA}°</text></svg>\n\nIn $\\triangle ABC$, $AC = ${scope.b}\\text{ cm}$, $AB = ${scope.c}\\text{ cm}$, and $\\angle A = ${scope.degA}^\\circ$.\n\nFind the unknown side length $x = BC$. (Give your answer correct to 1 decimal place.)",
+      "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='60,170 240,170 130,60' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 82 170 A 22 22 0 0 0 71 150' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='45' y='185' font-size='14' font-weight='bold'>A</text><text x='250' y='185' font-size='14' font-weight='bold'>B</text><text x='130' y='48' font-size='14' font-weight='bold' text-anchor='middle'>C</text><text x='150' y='192' font-size='13' text-anchor='middle' fill='#1d3557'>c = ${scope.c} cm</text><text x='82' y='110' font-size='13' fill='#1d3557' text-anchor='end'>b = ${scope.b} cm</text><text x='195' y='110' font-size='13' fill='#e63946' font-weight='bold'>x = ?</text><text x='92' y='162' font-size='12' fill='#e63946'>${scope.degA}°</text></svg>",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the Cosine Rule for side $x$: $$${scope.step1}$$",
+        "Simplify the right-hand side: $$${scope.step2}$$",
+        "Take the square root to evaluate $x$: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "b": {
+          "type": "randInt",
+          "min": 7,
+          "max": 10
+        },
+        "c": {
+          "type": "randInt",
+          "min": 9,
+          "max": 12
+        },
+        "a": {
+          "type": "randInt",
+          "min": 8,
+          "max": 11
+        }
+      },
+      "derived": {
+        "num": "scope.b * scope.b + scope.c * scope.c - scope.a * scope.a",
+        "den": "2 * scope.b * scope.c",
+        "cosA": "scope.num / scope.den",
+        "radA": "Math.acos(scope.cosA)",
+        "degA": "Math.round((scope.radA * 180 / Math.PI) * 10) / 10",
+        "ans": "scope.degA.toFixed(1)",
+        "cosA_str": "scope.cosA.toFixed(4)",
+        "step1": "'\\\\cos \\\\theta = \\\\frac{' + scope.b + '^2 + ' + scope.c + '^2 - ' + scope.a + '^2}{2(' + scope.b + ')(' + scope.c + ')}'",
+        "step2": "'\\\\cos \\\\theta = \\\\frac{' + scope.num + '}{' + scope.den + '} \\\\approx ' + scope.cosA_str",
+        "step3": "'\\\\theta = \\\\cos^{-1}(' + scope.cosA_str + ') \\\\approx ' + scope.ans + '^\\\\circ'"
+      },
+      "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='60,170 240,170 130,60' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 82 170 A 22 22 0 0 0 71 150' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='45' y='185' font-size='14' font-weight='bold'>A</text><text x='250' y='185' font-size='14' font-weight='bold'>B</text><text x='130' y='48' font-size='14' font-weight='bold' text-anchor='middle'>C</text><text x='150' y='192' font-size='13' text-anchor='middle' fill='#1d3557'>c = ${scope.c} cm</text><text x='82' y='110' font-size='13' fill='#1d3557' text-anchor='end'>b = ${scope.b} cm</text><text x='195' y='110' font-size='13' fill='#1d3557'>a = ${scope.a} cm</text><text x='92' y='162' font-size='12' fill='#e63946' font-weight='bold'>θ = ?</text></svg>\n\nIn $\\triangle ABC$, $AC = ${scope.b}\\text{ cm}$, $AB = ${scope.c}\\text{ cm}$, and $BC = ${scope.a}\\text{ cm}$.\n\nFind the value of angle $\\theta = \\angle A$. (Give your answer in degrees correct to 1 decimal place.)",
+      "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='60,170 240,170 130,60' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 82 170 A 22 22 0 0 0 71 150' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='45' y='185' font-size='14' font-weight='bold'>A</text><text x='250' y='185' font-size='14' font-weight='bold'>B</text><text x='130' y='48' font-size='14' font-weight='bold' text-anchor='middle'>C</text><text x='150' y='192' font-size='13' text-anchor='middle' fill='#1d3557'>c = ${scope.c} cm</text><text x='82' y='110' font-size='13' fill='#1d3557' text-anchor='end'>b = ${scope.b} cm</text><text x='195' y='110' font-size='13' fill='#1d3557'>a = ${scope.a} cm</text><text x='92' y='162' font-size='12' fill='#e63946' font-weight='bold'>θ = ?</text></svg>",
+      "inputs": [
+        {
+          "label": "\\theta =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the Cosine Rule rearranged for angle $\\theta$: $$${scope.step1}$$",
+        "Evaluate the ratio for $\\cos \\theta$: $$${scope.step2}$$",
+        "Take the inverse cosine: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": {
+          "type": "randInt",
+          "min": 6,
+          "max": 12
+        },
+        "b": {
+          "type": "randInt",
+          "min": 9,
+          "max": 15
+        },
+        "degQ": {
+          "type": "randInt",
+          "min": 95,
+          "max": 125
+        }
+      },
+      "derived": {
+        "radQ": "scope.degQ * Math.PI / 180",
+        "x2": "scope.a * scope.a + scope.b * scope.b - 2 * scope.a * scope.b * Math.cos(scope.radQ)",
+        "xVal": "Math.sqrt(scope.x2)",
+        "ansVal": "Math.round(scope.xVal * 10) / 10",
+        "ans": "scope.ansVal.toFixed(1)",
+        "x2_str": "scope.x2.toFixed(2)",
+        "step1": "'x^2 = ' + scope.a + '^2 + ' + scope.b + '^2 - 2(' + scope.a + ')(' + scope.b + ')\\\\cos ' + scope.degQ + '^\\\\circ'",
+        "step2": "'x^2 \\\\approx ' + scope.x2_str",
+        "step3": "'x = \\\\sqrt{' + scope.x2_str + '} \\\\approx ' + scope.ans + '\\\\text{ cm}'"
+      },
+      "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='40,140 140,180 270,70' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 120 172 A 20 20 0 0 1 155 167' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='25' y='145' font-size='14' font-weight='bold'>P</text><text x='140' y='200' font-size='14' font-weight='bold' text-anchor='middle'>Q</text><text x='280' y='70' font-size='14' font-weight='bold'>R</text><text x='80' y='175' font-size='13' fill='#1d3557'>${scope.a} cm</text><text x='215' y='140' font-size='13' fill='#1d3557'>${scope.b} cm</text><text x='150' y='95' font-size='13' fill='#e63946' font-weight='bold'>x = ?</text><text x='140' y='160' font-size='12' fill='#e63946' text-anchor='middle'>${scope.degQ}°</text></svg>\n\nIn $\\triangle PQR$, $PQ = ${scope.a}\\text{ cm}$, $QR = ${scope.b}\\text{ cm}$, and obtuse angle $\\angle Q = ${scope.degQ}^\\circ$.\n\nFind the length of side $x = PR$. (Give your answer correct to 1 decimal place.)",
+      "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='40,140 140,180 270,70' fill='none' stroke='#2b2b2b' stroke-width='2'/><path d='M 120 172 A 20 20 0 0 1 155 167' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='25' y='145' font-size='14' font-weight='bold'>P</text><text x='140' y='200' font-size='14' font-weight='bold' text-anchor='middle'>Q</text><text x='280' y='70' font-size='14' font-weight='bold'>R</text><text x='80' y='175' font-size='13' fill='#1d3557'>${scope.a} cm</text><text x='215' y='140' font-size='13' fill='#1d3557'>${scope.b} cm</text><text x='150' y='95' font-size='13' fill='#e63946' font-weight='bold'>x = ?</text><text x='140' y='160' font-size='12' fill='#e63946' text-anchor='middle'>${scope.degQ}°</text></svg>",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply the Cosine Rule in $\\triangle PQR$: $$${scope.step1}$$",
+        "Evaluate $x^2$: $$${scope.step2}$$",
+        "Calculate side $x$: $$${scope.step3}$$"
+      ]
+    },
+    {
+  "level": 2,
+  "variables": {
+    "ab": {
+      "type": "randInt",
+      "min": 5,
+      "max": 8
+    },
+    "da": {
+      "type": "randInt",
+      "min": 4,
+      "max": 6
+    },
+    "degA": {
+      "type": "randInt",
+      "min": 100,
+      "max": 115
+    },
+    "bc": {
+      "type": "randInt",
+      "min": 6,
+      "max": 9
+    },
+    "cd": {
+      "type": "randInt",
+      "min": 7,
+      "max": 10
+    }
+  },
+  "derived": {
+    "radA": "scope.degA * Math.PI / 180",
+    "bd2": "scope.ab * scope.ab + scope.da * scope.da - 2 * scope.ab * scope.da * Math.cos(scope.radA)",
+    "bd": "Math.sqrt(scope.bd2)",
+    "bd_str": "scope.bd.toFixed(2)",
+    "cosC": "(scope.bc * scope.bc + scope.cd * scope.cd - scope.bd2) / (2 * scope.bc * scope.cd)",
+    "radC": "Math.acos(scope.cosC)",
+    "degC": "Math.round((scope.radC * 180 / Math.PI) * 10) / 10",
+    "ans": "scope.degC.toFixed(1)",
+    "cosC_str": "scope.cosC.toFixed(4)",
+    "step1": "'\\\\begin{aligned} BD^2 &= ' + scope.ab + '^2 + ' + scope.da + '^2 - 2(' + scope.ab + ')(' + scope.da + ')\\\\cos ' + scope.degA + '^\\\\circ \\\\\\\\ BD &\\\\approx ' + scope.bd_str + '\\\\text{ cm}\\\\end{aligned}'",
+    "step2": "'\\\\begin{aligned} \\\\cos \\\\angle BCD &= \\\\frac{' + scope.bc + '^2 + ' + scope.cd + '^2 - ' + scope.bd_str + '^2}{2(' + scope.bc + ')(' + scope.cd + ')} \\\\\\\\ &\\\\approx ' + scope.cosC_str + '\\\\end{aligned}'",
+    "step3": "'\\\\angle BCD = \\\\cos^{-1}(' + scope.cosC_str + ') \\\\approx ' + scope.ans + '^\\\\circ'"
+  },
+  "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='80,170 200,170 240,60 60,80' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='60' y1='80' x2='200' y2='170' stroke='#2b2b2b' stroke-width='1.5' stroke-dasharray='4,4'/><path d='M 95 170 A 20 20 0 0 0 70 150' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M 220 62 A 20 20 0 0 0 233 79' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='70' y='190' font-size='14' font-weight='bold'>A</text><text x='210' y='185' font-size='14' font-weight='bold'>B</text><text x='245' y='55' font-size='14' font-weight='bold'>C</text><text x='45' y='80' font-size='14' font-weight='bold'>D</text><text x='140' y='190' font-size='13' text-anchor='middle' fill='#1d3557'>${scope.ab} cm</text><text x='58' y='130' font-size='13' fill='#1d3557' text-anchor='end'>${scope.da} cm</text><text x='230' y='125' font-size='13' fill='#1d3557'>${scope.bc} cm</text><text x='150' y='62' font-size='13' fill='#1d3557'>${scope.cd} cm</text><text x='92' y='155' font-size='12' fill='#e63946'>${scope.degA}°</text><text x='208' y='82' font-size='13' font-weight='bold' fill='#e63946'>?</text></svg>\n\nIn quadrilateral $ABCD$, $AB = ${scope.ab}\\text{ cm}$, $BC = ${scope.bc}\\text{ cm}$, $CD = ${scope.cd}\\text{ cm}$, $DA = ${scope.da}\\text{ cm}$, and $\\angle BAD = ${scope.degA}^\\circ$.\n\nFind $\\angle BCD$. (Give your answer in degrees correct to 1 decimal place.)",
+  "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='80,170 200,170 240,60 60,80' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='60' y1='80' x2='200' y2='170' stroke='#2b2b2b' stroke-width='1.5' stroke-dasharray='4,4'/><path d='M 95 170 A 20 20 0 0 0 70 150' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M 220 62 A 20 20 0 0 0 233 79' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='70' y='190' font-size='14' font-weight='bold'>A</text><text x='210' y='185' font-size='14' font-weight='bold'>B</text><text x='245' y='55' font-size='14' font-weight='bold'>C</text><text x='45' y='80' font-size='14' font-weight='bold'>D</text><text x='140' y='190' font-size='13' text-anchor='middle' fill='#1d3557'>${scope.ab} cm</text><text x='58' y='130' font-size='13' fill='#1d3557' text-anchor='end'>${scope.da} cm</text><text x='230' y='125' font-size='13' fill='#1d3557'>${scope.bc} cm</text><text x='150' y='62' font-size='13' fill='#1d3557'>${scope.cd} cm</text><text x='92' y='155' font-size='12' fill='#e63946'>${scope.degA}°</text><text x='208' y='82' font-size='13' font-weight='bold' fill='#e63946'>?</text></svg>",
+  "inputs": [
+    {
+      "label": "\\angle BCD =",
+      "answer": "${scope.ans}"
+    }
+  ],
+  "steps": [
+    "In $\\triangle ABD$, apply the Cosine Rule to find length $BD$: $$${scope.step1}$$",
+    "In $\\triangle BCD$, apply the Cosine Rule to set up $\\cos \\angle BCD$: $$${scope.step2}$$",
+    "Solve for angle $\\angle BCD$: $$${scope.step3}$$"
+  ]
+},
+    {
+  "level": 3,
+  "variables": {
+    "ab": {
+      "type": "randInt",
+      "min": 4,
+      "max": 8
+    },
+    "da": {
+      "type": "randInt",
+      "min": 3,
+      "max": 6
+    },
+    "degA": {
+      "type": "randInt",
+      "min": 70,
+      "max": 95
+    },
+    "bc": {
+      "type": "randInt",
+      "min": 5,
+      "max": 9
+    },
+    "degCBD": {
+      "type": "randInt",
+      "min": 25,
+      "max": 45
+    }
+  },
+  "derived": {
+    "radA": "scope.degA * Math.PI / 180",
+    "bd2": "scope.ab * scope.ab + scope.da * scope.da - 2 * scope.ab * scope.da * Math.cos(scope.radA)",
+    "bd": "Math.sqrt(scope.bd2)",
+    "bd_str": "scope.bd.toFixed(2)",
+    "radCBD": "scope.degCBD * Math.PI / 180",
+    "cd2": "scope.bd2 + scope.bc * scope.bc - 2 * scope.bd * scope.bc * Math.cos(scope.radCBD)",
+    "cd": "Math.sqrt(scope.cd2)",
+    "cd_str": "scope.cd.toFixed(2)",
+    "perimVal": "Math.round((scope.ab + scope.bc + scope.cd + scope.da) * 10) / 10",
+    "ans": "scope.perimVal.toFixed(1)",
+    "step1": "'\\\\begin{aligned} BD^2 &= ' + scope.ab + '^2 + ' + scope.da + '^2 - 2(' + scope.ab + ')(' + scope.da + ')\\\\cos ' + scope.degA + '^\\\\circ \\\\\\\\ BD &\\\\approx ' + scope.bd_str + '\\\\text{ cm}\\\\end{aligned}'",
+    "step2": "'\\\\begin{aligned} CD^2 &= ' + scope.bd_str + '^2 + ' + scope.bc + '^2 - 2(' + scope.bd_str + ')(' + scope.bc + ')\\\\cos ' + scope.degCBD + '^\\\\circ \\\\\\\\ CD &\\\\approx ' + scope.cd_str + '\\\\text{ cm}\\\\end{aligned}'",
+    "step3": "'\\\\begin{aligned} \\\\text{Perimeter} &= ' + scope.ab + ' + ' + scope.bc + ' + ' + scope.cd_str + ' + ' + scope.da + ' \\\\\\\\ &\\\\approx ' + scope.ans + '\\\\text{ cm}\\\\end{aligned}'"
+  },
+  "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='60,170 180,170 250,60 100,70' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='100' y1='70' x2='180' y2='170' stroke='#2b2b2b' stroke-width='1.5' stroke-dasharray='4,4'/><path d='M 78 170 A 18 18 0 0 0 68 152' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M 167 154 A 20 20 0 0 1 191 153' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='50' y='190' font-size='14' font-weight='bold'>A</text><text x='190' y='185' font-size='14' font-weight='bold'>B</text><text x='255' y='55' font-size='14' font-weight='bold'>C</text><text x='85' y='68' font-size='14' font-weight='bold'>D</text><text x='120' y='190' font-size='13' text-anchor='middle' fill='#1d3557'>${scope.ab} cm</text><text x='68' y='120' font-size='13' fill='#1d3557' text-anchor='end'>${scope.da} cm</text><text x='225' y='120' font-size='13' fill='#1d3557'>${scope.bc} cm</text><text x='80' y='160' font-size='12' fill='#e63946'>${scope.degA}°</text><text x='176' y='132' font-size='12' fill='#e63946' text-anchor='middle'>${scope.degCBD}°</text></svg>\n\nIn quadrilateral $ABCD$, $AB = ${scope.ab}\\text{ cm}$, $DA = ${scope.da}\\text{ cm}$, $BC = ${scope.bc}\\text{ cm}$, $\\angle BAD = ${scope.degA}^\\circ$, and $\\angle CBD = ${scope.degCBD}^\\circ$.\n\nFind the perimeter of quadrilateral $ABCD$. (Give your answer correct to 1 decimal place.)",
+  "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='60,170 180,170 250,60 100,70' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='100' y1='70' x2='180' y2='170' stroke='#2b2b2b' stroke-width='1.5' stroke-dasharray='4,4'/><path d='M 78 170 A 18 18 0 0 0 68 152' fill='none' stroke='#e63946' stroke-width='1.5'/><path d='M 167 154 A 20 20 0 0 1 191 153' fill='none' stroke='#e63946' stroke-width='1.5'/><text x='50' y='190' font-size='14' font-weight='bold'>A</text><text x='190' y='185' font-size='14' font-weight='bold'>B</text><text x='255' y='55' font-size='14' font-weight='bold'>C</text><text x='85' y='68' font-size='14' font-weight='bold'>D</text><text x='120' y='190' font-size='13' text-anchor='middle' fill='#1d3557'>${scope.ab} cm</text><text x='68' y='120' font-size='13' fill='#1d3557' text-anchor='end'>${scope.da} cm</text><text x='225' y='120' font-size='13' fill='#1d3557'>${scope.bc} cm</text><text x='80' y='160' font-size='12' fill='#e63946'>${scope.degA}°</text><text x='176' y='132' font-size='12' fill='#e63946' text-anchor='middle'>${scope.degCBD}°</text></svg>",
+  "inputs": [
+    {
+      "label": "Perimeter =",
+      "answer": "${scope.ans}"
+    }
+  ],
+  "steps": [
+    "In $\\triangle ABD$, calculate diagonal distance $BD$: $$${scope.step1}$$",
+    "In $\\triangle BCD$, calculate side $CD$: $$${scope.step2}$$",
+    "Add all four sides to find the perimeter: $$${scope.step3}$$"
+  ]
+},
+    {
+  "level": 3,
+  "variables": {
+    "ab": {
+      "type": "randInt",
+      "min": 6,
+      "max": 10
+    },
+    "bc": {
+      "type": "randInt",
+      "min": 7,
+      "max": 12
+    },
+    "ad": {
+      "type": "randInt",
+      "min": 11,
+      "max": 15
+    },
+    "cd": {
+      "type": "randInt",
+      "min": 12,
+      "max": 16
+    },
+    "degB": {
+      "type": "randInt",
+      "min": 100,
+      "max": 120
+    }
+  },
+  "derived": {
+    "radB": "scope.degB * Math.PI / 180",
+    "ac2": "scope.ab * scope.ab + scope.bc * scope.bc - 2 * scope.ab * scope.bc * Math.cos(scope.radB)",
+    "ac": "Math.sqrt(scope.ac2)",
+    "ac_str": "scope.ac.toFixed(2)",
+    "ac_ansVal": "Math.round(scope.ac * 10) / 10",
+    "ac_ans": "scope.ac_ansVal.toFixed(1)",
+    "cosD": "(scope.ad * scope.ad + scope.cd * scope.cd - scope.ac2) / (2 * scope.ad * scope.cd)",
+    "radD": "Math.acos(scope.cosD)",
+    "degD": "scope.radD * 180 / Math.PI",
+    "degD_ansVal": "Math.round(scope.degD * 10) / 10",
+    "degD_ans": "scope.degD_ansVal.toFixed(1)",
+    "step1": "'\\\\begin{aligned} AC^2 &= ' + scope.ab + '^2 + ' + scope.bc + '^2 - 2(' + scope.ab + ')(' + scope.bc + ')\\\\cos ' + scope.degB + '^\\\\circ \\\\\\\\ AC^2 &= ' + (scope.ab * scope.ab) + ' + ' + (scope.bc * scope.bc) + ' - ' + (2 * scope.ab * scope.bc) + '\\\\cos ' + scope.degB + '^\\\\circ \\\\\\\\ AC^2 &\\\\approx ' + scope.ac2.toFixed(2) + ' \\\\\\\\ AC &\\\\approx ' + scope.ac_ans + ' \\\\text{ cm}\\\\end{aligned}'",
+    "step2": "'\\\\begin{aligned} \\\\cos \\\\angle ADC &= \\\\frac{' + scope.ad + '^2 + ' + scope.cd + '^2 - ' + scope.ac_str + '^2}{2(' + scope.ad + ')(' + scope.cd + ')} \\\\\\\\ \\\\cos \\\\angle ADC &= \\\\frac{' + (scope.ad * scope.ad) + ' + ' + (scope.cd * scope.cd) + ' - ' + scope.ac2.toFixed(2) + '}{' + (2 * scope.ad * scope.cd) + '} \\\\\\\\ \\\\cos \\\\angle ADC &\\\\approx ' + scope.cosD.toFixed(4) + ' \\\\\\\\ \\\\angle ADC &\\\\approx ' + scope.degD_ans + '^\\\\circ\\\\end{aligned}'"
+  },
+  "questionTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='50,75 110,175 270,175 190,35' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='50' y1='75' x2='270' y2='175' stroke='#e63946' stroke-width='1.5' stroke-dasharray='4,4'/><path d='M 130 175 A 20 20 0 0 0 100 158' fill='none' stroke='#2b2b2b' stroke-width='1.5'/><text x='35' y='75' font-size='14' font-weight='bold'>A</text><text x='100' y='195' font-size='14' font-weight='bold'>B</text><text x='280' y='185' font-size='14' font-weight='bold'>C</text><text x='195' y='25' font-size='14' font-weight='bold'>D</text><text x='62' y='135' font-size='13' fill='#1d3557'>${scope.ab} cm</text><text x='185' y='195' font-size='13' fill='#1d3557'>${scope.bc} cm</text><text x='105' y='48' font-size='13' fill='#1d3557'>${scope.ad} cm</text><text x='240' y='100' font-size='13' fill='#1d3557'>${scope.cd} cm</text><text x='112' y='160' font-size='12' fill='#2b2b2b'>${scope.degB}°</text></svg>\n\nIn the quadrilateral $ABCD$, $AB = ${scope.ab}\\text{ cm}$, $BC = ${scope.bc}\\text{ cm}$, $AD = ${scope.ad}\\text{ cm}$, $CD = ${scope.cd}\\text{ cm}$, and $\\angle ABC = ${scope.degB}^\\circ$.\n\nFind:\n(a) the length of the diagonal $AC$,\n(b) the size of $\\angle ADC$.\n\n(Give your answers correct to 1 decimal place.)",
+  "svgTemplate": "<svg width='320' height='220' viewBox='0 0 320 220' xmlns='http://www.w3.org/2000/svg'><polygon points='50,75 110,175 270,175 190,35' fill='none' stroke='#2b2b2b' stroke-width='2'/><line x1='50' y1='75' x2='270' y2='175' stroke='#e63946' stroke-width='1.5' stroke-dasharray='4,4'/><path d='M 130 175 A 20 20 0 0 0 100 158' fill='none' stroke='#2b2b2b' stroke-width='1.5'/><text x='35' y='75' font-size='14' font-weight='bold'>A</text><text x='100' y='195' font-size='14' font-weight='bold'>B</text><text x='280' y='185' font-size='14' font-weight='bold'>C</text><text x='195' y='25' font-size='14' font-weight='bold'>D</text><text x='62' y='135' font-size='13' fill='#1d3557'>${scope.ab} cm</text><text x='185' y='195' font-size='13' fill='#1d3557'>${scope.bc} cm</text><text x='105' y='48' font-size='13' fill='#1d3557'>${scope.ad} cm</text><text x='240' y='100' font-size='13' fill='#1d3557'>${scope.cd} cm</text><text x='112' y='160' font-size='12' fill='#2b2b2b'>${scope.degB}°</text></svg>",
+  "inputs": [
+    {
+      "label": "(a) AC =",
+      "answer": "${scope.ac_ans}"
+    },
+    {
+      "label": "(b) ∠ADC =",
+      "answer": "${scope.degD_ans}°"
+    }
+  ],
+  "steps": [
+    "Use the Cosine Rule in $\\triangle ABC$ to find side length $AC$: $$${scope.step1}$$",
+    "Use the Cosine Rule in $\\triangle ACD$ to find angle $\\angle ADC$: $$${scope.step2}$$"
+  ]
+}
+  ]
+}
