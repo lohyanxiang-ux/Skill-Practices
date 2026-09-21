@@ -1,0 +1,16 @@
+[
+  {
+    "file": "skills/Geometry/G3 Angles of Elevation & Depression.json",
+    "title": "Angles of Elevation & Depression",
+    "levels": ["Sec 3", "Sec 4"],
+    "streams": ["G2", "G3"],
+    "topics": ["Geometry & Trigonometry"]
+  },
+  {
+    "file": "skills/Algebra/G1 Linear Equations.json",
+    "title": "Linear Equations",
+    "levels": ["Sec 1", "Sec 2"],
+    "streams": ["G1", "G2", "G3"],
+    "topics": ["Algebra"]
+  }
+]
