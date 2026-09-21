@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SLS Math Skill Runner</title>
+  <title>Math Skills Practice</title>
   
   <!-- SheetJS Library for parsing .xlsx files -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -526,20 +526,18 @@
 
 <div id="app-container">
   <header>
-    <h1 id="app-title">Math Skills Trainer</h1>
+    <h1 id="app-title">Math Skills Practice</h1>
     <div class="header-controls">
       
       <!-- 1st Dropdown: Select Level (e.g. G1, G2, G3) -->
       <div class="dropdown-wrapper" id="header-level-dropdown-wrapper">
-        <button class="dropdown-btn" id="header-level-dropdown-btn" onclick="toggleDropdown('header-level-dropdown-content', event)">Level: All</button>
-        <div class="dropdown-content" id="header-level-dropdown-content">
-          <div class="dropdown-item" onclick="selectHeaderLevel('All')">All Levels</div>
-        </div>
+        <button class="dropdown-btn" id="header-level-dropdown-btn" onclick="toggleDropdown('header-level-dropdown-content', event)">Select Level</button>
+        <div class="dropdown-content" id="header-level-dropdown-content"></div>
       </div>
 
       <!-- 2nd Dropdown: Select Skills (Filterable by Year & Strand) -->
       <div class="dropdown-wrapper" id="skills-dropdown-wrapper">
-        <button class="dropdown-btn" id="skills-dropdown-btn" onclick="toggleDropdown('skills-dropdown-content', event)">Select Skills (0)</button>
+        <button class="dropdown-btn" id="skills-dropdown-btn" onclick="toggleDropdown('skills-dropdown-content', event)">Select Level First</button>
         <div class="dropdown-content" id="skills-dropdown-content">
           <div id="skills-filter-container" onclick="event.stopPropagation()" style="position: sticky; top: 0; background: #f8f9fa; border-bottom: 1px solid #e0e0e0; padding: 8px 10px; z-index: 10;">
             <div style="display: flex; gap: 6px; margin-bottom: 6px;">
@@ -556,7 +554,7 @@
             </div>
           </div>
           <div id="skillsListContainer">
-            <div class="empty-msg">No skills loaded</div>
+            <div class="empty-msg">Please select a level first</div>
           </div>
         </div>
       </div>
@@ -565,10 +563,10 @@
       <div class="dropdown-wrapper" id="difficulty-dropdown-wrapper">
         <button class="dropdown-btn" id="difficulty-dropdown-btn" onclick="toggleDropdown('difficulty-dropdown-content', event)">Difficulty: All</button>
         <div class="dropdown-content" id="difficulty-dropdown-content">
-          <div class="dropdown-item" onclick="selectDifficulty('all')">Difficulty: All</div>
-          <div class="dropdown-item" onclick="selectDifficulty('1')">Difficulty 1 (Basic)</div>
-          <div class="dropdown-item" onclick="selectDifficulty('2')">Difficulty 2 (Intermediate)</div>
-          <div class="dropdown-item" onclick="selectDifficulty('3')">Difficulty 3 (Advanced)</div>
+          <div class="dropdown-item" onclick="selectDifficulty('all')">All</div>
+          <div class="dropdown-item" onclick="selectDifficulty('1')">Basic</div>
+          <div class="dropdown-item" onclick="selectDifficulty('2')">Intermediate</div>
+          <div class="dropdown-item" onclick="selectDifficulty('3')">Advanced</div>
         </div>
       </div>
 
@@ -581,9 +579,9 @@
       <div class="card">
         <div class="card-title-header">
           <span class="card-title">Question</span>
-          <span id="question-level-badge" class="level-badge" style="display:none;">Difficulty 1</span>
+          <span id="question-level-badge" class="level-badge" style="display:none;">Basic</span>
         </div>
-        <div id="question-text">Loading skills...</div>
+        <div id="question-text">Please select a level and skill to begin...</div>
       </div>
 
       <div class="card">
@@ -1293,7 +1291,7 @@ function renderSegmentTokens(str, baseIdx, cursorPos) {
 let masterSkillsIndex = [];
 let loadedSkillData = {};
 
-let selectedHeaderLevelFilter = "All";
+let selectedHeaderLevelFilter = ""; // Level selection required
 let selectedDifficultyFilter = "all";
 let currentQuestion = null;
 let activeSkillKeypad = null;
@@ -1317,16 +1315,16 @@ function parseTags(cellValue) {
     .filter(Boolean);
 }
 
-// Populate filter dropdowns (Header Level dropdown, plus Year & Strand dropdowns)
+// Populate filter dropdowns
 function populateFilterDropdowns() {
   const years = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.year)))].sort();
   const levels = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.level)))].sort();
   const strands = [...new Set(masterSkillsIndex.flatMap(s => parseTags(s.strand)))].sort();
 
-  // Populate 1st Header Dropdown (Level filter e.g. G1, G2, G3)
+  // Populate 1st Header Dropdown (Level filter e.g. G1, G2, G3 - No "All Levels")
   const headerLevelContent = document.getElementById('header-level-dropdown-content');
   if (headerLevelContent) {
-    headerLevelContent.innerHTML = `<div class="dropdown-item" onclick="selectHeaderLevel('All')">All Levels</div>`;
+    headerLevelContent.innerHTML = '';
     levels.forEach(lvl => {
       const item = document.createElement('div');
       item.className = 'dropdown-item';
@@ -1355,23 +1353,33 @@ function populateSelect(elementId, options) {
 }
 
 function selectHeaderLevel(lvl) {
-  selectedHeaderLevelFilter = lvl;
+  if (selectedHeaderLevelFilter !== lvl) {
+    selectedHeaderLevelFilter = lvl;
+    loadedSkillData = {}; // Clear active skills when changing levels
+  }
   const btn = document.getElementById('header-level-dropdown-btn');
   if (btn) {
-    btn.innerText = (lvl === 'All' || lvl === 'ALL') ? 'Level: All' : `Level: ${lvl}`;
+    btn.innerText = `Level: ${lvl}`;
   }
   document.getElementById('header-level-dropdown-content').classList.remove('show');
   renderSkillsList();
+  loadQuestion();
 }
 
-// Render filtered list by checking Level (from Header Dropdown 1), and Year & Strand (from Header Dropdown 2)
+// Render filtered list by checking Level, Year & Strand
 function renderSkillsList() {
-  const yearVal = document.getElementById('filterYear') ? document.getElementById('filterYear').value : 'All';
-  const strandVal = document.getElementById('filterStrand') ? document.getElementById('filterStrand').value : 'All';
-  const levelVal = selectedHeaderLevelFilter;
-
   const container = document.getElementById('skillsListContainer');
   if (!container) return;
+
+  if (!selectedHeaderLevelFilter) {
+    container.innerHTML = '<div class="empty-msg">Please select a level first</div>';
+    updateDropdownBtnText();
+    return;
+  }
+
+  const yearVal = document.getElementById('filterYear') ? document.getElementById('filterYear').value : 'All';
+  const strandVal = document.getElementById('filterStrand') ? document.getElementById('filterStrand').value : 'All';
+
   container.innerHTML = '';
 
   const filtered = masterSkillsIndex.filter(skill => {
@@ -1380,7 +1388,7 @@ function renderSkillsList() {
     const skillStrands = parseTags(skill.strand);
 
     const matchYear = (yearVal === 'All' || yearVal === 'ALL' || skillYears.includes(yearVal));
-    const matchLevel = (levelVal === 'All' || levelVal === 'ALL' || skillLevels.includes(levelVal));
+    const matchLevel = skillLevels.includes(selectedHeaderLevelFilter);
     const matchStrand = (strandVal === 'All' || strandVal === 'ALL' || skillStrands.includes(strandVal));
 
     return matchYear && matchLevel && matchStrand;
@@ -1417,8 +1425,18 @@ function renderSkillsList() {
 function updateDropdownBtnText() {
   const btn = document.getElementById('skills-dropdown-btn');
   if (!btn) return;
-  const loadedCount = Object.keys(loadedSkillData).filter(p => loadedSkillData[p]).length;
-  btn.innerText = `Select Skills (${loadedCount}/${masterSkillsIndex.length})`;
+
+  if (!selectedHeaderLevelFilter) {
+    btn.innerText = 'Select Level First';
+    return;
+  }
+
+  // Calculate total skills for the selected level only
+  const totalSkillsForLevel = masterSkillsIndex.filter(skill => parseTags(skill.level).includes(selectedHeaderLevelFilter));
+  const levelSkillsPaths = new Set(totalSkillsForLevel.map(s => s.path));
+
+  const loadedCount = Object.keys(loadedSkillData).filter(p => levelSkillsPaths.has(p) && loadedSkillData[p]).length;
+  btn.innerText = `Select Skills (${loadedCount}/${totalSkillsForLevel.length})`;
 }
 
 async function handleSkillToggle(skillPath, isChecked) {
@@ -1442,9 +1460,10 @@ async function handleSkillToggle(skillPath, isChecked) {
 }
 
 function setAllFilteredSkills(enableState) {
+  if (!selectedHeaderLevelFilter) return;
+
   const yearVal = document.getElementById('filterYear') ? document.getElementById('filterYear').value : 'All';
   const strandVal = document.getElementById('filterStrand') ? document.getElementById('filterStrand').value : 'All';
-  const levelVal = selectedHeaderLevelFilter;
 
   const filtered = masterSkillsIndex.filter(skill => {
     const skillYears = parseTags(skill.year);
@@ -1452,7 +1471,7 @@ function setAllFilteredSkills(enableState) {
     const skillStrands = parseTags(skill.strand);
 
     const matchYear = (yearVal === 'All' || yearVal === 'ALL' || skillYears.includes(yearVal));
-    const matchLevel = (levelVal === 'All' || levelVal === 'ALL' || skillLevels.includes(levelVal));
+    const matchLevel = skillLevels.includes(selectedHeaderLevelFilter);
     const matchStrand = (strandVal === 'All' || strandVal === 'ALL' || skillStrands.includes(strandVal));
 
     return matchYear && matchLevel && matchStrand;
@@ -1525,7 +1544,6 @@ async function loadBuiltInSkills() {
       }
     }
 
-    // On initial app startup, no skills are pre-selected
     loadedSkillData = {};
 
     populateFilterDropdowns();
@@ -1547,8 +1565,13 @@ function toggleDropdown(id, e) {
 
 function selectDifficulty(diff) {
   selectedDifficultyFilter = diff;
-  const label = diff === 'all' ? 'Difficulty: All' : `Difficulty ${diff}`;
-  document.getElementById('difficulty-dropdown-btn').innerText = label;
+  const labels = {
+    'all': 'Difficulty: All',
+    '1': 'Basic',
+    '2': 'Intermediate',
+    '3': 'Advanced'
+  };
+  document.getElementById('difficulty-dropdown-btn').innerText = labels[diff] || 'Difficulty: All';
   document.getElementById('difficulty-dropdown-content').classList.remove('show');
   loadQuestion();
 }
@@ -1638,6 +1661,14 @@ function generateQuestionFromStructure(structure) {
 }
 
 function loadQuestion() {
+  if (!selectedHeaderLevelFilter) {
+    document.getElementById('question-text').innerHTML = "Please select a level first.";
+    document.getElementById('submit-btn').style.display = 'none';
+    document.getElementById('skip-btn').style.display = 'none';
+    document.getElementById('question-level-badge').style.display = 'none';
+    return;
+  }
+
   const activeKeys = Object.keys(loadedSkillData);
   if (activeKeys.length === 0) {
     document.getElementById('question-text').innerHTML = "Please select at least one skill to practice.";
@@ -1680,8 +1711,9 @@ function loadQuestion() {
   inputCursors = new Array(currentQuestion.inputs.length).fill(0);
   activeInputIdx = 0;
 
+  const diffMap = { '1': 'Basic', '2': 'Intermediate', '3': 'Advanced', 1: 'Basic', 2: 'Intermediate', 3: 'Advanced' };
   const badge = document.getElementById('question-level-badge');
-  badge.innerText = `Difficulty ${currentQuestion.level}`;
+  badge.innerText = diffMap[currentQuestion.level] || 'Basic';
   badge.style.display = 'inline-block';
 
   document.getElementById('solution-box').style.display = 'none';
