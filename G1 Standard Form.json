@@ -1,0 +1,209 @@
+{
+  "skillTitle": "Standard Form",
+  "keypad": [
+    "\\times 10^",
+    "-",
+    ".",
+    "7",
+    "8",
+    "9",
+    "4",
+    "5",
+    "6",
+    "1",
+    "2",
+    "3",
+    "0",
+    "⌫",
+    "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "sig": { "type": "randInt", "min": 101, "max": 999 },
+        "p": { "type": "randInt", "min": 3, "max": 7 }
+      },
+      "derived": {
+        "sig_eff": "(scope.sig % 10 === 0) ? scope.sig + 3 : scope.sig",
+        "a_val": "(scope.sig_eff / 100).toFixed(2)",
+        "ord_num": "(scope.sig_eff * Math.pow(10, scope.p - 2)).toString()",
+        "ans": "scope.a_val + ' \\\\times 10^' + scope.p",
+        "step1": "scope.ord_num + ' is a **big number** (greater than 1), so the exponent of 10 will be **positive**.'",
+        "step2": "'Move the decimal point **' + scope.p + '** spaces to obtain $A = ' + scope.a_val + '$ (where $1 \\\\le A < 10$).'",
+        "step3": "scope.a_val + ' \\\\times 10^{' + scope.p + '}'"
+      },
+      "questionTemplate": "Express the ordinary number $${scope.ord_num}$ in standard form.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.step2}",
+        "Write in standard form:\n\n$$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "sig": { "type": "randInt", "min": 101, "max": 999 },
+        "zeros": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "sig_eff": "(scope.sig % 10 === 0) ? scope.sig + 1 : scope.sig",
+        "a_val": "(scope.sig_eff / 100).toFixed(2)",
+        "exp": "-1 * (scope.zeros + 1)",
+        "abs_exp": "scope.zeros + 1",
+        "dec_str": "'0.' + '0'.repeat(scope.zeros) + scope.sig_eff.toString()",
+        "ans": "scope.a_val + ' \\\\times 10^' + scope.exp",
+        "step1": "scope.dec_str + ' is a **small number** (less than 1), so the exponent of 10 will be **negative**.'",
+        "step2": "'Move the decimal point **' + scope.abs_exp + '** spaces to obtain $A = ' + scope.a_val + '$ (where $1 \\\\le A < 10$).'",
+        "step3": "scope.a_val + ' \\\\times 10^{' + scope.exp + '}'"
+      },
+      "questionTemplate": "Express the decimal number $${scope.dec_str}$ in standard form.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.step2}",
+        "Write in standard form:\n\n$$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "sig": { "type": "randInt", "min": 101, "max": 999 },
+        "zeros": { "type": "randInt", "min": 2, "max": 4 }
+      },
+      "derived": {
+        "sig_eff": "(scope.sig % 10 === 0) ? scope.sig + 7 : scope.sig",
+        "a_val": "(scope.sig_eff / 100).toFixed(2)",
+        "exp": "-1 * scope.zeros",
+        "ans": "'0.' + '0'.repeat(scope.zeros - 1) + scope.sig_eff.toString()",
+        "expr": "scope.a_val + ' \\\\times 10^{' + scope.exp + '}'"
+      },
+      "questionTemplate": "Express $${scope.expr}$ as an ordinary decimal number.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Use your calculator to evaluate $${scope.expr}$ directly.",
+        "The ordinary decimal number is $${scope.ans}$."
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "m1": { "type": "randInt", "min": 12, "max": 45 },
+        "m2": { "type": "randInt", "min": 12, "max": 35 },
+        "e1": { "type": "randInt", "min": 3, "max": 5 },
+        "e2": { "type": "randInt", "min": 2, "max": 4 }
+      },
+      "derived": {
+        "v1": "(scope.m1 / 10).toFixed(1)",
+        "v2": "(scope.m2 / 10).toFixed(1)",
+        "raw_val": "(scope.m1 / 10) * (scope.m2 / 10) * Math.pow(10, scope.e1 + scope.e2)",
+        "ord_num": "Math.round(scope.raw_val).toString()",
+        "exp": "Math.floor(Math.log10(scope.raw_val))",
+        "a_val_num": "Math.round((scope.raw_val / Math.pow(10, scope.exp)) * 100) / 100",
+        "a_val": "scope.a_val_num.toString()",
+        "ans": "scope.a_val + ' \\\\times 10^' + scope.exp",
+        "expr1": "scope.v1 + ' \\\\times 10^{' + scope.e1 + '}'",
+        "expr2": "scope.v2 + ' \\\\times 10^{' + scope.e2 + '}'"
+      },
+      "questionTemplate": "Calculate the following, giving your answer in standard form:\n\n$$(${scope.expr1}) \\times (${scope.expr2})$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Use your calculator to evaluate the expression directly to get the ordinary number:\n\n$$${scope.ord_num}$$",
+        "Since $${scope.ord_num}$ is a **big number** (greater than 1), the exponent of 10 is **positive**.",
+        "Move the decimal point **${scope.exp}** spaces to obtain $A = ${scope.a_val}$. Thus, in standard form:\n\n$$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a1_int": { "type": "randInt", "min": 101, "max": 999 },
+        "a2_int": { "type": "randInt", "min": 101, "max": 999 },
+        "e1": { "type": "randInt", "min": 3, "max": 5 },
+        "e2": { "type": "randInt", "min": 2, "max": 4 }
+      },
+      "derived": {
+        "a1": "(scope.a1_int / 100).toFixed(2)",
+        "a2": "(scope.a2_int / 100).toFixed(2)",
+        "raw_val": "(scope.a1_int / 100) * (scope.a2_int / 100) * Math.pow(10, scope.e1 + scope.e2)",
+        "exp": "Math.floor(Math.log10(scope.raw_val))",
+        "a_raw": "(scope.raw_val / Math.pow(10, scope.exp)).toFixed(4)",
+        "a_3sf": "(Math.round((scope.raw_val / Math.pow(10, scope.exp)) * 100) / 100).toFixed(2)",
+        "ans": "scope.a_3sf + ' \\\\times 10^' + scope.exp",
+        "expr1": "scope.a1 + ' \\\\times 10^{' + scope.e1 + '}'",
+        "expr2": "scope.a2 + ' \\\\times 10^{' + scope.e2 + '}'"
+      },
+      "questionTemplate": "Calculate each of the following. Give your answer in standard form, correct to 3 significant figures:\n\n$$(${scope.expr1}) \\times (${scope.expr2})$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Use your calculator to evaluate the expression:\n\n$$(${scope.expr1}) \\times (${scope.expr2}) = ${scope.raw_val}$$",
+        "Convert the result into unrounded standard form:\n\n$$${scope.a_raw} \\times 10^{${scope.exp}}$$",
+        "Round the coefficient to 3 significant figures:\n\n$$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "sig": { "type": "randInt", "min": 11, "max": 99 },
+        "unit_type": { "type": "randInt", "min": 0, "max": 1 },
+        "num_type": { "type": "randInt", "min": 1, "max": 2 }
+      },
+      "derived": {
+        "sig_eff": "(scope.sig % 10 === 0) ? scope.sig + 3 : scope.sig",
+        "unit_str": "(scope.unit_type === 0) ? 'million' : 'billion'",
+        "val_str": "(scope.num_type === 1) ? (scope.sig_eff / 10).toFixed(1) : scope.sig_eff.toString()",
+        "multiplier": "(scope.unit_type === 0) ? 1000000 : 1000000000",
+        "raw_val": "(scope.num_type === 1) ? (scope.sig_eff / 10) * scope.multiplier : scope.sig_eff * scope.multiplier",
+        "ans": "Math.round(scope.raw_val).toString()",
+        "ord_str": "scope.val_str + ' ' + scope.unit_str"
+      },
+      "questionTemplate": "Express $${scope.val_str}$ ${scope.unit_str} as an ordinary number.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Recall that $1 \\text{ ${scope.unit_str}} = ${scope.multiplier}$.",
+        "Multiply $${scope.val_str}$ by $${scope.multiplier}$ to obtain the ordinary number.",
+        "The ordinary number is $${scope.ans}$."
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "num_type": { "type": "randInt", "min": 1, "max": 3 },
+        "unit_type": { "type": "randInt", "min": 0, "max": 1 },
+        "sig": { "type": "randInt", "min": 11, "max": 99 }
+      },
+      "derived": {
+        "sig_eff": "(scope.sig % 10 === 0) ? scope.sig + 3 : scope.sig",
+        "unit_str": "(scope.unit_type === 0) ? 'million' : 'billion'",
+        "base_exp": "(scope.unit_type === 0) ? 6 : 9",
+        "val_str": "(scope.num_type === 1) ? (scope.sig_eff / 10).toFixed(1) : ((scope.num_type === 2) ? scope.sig_eff.toString() : (scope.sig_eff * 10).toString())",
+        "shift": "(scope.num_type === 1) ? 0 : ((scope.num_type === 2) ? 1 : 2)",
+        "exp": "scope.base_exp + scope.shift",
+        "a_val": "(scope.sig_eff / 10).toFixed(1)",
+        "ans": "scope.a_val + ' \\\\times 10^' + scope.exp",
+        "ord_str": "scope.val_str + ' ' + scope.unit_str"
+      },
+      "questionTemplate": "Express $${scope.val_str}$ ${scope.unit_str} in standard form.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Note that $1 \\text{ ${scope.unit_str}} = 10^{${scope.base_exp}}$. Thus, $${scope.val_str}$ ${scope.unit_str} $= ${scope.val_str} \\times 10^{${scope.base_exp}}$.",
+        "Since $${scope.val_str}$ ${scope.unit_str} is a **big number** (greater than 1), the exponent of 10 is **positive**.",
+        "Write in standard form $A \\times 10^n$ (where $1 \\le A < 10$):\n\n$$${scope.ans}$$"
+      ]
+    }
+  ]
+}

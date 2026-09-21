@@ -1,0 +1,623 @@
+{
+  "skillTitle": "Pythagoras' Theorem & Trigonometry",
+  "keypad": [
+    "°",
+    ".",
+    "-",
+    "7",
+    "8",
+    "9",
+    "4",
+    "5",
+    "6",
+    "1",
+    "2",
+    "3",
+    "0",
+    "⌫",
+    "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": {
+          "type": "randInt",
+          "min": 3,
+          "max": 12
+        },
+        "b": {
+          "type": "randInt",
+          "min": 4,
+          "max": 16
+        },
+        "orient": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "c_sq": "scope.a * scope.a + scope.b * scope.b",
+        "ans_num": "parseFloat(Math.sqrt(scope.c_sq).toPrecision(3))",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'AC^2 = ' + scope.a + '^2 + ' + scope.b + '^2 = ' + (scope.a * scope.a) + ' + ' + (scope.b * scope.b) + ' = ' + scope.c_sq",
+        "step2": "'AC = \\\\sqrt{' + scope.c_sq + '} \\\\approx ' + scope.ans_num",
+        "poly_pts": "['40,20 40,130 190,130', '190,20 190,130 40,130', '40,130 40,20 190,20', '190,130 190,20 40,20'][scope.orient]",
+        "sq_path": "['M 40,118 L 52,118 L 52,130', 'M 178,130 L 178,118 L 190,118', 'M 40,32 L 52,32 L 52,20', 'M 178,20 L 178,32 L 190,32'][scope.orient]",
+        "ax": "['25', '195', '25', '195'][scope.orient]",
+        "ay": "['20', '20', '145', '145'][scope.orient]",
+        "bx": "['25', '195', '25', '195'][scope.orient]",
+        "by": "['145', '145', '20', '20'][scope.orient]",
+        "cx": "['195', '25', '195', '25'][scope.orient]",
+        "cy": "['145', '145', '20', '20'][scope.orient]",
+        "side1_x": "['5', '200', '5', '200'][scope.orient]",
+        "side1_y": "['80', '80', '80', '80'][scope.orient]",
+        "side2_x": "['105', '105', '105', '105'][scope.orient]",
+        "side2_y": "['152', '152', '15', '15'][scope.orient]",
+        "hyp_x": "['120', '90', '120', '90'][scope.orient]",
+        "hyp_y": "['68', '68', '90', '90'][scope.orient]"
+      },
+      "questionTemplate": "<svg width=\"240\" height=\"160\" viewBox=\"0 0 240 160\" xmlns=\"http://www.w3.org/2000/svg\">\n  <polygon points=\"${scope.poly_pts}\" fill=\"#f8f9fa\" stroke=\"#2b2b2b\" stroke-width=\"2\"/>\n  <path d=\"${scope.sq_path}\" fill=\"none\" stroke=\"#2b2b2b\" stroke-width=\"1.5\"/>\n  <text x=\"${scope.ax}\" y=\"${scope.ay}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">A</text>\n  <text x=\"${scope.bx}\" y=\"${scope.by}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">B</text>\n  <text x=\"${scope.cx}\" y=\"${scope.cy}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">C</text>\n  <text x=\"${scope.side1_x}\" y=\"${scope.side1_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.a} cm</text>\n  <text x=\"${scope.side2_x}\" y=\"${scope.side2_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.b} cm</text>\n  <text x=\"${scope.hyp_x}\" y=\"${scope.hyp_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#0275d8\" font-weight=\"bold\">x</text>\n</svg>\n\nIn right-angled triangle $ABC$, $\\angle B = 90^\\circ$, $AB = ${scope.a}$ cm, and $BC = ${scope.b}$ cm. Calculate the length of hypotenuse $AC$ ($x\\text{ cm}$) to 3 significant figures.",
+      "inputs": [
+        {
+          "label": "x =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply Pythagoras' theorem: $$AC^2 = AB^2 + BC^2$$",
+        "Substitute the given side lengths: $$${scope.step1}$$",
+        "Take the square root to find $AC$: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "opp": {
+          "type": "randInt",
+          "min": 5,
+          "max": 20
+        },
+        "adj": {
+          "type": "randInt",
+          "min": 5,
+          "max": 20
+        },
+        "orient": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "ratio": "Math.round((scope.opp / scope.adj) * 1000) / 1000",
+        "deg_num": "Math.round(Math.atan(scope.opp / scope.adj) * (180 / Math.PI) * 10) / 10",
+        "ans": "scope.deg_num.toString()",
+        "step1": "'\\\\tan(\\\\theta) = \\\\frac{\\\\text{Opposite}}{\\\\text{Adjacent}} = \\\\frac{' + scope.opp + '}{' + scope.adj + '} = ' + scope.ratio",
+        "step2": "'\\\\theta = \\\\tan^{-1}(' + scope.ratio + ') \\\\approx ' + scope.deg_num + '^\\\\circ'",
+        "poly_pts": "['40,20 40,130 190,130', '190,20 190,130 40,130', '40,130 40,20 190,20', '190,130 190,20 40,20'][scope.orient]",
+        "sq_path": "['M 40,118 L 52,118 L 52,130', 'M 178,130 L 178,118 L 190,118', 'M 40,32 L 52,32 L 52,20', 'M 178,20 L 178,32 L 190,32'][scope.orient]",
+        "arc_path": "['M 160,130 A 30,30 0 0,0 167,118', 'M 70,130 A 30,30 0 0,1 63,118', 'M 160,20 A 30,30 0 0,1 167,32', 'M 70,20 A 30,30 0 0,0 63,32'][scope.orient]",
+        "px": "['25', '195', '25', '195'][scope.orient]",
+        "py": "['20', '20', '145', '145'][scope.orient]",
+        "qx": "['25', '195', '25', '195'][scope.orient]",
+        "qy": "['145', '145', '20', '20'][scope.orient]",
+        "rx": "['195', '25', '195', '25'][scope.orient]",
+        "ry": "['145', '145', '20', '20'][scope.orient]",
+        "opp_x": "['5', '200', '5', '200'][scope.orient]",
+        "opp_y": "['80', '80', '80', '80'][scope.orient]",
+        "adj_x": "['105', '105', '105', '105'][scope.orient]",
+        "adj_y": "['152', '152', '15', '15'][scope.orient]",
+        "theta_x": "['148', '80', '148', '80'][scope.orient]",
+        "theta_y": "['122', '122', '35', '35'][scope.orient]"
+      },
+      "questionTemplate": "<svg width=\"240\" height=\"160\" viewBox=\"0 0 240 160\" xmlns=\"http://www.w3.org/2000/svg\">\n  <polygon points=\"${scope.poly_pts}\" fill=\"#f8f9fa\" stroke=\"#2b2b2b\" stroke-width=\"2\"/>\n  <path d=\"${scope.sq_path}\" fill=\"none\" stroke=\"#2b2b2b\" stroke-width=\"1.5\"/>\n  <path d=\"${scope.arc_path}\" fill=\"none\" stroke=\"#0275d8\" stroke-width=\"1.5\"/>\n  <text x=\"${scope.px}\" y=\"${scope.py}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">P</text>\n  <text x=\"${scope.qx}\" y=\"${scope.qy}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">Q</text>\n  <text x=\"${scope.rx}\" y=\"${scope.ry}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">R</text>\n  <text x=\"${scope.opp_x}\" y=\"${scope.opp_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.opp} m</text>\n  <text x=\"${scope.adj_x}\" y=\"${scope.adj_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.adj} m</text>\n  <text x=\"${scope.theta_x}\" y=\"${scope.theta_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#0275d8\" font-weight=\"bold\">θ</text>\n</svg>\n\n\nIn right-angled triangle $PQR$, $\\angle Q = 90^\\circ$, side $PQ = ${scope.opp} m$, and side $QR = ${scope.adj} m$. Calculate the size of angle $\\theta$ in degrees to 1 decimal place.",
+      "inputs": [
+        {
+          "label": "θ =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Use the tangent ratio: $$\\tan(\\theta) = \\frac{\\text{Opposite}}{\\text{Adjacent}}$$ ",
+        "Substitute the values: $$${scope.step1}$$",
+        "Calculate inverse tangent: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": {
+          "type": "randInt",
+          "min": 5,
+          "max": 15
+        },
+        "c": {
+          "type": "randInt",
+          "min": 17,
+          "max": 30
+        },
+        "orient": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "b_sq": "scope.c * scope.c - scope.a * scope.a",
+        "ans_num": "parseFloat(Math.sqrt(scope.b_sq).toPrecision(3))",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'b^2 = ' + scope.c + '^2 - ' + scope.a + '^2 = ' + (scope.c * scope.c) + ' - ' + (scope.a * scope.a) + ' = ' + scope.b_sq",
+        "step2": "'b = \\\\sqrt{' + scope.b_sq + '} \\\\approx ' + scope.ans_num",
+        "poly_pts": "['40,20 40,130 190,130', '190,20 190,130 40,130', '40,130 40,20 190,20', '190,130 190,20 40,20'][scope.orient]",
+        "sq_path": "['M 40,118 L 52,118 L 52,130', 'M 178,130 L 178,118 L 190,118', 'M 40,32 L 52,32 L 52,20', 'M 178,20 L 178,32 L 190,32'][scope.orient]",
+        "xx": "['25', '195', '25', '195'][scope.orient]",
+        "xy": "['20', '20', '145', '145'][scope.orient]",
+        "yx": "['25', '195', '25', '195'][scope.orient]",
+        "yy": "['145', '145', '20', '20'][scope.orient]",
+        "zx": "['195', '25', '195', '25'][scope.orient]",
+        "zy": "['145', '145', '20', '20'][scope.orient]",
+        "a_x": "['5', '200', '5', '200'][scope.orient]",
+        "a_y": "['80', '80', '80', '80'][scope.orient]",
+        "b_x": "['105', '105', '105', '105'][scope.orient]",
+        "b_y": "['152', '152', '15', '15'][scope.orient]",
+        "c_x": "['120', '90', '120', '90'][scope.orient]",
+        "c_y": "['68', '68', '90', '90'][scope.orient]"
+      },
+      "questionTemplate": "<svg width=\"240\" height=\"160\" viewBox=\"0 0 240 160\" xmlns=\"http://www.w3.org/2000/svg\">\n  <polygon points=\"${scope.poly_pts}\" fill=\"#f8f9fa\" stroke=\"#2b2b2b\" stroke-width=\"2\"/>\n  <path d=\"${scope.sq_path}\" fill=\"none\" stroke=\"#2b2b2b\" stroke-width=\"1.5\"/>\n  <text x=\"${scope.xx}\" y=\"${scope.xy}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">X</text>\n  <text x=\"${scope.yx}\" y=\"${scope.yy}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">Y</text>\n  <text x=\"${scope.zx}\" y=\"${scope.zy}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">Z</text>\n  <text x=\"${scope.a_x}\" y=\"${scope.a_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.a} cm</text>\n  <text x=\"${scope.b_x}\" y=\"${scope.b_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#0275d8\" font-weight=\"bold\">b</text>\n  <text x=\"${scope.c_x}\" y=\"${scope.c_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.c} cm</text>\n</svg>\n\nIn right-angled triangle $XYZ$, $\\angle Y = 90^\\circ$, hypotenuse $XZ = ${scope.c}$ cm, and side $XY = ${scope.a}$ cm. Calculate the length of side $YZ$ ($b\\text{ cm}$) to 3 significant figures.",
+      "inputs": [
+        {
+          "label": "b =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply Pythagoras' theorem: $$a^2 + b^2 = c^2 \\implies b^2 = c^2 - a^2$$",
+        "Substitute given values: $$${scope.step1}$$",
+        "Calculate square root: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "h": {
+          "type": "randInt",
+          "min": 40,
+          "max": 90
+        },
+        "d": {
+          "type": "randInt",
+          "min": 100,
+          "max": 300
+        }
+      },
+      "derived": {
+        "tan_val": "Math.round((scope.h / scope.d) * 1000) / 1000",
+        "angle_num": "Math.round(Math.atan(scope.h / scope.d) * (180 / Math.PI) * 10) / 10",
+        "ans": "scope.angle_num.toString()",
+        "step1": "'\\\\tan(\\\\theta) = \\\\frac{\\\\text{Height}}{\\\\text{Horizontal Distance}} = \\\\frac{' + scope.h + '}{' + scope.d + '} = ' + scope.tan_val",
+        "step2": "'\\\\theta = \\\\tan^{-1}(' + scope.tan_val + ') \\\\approx ' + scope.angle_num + '^\\\\circ'"
+      },
+      "questionTemplate": "<svg width=\"260\" height=\"160\" viewBox=\"0 0 260 160\" xmlns=\"http://www.w3.org/2000/svg\">\n  <line x1=\"10\" y1=\"140\" x2=\"250\" y2=\"140\" stroke=\"#555\" stroke-width=\"2\"/>\n  <rect x=\"30\" y=\"30\" width=\"15\" height=\"110\" fill=\"#8b5a2b\"/>\n  <polygon points=\"45,30 45,140 220,140\" fill=\"none\" stroke=\"#d9534f\" stroke-dasharray=\"4,4\" stroke-width=\"1.5\"/>\n  <line x1=\"45\" y1=\"30\" x2=\"220\" y2=\"140\" stroke=\"#0275d8\" stroke-width=\"2.5\"/>\n  <path d=\"M 45,128 L 57,128 L 57,140\" fill=\"none\" stroke=\"#333\" stroke-width=\"1.5\"/>\n  <path d=\"M 190,140 A 30,30 0 0,0 197,125\" fill=\"none\" stroke=\"#0275d8\" stroke-width=\"1.5\"/>\n  <text x=\"5\" y=\"85\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#8b5a2b\" font-weight=\"bold\">${scope.h} m</text>\n  <text x=\"115\" y=\"155\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#333\">${scope.d} m</text>\n  <text x=\"178\" y=\"132\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#0275d8\" font-weight=\"bold\">θ</text>\n</svg>\n\n A flying fox ride starts at a platform ${scope.h} m high on a hill. The finish point is at a horizontal distance of ${scope.d} m from the base of the platform. Calculate the angle of elevation of the top platform from the finish point to 1 decimal place.",
+      "inputs": [
+        {
+          "label": "θ =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Set up tangent formula for angle of elevation: $$\\tan(\\theta) = \\frac{\\text{Opposite}}{\\text{Adjacent}}$$ ",
+        "Substitute values: $$${scope.step1}$$",
+        "Evaluate angle $\\theta$: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "d": {
+          "type": "randInt",
+          "min": 15,
+          "max": 40
+        },
+        "angle": {
+          "type": "randInt",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "derived": {
+        "tan_val": "Math.round(Math.tan(scope.angle * Math.PI / 180) * 10000) / 10000",
+        "h_num": "parseFloat((scope.d * Math.tan(scope.angle * Math.PI / 180)).toPrecision(3))",
+        "ans": "scope.h_num.toString()",
+        "step1": "'\\\\tan(' + scope.angle + '^\\\\circ) = \\\\frac{h}{' + scope.d + '}'",
+        "step2": "'h = ' + scope.d + ' \\\\times \\\\tan(' + scope.angle + '^\\\\circ) \\\\approx ' + scope.h_num"
+      },
+      "questionTemplate": "<svg width=\"260\" height=\"160\" viewBox=\"0 0 260 160\" xmlns=\"http://www.w3.org/2000/svg\">\n  <line x1=\"40\" y1=\"30\" x2=\"220\" y2=\"30\" stroke=\"#888\" stroke-dasharray=\"4,4\" stroke-width=\"1.5\"/>\n  <line x1=\"40\" y1=\"130\" x2=\"240\" y2=\"130\" stroke=\"#333\" stroke-width=\"2\"/>\n  <line x1=\"40\" y1=\"30\" x2=\"220\" y2=\"130\" stroke=\"#d9534f\" stroke-width=\"2\"/>\n  <line x1=\"220\" y1=\"30\" x2=\"220\" y2=\"130\" stroke=\"#0275d8\" stroke-dasharray=\"3,3\" stroke-width=\"1.5\"/>\n  <path d=\"M 70,30 A 30,30 0 0,1 67,43\" fill=\"none\" stroke=\"#d9534f\" stroke-width=\"1.5\"/>\n  <text x=\"20\" y=\"25\" font-family=\"sans-serif\" font-size=\"14\">✈</text>\n  <text x=\"75\" y=\"45\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#d9534f\">${scope.angle}°</text>\n  <text x=\"110\" y=\"22\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#555\">${scope.d} km</text>\n  <text x=\"228\" y=\"85\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#0275d8\" font-weight=\"bold\">h</text>\n</svg>\n\n An aircraft approaching an airport begins its final descent at a horizontal distance of ${scope.d} km from the runway at an angle of depression of ${scope.angle}°. Calculate the height $h\\text{ km}$ of the aircraft when its final descent begins to 3 significant figures.",
+      "inputs": [
+        {
+          "label": "h =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Use tangent ratio: $$\\tan(\\text{angle of depression}) = \\frac{\\text{Height } h}{\\text{Horizontal Distance } d}$$",
+        "Substitute given values: $$${scope.step1}$$",
+        "Solve for height $h$: $$${scope.step2}\\text{ km}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "east": {
+          "type": "randInt",
+          "min": 6,
+          "max": 24
+        },
+        "south": {
+          "type": "randInt",
+          "min": 5,
+          "max": 20
+        }
+      },
+      "derived": {
+        "d_sq": "scope.east * scope.east + scope.south * scope.south",
+        "ans_num": "parseFloat(Math.sqrt(scope.d_sq).toPrecision(3))",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'d^2 = ' + scope.east + '^2 + ' + scope.south + '^2 = ' + (scope.east * scope.east) + ' + ' + (scope.south * scope.south) + ' = ' + scope.d_sq",
+        "step2": "'d = \\\\sqrt{' + scope.d_sq + '} \\\\approx ' + scope.ans_num"
+      },
+      "questionTemplate": "<svg width=\"240\" height=\"160\" viewBox=\"0 0 240 160\" xmlns=\"http://www.w3.org/2000/svg\">\n  <polygon points=\"30,30 180,30 180,130\" fill=\"#f8f9fa\" stroke=\"#2b2b2b\" stroke-width=\"2\"/>\n  <path d=\"M 168,30 L 168,42 L 180,42\" fill=\"none\" stroke=\"#2b2b2b\" stroke-width=\"1.5\"/>\n  <circle cx=\"30\" cy=\"30\" r=\"5\" fill=\"#5cb85c\"/>\n  <text x=\"15\" y=\"22\" font-family=\"sans-serif\" font-size=\"12\" font-weight=\"bold\">Island</text>\n  <text x=\"85\" y=\"22\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#d9534f\">${scope.east} km (East)</text>\n  <text x=\"188\" y=\"85\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#d9534f\">${scope.south} km (South)</text>\n  <text x=\"90\" y=\"95\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#0275d8\" font-weight=\"bold\">d</text>\n</svg>\n\nA yacht sails ${scope.east} km due east from an island, then ${scope.south} km due south. Calculate the direct distance $d\\text{ km}$ of the yacht from the island to 3 significant figures.",
+      "inputs": [
+        {
+          "label": "d =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Since East and South directions are perpendicular ($90^\\circ$), use Pythagoras' theorem: $$d^2 = \\text{east}^2 + \\text{south}^2$$",
+        "Substitute the distances: $$${scope.step1}$$",
+        "Calculate direct distance $d$: $$${scope.step2}\\text{ km}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": {
+          "type": "randInt",
+          "min": 6,
+          "max": 15
+        },
+        "b": {
+          "type": "randInt",
+          "min": 8,
+          "max": 20
+        }
+      },
+      "derived": {
+        "bc_sq": "scope.a * scope.a + scope.b * scope.b",
+        "ans": "scope.bc_sq.toString()",
+        "step1": "'BC^2 = AB^2 + AC^2 = ' + scope.a + '^2 + ' + scope.b + '^2 = ' + (scope.a * scope.a) + ' + ' + (scope.b * scope.b) + ' = ' + scope.bc_sq",
+        "step2": "'\\\\text{Area of square } BCDE = BC^2 = ' + scope.bc_sq"
+      },
+      "questionTemplate": "<svg width=\"290\" height=\"250\" viewBox=\"0 0 290 250\" xmlns=\"http://www.w3.org/2000/svg\">\n  <polygon points=\"60,150 180,230 260,110 140,30\" fill=\"#d9edf7\" stroke=\"#0275d8\" stroke-width=\"2\" fill-opacity=\"0.6\"/>\n  <polygon points=\"60,230 60,150 180,230\" fill=\"#f8f9fa\" stroke=\"#2b2b2b\" stroke-width=\"2\"/>\n  <path d=\"M 60,218 L 72,218 L 72,230\" fill=\"none\" stroke=\"#2b2b2b\" stroke-width=\"1.5\"/>\n  <text x=\"45\" y=\"240\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">A</text>\n  <text x=\"45\" y=\"150\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">B</text>\n  <text x=\"185\" y=\"245\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">C</text>\n  <text x=\"268\" y=\"115\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">D</text>\n  <text x=\"135\" y=\"22\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">E</text>\n  <text x=\"20\" y=\"195\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#d9534f\">${scope.a} cm</text>\n  <text x=\"110\" y=\"248\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#d9534f\">${scope.b} cm</text>\n</svg>\n\nSquare $BCDE$ is constructed on hypotenuse $BC$ of right-angled triangle $ABC$ ($\\angle A = 90^\\circ$). Given $AB = ${scope.a}$ cm and $AC = ${scope.b}$ cm, find the area of square $BCDE$ in $\\text{cm}^2$.",
+      "inputs": [
+        {
+          "label": "Area =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "By Pythagoras' theorem on triangle $ABC$: $$BC^2 = AB^2 + AC^2$$",
+        "Calculate $BC^2$: $$${scope.step1}$$",
+        "The area of square $BCDE$ equals $BC^2$: $$${scope.step2}\\text{ cm}^2$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "bc": {
+          "type": "randInt",
+          "min": 5,
+          "max": 12
+        },
+        "ce": {
+          "type": "randInt",
+          "min": 12,
+          "max": 20
+        }
+      },
+      "derived": {
+        "be_sq": "scope.bc * scope.bc + scope.ce * scope.ce",
+        "be_num": "parseFloat(Math.sqrt(scope.be_sq).toPrecision(3))",
+        "ans": "scope.be_num.toString()",
+        "step1": "'BE^2 = BC^2 + CE^2 = ' + scope.bc + '^2 + ' + scope.ce + '^2 = ' + (scope.bc * scope.bc) + ' + ' + (scope.ce * scope.ce) + ' = ' + scope.be_sq",
+        "step2": "'BE = \\\\sqrt{' + scope.be_sq + '} \\\\approx ' + scope.be_num"
+      },
+      "questionTemplate": "<svg width=\"240\" height=\"180\" viewBox=\"0 0 240 180\" xmlns=\"http://www.w3.org/2000/svg\">\n  <polygon points=\"40,140 180,140 180,30\" fill=\"#f8f9fa\" stroke=\"#2b2b2b\" stroke-width=\"2\"/>\n  <line x1=\"40\" y1=\"140\" x2=\"180\" y2=\"30\" stroke=\"#0275d8\" stroke-width=\"2\" stroke-dasharray=\"4,4\"/>\n  <path d=\"M 168,140 L 168,128 L 180,128\" fill=\"none\" stroke=\"#2b2b2b\" stroke-width=\"1.5\"/>\n  <text x=\"25\" y=\"150\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">B</text>\n  <text x=\"188\" y=\"150\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">C</text>\n  <text x=\"188\" y=\"25\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">E</text>\n  <text x=\"100\" y=\"158\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#d9534f\">${scope.bc} cm</text>\n  <text x=\"192\" y=\"90\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#d9534f\">${scope.ce} cm</text>\n  <text x=\"95\" y=\"75\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#0275d8\" font-weight=\"bold\">BE</text>\n</svg>\n\nIn the diagram, right-angled triangle $BCE$ has $\\angle BCE = 90^\\circ$, side $BC = ${scope.bc}$ cm, and side $CE = ${scope.ce}$ cm. Calculate the length of $BE$ in cm to 3 significant figures.",
+      "inputs": [
+        {
+          "label": "BE =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply Pythagoras' theorem: $$BE^2 = BC^2 + CE^2$$",
+        "Substitute values: $$${scope.step1}$$",
+        "Evaluate $BE$: $$${scope.step2}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "opp": {
+          "type": "randInt",
+          "min": 5,
+          "max": 15
+        },
+        "diff": {
+          "type": "randInt",
+          "min": 2,
+          "max": 10
+        },
+        "orient": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "hyp": "scope.opp + scope.diff",
+        "ratio": "Math.round((scope.opp / scope.hyp) * 1000) / 1000",
+        "deg_num": "Math.round(Math.asin(scope.opp / scope.hyp) * (180 / Math.PI) * 10) / 10",
+        "ans": "scope.deg_num.toString()",
+        "step1": "'\\\\sin(\\\\theta) = \\\\frac{\\\\text{Opposite}}{\\\\text{Hypotenuse}} = \\\\frac{' + scope.opp + '}{' + scope.hyp + '} = ' + scope.ratio",
+        "step2": "'\\\\theta = \\\\sin^{-1}(' + scope.ratio + ') \\\\approx ' + scope.deg_num + '^\\\\circ'",
+        "poly_pts": "['40,20 40,130 190,130', '190,20 190,130 40,130', '40,130 40,20 190,20', '190,130 190,20 40,20'][scope.orient]",
+        "sq_path": "['M 40,118 L 52,118 L 52,130', 'M 178,130 L 178,118 L 190,118', 'M 40,32 L 52,32 L 52,20', 'M 178,20 L 178,32 L 190,32'][scope.orient]",
+        "arc_path": "['M 160,130 A 30,30 0 0,0 167,118', 'M 70,130 A 30,30 0 0,1 63,118', 'M 160,20 A 30,30 0 0,1 167,32', 'M 70,20 A 30,30 0 0,0 63,32'][scope.orient]",
+        "px": "['25', '195', '25', '195'][scope.orient]",
+        "py": "['20', '20', '145', '145'][scope.orient]",
+        "qx": "['25', '195', '25', '195'][scope.orient]",
+        "qy": "['145', '145', '20', '20'][scope.orient]",
+        "rx": "['195', '25', '195', '25'][scope.orient]",
+        "ry": "['145', '145', '20', '20'][scope.orient]",
+        "opp_x": "['5', '200', '5', '200'][scope.orient]",
+        "opp_y": "['80', '80', '80', '80'][scope.orient]",
+        "hyp_x": "['120', '90', '120', '90'][scope.orient]",
+        "hyp_y": "['68', '68', '90', '90'][scope.orient]",
+        "theta_x": "['148', '80', '148', '80'][scope.orient]",
+        "theta_y": "['122', '122', '35', '35'][scope.orient]"
+      },
+      "questionTemplate": "<svg width=\"240\" height=\"160\" viewBox=\"0 0 240 160\" xmlns=\"http://www.w3.org/2000/svg\">\n  <polygon points=\"${scope.poly_pts}\" fill=\"#f8f9fa\" stroke=\"#2b2b2b\" stroke-width=\"2\"/>\n  <path d=\"${scope.sq_path}\" fill=\"none\" stroke=\"#2b2b2b\" stroke-width=\"1.5\"/>\n  <path d=\"${scope.arc_path}\" fill=\"none\" stroke=\"#0275d8\" stroke-width=\"1.5\"/>\n  <text x=\"${scope.px}\" y=\"${scope.py}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">P</text>\n  <text x=\"${scope.qx}\" y=\"${scope.qy}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">Q</text>\n  <text x=\"${scope.rx}\" y=\"${scope.ry}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">R</text>\n  <text x=\"${scope.opp_x}\" y=\"${scope.opp_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.opp} m</text>\n  <text x=\"${scope.hyp_x}\" y=\"${scope.hyp_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.hyp} m</text>\n  <text x=\"${scope.theta_x}\" y=\"${scope.theta_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#0275d8\" font-weight=\"bold\">θ</text>\n</svg>\n\nIn right-angled triangle $PQR$, $\\angle Q = 90^\\circ$, side $PQ = ${scope.opp} m$, and hypotenuse $PR = ${scope.hyp} m$. Calculate the size of angle $\\theta$ in degrees to 1 decimal place.",
+      "inputs": [
+        {
+          "label": "θ =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Use the sine ratio: $$\\sin(\\theta) = \\frac{\\text{Opposite}}{\\text{Hypotenuse}}$$ ",
+        "Substitute the values: $$${scope.step1}$$",
+        "Calculate inverse sine: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "adj": {
+          "type": "randInt",
+          "min": 5,
+          "max": 15
+        },
+        "diff": {
+          "type": "randInt",
+          "min": 2,
+          "max": 10
+        },
+        "orient": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "hyp": "scope.adj + scope.diff",
+        "ratio": "Math.round((scope.adj / scope.hyp) * 1000) / 1000",
+        "deg_num": "Math.round(Math.acos(scope.adj / scope.hyp) * (180 / Math.PI) * 10) / 10",
+        "ans": "scope.deg_num.toString()",
+        "step1": "'\\\\cos(\\\\theta) = \\\\frac{\\\\text{Adjacent}}{\\\\text{Hypotenuse}} = \\\\frac{' + scope.adj + '}{' + scope.hyp + '} = ' + scope.ratio",
+        "step2": "'\\\\theta = \\\\cos^{-1}(' + scope.ratio + ') \\\\approx ' + scope.deg_num + '^\\\\circ'",
+        "poly_pts": "['40,20 40,130 190,130', '190,20 190,130 40,130', '40,130 40,20 190,20', '190,130 190,20 40,20'][scope.orient]",
+        "sq_path": "['M 40,118 L 52,118 L 52,130', 'M 178,130 L 178,118 L 190,118', 'M 40,32 L 52,32 L 52,20', 'M 178,20 L 178,32 L 190,32'][scope.orient]",
+        "arc_path": "['M 160,130 A 30,30 0 0,0 167,118', 'M 70,130 A 30,30 0 0,1 63,118', 'M 160,20 A 30,30 0 0,1 167,32', 'M 70,20 A 30,30 0 0,0 63,32'][scope.orient]",
+        "px": "['25', '195', '25', '195'][scope.orient]",
+        "py": "['20', '20', '145', '145'][scope.orient]",
+        "qx": "['25', '195', '25', '195'][scope.orient]",
+        "qy": "['145', '145', '20', '20'][scope.orient]",
+        "rx": "['195', '25', '195', '25'][scope.orient]",
+        "ry": "['145', '145', '20', '20'][scope.orient]",
+        "adj_x": "['105', '105', '105', '105'][scope.orient]",
+        "adj_y": "['152', '152', '15', '15'][scope.orient]",
+        "hyp_x": "['120', '90', '120', '90'][scope.orient]",
+        "hyp_y": "['68', '68', '90', '90'][scope.orient]",
+        "theta_x": "['148', '80', '148', '80'][scope.orient]",
+        "theta_y": "['122', '122', '35', '35'][scope.orient]"
+      },
+      "questionTemplate": "<svg width=\"240\" height=\"160\" viewBox=\"0 0 240 160\" xmlns=\"http://www.w3.org/2000/svg\">\n  <polygon points=\"${scope.poly_pts}\" fill=\"#f8f9fa\" stroke=\"#2b2b2b\" stroke-width=\"2\"/>\n  <path d=\"${scope.sq_path}\" fill=\"none\" stroke=\"#2b2b2b\" stroke-width=\"1.5\"/>\n  <path d=\"${scope.arc_path}\" fill=\"none\" stroke=\"#0275d8\" stroke-width=\"1.5\"/>\n  <text x=\"${scope.px}\" y=\"${scope.py}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">P</text>\n  <text x=\"${scope.qx}\" y=\"${scope.qy}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">Q</text>\n  <text x=\"${scope.rx}\" y=\"${scope.ry}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">R</text>\n  <text x=\"${scope.adj_x}\" y=\"${scope.adj_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.adj} m</text>\n  <text x=\"${scope.hyp_x}\" y=\"${scope.hyp_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.hyp} m</text>\n  <text x=\"${scope.theta_x}\" y=\"${scope.theta_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#0275d8\" font-weight=\"bold\">θ</text>\n</svg>\n\nIn right-angled triangle $PQR$, $\\angle Q = 90^\\circ$, side $QR = ${scope.adj} m$, and hypotenuse $PR = ${scope.hyp} m$. Calculate the size of angle $\\theta$ in degrees to 1 decimal place.",
+      "inputs": [
+        {
+          "label": "θ =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Use the cosine ratio: $$\\cos(\\theta) = \\frac{\\text{Adjacent}}{\\text{Hypotenuse}}$$ ",
+        "Substitute the values: $$${scope.step1}$$",
+        "Calculate inverse cosine: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "angle": {
+          "type": "randInt",
+          "min": 20,
+          "max": 70
+        },
+        "hyp": {
+          "type": "randInt",
+          "min": 10,
+          "max": 30
+        },
+        "orient": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "sin_val": "Math.round(Math.sin(scope.angle * Math.PI / 180) * 10000) / 10000",
+        "opp_num": "Math.round(scope.hyp * Math.sin(scope.angle * Math.PI / 180) * 10) / 10",
+        "ans": "scope.opp_num.toString()",
+        "step1": "'\\\\sin(' + scope.angle + '^\\\\circ) = \\\\frac{PQ}{' + scope.hyp + '}'",
+        "step2": "'PQ = ' + scope.hyp + ' \\\\times \\\\sin(' + scope.angle + '^\\\\circ) \\\\approx ' + scope.opp_num",
+        "poly_pts": "['40,20 40,130 190,130', '190,20 190,130 40,130', '40,130 40,20 190,20', '190,130 190,20 40,20'][scope.orient]",
+        "sq_path": "['M 40,118 L 52,118 L 52,130', 'M 178,130 L 178,118 L 190,118', 'M 40,32 L 52,32 L 52,20', 'M 178,20 L 178,32 L 190,32'][scope.orient]",
+        "arc_path": "['M 160,130 A 30,30 0 0,0 167,118', 'M 70,130 A 30,30 0 0,1 63,118', 'M 160,20 A 30,30 0 0,1 167,32', 'M 70,20 A 30,30 0 0,0 63,32'][scope.orient]",
+        "px": "['25', '195', '25', '195'][scope.orient]",
+        "py": "['20', '20', '145', '145'][scope.orient]",
+        "qx": "['25', '195', '25', '195'][scope.orient]",
+        "qy": "['145', '145', '20', '20'][scope.orient]",
+        "rx": "['195', '25', '195', '25'][scope.orient]",
+        "ry": "['145', '145', '20', '20'][scope.orient]",
+        "opp_x": "['5', '200', '5', '200'][scope.orient]",
+        "opp_y": "['80', '80', '80', '80'][scope.orient]",
+        "hyp_x": "['120', '90', '120', '90'][scope.orient]",
+        "hyp_y": "['68', '68', '90', '90'][scope.orient]",
+        "theta_x": "['148', '80', '148', '80'][scope.orient]",
+        "theta_y": "['122', '122', '35', '35'][scope.orient]"
+      },
+      "questionTemplate": "<svg width=\"240\" height=\"160\" viewBox=\"0 0 240 160\" xmlns=\"http://www.w3.org/2000/svg\">\n  <polygon points=\"${scope.poly_pts}\" fill=\"#f8f9fa\" stroke=\"#2b2b2b\" stroke-width=\"2\"/>\n  <path d=\"${scope.sq_path}\" fill=\"none\" stroke=\"#2b2b2b\" stroke-width=\"1.5\"/>\n  <path d=\"${scope.arc_path}\" fill=\"none\" stroke=\"#0275d8\" stroke-width=\"1.5\"/>\n  <text x=\"${scope.px}\" y=\"${scope.py}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">P</text>\n  <text x=\"${scope.qx}\" y=\"${scope.qy}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">Q</text>\n  <text x=\"${scope.rx}\" y=\"${scope.ry}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">R</text>\n  <text x=\"${scope.opp_x}\" y=\"${scope.opp_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#0275d8\" font-weight=\"bold\">PQ</text>\n  <text x=\"${scope.hyp_x}\" y=\"${scope.hyp_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.hyp} m</text>\n  <text x=\"${scope.theta_x}\" y=\"${scope.theta_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.angle}°</text>\n</svg>\n\nIn right-angled triangle $PQR$, $\\angle Q = 90^\\circ$, angle $\\theta = ${scope.angle}^\\circ$, and hypotenuse $PR = ${scope.hyp} m$. Calculate the length of side $PQ$ in meters to 1 decimal place.",
+      "inputs": [
+        {
+          "label": "PQ =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Use the sine ratio: $$\\sin(\\theta) = \\frac{\\text{Opposite}}{\\text{Hypotenuse}}$$ ",
+        "Substitute the given values: $$${scope.step1}$$",
+        "Solve for side $PQ$: $$${scope.step2}\\text{ m}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "angle": {
+          "type": "randInt",
+          "min": 20,
+          "max": 70
+        },
+        "hyp": {
+          "type": "randInt",
+          "min": 10,
+          "max": 30
+        },
+        "orient": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "cos_val": "Math.round(Math.cos(scope.angle * Math.PI / 180) * 10000) / 10000",
+        "adj_num": "Math.round(scope.hyp * Math.cos(scope.angle * Math.PI / 180) * 10) / 10",
+        "ans": "scope.adj_num.toString()",
+        "step1": "'\\\\cos(' + scope.angle + '^\\\\circ) = \\\\frac{QR}{' + scope.hyp + '}'",
+        "step2": "'QR = ' + scope.hyp + ' \\\\times \\\\cos(' + scope.angle + '^\\\\circ) \\\\approx ' + scope.adj_num",
+        "poly_pts": "['40,20 40,130 190,130', '190,20 190,130 40,130', '40,130 40,20 190,20', '190,130 190,20 40,20'][scope.orient]",
+        "sq_path": "['M 40,118 L 52,118 L 52,130', 'M 178,130 L 178,118 L 190,118', 'M 40,32 L 52,32 L 52,20', 'M 178,20 L 178,32 L 190,32'][scope.orient]",
+        "arc_path": "['M 160,130 A 30,30 0 0,0 167,118', 'M 70,130 A 30,30 0 0,1 63,118', 'M 160,20 A 30,30 0 0,1 167,32', 'M 70,20 A 30,30 0 0,0 63,32'][scope.orient]",
+        "px": "['25', '195', '25', '195'][scope.orient]",
+        "py": "['20', '20', '145', '145'][scope.orient]",
+        "qx": "['25', '195', '25', '195'][scope.orient]",
+        "qy": "['145', '145', '20', '20'][scope.orient]",
+        "rx": "['195', '25', '195', '25'][scope.orient]",
+        "ry": "['145', '145', '20', '20'][scope.orient]",
+        "adj_x": "['105', '105', '105', '105'][scope.orient]",
+        "adj_y": "['152', '152', '15', '15'][scope.orient]",
+        "hyp_x": "['120', '90', '120', '90'][scope.orient]",
+        "hyp_y": "['68', '68', '90', '90'][scope.orient]",
+        "theta_x": "['148', '80', '148', '80'][scope.orient]",
+        "theta_y": "['122', '122', '35', '35'][scope.orient]"
+      },
+      "questionTemplate": "<svg width=\"240\" height=\"160\" viewBox=\"0 0 240 160\" xmlns=\"http://www.w3.org/2000/svg\">\n  <polygon points=\"${scope.poly_pts}\" fill=\"#f8f9fa\" stroke=\"#2b2b2b\" stroke-width=\"2\"/>\n  <path d=\"${scope.sq_path}\" fill=\"none\" stroke=\"#2b2b2b\" stroke-width=\"1.5\"/>\n  <path d=\"${scope.arc_path}\" fill=\"none\" stroke=\"#0275d8\" stroke-width=\"1.5\"/>\n  <text x=\"${scope.px}\" y=\"${scope.py}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">P</text>\n  <text x=\"${scope.qx}\" y=\"${scope.qy}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">Q</text>\n  <text x=\"${scope.rx}\" y=\"${scope.ry}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">R</text>\n  <text x=\"${scope.adj_x}\" y=\"${scope.adj_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#0275d8\" font-weight=\"bold\">QR</text>\n  <text x=\"${scope.hyp_x}\" y=\"${scope.hyp_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.hyp} m</text>\n  <text x=\"${scope.theta_x}\" y=\"${scope.theta_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.angle}°</text>\n</svg>\n\nIn right-angled triangle $PQR$, $\\angle Q = 90^\\circ$, angle $\\theta = ${scope.angle}^\\circ$, and hypotenuse $PR = ${scope.hyp} m$. Calculate the length of side $QR$ in meters to 1 decimal place.",
+      "inputs": [
+        {
+          "label": "QR =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Use the cosine ratio: $$\\cos(\\theta) = \\frac{\\text{Adjacent}}{\\text{Hypotenuse}}$$ ",
+        "Substitute the given values: $$${scope.step1}$$",
+        "Solve for side $QR$: $$${scope.step2}\\text{ m}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "angle": {
+          "type": "randInt",
+          "min": 20,
+          "max": 70
+        },
+        "adj": {
+          "type": "randInt",
+          "min": 5,
+          "max": 25
+        },
+        "orient": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "tan_val": "Math.round(Math.tan(scope.angle * Math.PI / 180) * 10000) / 10000",
+        "opp_num": "Math.round(scope.adj * Math.tan(scope.angle * Math.PI / 180) * 10) / 10",
+        "ans": "scope.opp_num.toString()",
+        "step1": "'\\\\tan(' + scope.angle + '^\\\\circ) = \\\\frac{PQ}{' + scope.adj + '}'",
+        "step2": "'PQ = ' + scope.adj + ' \\\\times \\\\tan(' + scope.angle + '^\\\\circ) \\\\approx ' + scope.opp_num",
+        "poly_pts": "['40,20 40,130 190,130', '190,20 190,130 40,130', '40,130 40,20 190,20', '190,130 190,20 40,20'][scope.orient]",
+        "sq_path": "['M 40,118 L 52,118 L 52,130', 'M 178,130 L 178,118 L 190,118', 'M 40,32 L 52,32 L 52,20', 'M 178,20 L 178,32 L 190,32'][scope.orient]",
+        "arc_path": "['M 160,130 A 30,30 0 0,0 167,118', 'M 70,130 A 30,30 0 0,1 63,118', 'M 160,20 A 30,30 0 0,1 167,32', 'M 70,20 A 30,30 0 0,0 63,32'][scope.orient]",
+        "px": "['25', '195', '25', '195'][scope.orient]",
+        "py": "['20', '20', '145', '145'][scope.orient]",
+        "qx": "['25', '195', '25', '195'][scope.orient]",
+        "qy": "['145', '145', '20', '20'][scope.orient]",
+        "rx": "['195', '25', '195', '25'][scope.orient]",
+        "ry": "['145', '145', '20', '20'][scope.orient]",
+        "opp_x": "['5', '200', '5', '200'][scope.orient]",
+        "opp_y": "['80', '80', '80', '80'][scope.orient]",
+        "adj_x": "['105', '105', '105', '105'][scope.orient]",
+        "adj_y": "['152', '152', '15', '15'][scope.orient]",
+        "theta_x": "['148', '80', '148', '80'][scope.orient]",
+        "theta_y": "['122', '122', '35', '35'][scope.orient]"
+      },
+      "questionTemplate": "<svg width=\"240\" height=\"160\" viewBox=\"0 0 240 160\" xmlns=\"http://www.w3.org/2000/svg\">\n  <polygon points=\"${scope.poly_pts}\" fill=\"#f8f9fa\" stroke=\"#2b2b2b\" stroke-width=\"2\"/>\n  <path d=\"${scope.sq_path}\" fill=\"none\" stroke=\"#2b2b2b\" stroke-width=\"1.5\"/>\n  <path d=\"${scope.arc_path}\" fill=\"none\" stroke=\"#0275d8\" stroke-width=\"1.5\"/>\n  <text x=\"${scope.px}\" y=\"${scope.py}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">P</text>\n  <text x=\"${scope.qx}\" y=\"${scope.qy}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">Q</text>\n  <text x=\"${scope.rx}\" y=\"${scope.ry}\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\">R</text>\n  <text x=\"${scope.opp_x}\" y=\"${scope.opp_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#0275d8\" font-weight=\"bold\">PQ</text>\n  <text x=\"${scope.adj_x}\" y=\"${scope.adj_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.adj} m</text>\n  <text x=\"${scope.theta_x}\" y=\"${scope.theta_y}\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#d9534f\">${scope.angle}°</text>\n</svg>\n\nIn right-angled triangle $PQR$, $\\angle Q = 90^\\circ$, angle $\\theta = ${scope.angle}^\\circ$, and side $QR = ${scope.adj} m$. Calculate the length of side $PQ$ in meters to 1 decimal place.",
+      "inputs": [
+        {
+          "label": "PQ =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Use the tangent ratio: $$\\tan(\\theta) = \\frac{\\text{Opposite}}{\\text{Adjacent}}$$ ",
+        "Substitute the given values: $$${scope.step1}$$",
+        "Solve for side $PQ$: $$${scope.step2}\\text{ m}$$"
+      ]
+    }
+  ]
+}

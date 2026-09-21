@@ -1,0 +1,133 @@
+{
+  "skillTitle": "Symmetry",
+  "keypad": [
+    "7", "8", "9",
+    "4", "5", "6",
+    "1", "2", "3",
+    "0", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "shape_id": { "type": "randInt", "min": 0, "max": 9 },
+        "q_type": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "svg_list": "[ '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"30\" y=\"50\" width=\"140\" height=\"100\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"100,20 170,100 100,180 30,100\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"60,40 180,40 140,160 20,160\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"100,20 160,80 100,180 40,80\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"100,30 160,160 40,160\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"60,30 180,160 30,140\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"50,40 150,40 170,160 30,160\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"40,40 40,160 160,160\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"100,20 170,170 100,130 30,170\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"100,25 170,155 30,155\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>' ]",
+        "svg": "scope.svg_list[scope.shape_id]",
+        "lines_ans": "[2, 2, 0, 1, 1, 0, 1, 1, 1, 3][scope.shape_id]",
+        "rot_ans": "[2, 2, 2, 1, 1, 1, 1, 1, 1, 3][scope.shape_id]",
+        "q_text": "scope.q_type === 0 ? 'number of lines of symmetry' : 'order of rotational symmetry'",
+        "ans_num": "scope.q_type === 0 ? scope.lines_ans : scope.rot_ans",
+        "ans": "scope.ans_num.toString()",
+        "step1": "scope.q_type === 0 ? 'Recall that the line of symmetry is such that when the shape is folded along the line, the halves will fit exactly onto each other.' : 'Recall that the order of rotational symmetry is the number of times a shape matches the starting shape when rotated through a complete turn of 360°.'"
+      },
+      "questionTemplate": "<div style=\"display: block; text-align: left; margin-bottom: 12px;\">${scope.svg}</div>\n\nState the ${scope.q_text} for the shape shown above.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.ans}"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "n": { "type": "randInt", "min": 3, "max": 12 },
+        "q_type": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "pts": "[0,1,2,3,4,5,6,7,8,9,10,11].slice(0, scope.n).map(i => { let a = i * 2 * Math.PI / scope.n - Math.PI / 2; return (100 + 70 * Math.cos(a)).toFixed(1) + ',' + (100 + 70 * Math.sin(a)).toFixed(1); }).join(' ')",
+        "svg": "'<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"' + scope.pts + '\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>'",
+        "q_text": "scope.q_type === 0 ? 'number of lines of symmetry' : 'order of rotational symmetry'",
+        "ans": "scope.n.toString()",
+        "step1": "scope.q_type === 0 ? 'Recall that the line of symmetry is such that when the shape is folded along the line, the halves will fit exactly onto each other.' : 'Recall that the order of rotational symmetry is the number of times a shape matches the starting shape when rotated through a complete turn of 360°.'"
+      },
+      "questionTemplate": "<div style=\"display: block; text-align: left; margin-bottom: 12px;\">${scope.svg}</div>\n\nState the ${scope.q_text} for the regular polygon shown above.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.ans}"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "letter_id": { "type": "randInt", "min": 0, "max": 11 },
+        "q_type": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "letter": "['A', 'H', 'N', 'O', 'S', 'E', 'Z', 'M', 'T', 'X', 'Y', 'C'][scope.letter_id]",
+        "svg": "'<svg width=\"120\" height=\"120\" viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"50\" y=\"75\" font-family=\"Arial, sans-serif\" font-size=\"75\" font-weight=\"bold\" text-anchor=\"middle\" fill=\"#0F172A\">' + scope.letter + '</text></svg>'",
+        "lines_ans": "[1, 2, 0, 2, 0, 1, 0, 1, 1, 2, 1, 1][scope.letter_id]",
+        "rot_ans": "[1, 2, 2, 2, 2, 1, 2, 1, 1, 2, 1, 1][scope.letter_id]",
+        "q_text": "scope.q_type === 0 ? 'number of lines of symmetry' : 'order of rotational symmetry'",
+        "ans_num": "scope.q_type === 0 ? scope.lines_ans : scope.rot_ans",
+        "ans": "scope.ans_num.toString()",
+        "step1": "scope.q_type === 0 ? 'Recall that the line of symmetry is such that when the shape is folded along the line, the halves will fit exactly onto each other.' : 'Recall that the order of rotational symmetry is the number of times a shape matches the starting shape when rotated through a complete turn of 360°.'"
+      },
+      "questionTemplate": "<div style=\"display: block; text-align: left; margin-bottom: 12px;\">${scope.svg}</div>\n\nState the ${scope.q_text} for the letter shown above.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.ans}"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "shape_id": { "type": "randInt", "min": 0, "max": 9 },
+        "q_type": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "svg_list": "[ '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M 70 20 H 130 V 70 H 180 V 130 H 130 V 180 H 70 V 130 H 20 V 70 H 70 Z\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><ellipse cx=\"100\" cy=\"100\" rx=\"80\" ry=\"50\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"30,40 100,100 30,160 60,160 130,100 60,40\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M 100 20 A 70 70 0 1 0 170 130 A 60 60 0 1 1 100 20 Z\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"100,20 124,75 183,75 135,110 153,165 100,130 47,165 65,110 17,75 76,75\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"100,20 115,65 160,40 135,85 180,100 135,115 160,160 115,135 100,180 85,135 40,160 65,115 20,100 65,85 40,40 85,65\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M 50 30 L 150 30 A 20 20 0 0 0 170 50 L 170 110 A 20 20 0 0 0 150 130 L 50 130 A 20 20 0 0 0 30 110 L 30 50 A 20 20 0 0 0 50 30 Z\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M 30 140 A 70 70 0 0 1 170 140 L 140 140 A 40 40 0 0 0 60 140 Z\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M 100 40 A 30 30 0 0 1 130 70 A 30 30 0 0 1 160 100 A 30 30 0 0 1 130 130 A 30 30 0 0 1 100 160 A 30 30 0 0 1 70 130 A 30 30 0 0 1 40 100 A 30 30 0 0 1 70 70 A 30 30 0 0 1 100 40 Z\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M 100 30 A 70 70 0 0 1 170 100 H 30 A 70 70 0 0 1 100 30 Z M 100 170 A 70 70 0 0 1 30 100 H 170 A 70 70 0 0 1 100 170 Z\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>' ]",
+        "svg": "scope.svg_list[scope.shape_id]",
+        "lines_ans": "[4, 2, 1, 1, 5, 8, 2, 1, 4, 2][scope.shape_id]",
+        "rot_ans": "[4, 2, 1, 1, 5, 8, 2, 1, 4, 2][scope.shape_id]",
+        "q_text": "scope.q_type === 0 ? 'number of lines of symmetry' : 'order of rotational symmetry'",
+        "ans_num": "scope.q_type === 0 ? scope.lines_ans : scope.rot_ans",
+        "ans": "scope.ans_num.toString()",
+        "step1": "scope.q_type === 0 ? 'Recall that the line of symmetry is such that when the shape is folded along the line, the halves will fit exactly onto each other.' : 'Recall that the order of rotational symmetry is the number of times a shape matches the starting shape when rotated through a complete turn of 360°.'"
+      },
+      "questionTemplate": "<div style=\"display: block; text-align: left; margin-bottom: 12px;\">${scope.svg}</div>\n\nState the ${scope.q_text} for the shape shown above.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.ans}"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "shape_id": { "type": "randInt", "min": 0, "max": 4 },
+        "q_type": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "svg_list": "[ '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M 100 165 C 100 165 30 120 30 70 C 30 40 55 20 80 20 C 95 20 100 30 100 30 C 100 30 105 20 120 20 C 145 20 170 40 170 70 C 170 120 100 165 100 165 Z\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M 40 30 H 160 V 90 C 160 140 100 175 100 175 C 100 175 40 140 40 90 Z\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"30,30 170,30 30,170 170,170\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"100,20 170,140 30,140\" fill=\"none\" stroke=\"#0F172A\" stroke-width=\"4\"/><polygon points=\"100,180 170,60 30,60\" fill=\"none\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>', '<svg width=\"160\" height=\"160\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M 30 130 A 70 70 0 0 1 170 130 Z\" fill=\"#F8FAFC\" stroke=\"#0F172A\" stroke-width=\"4\"/></svg>' ]",
+        "svg": "scope.svg_list[scope.shape_id]",
+        "lines_ans": "[1, 1, 2, 6, 1][scope.shape_id]",
+        "rot_ans": "[1, 1, 2, 6, 1][scope.shape_id]",
+        "q_text": "scope.q_type === 0 ? 'number of lines of symmetry' : 'order of rotational symmetry'",
+        "ans_num": "scope.q_type === 0 ? scope.lines_ans : scope.rot_ans",
+        "ans": "scope.ans_num.toString()",
+        "step1": "scope.q_type === 0 ? 'Recall that the line of symmetry is such that when the shape is folded along the line, the halves will fit exactly onto each other.' : 'Recall that the order of rotational symmetry is the number of times a shape matches the starting shape when rotated through a complete turn of 360°.'"
+      },
+      "questionTemplate": "<div style=\"display: block; text-align: left; margin-bottom: 12px;\">${scope.svg}</div>\n\nState the ${scope.q_text} for the shape shown above.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.ans}"
+      ]
+    }
+  ]
+}

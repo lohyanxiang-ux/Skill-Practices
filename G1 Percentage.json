@@ -1,0 +1,284 @@
+{
+  "skillTitle": "Percentage",
+  "keypad": [
+    "%", ".", "$",
+    "7", "8", "9",
+    "4", "5", "6",
+    "1", "2", "3",
+    "0", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "num": { "type": "randInt", "min": 1, "max": 25 },
+        "den_idx": { "type": "randInt", "min": 0, "max": 5 }
+      },
+      "derived": {
+        "den": "[2, 4, 5, 10, 20, 25][scope.den_idx]",
+        "ans_num": "Math.round((scope.num / scope.den) * 100)",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'\\\\frac{' + scope.num + '}{' + scope.den + '} \\\\times 100\\\\% = ' + scope.ans_num + '\\\\%'"
+      },
+      "questionTemplate": "Express $\\frac{${scope.num}}{${scope.den}}$ as a percentage.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Multiply the fraction by 100%: $$${scope.step1}$$",
+        "Simplify to get the final answer: $${scope.ans}\\%$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "pct_raw": { "type": "randInt", "min": 1, "max": 50 },
+        "val_raw": { "type": "randInt", "min": 1, "max": 40 }
+      },
+      "derived": {
+        "pct": "scope.pct_raw * 10",
+        "val": "scope.val_raw * 10",
+        "ans_num": "(scope.pct * scope.val) / 100",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'\\\\frac{' + scope.pct + '}{100} \\\\times ' + scope.val"
+      },
+      "questionTemplate": "Find the value of ${scope.pct}% of ${scope.val}.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Convert percentage to a fraction and multiply by the total amount: $$${scope.step1}$$",
+        "Evaluate: $${scope.ans}$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "b_idx": { "type": "randInt", "min": 0, "max": 4 },
+        "a_raw": { "type": "randInt", "min": 1, "max": 30 }
+      },
+      "derived": {
+        "b": "[10, 20, 25, 50, 100][scope.b_idx]",
+        "a": "scope.a_raw * 2",
+        "ans_num": "Math.round((scope.a / scope.b) * 100)",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'\\\\frac{' + scope.a + '}{' + scope.b + '} \\\\times 100\\\\% = ' + scope.ans_num + '\\\\%'"
+      },
+      "questionTemplate": "Express ${scope.a} as a percentage of ${scope.b}.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write the quantity as a fraction of the total and multiply by 100%: $$${scope.step1}$$",
+        "Simplify: $${scope.ans}\\%$"
+      ]
+    },
+{
+  "level": 1,
+  "variables": {
+    "val_int": { "type": "randInt", "min": 5, "max": 250 }
+  },
+  "derived": {
+    "dec": "(scope.val_int / 100).toFixed(2)",
+    "ans_num": "scope.val_int",
+    "ans": "scope.ans_num.toString()",
+    "step1": "scope.dec + ' \\\\times 100\\\\% = ' + scope.ans + '\\\\%'"
+  },
+  "questionTemplate": "Express ${scope.dec} as a percentage.",
+  "inputs": [
+    { "label": "=", "answer": "${scope.ans}" }
+  ],
+  "steps": [
+    "Multiply the decimal by 100%: $$${scope.step1}$$",
+    "Simplify to get the final answer: $${scope.ans}\\%$"
+  ]
+},
+    {
+      "level": 2,
+      "variables": {
+        "mm_val": { "type": "randInt", "min": 5, "max": 40 },
+        "cm_val": { "type": "randInt", "min": 2, "max": 10 }
+      },
+      "derived": {
+        "cm_in_mm": "scope.cm_val * 10",
+        "ans_num": "Math.round((scope.mm_val / scope.cm_in_mm) * 100 * 10) / 10",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'1\\\\text{ cm} = 10\\\\text{ mm} \\\\implies ' + scope.cm_val + '\\\\text{ cm} = ' + scope.cm_in_mm + '\\\\text{ mm}'",
+        "step2": "'\\\\frac{' + scope.mm_val + '}{' + scope.cm_in_mm + '} \\\\times 100\\\\% = ' + scope.ans_num + '\\\\%'"
+      },
+      "questionTemplate": "Express ${scope.mm_val} mm as a percentage of ${scope.cm_val} cm.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Convert both quantities to the same unit: $$${scope.step1}$$",
+        "Write as a fraction of the total and multiply by 100%: $$${scope.step2}$$",
+        "Evaluate: $${scope.ans}\\%$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "v1_raw": { "type": "randInt", "min": 5, "max": 30 },
+        "diff_raw": { "type": "randInt", "min": 1, "max": 15 },
+        "is_inc": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "v1": "scope.v1_raw * 10",
+        "diff": "scope.diff_raw * 5",
+        "v2": "scope.is_inc === 1 ? (scope.v1 + scope.diff) : (scope.v1 - scope.diff)",
+        "typeStr": "scope.is_inc === 1 ? 'increase' : 'decrease'",
+        "typeCap": "scope.is_inc === 1 ? 'Increase' : 'Decrease'",
+        "calcDiff": "scope.is_inc === 1 ? (scope.v2 + ' - ' + scope.v1) : (scope.v1 + ' - ' + scope.v2)",
+        "ans_num": "Math.round((scope.diff / scope.v1) * 100 * 10) / 10",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'\\\\text{Formula: Percentage ' + scope.typeStr + '} = \\\\frac{\\\\text{' + scope.typeCap + '}}{\\\\text{Original}} \\\\times 100\\\\%'",
+        "step2": "'\\\\text{' + scope.typeCap + '} = ' + scope.calcDiff + ' = ' + scope.diff",
+        "step3": "'\\\\text{Apply Formula}: \\\\frac{' + scope.diff + '}{' + scope.v1 + '} \\\\times 100\\\\%'",
+        "step4": "'\\\\text{Evaluate}: ' + scope.ans + '\\\\%'"
+      },
+      "questionTemplate": "Calculate the percentage ${scope.typeStr} when a quantity changes from ${scope.v1} to ${scope.v2}.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Step 1: $$${scope.step1}$$",
+        "Step 2: $$${scope.step2}$$",
+        "Step 3: $$${scope.step3}$$",
+        "Step 4: $$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "price_raw": { "type": "randInt", "min": 2, "max": 40 }
+      },
+      "derived": {
+        "orig": "scope.price_raw * 10",
+        "one_pct": "(scope.orig / 100).toFixed(2).replace(/\\.00$/, '')",
+        "ans_num": "(scope.orig * 109) / 100",
+        "ans": "scope.ans_num.toFixed(2).replace(/\\.00$/, '')",
+        "step1": "'100\\\\% \\\\rightarrow \\\\$' + scope.orig",
+        "step2": "'109\\\\% \\\\rightarrow \\\\$? \\\\text{ (Price after 9\\% GST is added)}'",
+        "step3": "'\\\\text{Find } 1\\\\% = \\\\frac{\\\\text{\\\\$}' + scope.orig + '}{100} = \\\\$' + scope.one_pct",
+        "step4": "'\\\\text{Find } 109\\\\% = \\\\frac{\\\\text{\\\\$}' + scope.orig + '}{100} \\\\times 109 = \\\\$' + scope.ans"
+      },
+      "questionTemplate": "The original price of an item is \\$${scope.orig}. Find the final price after a GST addition of 9%.",
+      "inputs": [
+        { "label": "=$", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Step 1: $$${scope.step1}$$",
+        "Step 2: $$${scope.step2}$$",
+        "Step 3: $$${scope.step3}$$",
+        "Step 4: $$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "amt_raw": { "type": "randInt", "min": 2, "max": 20 },
+        "pct_idx": { "type": "randInt", "min": 0, "max": 5 },
+        "is_inc": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "amount": "scope.amt_raw * 5",
+        "pct": "[5, 10, 15, 20, 25, 30][scope.pct_idx]",
+        "actionWord": "scope.is_inc === 1 ? 'Increase' : 'Decrease'",
+        "change": "(scope.amount * scope.pct) / 100",
+        "ans_num": "scope.is_inc === 1 ? (scope.amount + scope.change) : (scope.amount - scope.change)",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'\\\\text{Find } ' + scope.pct + '\\\\% \\\\text{ of } ' + scope.amount + ' = \\\\frac{' + scope.pct + '}{100} \\\\times ' + scope.amount + ' = ' + scope.change",
+        "step2": "'\\\\text{Final amount} = ' + scope.amount + ' ' + (scope.is_inc === 1 ? '+' : '-') + ' ' + scope.change + ' = ' + scope.ans"
+      },
+      "questionTemplate": "${scope.actionWord} the quantity ${scope.amount} by ${scope.pct}%.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Calculate the increase or decrease value: $$${scope.step1}$$",
+        "Calculate the final value: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "orig_raw": { "type": "randInt", "min": 5, "max": 40 }
+      },
+      "derived": {
+        "orig": "scope.orig_raw * 10",
+        "inc_price": "((scope.orig * 109) / 100).toFixed(2).replace(/\\.00$/, '')",
+        "ans": "scope.orig.toString()",
+        "step1": "'109\\\\% \\\\rightarrow \\\\$' + scope.inc_price",
+        "step2": "'100\\\\% \\\\rightarrow \\\\$? \\\\text{ (Original price)}'",
+        "step3": "'\\\\text{Find } 1\\\\% = \\\\frac{\\\\text{\\\\$}' + scope.inc_price + '}{109}'",
+        "step4": "'\\\\text{Find } 100\\\\% = \\\\frac{\\\\text{\\\\$}' + scope.inc_price + '}{109} \\\\times 100 = \\\\$' + scope.orig"
+      },
+      "questionTemplate": "The cost of an item is \\$${scope.inc_price} inclusive of 9% GST. Find the original cost of the item.",
+      "inputs": [
+        { "label": "=$", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Step 1: $$${scope.step1}$$",
+        "Step 2: $$${scope.step2}$$",
+        "Step 3: $$${scope.step3}$$",
+        "Step 4: $$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "total_raw": { "type": "randInt", "min": 4, "max": 20 },
+        "pct_idx": { "type": "randInt", "min": 0, "max": 6 }
+      },
+      "derived": {
+        "total": "scope.total_raw * 10",
+        "pct": "[25, 40, 50, 60, 65, 75, 85][scope.pct_idx]",
+        "part": "(scope.pct * scope.total) / 100",
+        "ans": "scope.total.toString()",
+        "step1": "scope.pct + '\\\\% \\\\rightarrow ' + scope.part",
+        "step2": "'100\\\\% \\\\rightarrow ? \\\\text{ (Total questions)}'",
+        "step3": "'\\\\text{Find } 1\\\\% = \\\\frac{' + scope.part + '}{' + scope.pct + '}'",
+        "step4": "'\\\\text{Find } 100\\\\% = \\\\frac{' + scope.part + '}{' + scope.pct + '} \\\\times 100 = ' + scope.ans"
+      },
+      "questionTemplate": "Adam attempts ${scope.pct}% of the questions in a test. If he attempts ${scope.part} questions, find the total number of questions in the test.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Step 1: $$${scope.step1}$$",
+        "Step 2: $$${scope.step2}$$",
+        "Step 3: $$${scope.step3}$$",
+        "Step 4: $$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "orig_raw": { "type": "randInt", "min": 4, "max": 30 },
+        "disc_idx": { "type": "randInt", "min": 0, "max": 4 }
+      },
+      "derived": {
+        "orig": "scope.orig_raw * 10",
+        "disc": "[10, 15, 20, 25, 30][scope.disc_idx]",
+        "sale_pct": "100 - scope.disc",
+        "sale_price": "((scope.orig * scope.sale_pct) / 100).toFixed(2).replace(/\\.00$/, '')",
+        "ans": "scope.orig.toString()",
+        "step1": "scope.sale_pct + '\\\\% \\\\rightarrow \\\\$' + scope.sale_price",
+        "step2": "'100\\\\% \\\\rightarrow \\\\$? \\\\text{ (Original price)}'",
+        "step3": "'\\\\text{Find } 1\\\\% = \\\\frac{\\\\text{\\\\$}' + scope.sale_price + '}{' + scope.sale_pct + '}'",
+        "step4": "'\\\\text{Find } 100\\\\% = \\\\frac{\\\\text{\\\\$}' + scope.sale_price + '}{' + scope.sale_pct + '} \\\\times 100 = \\\\$' + scope.orig"
+      },
+      "questionTemplate": "A toy car costs \\$${scope.sale_price} after a ${scope.disc}% discount. What is the original price of the toy car?",
+      "inputs": [
+        { "label": "=$", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Step 1: $$${scope.step1}$$",
+        "Step 2: $$${scope.step2}$$",
+        "Step 3: $$${scope.step3}$$",
+        "Step 4: $$${scope.step4}$$"
+      ]
+    }
+  ]
+}

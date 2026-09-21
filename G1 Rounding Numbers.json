@@ -1,0 +1,158 @@
+{
+  "skillTitle": "Rounding Numbers",
+  "keypad": [
+    "7", "8", "9",
+    "4", "5", "6",
+    "1", "2", "3",
+    "-", "0", ".",
+    "00", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "num": { "type": "randInt", "min": 1200, "max": 9899 },
+        "place": { "type": "randInt", "min": 1, "max": 3 }
+      },
+      "derived": {
+        "placeName": "scope.place === 1 ? 'ten' : (scope.place === 2 ? 'hundred' : 'thousand')",
+        "divisor": "scope.place === 1 ? 10 : (scope.place === 2 ? 100 : 1000)",
+        "decidingPlace": "scope.place === 1 ? 'ones' : (scope.place === 2 ? 'tens' : 'hundreds')",
+        "decidingDigit": "Math.floor((scope.num % scope.divisor) / (scope.divisor / 10))",
+        "ans": "(Math.round(scope.num / scope.divisor) * scope.divisor).toString()",
+        "step1": "'To round to the nearest ' + scope.placeName + ', look at the digit in the ' + scope.decidingPlace + ' place, which is ' + scope.decidingDigit + '.'",
+        "step2": "scope.decidingDigit >= 5 ? 'Since ' + scope.decidingDigit + ' >= 5, round up and replace remaining digits with zeros to keep the value of the original number.' : 'Since ' + scope.decidingDigit + ' < 5, replace remaining digits with zeros to keep the value of the original number.'"
+      },
+      "questionTemplate": "Round the number $$${scope.num}$$ to the nearest ${scope.placeName}.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.step2}",
+        "Final rounded answer: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 10, "max": 99 },
+        "b": { "type": "randInt", "min": 1, "max": 8 },
+        "c": { "type": "randInt", "min": 1, "max": 9 },
+        "d": { "type": "randInt", "min": 1, "max": 9 }
+      },
+      "derived": {
+        "val": "scope.a + '.' + scope.b + scope.c + scope.d",
+        "ans": "scope.c >= 5 ? scope.a + '.' + (scope.b + 1) : scope.a + '.' + scope.b",
+        "step1": "'To round to 1 decimal place, look at the digit in the 2nd decimal place, which is ' + scope.c + '.'",
+        "step2": "scope.c >= 5 ? 'Since ' + scope.c + ' >= 5, round ' + scope.b + ' up to ' + (scope.b + 1) + '.' : 'Since ' + scope.c + ' < 5, keep ' + scope.b + ' unchanged.'"
+      },
+      "questionTemplate": "Round $$${scope.val}$$ to $1$ decimal place.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.step2}",
+        "Final rounded answer: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 50 },
+        "b": { "type": "randInt", "min": 1, "max": 8 },
+        "c": { "type": "randInt", "min": 1, "max": 8 },
+        "d": { "type": "randInt", "min": 1, "max": 9 }
+      },
+      "derived": {
+        "val": "scope.a + '.' + scope.b + scope.c + scope.d",
+        "ans": "scope.d >= 5 ? scope.a + '.' + scope.b + (scope.c + 1) : scope.a + '.' + scope.b + scope.c",
+        "step1": "'To round to 2 decimal places, look at the digit in the 3rd decimal place, which is ' + scope.d + '.'",
+        "step2": "scope.d >= 5 ? 'Since ' + scope.d + ' >= 5, round ' + scope.c + ' up to ' + (scope.c + 1) + '.' : 'Since ' + scope.d + ' < 5, keep ' + scope.c + ' unchanged.'"
+      },
+      "questionTemplate": "Round $$${scope.val}$$ to $2$ decimal places.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.step2}",
+        "Final rounded answer: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "d1": { "type": "randInt", "min": 1, "max": 9 },
+        "d2": { "type": "randInt", "min": 0, "max": 8 },
+        "d3": { "type": "randInt", "min": 1, "max": 9 },
+        "d4": { "type": "randInt", "min": 1, "max": 9 },
+        "d5": { "type": "randInt", "min": 1, "max": 9 }
+      },
+      "derived": {
+        "val": "scope.d1 * 10000 + scope.d2 * 1000 + scope.d3 * 100 + scope.d4 * 10 + scope.d5",
+        "ans": "scope.d3 >= 5 ? (scope.d1 * 10 + scope.d2 + 1) + '000' : (scope.d1 * 10 + scope.d2) + '000'",
+        "step1": "'The first two significant figures are ' + scope.d1 + scope.d2 + '. Look at the 3rd digit, which is ' + scope.d3 + '.'",
+        "step2": "scope.d3 >= 5 ? 'Since ' + scope.d3 + ' >= 5, round ' + scope.d2 + ' up to ' + (scope.d2 + 1) + ' and replace remaining digits with zeros to keep the value of the original number.' : 'Since ' + scope.d3 + ' < 5, replace remaining digits with zeros to keep the value of the original number.'"
+      },
+      "questionTemplate": "Round $$${scope.val}$$ to $2$ significant figures.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.step2}",
+        "Final rounded answer: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "z": { "type": "randInt", "min": 1, "max": 2 },
+        "d1": { "type": "randInt", "min": 1, "max": 9 },
+        "d2": { "type": "randInt", "min": 0, "max": 8 },
+        "d3": { "type": "randInt", "min": 1, "max": 9 },
+        "d4": { "type": "randInt", "min": 1, "max": 9 }
+      },
+      "derived": {
+        "zerosStr": "scope.z === 1 ? '0' : '00'",
+        "val": "'0.' + scope.zerosStr + scope.d1 + scope.d2 + scope.d3 + scope.d4",
+        "ans": "scope.d3 >= 5 ? '0.' + scope.zerosStr + scope.d1 + (scope.d2 + 1) : '0.' + scope.zerosStr + scope.d1 + scope.d2",
+        "step1": "'The first non-zero digit is ' + scope.d1 + '. The first 2 significant figures are ' + scope.d1 + scope.d2 + '.'",
+        "step2": "scope.d3 >= 5 ? 'Since the next digit is ' + scope.d3 + ' (>= 5), round ' + scope.d2 + ' up to ' + (scope.d2 + 1) + '.' : 'Since the next digit is ' + scope.d3 + ' (< 5), keep ' + scope.d2 + ' unchanged.'"
+      },
+      "questionTemplate": "Round $$${scope.val}$$ to $2$ significant figures.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.step2}",
+        "Final rounded answer: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 8 },
+        "b": { "type": "randInt", "min": 1, "max": 8 }
+      },
+      "derived": {
+        "val": "scope.a * 100000 + scope.b * 10000 + 5993",
+        "ans": "(scope.a * 100 + scope.b * 10 + 6) + '000'",
+        "step1": "'Identify the first 4 significant figures of ' + scope.val + ', which are ' + scope.a + scope.b + '59.'",
+        "step2": "'Look at the 5th digit, which is 9. Since 9 >= 5, round up. Rounding 9 up causes a carry-over, giving ' + scope.ans + '. Replace remaining positions with zeros to keep the value of the original number.'"
+      },
+      "questionTemplate": "Round $$${scope.val}$$ to $4$ significant figures.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.step2}",
+        "Final rounded answer: $$${scope.ans}$$"
+      ]
+    }
+  ]
+}

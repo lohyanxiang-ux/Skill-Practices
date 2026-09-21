@@ -1,0 +1,275 @@
+{
+  "skillTitle": "Evaluate using Calculator",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "4",
+    "5",
+    "6",
+    "1",
+    "2",
+    "3",
+    ".",
+    "0",
+    "-",
+    "/",
+    "⌫",
+    "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "op_type": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        },
+        "n": {
+          "type": "randInt",
+          "min": 2,
+          "max": 12
+        },
+        "instr_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "instr": "['Find the value of', 'Calculate', 'Use your calculator to work out', 'Work out'][scope.instr_idx]",
+        "target_num": "scope.op_type === 0 ? scope.n : (scope.op_type === 1 ? scope.n : (scope.op_type === 2 ? scope.n * scope.n : scope.n * scope.n * scope.n))",
+        "phrase": "scope.op_type === 0 ? 'the cube of ' + scope.n : (scope.op_type === 1 ? 'the square of ' + scope.n : (scope.op_type === 2 ? 'the square root of ' + scope.target_num : 'the cube root of ' + scope.target_num))",
+        "ans_num": "scope.op_type === 0 ? scope.n * scope.n * scope.n : (scope.op_type === 1 ? scope.n * scope.n : scope.n)",
+        "ans": "scope.ans_num.toString()",
+        "latex_expr": "scope.op_type === 0 ? scope.n + '^3' : (scope.op_type === 1 ? scope.n + '^2' : (scope.op_type === 2 ? '\\\\sqrt{' + scope.target_num + '}' : '\\\\sqrt[3]{' + scope.target_num + '}'))"
+      },
+      "questionTemplate": "${scope.instr} ${scope.phrase}.",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Key the expression into your calculator: $$${scope.latex_expr}$$",
+        "Evaluate to get: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "base": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "exp": {
+          "type": "randInt",
+          "min": 2,
+          "max": 4
+        },
+        "instr_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "instr": "['Find the value of', 'Calculate', 'Use your calculator to work out', 'Work out'][scope.instr_idx]",
+        "den": "Math.pow(scope.base, scope.exp)",
+        "ans": "'1/' + scope.den",
+        "expr": "scope.base + '^{-' + scope.exp + '}'"
+      },
+      "questionTemplate": "${scope.instr}\n\n$$${scope.expr}$$\n\ngiving your answer as a fraction in simplest form.",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Key $$${scope.expr}$$ directly into your calculator.",
+        "Convert the result to fraction format: $$\\frac{1}{${scope.den}}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a_int": {
+          "type": "randInt",
+          "min": 100,
+          "max": 999
+        },
+        "b_int": {
+          "type": "randInt",
+          "min": 5000,
+          "max": 9999
+        },
+        "c_int": {
+          "type": "randInt",
+          "min": 1000,
+          "max": 4999
+        },
+        "instr_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "instr": "['Calculate the exact value of', 'Find the value of', 'Use your calculator to work out', 'Work out'][scope.instr_idx]",
+        "a": "scope.a_int / 1000",
+        "b": "scope.b_int / 100",
+        "c": "scope.c_int / 100",
+        "diff": "Math.round((scope.b - scope.c) * 100) / 100",
+        "ans_num": "Math.round(scope.a * scope.diff * 100000) / 100000",
+        "ans": "scope.ans_num.toString()",
+        "expr": "scope.a + '(' + scope.b + ' - ' + scope.c + ')'"
+      },
+      "questionTemplate": "${scope.instr}\n\n$$${scope.expr}$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Key the entire expression $$${scope.expr}$$ directly into your calculator.",
+        "Evaluate to get: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a_int": {
+          "type": "randInt",
+          "min": 100,
+          "max": 999
+        },
+        "b_int": {
+          "type": "randInt",
+          "min": 100,
+          "max": 999
+        },
+        "c_int": {
+          "type": "randInt",
+          "min": 200,
+          "max": 800
+        },
+        "instr_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "instr": "['Use your calculator to work out', 'Calculate', 'Work out', 'Find the value of'][scope.instr_idx]",
+        "a": "scope.a_int / 100",
+        "b": "scope.b_int / 100",
+        "c": "scope.c_int / 100",
+        "num": "Math.round((scope.a + scope.b) * 100) / 100",
+        "ans_num": "Math.round((scope.num / scope.c) * 1000) / 1000",
+        "ans": "scope.ans_num.toString()",
+        "expr": "'\\\\frac{' + scope.a + ' + ' + scope.b + '}{' + scope.c + '}'"
+      },
+      "questionTemplate": "${scope.instr}\n\n$$${scope.expr}$$\n\nGive your answer as a decimal.",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Key the whole fraction expression $$${scope.expr}$$ into your calculator using the fraction template key.",
+        "Evaluate to get: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": {
+          "type": "randInt",
+          "min": 5,
+          "max": 12
+        },
+        "b": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "c": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        },
+        "instr_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "instr": "['Work out', 'Calculate', 'Use your calculator to work out', 'Find the value of'][scope.instr_idx]",
+        "disc": "scope.a * scope.a - 4 * scope.b * (-scope.c)",
+        "ans_num": "Math.round(Math.sqrt(scope.disc) * 100) / 100",
+        "ans": "scope.ans_num.toString()",
+        "expr": "'\\\\sqrt{' + scope.a + '^2 - 4 \\\\times ' + scope.b + ' \\\\times (' + (-scope.c) + ')}'"
+      },
+      "questionTemplate": "${scope.instr}\n\n$$${scope.expr}$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Key the whole expression $$${scope.expr}$$ into your calculator.",
+        "Evaluate to get: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "type_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 1
+        },
+        "n_surd": {
+          "type": "randInt",
+          "min": 11,
+          "max": 99
+        },
+        "exp_val": {
+          "type": "randInt",
+          "min": 7,
+          "max": 12
+        },
+        "instr_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "instr": "['Find the value of', 'Calculate the exact value of', 'Work out', 'Use your calculator to work out'][scope.instr_idx]",
+        "ans_num": "scope.type_idx === 0 ? scope.n_surd : Math.pow(2, scope.exp_val)",
+        "ans": "scope.ans_num.toString()",
+        "expr": "scope.type_idx === 0 ? '(\\\\sqrt{' + scope.n_surd + '})^2' : '2^{' + scope.exp_val + '}'"
+      },
+      "questionTemplate": "${scope.instr}\n\n$$${scope.expr}$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Key $$${scope.expr}$$ directly into your calculator.",
+        "Evaluate to get: $$${scope.ans}$$"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,446 @@
+{
+  "skillTitle": "Area and Perimeter",
+  "keypad": [
+    "7", "8", "9",
+    "4", "5", "6",
+    "1", "2", "3",
+    ".", "0", "⌫"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "s": { "type": "randInt", "min": 4, "max": 12 }
+      },
+      "derived": {
+        "area": "scope.s * scope.s",
+        "ans": "scope.area.toString()",
+        "step2": "'\\\\text{Area} = ' + scope.s + '^2'",
+        "svg": "'<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"30\" y=\"30\" width=\"100\" height=\"100\" fill=\"#edf2f7\" stroke=\"#4a5568\" stroke-width=\"2\"/><text x=\"80\" y=\"22\" font-size=\"14\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.s + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the area of the square shown above.",
+      "inputs": [
+        { "label": "Area =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the area of a square:\n$$\\text{Area} = s^2$$",
+        "Substitute the given side length into the formula:\n$$${scope.step2}$$",
+        "Solve to find the area:\n$$\\text{Area} = ${scope.ans}\\text{ cm}^2$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "s": { "type": "randInt", "min": 4, "max": 12 }
+      },
+      "derived": {
+        "perim": "4 * scope.s",
+        "ans": "scope.perim.toString()",
+        "step2": "'\\\\text{Perimeter} = 4 \\\\times ' + scope.s",
+        "svg": "'<svg width=\"160\" height=\"160\" viewBox=\"0 0 160 160\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"30\" y=\"30\" width=\"100\" height=\"100\" fill=\"#edf2f7\" stroke=\"#4a5568\" stroke-width=\"2\"/><text x=\"80\" y=\"22\" font-size=\"14\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.s + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the perimeter of the square shown above.",
+      "inputs": [
+        { "label": "Perimeter =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the perimeter of a square:\n$$\\text{Perimeter} = 4s$$",
+        "Substitute the given side length into the formula:\n$$${scope.step2}$$",
+        "Solve to find the perimeter:\n$$\\text{Perimeter} = ${scope.ans}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "l": { "type": "randInt", "min": 6, "max": 15 },
+        "w": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "area": "scope.l * scope.w",
+        "ans": "scope.area.toString()",
+        "step2": "'\\\\text{Area} = ' + scope.l + ' \\\\times ' + scope.w",
+        "svg": "'<svg width=\"200\" height=\"130\" viewBox=\"0 0 200 130\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"30\" y=\"25\" width=\"140\" height=\"70\" fill=\"#e6fffa\" stroke=\"#319795\" stroke-width=\"2\"/><text x=\"100\" y=\"18\" font-size=\"14\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.l + ' cm</text><text x=\"178\" y=\"65\" font-size=\"14\" text-anchor=\"start\" fill=\"#2d3748\">' + scope.w + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the area of the rectangle shown above.",
+      "inputs": [
+        { "label": "Area =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the area of a rectangle:\n$$\\text{Area} = l \\times w$$",
+        "Substitute the given length and width into the formula:\n$$${scope.step2}$$",
+        "Solve to find the area:\n$$\\text{Area} = ${scope.ans}\\text{ cm}^2$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "l": { "type": "randInt", "min": 6, "max": 15 },
+        "w": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "perim": "2 * (scope.l + scope.w)",
+        "ans": "scope.perim.toString()",
+        "step2": "'\\\\text{Perimeter} = 2 \\\\times (' + scope.l + ' + ' + scope.w + ')'",
+        "svg": "'<svg width=\"200\" height=\"130\" viewBox=\"0 0 200 130\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"30\" y=\"25\" width=\"140\" height=\"70\" fill=\"#e6fffa\" stroke=\"#319795\" stroke-width=\"2\"/><text x=\"100\" y=\"18\" font-size=\"14\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.l + ' cm</text><text x=\"178\" y=\"65\" font-size=\"14\" text-anchor=\"start\" fill=\"#2d3748\">' + scope.w + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the perimeter of the rectangle shown above.",
+      "inputs": [
+        { "label": "Perimeter =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the perimeter of a rectangle:\n$$\\text{Perimeter} = 2(l + w)$$",
+        "Substitute the given length and width into the formula:\n$$${scope.step2}$$",
+        "Solve to find the perimeter:\n$$\\text{Perimeter} = ${scope.ans}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "b": { "type": "randInt", "min": 6, "max": 14 },
+        "h": { "type": "randInt", "min": 4, "max": 10 }
+      },
+      "derived": {
+        "area": "0.5 * scope.b * scope.h",
+        "ans": "scope.area.toString()",
+        "step2": "'\\\\text{Area} = \\\\frac{1}{2} \\\\times ' + scope.b + ' \\\\times ' + scope.h",
+        "svg": "'<svg width=\"200\" height=\"140\" viewBox=\"0 0 200 140\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"20,110 180,110 120,30\" fill=\"#feebc8\" stroke=\"#dd6b20\" stroke-width=\"2\"/><line x1=\"120\" y1=\"30\" x2=\"120\" y2=\"110\" stroke=\"#e53e3e\" stroke-dasharray=\"4\" stroke-width=\"2\"/><text x=\"100\" y=\"128\" font-size=\"14\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.b + ' cm</text><text x=\"128\" y=\"75\" font-size=\"14\" text-anchor=\"start\" fill=\"#e53e3e\">' + scope.h + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the area of the triangle shown above.",
+      "inputs": [
+        { "label": "Area =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the area of a triangle:\n$$\\text{Area} = \\frac{1}{2}bh$$",
+        "Substitute the base and height into the formula:\n$$${scope.step2}$$",
+        "Solve to find the area:\n$$\\text{Area} = ${scope.ans}\\text{ cm}^2$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 5, "max": 9 },
+        "b": { "type": "randInt", "min": 6, "max": 10 },
+        "c": { "type": "randInt", "min": 7, "max": 12 }
+      },
+      "derived": {
+        "p": "scope.a + scope.b + scope.c",
+        "ans": "scope.p.toString()",
+        "step2": "'\\\\text{Perimeter} = ' + scope.a + ' + ' + scope.b + ' + ' + scope.c",
+        "svg": "'<svg width=\"200\" height=\"140\" viewBox=\"0 0 200 140\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"30,110 170,110 120,30\" fill=\"#feebc8\" stroke=\"#dd6b20\" stroke-width=\"2\"/><text x=\"100\" y=\"128\" font-size=\"13\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.b + ' cm</text><text x=\"65\" y=\"65\" font-size=\"13\" text-anchor=\"end\" fill=\"#2d3748\">' + scope.a + ' cm</text><text x=\"150\" y=\"65\" font-size=\"13\" text-anchor=\"start\" fill=\"#2d3748\">' + scope.c + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the perimeter of the triangle shown above.",
+      "inputs": [
+        { "label": "Perimeter =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the perimeter of a triangle:\n$$\\text{Perimeter} = a + b + c$$",
+        "Substitute the side lengths into the formula:\n$$${scope.step2}$$",
+        "Solve to find the perimeter:\n$$\\text{Perimeter} = ${scope.ans}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "b": { "type": "randInt", "min": 6, "max": 15 },
+        "h": { "type": "randInt", "min": 4, "max": 10 }
+      },
+      "derived": {
+        "area": "scope.b * scope.h",
+        "ans": "scope.area.toString()",
+        "step2": "'\\\\text{Area} = ' + scope.b + ' \\\\times ' + scope.h",
+        "svg": "'<svg width=\"220\" height=\"130\" viewBox=\"0 0 220 130\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"40,30 180,30 150,100 10,100\" fill=\"#fefcbf\" stroke=\"#d69e2e\" stroke-width=\"2\"/><line x1=\"40\" y1=\"30\" x2=\"40\" y2=\"100\" stroke=\"#e53e3e\" stroke-dasharray=\"4\" stroke-width=\"2\"/><text x=\"80\" y=\"118\" font-size=\"14\" text-anchor=\"middle\">' + scope.b + ' cm</text><text x=\"32\" y=\"70\" font-size=\"14\" text-anchor=\"end\" fill=\"#e53e3e\">' + scope.h + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the area of the parallelogram shown above.",
+      "inputs": [
+        { "label": "Area =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the area of a parallelogram:\n$$\\text{Area} = bh$$",
+        "Substitute the base and height into the formula:\n$$${scope.step2}$$",
+        "Solve to find the area:\n$$\\text{Area} = ${scope.ans}\\text{ cm}^2$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 4, "max": 8 },
+        "b": { "type": "randInt", "min": 10, "max": 16 },
+        "h": { "type": "randInt", "min": 4, "max": 10 }
+      },
+      "derived": {
+        "area": "0.5 * (scope.a + scope.b) * scope.h",
+        "ans": "scope.area.toString()",
+        "step2": "'\\\\text{Area} = \\\\frac{1}{2} \\\\times (' + scope.a + ' + ' + scope.b + ') \\\\times ' + scope.h",
+        "svg": "'<svg width=\"220\" height=\"140\" viewBox=\"0 0 220 140\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"50,30 150,30 190,110 20,110\" fill=\"#e8f4f8\" stroke=\"#2b6cb0\" stroke-width=\"2\"/><line x1=\"50\" y1=\"30\" x2=\"50\" y2=\"110\" stroke=\"#e53e3e\" stroke-dasharray=\"4\" stroke-width=\"2\"/><text x=\"100\" y=\"22\" font-size=\"14\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.a + ' cm</text><text x=\"105\" y=\"128\" font-size=\"14\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.b + ' cm</text><text x=\"42\" y=\"75\" font-size=\"14\" text-anchor=\"end\" fill=\"#e53e3e\">' + scope.h + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the area of the trapezium shown above.",
+      "inputs": [
+        { "label": "Area =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the area of a trapezium:\n$$\\text{Area} = \\frac{1}{2}(a + b)h$$",
+        "Substitute the given dimensions into the formula:\n$$${scope.step2}$$",
+        "Solve to find the area:\n$$\\text{Area} = ${scope.ans}\\text{ cm}^2$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 4, "max": 8 },
+        "b": { "type": "randInt", "min": 10, "max": 15 },
+        "c": { "type": "randInt", "min": 5, "max": 9 },
+        "d": { "type": "randInt", "min": 5, "max": 9 }
+      },
+      "derived": {
+        "p": "scope.a + scope.b + scope.c + scope.d",
+        "ans": "scope.p.toString()",
+        "step2": "'\\\\text{Perimeter} = ' + scope.a + ' + ' + scope.b + ' + ' + scope.c + ' + ' + scope.d",
+        "svg": "'<svg width=\"220\" height=\"140\" viewBox=\"0 0 220 140\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"50,30 150,30 190,110 20,110\" fill=\"#e8f4f8\" stroke=\"#2b6cb0\" stroke-width=\"2\"/><text x=\"100\" y=\"22\" font-size=\"13\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.a + ' cm</text><text x=\"105\" y=\"128\" font-size=\"13\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.b + ' cm</text><text x=\"28\" y=\"70\" font-size=\"13\" text-anchor=\"end\" fill=\"#2d3748\">' + scope.c + ' cm</text><text x=\"175\" y=\"70\" font-size=\"13\" text-anchor=\"start\" fill=\"#2d3748\">' + scope.d + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the perimeter of the trapezium shown above.",
+      "inputs": [
+        { "label": "Perimeter =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the perimeter of a trapezium:\n$$\\text{Perimeter} = a + b + c + d$$",
+        "Substitute the side lengths into the formula:\n$$${scope.step2}$$",
+        "Solve to find the perimeter:\n$$\\text{Perimeter} = ${scope.ans}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "is_diameter": { "type": "randInt", "min": 0, "max": 1 },
+        "dim_val": { "type": "randInt", "min": 6, "max": 20 }
+      },
+      "derived": {
+        "r_val": "scope.is_diameter === 1 ? scope.dim_val / 2 : scope.dim_val",
+        "circ_exact": "2 * Math.PI * scope.r_val",
+        "ans": "(scope.circ_exact).toPrecision(3)",
+        "step1": "scope.is_diameter === 1 ? 'C = \\\\pi d' : 'C = 2\\\\pi r'",
+        "step2": "scope.is_diameter === 1 ? 'C = \\\\pi \\\\times ' + scope.dim_val : 'C = 2 \\\\times \\\\pi \\\\times ' + scope.dim_val",
+        "svg": "scope.is_diameter === 1 ? '<svg width=\"180\" height=\"180\" viewBox=\"0 0 180 180\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"90\" cy=\"90\" r=\"70\" fill=\"#edf2f7\" stroke=\"#319795\" stroke-width=\"2\"/><circle cx=\"90\" cy=\"90\" r=\"3\" fill=\"#2d3748\"/><line x1=\"20\" y1=\"90\" x2=\"160\" y2=\"90\" stroke=\"#e53e3e\" stroke-width=\"2\"/><text x=\"90\" y=\"82\" font-size=\"14\" text-anchor=\"middle\" fill=\"#e53e3e\">' + scope.dim_val + ' cm</text></svg>' : '<svg width=\"180\" height=\"180\" viewBox=\"0 0 180 180\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"90\" cy=\"90\" r=\"70\" fill=\"#edf2f7\" stroke=\"#319795\" stroke-width=\"2\"/><circle cx=\"90\" cy=\"90\" r=\"3\" fill=\"#2d3748\"/><line x1=\"90\" y1=\"90\" x2=\"160\" y2=\"90\" stroke=\"#e53e3e\" stroke-width=\"2\"/><text x=\"125\" y=\"82\" font-size=\"14\" text-anchor=\"middle\" fill=\"#e53e3e\">' + scope.dim_val + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the circumference of the circle shown above. Give your answer correct to 3 significant figures.",
+      "inputs": [
+        { "label": "Circumference =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the circumference of a circle:\n$$${scope.step1}$$",
+        "Substitute the given dimension into the formula:\n$$${scope.step2}$$",
+        "Solve and round to 3 significant figures:\n$$C = ${scope.ans}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "r": { "type": "randInt", "min": 5, "max": 12 },
+        "angle_idx": { "type": "randInt", "min": 0, "max": 4 }
+      },
+      "derived": {
+        "angles": "[45, 60, 90, 120, 150]",
+        "theta": "scope.angles[scope.angle_idx]",
+        "rad": "(scope.theta * Math.PI) / 180",
+        "svg_x": "(90 + 55 * Math.cos(scope.rad)).toFixed(1)",
+        "svg_y": "(90 - 55 * Math.sin(scope.rad)).toFixed(1)",
+        "area_exact": "(scope.theta / 360) * Math.PI * scope.r * scope.r",
+        "ans": "(scope.area_exact).toPrecision(3)",
+        "step2": "'\\\\text{Area} = \\\\frac{' + scope.theta + '}{360^\\\\circ} \\\\times \\\\pi \\\\times ' + scope.r + '^2'",
+        "svg": "'<svg width=\"180\" height=\"180\" viewBox=\"0 0 180 180\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M 90 90 L 145 90 A 55 55 0 0 0 ' + scope.svg_x + ' ' + scope.svg_y + ' Z\" fill=\"#fbb6ce\" stroke=\"#d53f8c\" stroke-width=\"2\"/><text x=\"115\" y=\"105\" font-size=\"13\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.r + ' cm</text><text x=\"98\" y=\"82\" font-size=\"13\" fill=\"#d53f8c\">' + scope.theta + '°</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the area of the sector shown above. Give your answer correct to 3 significant figures.",
+      "inputs": [
+        { "label": "Area =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the area of a sector:\n$$\\text{Area} = \\frac{\\theta}{360^\\circ} \\times \\pi r^2$$",
+        "Substitute the radius and angle into the formula:\n$$${scope.step2}$$",
+        "Solve and round to 3 significant figures:\n$$\\text{Area} = ${scope.ans}\\text{ cm}^2$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "r": { "type": "randInt", "min": 5, "max": 12 },
+        "angle_idx": { "type": "randInt", "min": 0, "max": 4 }
+      },
+      "derived": {
+        "angles": "[60, 90, 120, 135, 150]",
+        "theta": "scope.angles[scope.angle_idx]",
+        "rad": "(scope.theta * Math.PI) / 180",
+        "svg_x": "(90 + 55 * Math.cos(scope.rad)).toFixed(1)",
+        "svg_y": "(90 - 55 * Math.sin(scope.rad)).toFixed(1)",
+        "arc_exact": "(scope.theta / 360) * 2 * Math.PI * scope.r",
+        "ans": "(scope.arc_exact).toPrecision(3)",
+        "step2": "'\\\\text{Arc Length} = \\\\frac{' + scope.theta + '}{360^\\\\circ} \\\\times 2 \\\\times \\\\pi \\\\times ' + scope.r",
+        "svg": "'<svg width=\"180\" height=\"180\" viewBox=\"0 0 180 180\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M 90 90 L 145 90 A 55 55 0 0 0 ' + scope.svg_x + ' ' + scope.svg_y + ' Z\" fill=\"#fff5f5\" stroke=\"#cbd5e0\" stroke-width=\"1.5\"/><path d=\"M 145 90 A 55 55 0 0 0 ' + scope.svg_x + ' ' + scope.svg_y + '\" fill=\"none\" stroke=\"#e53e3e\" stroke-width=\"3.5\"/><text x=\"115\" y=\"105\" font-size=\"13\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.r + ' cm</text><text x=\"98\" y=\"82\" font-size=\"13\" fill=\"#e53e3e\">' + scope.theta + '°</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the arc length of the sector (highlighted in red). Give your answer correct to 3 significant figures.",
+      "inputs": [
+        { "label": "Arc Length =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the arc length of a sector:\n$$\\text{Arc Length} = \\frac{\\theta}{360^\\circ} \\times 2\\pi r$$",
+        "Substitute the given angle and radius into the formula:\n$$${scope.step2}$$",
+        "Solve and round to 3 significant figures:\n$$\\text{Arc Length} = ${scope.ans}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "b": { "type": "randInt", "min": 6, "max": 16 },
+        "h": { "type": "randInt", "min": 4, "max": 12 }
+      },
+      "derived": {
+        "area": "0.5 * scope.b * scope.h",
+        "ans": "scope.h.toString()",
+        "step2": "scope.area + ' = \\\\frac{1}{2} \\\\times ' + scope.b + ' \\\\times h'",
+        "svg": "'<svg width=\"200\" height=\"140\" viewBox=\"0 0 200 140\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"20,110 180,110 120,30\" fill=\"#feebc8\" stroke=\"#dd6b20\" stroke-width=\"2\"/><line x1=\"120\" y1=\"30\" x2=\"120\" y2=\"110\" stroke=\"#e53e3e\" stroke-dasharray=\"4\" stroke-width=\"2\"/><text x=\"100\" y=\"128\" font-size=\"14\" text-anchor=\"middle\">' + scope.b + ' cm</text><text x=\"128\" y=\"75\" font-size=\"14\" text-anchor=\"start\" fill=\"#e53e3e\">h</text><text x=\"95\" y=\"80\" font-size=\"13\" text-anchor=\"middle\" fill=\"#7b341e\">Area = ' + scope.area + ' cm²</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the missing perpendicular height $h$ of the triangle.",
+      "inputs": [
+        { "label": "h =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the area of a triangle:\n$$\\text{Area} = \\frac{1}{2}bh$$",
+        "Substitute the known area and base into the formula:\n$$${scope.step2}$$",
+        "Solve for the missing height $h$:\n$$h = ${scope.ans}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 5, "max": 9 },
+        "b": { "type": "randInt", "min": 6, "max": 10 },
+        "c": { "type": "randInt", "min": 7, "max": 12 }
+      },
+      "derived": {
+        "p": "scope.a + scope.b + scope.c",
+        "ans": "scope.c.toString()",
+        "step2": "scope.p + ' = ' + scope.a + ' + ' + scope.b + ' + c'",
+        "svg": "'<svg width=\"200\" height=\"140\" viewBox=\"0 0 200 140\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"30,110 170,110 120,30\" fill=\"#feebc8\" stroke=\"#dd6b20\" stroke-width=\"2\"/><text x=\"100\" y=\"128\" font-size=\"13\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.b + ' cm</text><text x=\"65\" y=\"65\" font-size=\"13\" text-anchor=\"end\" fill=\"#2d3748\">' + scope.a + ' cm</text><text x=\"150\" y=\"65\" font-size=\"13\" text-anchor=\"start\" fill=\"#e53e3e\">c</text><text x=\"100\" y=\"75\" font-size=\"12\" text-anchor=\"middle\" fill=\"#7b341e\">Perimeter = ' + scope.p + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nThe perimeter of the triangle is $${scope.p}\\text{ cm}$. Find the missing side length $c$.",
+      "inputs": [
+        { "label": "c =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the perimeter of a triangle:\n$$\\text{Perimeter} = a + b + c$$",
+        "Substitute the known perimeter and side lengths into the formula:\n$$${scope.step2}$$",
+        "Solve for the missing side length $c$:\n$$c = ${scope.ans}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "l": { "type": "randInt", "min": 6, "max": 15 },
+        "w": { "type": "randInt", "min": 3, "max": 10 }
+      },
+      "derived": {
+        "area": "scope.l * scope.w",
+        "ans": "scope.w.toString()",
+        "step2": "scope.area + ' = ' + scope.l + ' \\\\times w'",
+        "svg": "'<svg width=\"200\" height=\"130\" viewBox=\"0 0 200 130\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"30\" y=\"25\" width=\"140\" height=\"70\" fill=\"#e6fffa\" stroke=\"#319795\" stroke-width=\"2\"/><text x=\"100\" y=\"18\" font-size=\"14\" text-anchor=\"middle\">' + scope.l + ' cm</text><text x=\"178\" y=\"65\" font-size=\"14\" text-anchor=\"start\" fill=\"#e53e3e\">w</text><text x=\"100\" y=\"65\" font-size=\"13\" text-anchor=\"middle\" fill=\"#234e52\">Area = ' + scope.area + ' cm²</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nFind the missing width $w$ of the rectangle.",
+      "inputs": [
+        { "label": "w =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the area of a rectangle:\n$$\\text{Area} = l \\times w$$",
+        "Substitute the known area and length into the formula:\n$$${scope.step2}$$",
+        "Solve for the missing width $w$:\n$$w = ${scope.ans}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "l": { "type": "randInt", "min": 6, "max": 15 },
+        "w": { "type": "randInt", "min": 3, "max": 10 }
+      },
+      "derived": {
+        "p": "2 * (scope.l + scope.w)",
+        "ans": "scope.w.toString()",
+        "step2": "scope.p + ' = 2 \\\\times (' + scope.l + ' + w)'",
+        "svg": "'<svg width=\"200\" height=\"130\" viewBox=\"0 0 200 130\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"30\" y=\"25\" width=\"140\" height=\"70\" fill=\"#e6fffa\" stroke=\"#319795\" stroke-width=\"2\"/><text x=\"100\" y=\"18\" font-size=\"14\" text-anchor=\"middle\">' + scope.l + ' cm</text><text x=\"178\" y=\"65\" font-size=\"14\" text-anchor=\"start\" fill=\"#e53e3e\">w</text><text x=\"100\" y=\"65\" font-size=\"13\" text-anchor=\"middle\" fill=\"#234e52\">Perimeter = ' + scope.p + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nThe perimeter of the rectangle is $${scope.p}\\text{ cm}$. Find its missing width $w$.",
+      "inputs": [
+        { "label": "w =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the perimeter of a rectangle:\n$$\\text{Perimeter} = 2(l + w)$$",
+        "Substitute the known perimeter and length into the formula:\n$$${scope.step2}$$",
+        "Solve for the missing width $w$:\n$$w = ${scope.ans}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 4, "max": 8 },
+        "b": { "type": "randInt", "min": 10, "max": 15 },
+        "c": { "type": "randInt", "min": 5, "max": 9 },
+        "d": { "type": "randInt", "min": 6, "max": 10 }
+      },
+      "derived": {
+        "p": "scope.a + scope.b + scope.c + scope.d",
+        "ans": "scope.d.toString()",
+        "step2": "scope.p + ' = ' + scope.a + ' + ' + scope.b + ' + ' + scope.c + ' + d'",
+        "svg": "'<svg width=\"220\" height=\"140\" viewBox=\"0 0 220 140\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"50,30 150,30 190,110 20,110\" fill=\"#e8f4f8\" stroke=\"#2b6cb0\" stroke-width=\"2\"/><text x=\"100\" y=\"22\" font-size=\"13\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.a + ' cm</text><text x=\"105\" y=\"128\" font-size=\"13\" text-anchor=\"middle\" fill=\"#2d3748\">' + scope.b + ' cm</text><text x=\"28\" y=\"70\" font-size=\"13\" text-anchor=\"end\" fill=\"#2d3748\">' + scope.c + ' cm</text><text x=\"175\" y=\"70\" font-size=\"13\" text-anchor=\"start\" fill=\"#e53e3e\">d</text><text x=\"100\" y=\"75\" font-size=\"12\" text-anchor=\"middle\" fill=\"#1a365d\">Perimeter = ' + scope.p + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nThe perimeter of the trapezium is $${scope.p}\\text{ cm}$. Find the missing side length $d$.",
+      "inputs": [
+        { "label": "d =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the perimeter of a trapezium:\n$$\\text{Perimeter} = a + b + c + d$$",
+        "Substitute the known perimeter and given side lengths into the formula:\n$$${scope.step2}$$",
+        "Solve for the missing side length $d$:\n$$d = ${scope.ans}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "r": { "type": "randInt", "min": 4, "max": 15 }
+      },
+      "derived": {
+        "circ_exact": "2 * Math.PI * scope.r",
+        "circ_given": "(scope.circ_exact).toPrecision(3)",
+        "ans": "(parseFloat(scope.circ_given) / (2 * Math.PI)).toPrecision(3)",
+        "step2": "scope.circ_given + ' = 2 \\\\times \\\\pi \\\\times r'",
+        "svg": "'<svg width=\"180\" height=\"180\" viewBox=\"0 0 180 180\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"90\" cy=\"90\" r=\"70\" fill=\"#ebf8ff\" stroke=\"#3182ce\" stroke-width=\"2\"/><circle cx=\"90\" cy=\"90\" r=\"3\" fill=\"#2d3748\"/><line x1=\"90\" y1=\"90\" x2=\"160\" y2=\"90\" stroke=\"#e53e3e\" stroke-width=\"2\"/><text x=\"125\" y=\"82\" font-size=\"14\" text-anchor=\"middle\" fill=\"#e53e3e\">r</text><text x=\"90\" y=\"120\" font-size=\"13\" text-anchor=\"middle\" fill=\"#2b6cb0\">Circumference = ' + scope.circ_given + ' cm</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nThe circumference of the circle is $${scope.circ_given}\\text{ cm}$. Find its radius $r$ correct to 3 significant figures.",
+      "inputs": [
+        { "label": "r =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the circumference of a circle:\n$$C = 2\\pi r$$",
+        "Substitute the given circumference into the formula:\n$$${scope.step2}$$",
+        "Solve for $r$ and round to 3 significant figures:\n$$r = ${scope.ans}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "r": { "type": "randInt", "min": 4, "max": 15 }
+      },
+      "derived": {
+        "area_exact": "Math.PI * scope.r * scope.r",
+        "area_given": "(scope.area_exact).toPrecision(3)",
+        "ans": "(Math.sqrt(parseFloat(scope.area_given) / Math.PI)).toPrecision(3)",
+        "step2": "scope.area_given + ' = \\\\pi \\\\times r^2'",
+        "svg": "'<svg width=\"180\" height=\"180\" viewBox=\"0 0 180 180\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"90\" cy=\"90\" r=\"70\" fill=\"#ebf8ff\" stroke=\"#3182ce\" stroke-width=\"2\"/><circle cx=\"90\" cy=\"90\" r=\"3\" fill=\"#2d3748\"/><line x1=\"90\" y1=\"90\" x2=\"160\" y2=\"90\" stroke=\"#e53e3e\" stroke-width=\"2\"/><text x=\"125\" y=\"82\" font-size=\"14\" text-anchor=\"middle\" fill=\"#e53e3e\">r</text><text x=\"90\" y=\"120\" font-size=\"13\" text-anchor=\"middle\" fill=\"#2b6cb0\">Area = ' + scope.area_given + ' cm²</text></svg>'"
+      },
+      "questionTemplate": "${scope.svg}\n\nThe area of the circle is $${scope.area_given}\\text{ cm}^2$. Find its radius $r$ correct to 3 significant figures.",
+      "inputs": [
+        { "label": "r =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down the formula for the area of a circle:\n$$\\text{Area} = \\pi r^2$$",
+        "Substitute the given area into the formula:\n$$${scope.step2}$$",
+        "Solve for $r$ and round to 3 significant figures:\n$$r = ${scope.ans}\\text{ cm}$$"
+      ]
+    }
+  ]
+}

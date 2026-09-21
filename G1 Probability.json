@@ -1,0 +1,299 @@
+{
+  "skillTitle": "Probability",
+  "keypad": [
+    "/",
+    ".",
+    "%",
+    "7",
+    "8",
+    "9",
+    "4",
+    "5",
+    "6",
+    "1",
+    "2",
+    "3",
+    "0",
+    "⌫",
+    "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "red": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "blue": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "green": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "targetColorIdx": {
+          "type": "randInt",
+          "min": 1,
+          "max": 3
+        }
+      },
+      "derived": {
+        "colorName": "scope.targetColorIdx === 1 ? 'red' : (scope.targetColorIdx === 2 ? 'blue' : 'green')",
+        "targetCount": "scope.targetColorIdx === 1 ? scope.red : (scope.targetColorIdx === 2 ? scope.blue : scope.green)",
+        "totalCount": "scope.red + scope.blue + scope.green",
+        "gcd": "((a, b) => { let r; while(b){ r = a % b; a = b; b = r; } return a; })(scope.targetCount, scope.totalCount)",
+        "ans_num": "scope.targetCount / scope.gcd",
+        "ans_den": "scope.totalCount / scope.gcd",
+        "ans": "scope.ans_den === 1 ? scope.ans_num.toString() : scope.ans_num + '/' + scope.ans_den",
+        "frac_unsimplified": "'\\\\frac{' + scope.targetCount + '}{' + scope.totalCount + '}'",
+        "frac_simplified": "scope.ans_den === 1 ? scope.ans_num.toString() : '\\\\frac{' + scope.ans_num + '}{' + scope.ans_den + '}'",
+        "step1": "'\\\\text{Total number of balls} = ' + scope.red + ' + ' + scope.blue + ' + ' + scope.green + ' = ' + scope.totalCount",
+        "step2": "'P(\\\\text{' + scope.colorName + '}) = ' + scope.frac_unsimplified + (scope.gcd > 1 ? ' = ' + scope.frac_simplified : '')"
+      },
+      "questionTemplate": "A bag contains ${scope.red} red balls, ${scope.blue} blue balls, and ${scope.green} green balls. A ball is picked at random.\n\nWhat is the probability of picking a ${scope.colorName} ball?\n(Give your answer as a fraction in simplest form)",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}",
+          "type": "fraction",
+          "strict": true,
+          "exact": true,
+          "simplified": true,
+          "requireSimplified": true
+        }
+      ],
+      "steps": [
+        "Calculate the total number of balls in the bag: $$${scope.step1}$$",
+        "Form the probability fraction and simplify to lowest terms: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "wordIdx": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        },
+        "askType": {
+          "type": "randInt",
+          "min": 1,
+          "max": 2
+        }
+      },
+      "derived": {
+        "word": "scope.wordIdx === 1 ? 'MATHEMATICS' : (scope.wordIdx === 2 ? 'PROBABILITY' : (scope.wordIdx === 3 ? 'STATISTICS' : (scope.wordIdx === 4 ? 'GEOMETRY' : 'EQUATION')))",
+        "vowelsCount": "scope.word.split('').filter(c => 'AEIOU'.includes(c)).length",
+        "totalCount": "scope.word.length",
+        "consonantsCount": "scope.totalCount - scope.vowelsCount",
+        "targetType": "scope.askType === 1 ? 'vowel' : 'consonant'",
+        "targetCount": "scope.askType === 1 ? scope.vowelsCount : scope.consonantsCount",
+        "gcd": "((a, b) => { let r; while(b){ r = a % b; a = b; b = r; } return a; })(scope.targetCount, scope.totalCount)",
+        "ans_num": "scope.targetCount / scope.gcd",
+        "ans_den": "scope.totalCount / scope.gcd",
+        "ans": "scope.ans_den === 1 ? scope.ans_num.toString() : scope.ans_num + '/' + scope.ans_den",
+        "frac_unsimplified": "'\\\\frac{' + scope.targetCount + '}{' + scope.totalCount + '}'",
+        "frac_simplified": "scope.ans_den === 1 ? scope.ans_num.toString() : '\\\\frac{' + scope.ans_num + '}{' + scope.ans_den + '}'",
+        "step1": "'\\\\text{Total letters in } \\\\text{\"' + scope.word + '\"} = ' + scope.totalCount",
+        "step2": "'\\\\text{Number of ' + scope.targetType + 's} = ' + scope.targetCount",
+        "step3": "'P(\\\\text{' + scope.targetType + '}) = ' + scope.frac_unsimplified + (scope.gcd > 1 ? ' = ' + scope.frac_simplified : '')"
+      },
+      "questionTemplate": "A letter is chosen at random from the word ${scope.word}.\n\nFind the probability that the chosen letter is a ${scope.targetType}.\n(Give your answer as a fraction in simplest form)",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}",
+          "type": "fraction",
+          "strict": true,
+          "exact": true,
+          "simplified": true,
+          "requireSimplified": true
+        }
+      ],
+      "steps": [
+        "Count the total number of letters: $$${scope.step1}$$",
+        "Count the number of favourable outcomes: $$${scope.step2}$$",
+        "Calculate and simplify the probability fraction: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "red": {
+          "type": "randInt",
+          "min": 3,
+          "max": 7
+        },
+        "blue": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "yellow": {
+          "type": "randInt",
+          "min": 3,
+          "max": 7
+        },
+        "excludeColorIdx": {
+          "type": "randInt",
+          "min": 1,
+          "max": 3
+        }
+      },
+      "derived": {
+        "colorName": "scope.excludeColorIdx === 1 ? 'red' : (scope.excludeColorIdx === 2 ? 'blue' : 'yellow')",
+        "excludedCount": "scope.excludeColorIdx === 1 ? scope.red : (scope.excludeColorIdx === 2 ? scope.blue : scope.yellow)",
+        "totalCount": "scope.red + scope.blue + scope.yellow",
+        "targetCount": "scope.totalCount - scope.excludedCount",
+        "gcd": "((a, b) => { let r; while(b){ r = a % b; a = b; b = r; } return a; })(scope.targetCount, scope.totalCount)",
+        "ans_num": "scope.targetCount / scope.gcd",
+        "ans_den": "scope.totalCount / scope.gcd",
+        "ans": "scope.ans_den === 1 ? scope.ans_num.toString() : scope.ans_num + '/' + scope.ans_den",
+        "frac_unsimplified": "'\\\\frac{' + scope.targetCount + '}{' + scope.totalCount + '}'",
+        "frac_simplified": "scope.ans_den === 1 ? scope.ans_num.toString() : '\\\\frac{' + scope.ans_num + '}{' + scope.ans_den + '}'",
+        "step1": "'\\\\text{Total marbles} = ' + scope.totalCount",
+        "step2": "'\\\\text{Number of marbles that are NOT ' + scope.colorName + '} = ' + scope.totalCount + ' - ' + scope.excludedCount + ' = ' + scope.targetCount",
+        "step3": "'P(\\\\text{not ' + scope.colorName + '}) = ' + scope.frac_unsimplified + (scope.gcd > 1 ? ' = ' + scope.frac_simplified : '')"
+      },
+      "questionTemplate": "A bag contains ${scope.red} red, ${scope.blue} blue, and ${scope.yellow} yellow marbles. One marble is selected at random.\n\nWhat is the probability of selecting a marble that is NOT ${scope.colorName}?\n(Give your answer as a fraction in simplest form)",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}",
+          "type": "fraction",
+          "strict": true,
+          "exact": true,
+          "simplified": true,
+          "requireSimplified": true
+        }
+      ],
+      "steps": [
+        "Find the total number of marbles: $$${scope.step1}$$",
+        "Find the number of marbles that meet the condition: $$${scope.step2}$$",
+        "Calculate and simplify the probability fraction: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "slices": {
+          "type": "randInt",
+          "min": 4,
+          "max": 8
+        },
+        "shift": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        },
+        "conditionType": {
+          "type": "randInt",
+          "min": 1,
+          "max": 3
+        },
+        "targetNum": {
+          "type": "randInt",
+          "min": 1,
+          "max": 4
+        }
+      },
+      "derived": {
+        "sectors": "((n, s) => Array.from({length: n}, (_, i) => ((i + s) % 4) + 1))(scope.slices, scope.shift)",
+        "condName": "scope.conditionType === 1 ? 'an even number' : (scope.conditionType === 2 ? 'an odd number' : 'the number ' + scope.targetNum)",
+        "targetCount": "scope.conditionType === 1 ? scope.sectors.filter(x => x % 2 === 0).length : (scope.conditionType === 2 ? scope.sectors.filter(x => x % 2 !== 0).length : scope.sectors.filter(x => x === scope.targetNum).length)",
+        "totalCount": "scope.slices",
+        "gcd": "((a, b) => { let r; while(b){ r = a % b; a = b; b = r; } return a; })(scope.targetCount, scope.totalCount)",
+        "ans_num": "scope.targetCount / scope.gcd",
+        "ans_den": "scope.totalCount / scope.gcd",
+        "ans": "scope.ans_den === 1 ? scope.ans_num.toString() : scope.ans_num + '/' + scope.ans_den",
+        "frac_unsimplified": "'\\\\frac{' + scope.targetCount + '}{' + scope.totalCount + '}'",
+        "frac_simplified": "scope.ans_den === 1 ? scope.ans_num.toString() : '\\\\frac{' + scope.ans_num + '}{' + scope.ans_den + '}'",
+        "svg": "((sectors) => { let n = sectors.length; let p = ''; for(let i=0; i<n; i++){ let a1 = i*2*Math.PI/n - Math.PI/2; let a2 = (i+1)*2*Math.PI/n - Math.PI/2; let x1 = (100 + 80*Math.cos(a1)).toFixed(1); let y1 = (100 + 80*Math.sin(a1)).toFixed(1); let x2 = (100 + 80*Math.cos(a2)).toFixed(1); let y2 = (100 + 80*Math.sin(a2)).toFixed(1); let tm = (i+0.5)*2*Math.PI/n - Math.PI/2; let tx = (100 + 55*Math.cos(tm)).toFixed(1); let ty = (100 + 55*Math.sin(tm) + 5).toFixed(1); let bg = i % 2 === 0 ? '#f1f5f9' : '#ffffff'; p += '<path d=\"M100,100 L' + x1 + ',' + y1 + ' A80,80 0 0,1 ' + x2 + ',' + y2 + ' Z\" fill=\"' + bg + '\" stroke=\"#334155\" stroke-width=\"2\"/><text x=\"' + tx + '\" y=\"' + ty + '\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#0f172a\">' + sectors[i] + '</text>'; } return '<svg width=\"200\" height=\"200\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"100\" cy=\"100\" r=\"82\" fill=\"none\" stroke=\"#0f172a\" stroke-width=\"3\"/>' + p + '<polygon points=\"100,20 94,5 106,5\" fill=\"#ef4444\"/><circle cx=\"100\" cy=\"100\" r=\"6\" fill=\"#0f172a\"/></svg>'; })(scope.sectors)",
+        "step1": "'\\\\text{Total equal sectors} = ' + scope.totalCount",
+        "step2": "'\\\\text{Sectors showing ' + scope.condName + '} = ' + scope.targetCount",
+        "step3": "'P(\\\\text{' + scope.condName + '}) = ' + scope.frac_unsimplified + (scope.gcd > 1 ? ' = ' + scope.frac_simplified : '')"
+      },
+      "questionTemplate": "${scope.svg}\n\nThe fair spinner shown above has ${scope.slices} equal sectors labeled with numbers.\n\nWhat is the probability that the spinner lands on ${scope.condName}?\n(Give your answer as a fraction in simplest form)",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}",
+          "type": "fraction",
+          "strict": true,
+          "exact": true,
+          "simplified": true,
+          "requireSimplified": true
+        }
+      ],
+      "steps": [
+        "Identify total possible outcomes from the spinner: $$${scope.step1}$$",
+        "Count the number of favourable outcomes: $$${scope.step2}$$",
+        "Calculate and simplify the probability fraction: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "slices": {
+          "type": "randInt",
+          "min": 5,
+          "max": 8
+        },
+        "shift": {
+          "type": "randInt",
+          "min": 1,
+          "max": 4
+        },
+        "qType": {
+          "type": "randInt",
+          "min": 1,
+          "max": 2
+        },
+        "threshold": {
+          "type": "randInt",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "derived": {
+        "sectors": "((n, s) => Array.from({length: n}, (_, i) => ((i * 2 + s) % 6) + 1))(scope.slices, scope.shift)",
+        "condName": "scope.qType === 1 ? 'a prime number' : 'a number greater than ' + scope.threshold",
+        "targetCount": "scope.qType === 1 ? scope.sectors.filter(x => [2, 3, 5, 7].includes(x)).length : scope.sectors.filter(x => x > scope.threshold).length",
+        "totalCount": "scope.slices",
+        "gcd": "((a, b) => { let r; while(b){ r = a % b; a = b; b = r; } return a; })(scope.targetCount, scope.totalCount)",
+        "ans_num": "scope.targetCount / scope.gcd",
+        "ans_den": "scope.totalCount / scope.gcd",
+        "ans": "scope.ans_den === 1 ? scope.ans_num.toString() : scope.ans_num + '/' + scope.ans_den",
+        "frac_unsimplified": "'\\\\frac{' + scope.targetCount + '}{' + scope.totalCount + '}'",
+        "frac_simplified": "scope.ans_den === 1 ? scope.ans_num.toString() : '\\\\frac{' + scope.ans_num + '}{' + scope.ans_den + '}'",
+        "svg": "((sectors) => { let n = sectors.length; let p = ''; for(let i=0; i<n; i++){ let a1 = i*2*Math.PI/n - Math.PI/2; let a2 = (i+1)*2*Math.PI/n - Math.PI/2; let x1 = (100 + 80*Math.cos(a1)).toFixed(1); let y1 = (100 + 80*Math.sin(a1)).toFixed(1); let x2 = (100 + 80*Math.cos(a2)).toFixed(1); let y2 = (100 + 80*Math.sin(a2)).toFixed(1); let tm = (i+0.5)*2*Math.PI/n - Math.PI/2; let tx = (100 + 55*Math.cos(tm)).toFixed(1); let ty = (100 + 55*Math.sin(tm) + 5).toFixed(1); let bg = i % 2 === 0 ? '#f1f5f9' : '#ffffff'; p += '<path d=\"M100,100 L' + x1 + ',' + y1 + ' A80,80 0 0,1 ' + x2 + ',' + y2 + ' Z\" fill=\"' + bg + '\" stroke=\"#334155\" stroke-width=\"2\"/><text x=\"' + tx + '\" y=\"' + ty + '\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#0f172a\">' + sectors[i] + '</text>'; } return '<svg width=\"200\" height=\"200\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"100\" cy=\"100\" r=\"82\" fill=\"none\" stroke=\"#0f172a\" stroke-width=\"3\"/>' + p + '<polygon points=\"100,20 94,5 106,5\" fill=\"#ef4444\"/><circle cx=\"100\" cy=\"100\" r=\"6\" fill=\"#0f172a\"/></svg>'; })(scope.sectors)",
+        "matchingSectors": "scope.qType === 1 ? scope.sectors.filter(x => [2, 3, 5, 7].includes(x)).join(', ') : scope.sectors.filter(x => x > scope.threshold).join(', ')",
+        "step1": "'\\\\text{Total outcomes} = ' + scope.totalCount",
+        "step2": "'\\\\text{Favourable sectors (' + scope.condName + '): } ' + (scope.targetCount > 0 ? scope.matchingSectors + ' \\\\implies ' + scope.targetCount + ' \\\\text{ sectors}' : '\\\\text{none (0 sectors)}')",
+        "step3": "'P(\\\\text{' + scope.condName + '}) = ' + scope.frac_unsimplified + (scope.gcd > 1 ? ' = ' + scope.frac_simplified : '')"
+      },
+      "questionTemplate": "${scope.svg}\n\nA fair spinner has ${scope.slices} equal sectors labeled with numbers.\n\nWhat is the probability of spinning ${scope.condName}?\n(Give your answer as a fraction in simplest form)",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}",
+          "type": "fraction",
+          "strict": true,
+          "exact": true,
+          "simplified": true,
+          "requireSimplified": true
+        }
+      ],
+      "steps": [
+        "Determine the total number of outcomes: $$${scope.step1}$$",
+        "List and count all favourable outcomes: $$${scope.step2}$$",
+        "Calculate and simplify the probability fraction: $$${scope.step3}$$"
+      ]
+    }
+  ]
+}

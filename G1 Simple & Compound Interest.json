@@ -1,0 +1,150 @@
+{
+  "skillTitle": "Simple & Compound Interest",
+  "keypad": [
+    ".", "%", "$",
+    "7", "8", "9",
+    "4", "5", "6",
+    "1", "2", "3",
+    "0", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "P_raw": { "type": "randInt", "min": 10, "max": 100 },
+        "r_raw": { "type": "randInt", "min": 15, "max": 80 },
+        "t": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "P": "scope.P_raw * 100",
+        "r_val": "scope.r_raw / 10",
+        "r": "scope.r_val.toString()",
+        "interest_val": "Math.round(scope.P * scope.r_val * scope.t) / 100",
+        "ans": "scope.interest_val % 1 === 0 ? scope.interest_val.toString() : scope.interest_val.toFixed(2)",
+        "step1": "'I = \\\\frac{P r t}{100}'",
+        "step2": "'I = \\\\frac{' + scope.P + ' \\\\times ' + scope.r + ' \\\\times ' + scope.t + '}{100}'",
+        "step3": "'I = \\\\$' + scope.ans"
+      },
+      "questionTemplate": "Calculate the simple interest earned on \\$${scope.P} at $${scope.r}\\%$ per annum for $${scope.t}$ years.\n\n(Give your answer correct to the nearest cent if not exact.)",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "State the simple interest formula: $$${scope.step1}$$",
+        "Substitute the values into the formula: $$${scope.step2}$$",
+        "Calculate the simple interest: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "P_raw": { "type": "randInt", "min": 10, "max": 80 },
+        "r_raw": { "type": "randInt", "min": 15, "max": 75 },
+        "t": { "type": "randInt", "min": 3, "max": 7 }
+      },
+      "derived": {
+        "P": "scope.P_raw * 100",
+        "r_val": "scope.r_raw / 10",
+        "r": "scope.r_val.toString()",
+        "interest_val": "Math.round(scope.P * scope.r_val * scope.t) / 100",
+        "total_val": "Math.round((scope.P + scope.interest_val) * 100) / 100",
+        "ans": "scope.total_val % 1 === 0 ? scope.total_val.toString() : scope.total_val.toFixed(2)",
+        "interest_str": "scope.interest_val % 1 === 0 ? scope.interest_val.toString() : scope.interest_val.toFixed(2)",
+        "step1": "'I = \\\\frac{' + scope.P + ' \\\\times ' + scope.r + ' \\\\times ' + scope.t + '}{100} = \\\\$' + scope.interest_str",
+        "step2": "'A = P + I = \\\\$' + scope.P + ' + \\\\$' + scope.interest_str + ' = \\\\$' + scope.ans"
+      },
+      "questionTemplate": "An amount of \\$${scope.P} is invested at $${scope.r}\\%$ per annum simple interest for $${scope.t}$ years.\n\nCalculate the total amount of the investment at the end of $${scope.t}$ years.\n\n(Give your answer correct to the nearest cent if not exact.)",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Calculate the simple interest earned using $I = \\frac{P r t}{100}$: $$${scope.step1}$$",
+        "Add the interest to the principal to find the total amount: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "P_raw": { "type": "randInt", "min": 20, "max": 90 },
+        "r_raw": { "type": "randInt", "min": 2, "max": 8 },
+        "t": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "P": "scope.P_raw * 100",
+        "r": "scope.r_raw.toString()",
+        "amount_val": "Math.round(scope.P * Math.pow(1 + scope.r_raw / 100, scope.t) * 100) / 100",
+        "ans": "scope.amount_val % 1 === 0 ? scope.amount_val.toString() : scope.amount_val.toFixed(2)",
+        "step1": "'A = P \\\\left(1 + \\\\frac{r}{100}\\\\right)^t'",
+        "step2": "'A = \\\\$' + scope.P + ' \\\\times \\\\left(1 + \\\\frac{' + scope.r + '}{100}\\\\right)^' + scope.t",
+        "step3": "'A = \\\\$' + scope.ans"
+      },
+      "questionTemplate": "\\$${scope.P} is deposited into a bank account earning compound interest at $${scope.r}\\%$ per annum.\n\nCalculate the total amount in the account after $${scope.t}$ years.\n\n(Give your answer correct to the nearest cent if not exact.)",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "State the compound interest formula for total amount: $$${scope.step1}$$",
+        "Substitute the given values into the formula: $$${scope.step2}$$",
+        "Calculate the total amount: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "P_raw": { "type": "randInt", "min": 15, "max": 85 },
+        "r_raw": { "type": "randInt", "min": 25, "max": 65 },
+        "t": { "type": "randInt", "min": 3, "max": 5 }
+      },
+      "derived": {
+        "P": "scope.P_raw * 100",
+        "r_val": "scope.r_raw / 10",
+        "r": "scope.r_val.toString()",
+        "total_amount": "Math.round(scope.P * Math.pow(1 + scope.r_val / 100, scope.t) * 100) / 100",
+        "interest_val": "Math.round((scope.total_amount - scope.P) * 100) / 100",
+        "ans": "scope.interest_val % 1 === 0 ? scope.interest_val.toString() : scope.interest_val.toFixed(2)",
+        "amount_str": "scope.total_amount % 1 === 0 ? scope.total_amount.toString() : scope.total_amount.toFixed(2)",
+        "step1": "'A = \\\\$' + scope.P + ' \\\\times \\\\left(1 + \\\\frac{' + scope.r + '}{100}\\\\right)^' + scope.t",
+        "step2": "'A = \\\\$' + scope.amount_str",
+        "step3": "'I = A - P = \\\\$' + scope.amount_str + ' - \\\\$' + scope.P + ' = \\\\$' + scope.ans"
+      },
+      "questionTemplate": "\\$${scope.P} is invested for $${scope.t}$ years at an interest rate of $${scope.r}\\%$ per annum compound interest.\n\nCalculate the compound interest earned.\n\n(Give your answer correct to the nearest cent if not exact.)",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Find the total amount $A$ using the compound interest formula: $$${scope.step1}$$",
+        "Evaluate $A$: $$${scope.step2}$$",
+        "Subtract the principal from the total amount to find the interest earned: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "P_raw": { "type": "randInt", "min": 25, "max": 95 },
+        "r_raw": { "type": "randInt", "min": 32, "max": 58 },
+        "t": { "type": "randInt", "min": 4, "max": 6 }
+      },
+      "derived": {
+        "P": "scope.P_raw * 100",
+        "r_val": "scope.r_raw / 10",
+        "r_str": "scope.r_val.toString()",
+        "total_amount": "Math.round(scope.P * Math.pow(1 + scope.r_val / 100, scope.t) * 100) / 100",
+        "interest_val": "Math.round((scope.total_amount - scope.P) * 100) / 100",
+        "ans": "scope.interest_val % 1 === 0 ? scope.interest_val.toString() : scope.interest_val.toFixed(2)",
+        "amount_str": "scope.total_amount % 1 === 0 ? scope.total_amount.toString() : scope.total_amount.toFixed(2)",
+        "step1": "'A = \\\\$' + scope.P + ' \\\\times \\\\left(1 + \\\\frac{' + scope.r_str + '}{100}\\\\right)^' + scope.t",
+        "step2": "'A = \\\\$' + scope.amount_str",
+        "step3": "'I = A - P = \\\\$' + scope.amount_str + ' - \\\\$' + scope.P + ' = \\\\$' + scope.ans"
+      },
+      "questionTemplate": "An investment of \\$${scope.P} earns compound interest at $${scope.r_str}\\%$ per annum.\n\nCalculate the total compound interest earned after $${scope.t}$ years.\n\n(Give your answer correct to the nearest cent if not exact.)",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Calculate the total amount $A$: $$${scope.step1}$$",
+        "Evaluate the total amount: $$${scope.step2}$$",
+        "Subtract the principal to find the compound interest earned: $$${scope.step3}$$"
+      ]
+    }
+  ]
+}

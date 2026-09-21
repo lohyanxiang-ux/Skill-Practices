@@ -1,0 +1,237 @@
+{
+  "skillTitle": "Ratio",
+  "keypad": [
+    ":",
+    "/",
+    ".",
+    "7",
+    "8",
+    "9",
+    "4",
+    "5",
+    "6",
+    "1",
+    "2",
+    "3",
+    "0",
+    "⌫",
+    "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "mult": { "type": "randInt", "min": 2, "max": 12 },
+        "r1": { "type": "randInt", "min": 2, "max": 9 },
+        "r2_raw": { "type": "randInt", "min": 2, "max": 9 }
+      },
+      "derived": {
+        "r2": "scope.r2_raw === scope.r1 ? scope.r1 + 1 : scope.r2_raw",
+        "a": "scope.mult * scope.r1",
+        "b": "scope.mult * scope.r2",
+        "gcd": "((x, y) => { while (y) { let t = y; y = x % y; x = t; } return x; })(scope.a, scope.b)",
+        "s1": "scope.a / scope.gcd",
+        "s2": "scope.b / scope.gcd",
+        "ans": "scope.s1 + ':' + scope.s2",
+        "step1": "'\\\\text{Using a calculator, simplify the fraction: } \\\\frac{' + scope.a + '}{' + scope.b + '} = \\\\frac{' + scope.s1 + '}{' + scope.s2 + '}'",
+        "step2": "'\\\\text{So, the simplified ratio is } ' + scope.s1 + ' : ' + scope.s2"
+      },
+      "questionTemplate": "Express the ratio $${scope.a} : ${scope.b}$ in simplest form.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "$$${scope.step1}$$",
+        "$$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "m": { "type": "randInt", "min": 2, "max": 6 },
+        "p1": { "type": "randInt", "min": 2, "max": 7 },
+        "p2": { "type": "randInt", "min": 2, "max": 7 },
+        "p3": { "type": "randInt", "min": 2, "max": 7 }
+      },
+      "derived": {
+        "a": "scope.m * scope.p1",
+        "b": "scope.m * scope.p2",
+        "c": "scope.m * scope.p3",
+        "gcd": "((x, y, z) => { const g = (u, v) => v === 0 ? u : g(v, u % v); return g(g(x, y), z); })(scope.a, scope.b, scope.c)",
+        "s1": "scope.a / scope.gcd",
+        "s2": "scope.b / scope.gcd",
+        "s3": "scope.c / scope.gcd",
+        "ans": "scope.s1 + ':' + scope.s2 + ':' + scope.s3",
+        "step1": "'\\\\text{Divide all three terms by their highest common factor, }' + scope.gcd + ':'",
+        "step2": "'\\\\frac{' + scope.a + '}{' + scope.gcd + '} : \\\\frac{' + scope.b + '}{' + scope.gcd + '} : \\\\frac{' + scope.c + '}{' + scope.gcd + '} = ' + scope.s1 + ' : ' + scope.s2 + ' : ' + scope.s3"
+      },
+      "questionTemplate": "Express the ratio $${scope.a} : ${scope.b} : ${scope.c}$ in simplest form.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "$$${scope.step2}$$",
+        "Simplest form: $${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "cm_mult": { "type": "randInt", "min": 4, "max": 18 },
+        "m_val": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "a_cm": "scope.cm_mult * 10",
+        "b_m": "scope.m_val",
+        "b_cm": "scope.b_m * 100",
+        "gcd": "((x, y) => { while (y) { let t = y; y = x % y; x = t; } return x; })(scope.a_cm, scope.b_cm)",
+        "s1": "scope.a_cm / scope.gcd",
+        "s2": "scope.b_cm / scope.gcd",
+        "ans": "scope.s1 + ':' + scope.s2",
+        "step1": "'\\\\text{Convert }' + scope.b_m + '\\\\text{ m to cm: }' + scope.b_m + '\\\\times 100 = ' + scope.b_cm + '\\\\text{ cm}'",
+        "step2": "'\\\\text{Write the ratio using the same units: }' + scope.a_cm + ' : ' + scope.b_cm",
+        "step3": "'\\\\text{Using a calculator, simplify the fraction: } \\\\frac{' + scope.a_cm + '}{' + scope.b_cm + '} = \\\\frac{' + scope.s1 + '}{' + scope.s2 + '}'",
+        "step4": "'\\\\text{So, the simplified ratio is } ' + scope.s1 + ' : ' + scope.s2"
+      },
+      "questionTemplate": "Express the ratio $${scope.a_cm}\\text{ cm} : ${scope.b_m}\\text{ m}$ in simplest form.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Convert both quantities to the same unit (centimetres): $$${scope.step1}$$",
+        "Write the ratio with common units: $$${scope.step2}$$",
+        "Simplify to lowest terms: $$${scope.step3}$$ $$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "r1": { "type": "randInt", "min": 2, "max": 5 },
+        "r2": { "type": "randInt", "min": 2, "max": 5 },
+        "unit_val": { "type": "randInt", "min": 15, "max": 80 }
+      },
+      "derived": {
+        "total_parts": "scope.r1 + scope.r2",
+        "total_amount": "scope.total_parts * scope.unit_val",
+        "share2": "scope.r2 * scope.unit_val",
+        "ans": "scope.share2.toString()",
+        "step1": "'\\\\text{Total parts} = ' + scope.r1 + ' + ' + scope.r2 + ' = ' + scope.total_parts",
+        "step2": "'\\\\text{Value of 1 part} = \\\\$' + scope.total_amount + ' \\\\div ' + scope.total_parts + ' = \\\\$' + scope.unit_val",
+        "step3": "'\\\\text{Mei Lin}\\\\text{\\'s share (' + scope.r2 + ' parts)} = ' + scope.r2 + ' \\\\times \\\\$' + scope.unit_val + ' = \\\\$' + scope.share2"
+      },
+      "questionTemplate": "Radiyah and Mei Lin divide $\\$${scope.total_amount}$ between them in the ratio $${scope.r1} : ${scope.r2}$. How much money does Mei Lin receive?",
+      "inputs": [
+        { "label": "$", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Find the total number of equal parts: $$${scope.step1}$$",
+        "Calculate the amount per part: $$${scope.step2}$$",
+        "Calculate Mei Lin's share: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "scale_k": { "type": "randInt", "min": 2, "max": 8 },
+        "map_cm": { "type": "randInt", "min": 3, "max": 15 }
+      },
+      "derived": {
+        "n": "scope.scale_k * 10000",
+        "km_per_cm": "parseFloat((scope.n / 100000).toFixed(6))",
+        "actual_km": "parseFloat((scope.map_cm * scope.km_per_cm).toFixed(6))",
+        "ans": "scope.actual_km.toString()",
+        "step1": "'1\\\\text{ cm on map} = ' + scope.n + '\\\\text{ cm in reality}'",
+        "step2": "'1\\\\text{ cm on map} = ' + scope.n + ' \\\\div 100\\\\,000 = ' + scope.km_per_cm + '\\\\text{ km}'",
+        "step3": "'\\\\text{Actual length} = ' + scope.map_cm + ' \\\\times ' + scope.km_per_cm + ' = ' + scope.actual_km + '\\\\text{ km}'"
+      },
+      "questionTemplate": "A map is drawn to a scale of $1 : ${scope.n}$. A road marked on the map is $${scope.map_cm}\\text{ cm}$ long. Find the actual length of the road in kilometres.",
+      "inputs": [
+        { "label": "km", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Convert the map scale unit to kilometres ($1\\text{ km} = 100\\,000\\text{ cm}$): $$${scope.step1}$$ $$${scope.step2}$$",
+        "Multiply by map distance to find actual length: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "scale_k": { "type": "randInt", "min": 2, "max": 8 },
+        "map_cm_val": { "type": "randInt", "min": 3, "max": 15 }
+      },
+      "derived": {
+        "n": "scope.scale_k * 10000",
+        "km_per_cm": "parseFloat((scope.n / 100000).toFixed(6))",
+        "actual_km": "parseFloat((scope.map_cm_val * scope.km_per_cm).toFixed(6))",
+        "ans": "scope.map_cm_val.toString()",
+        "step1": "'1\\\\text{ cm} = ' + scope.n + ' \\\\div 100\\\\,000 = ' + scope.km_per_cm + '\\\\text{ km}'",
+        "step2": "'1\\\\text{ km} = \\\\frac{1}{' + scope.km_per_cm + '}\\\\text{ cm}'",
+        "step3": "'\\\\text{Length on map} = \\\\frac{1}{' + scope.km_per_cm + '} \\\\times ' + scope.actual_km + ' = ' + scope.map_cm_val + '\\\\text{ cm}'"
+      },
+      "questionTemplate": "A map is drawn to a scale of $1 : ${scope.n}$. A canal has an actual length of $${scope.actual_km}\\text{ km}$. Find its length on the map in centimetres.",
+      "inputs": [
+        { "label": "cm", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Convert the map scale unit to kilometres ($1\\text{ km} = 100\\,000\\text{ cm}$): $$${scope.step1}$$",
+        "Find the length on map corresponding to $1\\text{ km}$: $$${scope.step2}$$",
+        "Multiply by actual length to find map length: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "scale_k": { "type": "randInt", "min": 2, "max": 5 },
+        "map_area": { "type": "randInt", "min": 2, "max": 12 }
+      },
+      "derived": {
+        "n": "scope.scale_k * 10000",
+        "km_per_cm": "parseFloat((scope.n / 100000).toFixed(6))",
+        "km2_per_cm2": "parseFloat((Math.pow(scope.km_per_cm, 2)).toFixed(6))",
+        "actual_area": "parseFloat((scope.map_area * scope.km2_per_cm2).toFixed(6))",
+        "ans": "scope.actual_area.toString()",
+        "step1": "'1\\\\text{ cm} = ' + scope.n + ' \\\\div 100\\\\,000 = ' + scope.km_per_cm + '\\\\text{ km}'",
+        "step2": "'1\\\\text{ cm}^2 = (' + scope.km_per_cm + '\\\\text{ km})^2 = ' + scope.km2_per_cm2 + '\\\\text{ km}^2'",
+        "step3": "'\\\\text{Actual area} = ' + scope.map_area + ' \\\\times ' + scope.km2_per_cm2 + ' = ' + scope.actual_area + '\\\\text{ km}^2'"
+      },
+      "questionTemplate": "A map with scale $1 : ${scope.n}$ shows a park. The area of the park on the map is $${scope.map_area}\\text{ cm}^2$. Find the actual area of the park in square kilometres.",
+      "inputs": [
+        { "label": "km²", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Determine the linear scale in kilometres: $$${scope.step1}$$",
+        "Square both sides to find the area scale: $$${scope.step2}$$",
+        "Calculate actual area: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "scale_k": { "type": "randInt", "min": 2, "max": 5 },
+        "map_area_val": { "type": "randInt", "min": 2, "max": 12 }
+      },
+      "derived": {
+        "n": "scope.scale_k * 10000",
+        "km_per_cm": "parseFloat((scope.n / 100000).toFixed(6))",
+        "km2_per_cm2": "parseFloat((Math.pow(scope.km_per_cm, 2)).toFixed(6))",
+        "actual_area": "parseFloat((scope.map_area_val * scope.km2_per_cm2).toFixed(6))",
+        "ans": "scope.map_area_val.toString()",
+        "step1": "'1\\\\text{ cm} = ' + scope.n + ' \\\\div 100\\\\,000 = ' + scope.km_per_cm + '\\\\text{ km}'",
+        "step2": "'1\\\\text{ cm}^2 = (' + scope.km_per_cm + '\\\\text{ km})^2 = ' + scope.km2_per_cm2 + '\\\\text{ km}^2'",
+        "step3": "'1\\\\text{ km}^2 = \\\\frac{1}{' + scope.km2_per_cm2 + '}\\\\text{ cm}^2'",
+        "step4": "'\\\\text{Area on map} = \\\\frac{1}{' + scope.km2_per_cm2 + '} \\\\times ' + scope.actual_area + ' = ' + scope.map_area_val + '\\\\text{ cm}^2'"
+      },
+      "questionTemplate": "A map with scale $1 : ${scope.n}$ shows a lake. The actual area of the lake is $${scope.actual_area}\\text{ km}^2$. Find the area of the lake on the map in square centimetres.",
+      "inputs": [
+        { "label": "cm²", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Determine the linear scale in kilometres: $$${scope.step1}$$",
+        "Square both sides to find the area scale: $$${scope.step2}$$",
+        "Find the area on map corresponding to $1\\text{ km}^2$: $$${scope.step3}$$",
+        "Multiply by actual area to find map area: $$${scope.step4}$$"
+      ]
+    }
+  ]
+}

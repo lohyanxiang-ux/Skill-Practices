@@ -1,0 +1,216 @@
+{
+  "skillTitle": "Rate & Speed",
+  "keypad": [
+    ":", ".", "/",
+    "7", "8", "9",
+    "4", "5", "6",
+    "1", "2", "3",
+    "0", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "p_unit": { "type": "randInt", "min": 1, "max": 3 },
+        "t1": { "type": "randInt", "min": 3, "max": 6 },
+        "t2_factor": { "type": "randInt", "min": 2, "max": 4 }
+      },
+      "derived": {
+        "t1_mins": "scope.t1 * 10",
+        "t2_mins": "scope.t1_mins * scope.t2_factor",
+        "pages_per_10min": "scope.p_unit * 15",
+        "p1": "scope.pages_per_10min * scope.t1",
+        "rate_per_min": "scope.p1 / scope.t1_mins",
+        "ans_num": "scope.rate_per_min * scope.t2_mins",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'\\\\text{Rate} = \\\\frac{' + scope.p1 + '\\\\text{ pages}}{' + scope.t1_mins + '\\\\text{ minutes}} = ' + scope.rate_per_min + '\\\\text{ pages/minute}'",
+        "step2": "'\\\\text{Pages in ' + scope.t2_mins + ' minutes} = ' + scope.rate_per_min + ' \\\\times ' + scope.t2_mins + ' = ' + scope.ans"
+      },
+      "questionTemplate": "Hakim reads ${scope.p1} pages in ${scope.t1_mins} minutes. How many pages can he read in ${scope.t2_mins} minutes if he continues at the same rate?",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Find the reading rate per minute: $$${scope.step1}$$",
+        "Multiply the rate by the target time: $$${scope.step2}$$"
+      ]
+    },
+{
+      "level": 1,
+      "variables": {
+        "rate_val": { "type": "randInt", "min": 15, "max": 45 },
+        "hours": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "cost": "scope.rate_val * scope.hours",
+        "ans": "scope.rate_val.toString()",
+        "step1": "'\\\\text{Rate} = \\\\frac{\\\\$' + scope.cost + '}{' + scope.hours + '\\\\text{ hours}}'",
+        "step2": "'\\\\text{Rate} = \\\\$' + scope.rate_val + '\\\\text{ per hour}'"
+      },
+      "questionTemplate": "Mr Lim paid $\\$$${scope.cost} for ${scope.hours} hours of piano lessons. Calculate his tuition rate in dollars per hour.",
+      "inputs": [
+        { "label": "Rate = $", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Calculate the cost per hour by dividing total cost by number of hours: $$${scope.step1}$$",
+        "Simplify: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "speed": { "type": "randInt", "min": 12, "max": 30 },
+        "hours": { "type": "randInt", "min": 1, "max": 2 },
+        "mins_idx": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "mins": "scope.mins_idx === 1 ? 15 : (scope.mins_idx === 2 ? 20 : (scope.mins_idx === 3 ? 30 : 45))",
+        "time_hours": "scope.hours + (scope.mins / 60)",
+        "dist_val": "Math.round(scope.speed * scope.time_hours * 100) / 100",
+        "ans": "scope.dist_val.toString()",
+        "step1": "'\\\\text{Time in hours} = ' + scope.hours + ' \\\\text{ h} + \\\\frac{' + scope.mins + '}{60}\\\\text{ h} = ' + scope.time_hours + '\\\\text{ h}'",
+        "step2": "'\\\\text{Distance} = \\\\text{Speed} \\\\times \\\\text{Time} = ' + scope.speed + ' \\\\times ' + scope.time_hours + ' = ' + scope.dist_val + '\\\\text{ km}'"
+      },
+      "questionTemplate": "Janahan cycles at a speed of $${scope.speed}\\text{ km/h}$. Calculate how far Janahan cycles in ${scope.hours} hour ${scope.mins} minutes.",
+      "inputs": [
+        { "label": "Distance (km) =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Convert the time into hours: $$${scope.step1}$$",
+        "Calculate the distance travelled: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k": { "type": "randInt", "min": 2, "max": 10 }
+      },
+      "derived": {
+        "kmh": "scope.k * 18",
+        "ms": "scope.k * 5",
+        "ans": "scope.ms.toString()",
+        "step1": "scope.kmh + '\\\\text{ km/h} = \\\\frac{' + scope.kmh + ' \\\\times 1\\\\text{ km}}{1\\\\text{ h}}'",
+        "step2": "'1\\\\text{ km} = 1000\\\\text{ m}, \\\\quad 1\\\\text{ h} = 3600\\\\text{ s}'",
+        "step3": "'\\\\frac{' + scope.kmh + ' \\\\times 1000\\\\text{ m}}{3600\\\\text{ s}} = ' + scope.ms + '\\\\text{ m/s}'"
+      },
+      "questionTemplate": "Convert a speed of $${scope.kmh}\\text{ km/h}$ into $\\text{m/s}$.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Step 1: Write $$${scope.step1}$$",
+        "Step 2: Write $$${scope.step2}$$",
+        "Step 3: Evaluate $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k": { "type": "randInt", "min": 2, "max": 9 },
+        "time_h": { "type": "randInt", "min": 2, "max": 4 }
+      },
+      "derived": {
+        "speed_kmh": "scope.k * 18",
+        "dist": "scope.speed_kmh * scope.time_h",
+        "ms": "scope.k * 5",
+        "ans": "scope.ms.toString()",
+        "step_speed": "'\\\\text{Speed in km/h} = \\\\frac{' + scope.dist + '\\\\text{ km}}{' + scope.time_h + '\\\\text{ h}} = ' + scope.speed_kmh + '\\\\text{ km/h}'",
+        "step1": "scope.speed_kmh + '\\\\text{ km/h} = \\\\frac{' + scope.speed_kmh + ' \\\\times 1\\\\text{ km}}{1\\\\text{ h}}'",
+        "step2": "'1\\\\text{ km} = 1000\\\\text{ m}, \\\\quad 1\\\\text{ h} = 3600\\\\text{ s}'",
+        "step3": "'\\\\frac{' + scope.speed_kmh + ' \\\\times 1000\\\\text{ m}}{3600\\\\text{ s}} = ' + scope.ms + '\\\\text{ m/s}'"
+      },
+      "questionTemplate": "A car travels $${scope.dist}\\text{ km}$ in $${scope.time_h}\\text{ hours}$. Calculate the car's speed in $\\text{m/s}$.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Calculate the speed in km/h: $$${scope.step_speed}$$",
+        "Step 1: Write $$${scope.step1}$$",
+        "Step 2: Write $$${scope.step2}$$",
+        "Step 3: Evaluate $$${scope.step3}$$"
+      ]
+    },
+{
+  "level": 2,
+  "variables": {
+    "rate_sec": { "type": "randInt", "min": 5, "max": 25 }
+  },
+  "derived": {
+    "flow_cm3": "scope.rate_sec * 10",
+    "litres_per_min": "(scope.flow_cm3 * 60 / 1000).toFixed(1)",
+    "ans": "parseFloat(scope.litres_per_min).toString()",
+    "step1": "scope.flow_cm3 + '\\\\text{ cm}^3\\\\text{ per second} = \\\\frac{' + scope.flow_cm3 + '\\\\text{ cm}^3}{1\\\\text{ s}}'",
+    "step2": "'1\\\\text{ cm}^3 = \\\\frac{1}{1000}\\\\text{ l} \\\\quad \\\\text{and} \\\\quad 1\\\\text{ s} = \\\\frac{1}{60}\\\\text{ min}'",
+    "step3": "'\\\\frac{' + scope.flow_cm3 + ' \\\\times \\\\frac{1}{1000}\\\\text{ l}}{\\\\frac{1}{60}\\\\text{ min}} = ' + scope.ans + '\\\\text{ litres/min}'"
+  },
+  "questionTemplate": "Water flows from a tap at a rate of $${scope.flow_cm3}\\text{ cm}^3\\text{ per second}$. Convert this rate to $\\text{litres per minute}$.",
+  "inputs": [
+    { "label": "=", "answer": "${scope.ans}" }
+  ],
+  "steps": [
+    "Step 1: Write $$${scope.step1}$$",
+    "Step 2: Note unit conversions $$${scope.step2}$$",
+    "Step 3: Evaluate $$${scope.step3}$$"
+  ]
+},
+{
+      "level": 3,
+      "variables": {
+        "speed_target": { "type": "randInt", "min": 50, "max": 80 },
+        "hours_total": { "type": "randInt", "min": 2, "max": 3 },
+        "d1_raw": { "type": "randInt", "min": 30, "max": 60 },
+        "t1_raw": { "type": "randInt", "min": 30, "max": 45 },
+        "rest_raw": { "type": "randInt", "min": 10, "max": 20 }
+      },
+      "derived": {
+        "total_dist": "scope.speed_target * scope.hours_total",
+        "d1": "Math.min(scope.d1_raw, scope.total_dist - 20)",
+        "d2": "scope.total_dist - scope.d1",
+        "total_min": "scope.hours_total * 60",
+        "t1": "scope.t1_raw",
+        "t_rest": "scope.rest_raw",
+        "t2": "scope.total_min - scope.t1 - scope.t_rest",
+        "ans": "scope.speed_target.toString()",
+        "step1": "'\\\\text{Total Distance} = ' + scope.d1 + ' + ' + scope.d2 + ' = ' + scope.total_dist + '\\\\text{ km}'",
+        "step2": "'\\\\text{Total Time} = ' + scope.t1 + ' + ' + scope.t_rest + ' + ' + scope.t2 + ' = ' + scope.total_min + '\\\\text{ minutes} = ' + scope.hours_total + '\\\\text{ hours}'",
+        "step3": "'\\\\text{Average Speed} = \\\\frac{' + scope.total_dist + '\\\\text{ km}}{' + scope.hours_total + '\\\\text{ h}} = ' + scope.speed_target + '\\\\text{ km/h}'"
+      },
+      "questionTemplate": "A driver travelled $${scope.d1}\\text{ km}$ in $${scope.t1}\\text{ minutes}$, rested for $${scope.t_rest}\\text{ minutes}$, and then drove another $${scope.d2}\\text{ km}$ in $${scope.t2}\\text{ minutes}$. Calculate the driver's average speed in $\\text{km/h}$ for the entire journey.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Find the total distance covered: $$${scope.step1}$$",
+        "Find the total duration including rest time in hours: $$${scope.step2}$$",
+        "Calculate average speed using $\\text{Average Speed} = \\frac{\\text{Total Distance}}{\\text{Total Time}}$: $$${scope.step3}$$"
+      ]
+    },
+
+
+    {
+      "level": 3,
+      "variables": {
+        "speed": { "type": "randInt", "min": 30, "max": 60 },
+        "hours_part": { "type": "randInt", "min": 1, "max": 2 },
+        "mins_part": { "type": "randInt", "min": 1, "max": 3 }
+      },
+      "derived": {
+        "mins_val": "scope.mins_part * 15",
+        "dist": "scope.speed * scope.hours_part + (scope.speed * scope.mins_val) / 60",
+        "ans": "scope.hours_part.toString() + ':' + scope.mins_val.toString()",
+        "hours_dec": "scope.hours_part + (scope.mins_val / 60)",
+        "step1": "'\\\\text{Time} = \\\\frac{\\\\text{Distance}}{\\\\text{Speed}} = \\\\frac{' + scope.dist + '}{' + scope.speed + '} = ' + scope.hours_dec + '\\\\text{ hours}'",
+        "step2": "scope.hours_part + '\\\\text{ hour(s)} + (' + (scope.mins_val / 60) + ' \\\\times 60)\\\\text{ minutes} = ' + scope.hours_part + '\\\\text{ h } ' + scope.mins_val + '\\\\text{ min}'"
+      },
+      "questionTemplate": "A cyclist cycles at a speed of $${scope.speed}\\text{ km/h}$. Calculate the time taken for the cyclist to cycle $${scope.dist}\\text{ km}$. Give your answer in hours and minutes formatted as $\\text{h:min}$ (e.g. 1:15).",
+      "inputs": [
+        { "label": "Time (h:min) =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Calculate time taken in hours: $$${scope.step1}$$",
+        "Convert the fractional hour to minutes: $$${scope.step2}$$",
+        "Write answer in $\\text{h:min}$ format: $${scope.ans}$"
+      ]
+    }
+  ]
+}
