@@ -239,6 +239,28 @@
     #question-text {
       font-size: 1.05rem;
       line-height: 1.5;
+      text-align: left;
+    }
+
+    /* Force diagrams to be block elements with text on the next line below, left aligned */
+    #question-text img,
+    #question-text svg,
+    #question-text canvas,
+    #question-text figure,
+    #question-text .diagram,
+    #question-text .diagram-container,
+    #question-text .svg-container {
+      display: block;
+      margin: 0 0 12px 0;
+      max-width: 100%;
+      height: auto;
+      clear: both;
+    }
+
+    #question-text p {
+      margin-top: 0;
+      margin-bottom: 8px;
+      text-align: left;
     }
 
     .hint-btn {
@@ -398,9 +420,10 @@
       50% { opacity: 0; }
     }
 
+    /* Enforce 4-column layout */
     .keypad-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 6px;
       margin-bottom: 8px;
     }
@@ -557,11 +580,17 @@
         <div class="dropdown-content" id="header-level-dropdown-content" onclick="event.stopPropagation()"></div>
       </div>
 
-      <!-- 2nd Dropdown: Select Skills (Filterable by Year & Strand) -->
+      <!-- 2nd Dropdown: Select Skills (Filterable by Year, Strand & Search Keyword) -->
       <div class="dropdown-wrapper" id="skills-dropdown-wrapper">
         <button class="dropdown-btn" id="skills-dropdown-btn" onclick="toggleDropdown('skills-dropdown-content', event)">Select Level First</button>
         <div class="dropdown-content" id="skills-dropdown-content" onclick="event.stopPropagation()">
           <div id="skills-filter-container" onclick="event.stopPropagation()" style="position: sticky; top: 0; background: #f8f9fa; border-bottom: 1px solid #e0e0e0; padding: 8px 10px; z-index: 10;">
+            
+            <!-- Skill Name Search Input -->
+            <div style="margin-bottom: 6px;">
+              <input type="text" id="searchSkill" placeholder="Search skill name..." oninput="renderSkillsList()" onclick="event.stopPropagation()" style="width: 100%; box-sizing: border-box; font-size: 0.75rem; padding: 5px 8px; border-radius: 4px; border: 1px solid #ccc; color: #212529; background-color: #fff;">
+            </div>
+
             <div style="display: flex; gap: 6px; margin-bottom: 6px;">
               <select id="filterYear" style="flex: 1; min-width: 0; font-size: 0.75rem; padding: 4px; border-radius: 4px; border: 1px solid #ccc; color: #212529; background-color: #fff;" onchange="renderSkillsList()">
                 <option value="All">All Years</option>
@@ -1388,7 +1417,7 @@ function selectHeaderLevel(lvl) {
   loadQuestion();
 }
 
-// Render filtered list by checking Level, Year & Strand
+// Render filtered list by checking Level, Year, Strand & Search Input
 function renderSkillsList() {
   const container = document.getElementById('skillsListContainer');
   if (!container) return;
@@ -1401,6 +1430,7 @@ function renderSkillsList() {
 
   const yearVal = document.getElementById('filterYear') ? document.getElementById('filterYear').value : 'All';
   const strandVal = document.getElementById('filterStrand') ? document.getElementById('filterStrand').value : 'All';
+  const searchVal = document.getElementById('searchSkill') ? document.getElementById('searchSkill').value.trim().toLowerCase() : '';
 
   container.innerHTML = '';
 
@@ -1412,8 +1442,9 @@ function renderSkillsList() {
     const matchYear = (yearVal === 'All' || yearVal === 'ALL' || skillYears.includes(yearVal));
     const matchLevel = skillLevels.includes(selectedHeaderLevelFilter);
     const matchStrand = (strandVal === 'All' || strandVal === 'ALL' || skillStrands.includes(strandVal));
+    const matchSearch = !searchVal || (skill.title && skill.title.toLowerCase().includes(searchVal));
 
-    return matchYear && matchLevel && matchStrand;
+    return matchYear && matchLevel && matchStrand && matchSearch;
   });
 
   if (filtered.length === 0) {
@@ -1486,6 +1517,7 @@ function setAllFilteredSkills(enableState) {
 
   const yearVal = document.getElementById('filterYear') ? document.getElementById('filterYear').value : 'All';
   const strandVal = document.getElementById('filterStrand') ? document.getElementById('filterStrand').value : 'All';
+  const searchVal = document.getElementById('searchSkill') ? document.getElementById('searchSkill').value.trim().toLowerCase() : '';
 
   const filtered = masterSkillsIndex.filter(skill => {
     const skillYears = parseTags(skill.year);
@@ -1495,8 +1527,9 @@ function setAllFilteredSkills(enableState) {
     const matchYear = (yearVal === 'All' || yearVal === 'ALL' || skillYears.includes(yearVal));
     const matchLevel = skillLevels.includes(selectedHeaderLevelFilter);
     const matchStrand = (strandVal === 'All' || strandVal === 'ALL' || skillStrands.includes(strandVal));
+    const matchSearch = !searchVal || (skill.title && skill.title.toLowerCase().includes(searchVal));
 
-    return matchYear && matchLevel && matchStrand;
+    return matchYear && matchLevel && matchStrand && matchSearch;
   });
 
   const promises = filtered.map(async (skill) => {
@@ -1882,11 +1915,8 @@ function renderKeypad() {
   keys = keys.filter(k => k !== '←' && k !== '→');
   keys.push('←', '→');
 
-  if (keys.length > 15) {
-    grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
-  } else {
-    grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
-  }
+  // Enforce 4 columns unconditionally
+  grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
 
   keys.forEach((key) => {
     const btn = document.createElement('button');
