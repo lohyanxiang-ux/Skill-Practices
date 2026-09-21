@@ -1,0 +1,289 @@
+{
+  "skillTitle": "Multiplication & Division of Algebraic Fractions",
+  "keypad": [
+  "x",
+  "y",
+  "(",
+  ")",
+  "a",
+  "b",
+  "c",
+  "^2",
+  "7",
+  "8",
+  "9",
+  "/",
+  "4",
+  "5",
+  "6",
+  "+",
+  "1",
+  "2",
+  "3",
+  "-",
+  "Clear",
+  "0",
+  ".",
+  "⌫"
+],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 6 },
+        "b": { "type": "randInt", "min": 2, "max": 6 },
+        "c": { "type": "randInt", "min": 2, "max": 6 },
+        "d": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "num_raw": "scope.a * scope.c",
+        "den_raw": "scope.b * scope.d",
+        "g": "((a, b) => { a = Math.abs(a); b = Math.abs(b); while(b) { let t = b; b = a % b; a = t; } return a; })(scope.num_raw, scope.den_raw)",
+        "num": "scope.num_raw / scope.g",
+        "den": "scope.den_raw / scope.g",
+        "expr": "'\\\\frac{' + scope.a + 'x}{' + scope.b + '} \\\\times \\\\frac{' + scope.c + 'y}{' + scope.d + 'x^2}'",
+        "step1": "'\\\\frac{' + scope.num_raw + 'xy}{' + scope.den_raw + 'x^2}'",
+        "num_str": "scope.num === 1 ? 'y' : scope.num + 'y'",
+        "den_str": "scope.den === 1 ? 'x' : scope.den + 'x'",
+        "step2": "'\\\\frac{' + scope.num_str + '}{' + scope.den_str + '}'",
+        "ans": "scope.num_str + '/(' + scope.den_str + ')'"
+      },
+      "questionTemplate": "Simplify the algebraic expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Multiply numerators and denominators respectively: $$${scope.step1}$$",
+        "Simplify by canceling common terms and factors: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 6 },
+        "b": { "type": "randInt", "min": 2, "max": 6 },
+        "c": { "type": "randInt", "min": 2, "max": 6 },
+        "d": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "num_raw": "scope.a * scope.d",
+        "den_raw": "scope.b * scope.c",
+        "g": "((a, b) => { a = Math.abs(a); b = Math.abs(b); while(b) { let t = b; b = a % b; a = t; } return a; })(scope.num_raw, scope.den_raw)",
+        "num": "scope.num_raw / scope.g",
+        "den": "scope.den_raw / scope.g",
+        "expr": "'\\\\frac{' + scope.a + 'x}{' + scope.b + 'y} \\\\div \\\\frac{' + scope.c + 'x^2}{' + scope.d + '}'",
+        "kcf": "'\\\\frac{' + scope.a + 'x}{' + scope.b + 'y} \\\\times \\\\frac{' + scope.d + '}{' + scope.c + 'x^2}'",
+        "step2": "'\\\\frac{' + scope.num_raw + 'x}{' + scope.den_raw + 'x^2y}'",
+        "num_str": "scope.num === 1 ? '1' : scope.num.toString()",
+        "den_str": "scope.den === 1 ? 'xy' : scope.den + 'xy'",
+        "step3": "'\\\\frac{' + scope.num_str + '}{' + scope.den_str + '}'",
+        "ans": "scope.num_str + '/(' + scope.den_str + ')'"
+      },
+      "questionTemplate": "Simplify the algebraic expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply Keep-Change-Flip (KCF) to convert division into multiplication: $$${scope.kcf}$$",
+        "Multiply numerators and denominators respectively: $$${scope.step2}$$",
+        "Simplify by canceling common terms: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 5 },
+        "b": { "type": "randInt", "min": 2, "max": 5 },
+        "c": { "type": "randInt", "min": 2, "max": 5 },
+        "d": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "num_raw": "scope.a * scope.d",
+        "den_raw": "scope.b * scope.c",
+        "g": "((a, b) => { a = Math.abs(a); b = Math.abs(b); while(b) { let t = b; b = a % b; a = t; } return a; })(scope.num_raw, scope.den_raw)",
+        "num": "scope.num_raw / scope.g",
+        "den": "scope.den_raw / scope.g",
+        "expr": "'\\\\frac{' + scope.a + 'ab}{' + scope.b + 'c} \\\\div \\\\frac{' + scope.c + 'b}{' + scope.d + 'c^2}'",
+        "kcf": "'\\\\frac{' + scope.a + 'ab}{' + scope.b + 'c} \\\\times \\\\frac{' + scope.d + 'c^2}{' + scope.c + 'b}'",
+        "step2": "'\\\\frac{' + scope.num_raw + 'abc^2}{' + scope.den_raw + 'bc}'",
+        "num_str": "scope.num === 1 ? 'ac' : scope.num + 'ac'",
+        "den_str": "scope.den === 1 ? 'b' : scope.den + 'b'",
+        "step3": "'\\\\frac{' + scope.num_str + '}{' + scope.den_str + '}'",
+        "ans": "scope.num_str + '/(' + scope.den_str + ')'"
+      },
+      "questionTemplate": "Simplify the algebraic expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply Keep-Change-Flip (KCF) to convert division into multiplication: $$${scope.kcf}$$",
+        "Multiply numerators and denominators respectively: $$${scope.step2}$$",
+        "Simplify by canceling common variables and numerical factors: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 5 },
+        "b": { "type": "randInt", "min": 2, "max": 4 },
+        "c": { "type": "randInt", "min": 1, "max": 5 },
+        "d": { "type": "randInt", "min": 2, "max": 4 }
+      },
+      "derived": {
+        "denCoeff": "scope.b * scope.d",
+        "g": "((a, b) => { a = Math.abs(a); b = Math.abs(b); while(b) { let t = b; b = a % b; a = t; } return a; })(scope.c, scope.denCoeff)",
+        "num": "scope.c / scope.g",
+        "den": "scope.denCoeff / scope.g",
+        "expr": "'\\\\frac{x + ' + scope.a + '}{' + scope.b + 'x} \\\\times \\\\frac{' + scope.c + '}{' + scope.d + '(x + ' + scope.a + ')}'",
+        "step1": "'\\\\frac{' + scope.c + '(x + ' + scope.a + ')}{' + scope.denCoeff + 'x(x + ' + scope.a + ')}'",
+        "den_str": "scope.den === 1 ? 'x' : scope.den + 'x'",
+        "step2": "'\\\\frac{' + scope.num + '}{' + scope.den_str + '}'",
+        "ans": "scope.num + '/(' + scope.den_str + ')'"
+      },
+      "questionTemplate": "Simplify the algebraic fraction:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Multiply numerators and denominators respectively: $$${scope.step1}$$",
+        "Cancel the common linear factor $(x + ${scope.a})$: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 5 },
+        "b": { "type": "randInt", "min": 1, "max": 5 },
+        "c": { "type": "randInt", "min": 2, "max": 5 },
+        "d": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "ab": "scope.a * scope.b",
+        "num_raw": "scope.a * scope.d",
+        "g": "((a, b) => { a = Math.abs(a); b = Math.abs(b); while(b) { let t = b; b = a % b; a = t; } return a; })(scope.num_raw, scope.c)",
+        "num": "scope.num_raw / scope.g",
+        "den": "scope.c / scope.g",
+        "expr": "'\\\\frac{' + scope.a + 'x - ' + scope.ab + '}{' + scope.c + 'x} \\\\div \\\\frac{x - ' + scope.b + '}{' + scope.d + '}'",
+        "kcf": "'\\\\frac{' + scope.a + 'x - ' + scope.ab + '}{' + scope.c + 'x} \\\\times \\\\frac{' + scope.d + '}{x - ' + scope.b + '}'",
+        "step2": "'\\\\frac{' + scope.a + '(x - ' + scope.b + ')}{' + scope.c + 'x} \\\\times \\\\frac{' + scope.d + '}{x - ' + scope.b + '}'",
+        "den_str": "scope.den === 1 ? 'x' : scope.den + 'x'",
+        "step3": "'\\\\frac{' + scope.num + '}{' + scope.den_str + '}'",
+        "ans": "scope.num + '/(' + scope.den_str + ')'"
+      },
+      "questionTemplate": "Simplify the algebraic fraction:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply Keep-Change-Flip (KCF) to convert division into multiplication: $$${scope.kcf}$$",
+        "Factorize linear terms in the numerator: $$${scope.step2}$$",
+        "Cancel common factor $(x - ${scope.b})$: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 5 },
+        "b": { "type": "randInt", "min": 1, "max": 5 },
+        "c": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "b2": "scope.b * scope.b",
+        "expr": "'\\\\frac{x - ' + scope.a + '}{x^2 - ' + scope.b2 + '} \\\\div \\\\frac{' + scope.c + '}{x + ' + scope.b + '}'",
+        "kcf": "'\\\\frac{x - ' + scope.a + '}{x^2 - ' + scope.b2 + '} \\\\times \\\\frac{x + ' + scope.b + '}{' + scope.c + '}'",
+        "step2": "'\\\\frac{x - ' + scope.a + '}{(x - ' + scope.b + ')(x + ' + scope.b + ')} \\\\times \\\\frac{x + ' + scope.b + '}{' + scope.c + '}'",
+        "den_str": "scope.c === 1 ? 'x - ' + scope.b : scope.c + '(x - ' + scope.b + ')'",
+        "step3": "'\\\\frac{x - ' + scope.a + '}{' + scope.den_str + '}'",
+        "ans": "'(x-' + scope.a + ')/(' + (scope.c === 1 ? 'x-' + scope.b : scope.c + '(x-' + scope.b + ')') + ')'"
+      },
+      "questionTemplate": "Simplify the algebraic fraction:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply Keep-Change-Flip (KCF) to convert division into multiplication: $$${scope.kcf}$$",
+        "Factorize the difference of two squares $x^2 - ${scope.b2}$: $$${scope.step2}$$",
+        "Cancel common factor $(x + ${scope.b})$: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 5 },
+        "b": { "type": "randInt", "min": 1, "max": 5 },
+        "c": { "type": "randInt", "min": 1, "max": 5 }
+      },
+      "derived": {
+        "sumAB": "scope.a + scope.b",
+        "prodAB": "scope.a * scope.b",
+        "expr": "'\\\\frac{x^2 + ' + scope.sumAB + 'x + ' + scope.prodAB + '}{x + ' + scope.c + '} \\\\times \\\\frac{1}{x + ' + scope.a + '}'",
+        "step1": "'\\\\frac{(x + ' + scope.a + ')(x + ' + scope.b + ')}{x + ' + scope.c + '} \\\\times \\\\frac{1}{x + ' + scope.a + '}'",
+        "step2": "'\\\\frac{x + ' + scope.b + '}{x + ' + scope.c + '}'",
+        "ans": "'(x+' + scope.b + ')/(x+' + scope.c + ')'"
+      },
+      "questionTemplate": "Simplify the expression by factorizing:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Factorize the quadratic trinomial $x^2 + ${scope.sumAB}x + ${scope.prodAB}$: $$${scope.step1}$$",
+        "Cancel common factor $(x + ${scope.a})$: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 5 },
+        "b": { "type": "randInt", "min": 1, "max": 5 },
+        "c": { "type": "randInt", "min": 1, "max": 5 }
+      },
+      "derived": {
+        "a2": "scope.a * scope.a",
+        "sumBC": "scope.b + scope.c",
+        "prodBC": "scope.b * scope.c",
+        "expr": "'\\\\frac{x^2 - ' + scope.a2 + '}{x^2 + ' + scope.sumBC + 'x + ' + scope.prodBC + '} \\\\div \\\\frac{x - ' + scope.a + '}{x + ' + scope.b + '}'",
+        "kcf": "'\\\\frac{x^2 - ' + scope.a2 + '}{x^2 + ' + scope.sumBC + 'x + ' + scope.prodBC + '} \\\\times \\\\frac{x + ' + scope.b + '}{x - ' + scope.a + '}'",
+        "step2": "'\\\\frac{(x - ' + scope.a + ')(x + ' + scope.a + ')}{(x + ' + scope.b + ')(x + ' + scope.c + ')} \\\\times \\\\frac{x + ' + scope.b + '}{x - ' + scope.a + '}'",
+        "step3": "'\\\\frac{x + ' + scope.a + '}{x + ' + scope.c + '}'",
+        "ans": "'(x+' + scope.a + ')/(x+' + scope.c + ')'"
+      },
+      "questionTemplate": "Simplify the expression completely:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply Keep-Change-Flip (KCF) to convert division into multiplication: $$${scope.kcf}$$",
+        "Factorize all numerators and denominators completely: $$${scope.step2}$$",
+        "Cancel common factors $(x - ${scope.a})$ and $(x + ${scope.b})$: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 5 },
+        "b": { "type": "randInt", "min": 1, "max": 5 },
+        "c": { "type": "randInt", "min": 1, "max": 5 },
+        "d": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "sumBC": "scope.b + scope.c",
+        "prodBC": "scope.b * scope.c",
+        "expr": "'\\\\frac{x + ' + scope.a + '}{x^2 + ' + scope.sumBC + 'x + ' + scope.prodBC + '} \\\\div \\\\frac{' + scope.d + '}{x + ' + scope.b + '}'",
+        "kcf": "'\\\\frac{x + ' + scope.a + '}{x^2 + ' + scope.sumBC + 'x + ' + scope.prodBC + '} \\\\times \\\\frac{x + ' + scope.b + '}{' + scope.d + '}'",
+        "step2": "'\\\\frac{x + ' + scope.a + '}{(x + ' + scope.b + ')(x + ' + scope.c + ')} \\\\times \\\\frac{x + ' + scope.b + '}{' + scope.d + '}'",
+        "den_str": "scope.d === 1 ? 'x + ' + scope.c : scope.d + '(x + ' + scope.c + ')'",
+        "step3": "'\\\\frac{x + ' + scope.a + '}{' + scope.den_str + '}'",
+        "ans": "'(x+' + scope.a + ')/(' + (scope.d === 1 ? 'x+' + scope.c : scope.d + '(x+' + scope.c + ')') + ')'"
+      },
+      "questionTemplate": "Simplify the expression completely:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply Keep-Change-Flip (KCF) to convert division into multiplication: $$${scope.kcf}$$",
+        "Factorize the quadratic denominator: $$${scope.step2}$$",
+        "Cancel common factor $(x + ${scope.b})$: $$${scope.step3}$$"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,396 @@
+{
+  "skillTitle": "Trigonometry",
+  "keypad": [
+  "θ", "x", "°", "/",
+  "7", "8", "9", "-",
+  "4", "5", "6", ".",
+  "1", "2", "3", "0",
+  "(", ")", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 5, "max": 20 },
+        "theta": { "type": "randInt", "min": 22, "max": 68 }
+      },
+      "derived": {
+        "ans_val": "scope.a * Math.tan(scope.theta * Math.PI / 180)",
+        "ans": "parseFloat((scope.a * Math.tan(scope.theta * Math.PI / 180)).toPrecision(3)).toString()",
+        "step1": "'\\\\tan(' + scope.theta + '^\\\\circ) = \\\\frac{x}{' + scope.a + '}'",
+        "step2": "'x = ' + scope.a + ' \\\\times \\\\tan(' + scope.theta + '^\\\\circ)'",
+        "step3": "'x \\\\approx ' + scope.ans"
+      },
+      "questionTemplate": "In the right-angled triangle $ABC$ below, $\\angle B = 90^\\circ$, $AB = ${scope.a}\\text{ cm}$, and $\\angle A = ${scope.theta}^\\circ$.\n\nFind the length of $BC$ (labeled as $x$), giving your answer correct to 3 significant figures.\n\n<div style='text-align: center; margin-top: 12px;'>\n<svg width='220' height='160' viewBox='0 0 220 160'><polygon points='30,120 180,120 30,30' fill='none' stroke='#2b6cb0' stroke-width='2'/><rect x='30' y='105' width='15' height='15' fill='none' stroke='#2b6cb0' stroke-width='1.5'/><text x='18' y='135' font-size='14' fill='#2d3748'>B</text><text x='188' y='135' font-size='14' fill='#2d3748'>A</text><text x='18' y='25' font-size='14' fill='#2d3748'>C</text><text x='105' y='140' font-size='13' fill='#2d3748' text-anchor='middle'>${scope.a} cm</text><text x='25' y='75' font-size='13' fill='#2d3748' text-anchor='end'>x</text><path d='M 155,120 A 25,25 0 0,1 158.6,107.1' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='140' y='114' font-size='12' fill='#e53e3e'>${scope.theta}°</text></svg>\n</div>",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply the tangent ratio: $$\\tan(\\theta) = \\frac{\\text{opposite}}{\\text{adjacent}}$$ ",
+        "Substitute the given values into the formula: $$${scope.step1}$$",
+        "Solve for $x$: $$${scope.step2}$$",
+        "Evaluate correct to 3 significant figures: $$${scope.step3}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "h": { "type": "randInt", "min": 12, "max": 35 },
+        "theta": { "type": "randInt", "min": 25, "max": 65 }
+      },
+      "derived": {
+        "ans_val": "scope.h * Math.sin(scope.theta * Math.PI / 180)",
+        "ans": "parseFloat((scope.h * Math.sin(scope.theta * Math.PI / 180)).toPrecision(3)).toString()",
+        "step1": "'\\\\sin(' + scope.theta + '^\\\\circ) = \\\\frac{x}{' + scope.h + '}'",
+        "step2": "'x = ' + scope.h + ' \\\\times \\\\sin(' + scope.theta + '^\\\\circ)'",
+        "step3": "'x \\\\approx ' + scope.ans"
+      },
+      "questionTemplate": "In the right-angled triangle $DEF$ below, $\\angle E = 90^\\circ$, hypotenuse $DF = ${scope.h}\\text{ cm}$, and $\\angle F = ${scope.theta}^\\circ$.\n\nFind the length of $DE$ (labeled as $x$), giving your answer correct to 3 significant figures.\n\n<div style='text-align: center; margin-top: 12px;'>\n<svg width='220' height='160' viewBox='0 0 220 160'><polygon points='30,120 180,120 30,30' fill='none' stroke='#2b6cb0' stroke-width='2'/><rect x='30' y='105' width='15' height='15' fill='none' stroke='#2b6cb0' stroke-width='1.5'/><text x='18' y='135' font-size='14' fill='#2d3748'>E</text><text x='188' y='135' font-size='14' fill='#2d3748'>F</text><text x='18' y='25' font-size='14' fill='#2d3748'>D</text><text x='110' y='65' font-size='13' fill='#2d3748' transform='rotate(31 110 65)'>${scope.h} cm</text><text x='25' y='75' font-size='13' fill='#2d3748' text-anchor='end'>x</text><path d='M 155,120 A 25,25 0 0,1 158.6,107.1' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='140' y='114' font-size='12' fill='#e53e3e'>${scope.theta}°</text></svg>\n</div>",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply the sine ratio: $$\\sin(\\theta) = \\frac{\\text{opposite}}{\\text{hypotenuse}}$$ ",
+        "Substitute the given values into the formula: $$${scope.step1}$$",
+        "Solve for $x$: $$${scope.step2}$$",
+        "Evaluate correct to 3 significant figures: $$${scope.step3}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "h": { "type": "randInt", "min": 12, "max": 35 },
+        "theta": { "type": "randInt", "min": 25, "max": 65 }
+      },
+      "derived": {
+        "ans_val": "scope.h * Math.cos(scope.theta * Math.PI / 180)",
+        "ans": "parseFloat((scope.h * Math.cos(scope.theta * Math.PI / 180)).toPrecision(3)).toString()",
+        "step1": "'\\\\cos(' + scope.theta + '^\\\\circ) = \\\\frac{x}{' + scope.h + '}'",
+        "step2": "'x = ' + scope.h + ' \\\\times \\\\cos(' + scope.theta + '^\\\\circ)'",
+        "step3": "'x \\\\approx ' + scope.ans"
+      },
+      "questionTemplate": "In the right-angled triangle $DEF$ below, $\\angle E = 90^\\circ$, hypotenuse $DF = ${scope.h}\\text{ cm}$, and $\\angle EDF = ${scope.theta}^\\circ$.\n\nFind the length of $DE$ (labeled as $x$), giving your answer correct to 3 significant figures.\n\n<div style='text-align: center; margin-top: 12px;'>\n<svg width='220' height='160' viewBox='0 0 220 160'><polygon points='30,120 180,120 30,30' fill='none' stroke='#2b6cb0' stroke-width='2'/><rect x='30' y='105' width='15' height='15' fill='none' stroke='#2b6cb0' stroke-width='1.5'/><text x='18' y='135' font-size='14' fill='#2d3748'>E</text><text x='188' y='135' font-size='14' fill='#2d3748'>F</text><text x='18' y='25' font-size='14' fill='#2d3748'>D</text><text x='110' y='65' font-size='13' fill='#2d3748' transform='rotate(31 110 65)'>${scope.h} cm</text><text x='25' y='75' font-size='13' fill='#2d3748' text-anchor='end'>x</text><path d='M 30,55 A 25,25 0 0,0 51.4,42.9' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='42' y='65' font-size='12' fill='#e53e3e'>${scope.theta}°</text></svg>\n</div>",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply the cosine ratio: $$\\cos(\\theta) = \\frac{\\text{adjacent}}{\\text{hypotenuse}}$$ ",
+        "Substitute the given values into the formula: $$${scope.step1}$$",
+        "Solve for $x$: $$${scope.step2}$$",
+        "Evaluate correct to 3 significant figures: $$${scope.step3}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "opp": { "type": "randInt", "min": 8, "max": 25 },
+        "theta": { "type": "randInt", "min": 25, "max": 65 }
+      },
+      "derived": {
+        "ans_val": "scope.opp / Math.sin(scope.theta * Math.PI / 180)",
+        "ans": "parseFloat((scope.opp / Math.sin(scope.theta * Math.PI / 180)).toPrecision(3)).toString()",
+        "step1": "'\\\\sin(' + scope.theta + '^\\\\circ) = \\\\frac{' + scope.opp + '}{x}'",
+        "step2": "'x = \\\\frac{' + scope.opp + '}{\\\\sin(' + scope.theta + '^\\\\circ)}'",
+        "step3": "'x \\\\approx ' + scope.ans"
+      },
+      "questionTemplate": "In the right-angled triangle $ABC$ below, $\\angle B = 90^\\circ$, $AB = ${scope.opp}\\text{ cm}$, and $\\angle C = ${scope.theta}^\\circ$.\n\nFind the length of hypotenuse $AC$ (labeled as $x$), giving your answer correct to 3 significant figures.\n\n<div style='text-align: center; margin-top: 12px;'>\n<svg width='220' height='160' viewBox='0 0 220 160'><polygon points='45,120 195,120 45,30' fill='none' stroke='#2b6cb0' stroke-width='2'/><rect x='45' y='105' width='15' height='15' fill='none' stroke='#2b6cb0' stroke-width='1.5'/><text x='33' y='135' font-size='14' fill='#2d3748'>B</text><text x='203' y='135' font-size='14' fill='#2d3748'>C</text><text x='33' y='25' font-size='14' fill='#2d3748'>A</text><text x='125' y='65' font-size='13' fill='#2d3748' transform='rotate(31 125 65)'>x</text><text x='40' y='75' font-size='13' fill='#2d3748' text-anchor='end'>${scope.opp} cm</text><path d='M 170,120 A 25,25 0 0,1 173.6,107.1' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='155' y='114' font-size='12' fill='#e53e3e'>${scope.theta}°</text></svg>\n</div>",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply the sine ratio: $$\\sin(\\theta) = \\frac{\\text{opposite}}{\\text{hypotenuse}}$$ ",
+        "Substitute the given values into the formula: $$${scope.step1}$$",
+        "Solve for $x$: $$${scope.step2}$$",
+        "Evaluate correct to 3 significant figures: $$${scope.step3}\\text{ cm}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "triple_idx": { "type": "randInt", "min": 0, "max": 4 }
+      },
+      "derived": {
+        "triples": "[ [5, 12, 13], [3, 4, 5], [8, 15, 17], [7, 24, 25], [20, 21, 29] ]",
+        "opp": "JSON.parse(scope.triples)[scope.triple_idx][0]",
+        "adj": "JSON.parse(scope.triples)[scope.triple_idx][1]",
+        "hyp": "JSON.parse(scope.triples)[scope.triple_idx][2]",
+        "sin_ans": "scope.opp + '/' + scope.hyp",
+        "cos_ans": "scope.adj + '/' + scope.hyp",
+        "tan_ans": "scope.opp + '/' + scope.adj"
+      },
+      "questionTemplate": "State the values of $\\sin \\theta$, $\\cos \\theta$, and $\\tan \\theta$ in the right-angled triangle below. Leave each answer as a fraction in its simplest form.\n\n<div style='text-align: center; margin-top: 12px;'>\n<svg width='220' height='150' viewBox='0 0 220 150'><polygon points='30,120 180,120 30,30' fill='none' stroke='#2b6cb0' stroke-width='2'/><rect x='30' y='105' width='15' height='15' fill='none' stroke='#2b6cb0' stroke-width='1.5'/><text x='18' y='135' font-size='14' fill='#2d3748'>B</text><text x='188' y='135' font-size='14' fill='#2d3748'>C</text><text x='18' y='25' font-size='14' fill='#2d3748'>A</text><text x='105' y='140' font-size='13' fill='#2d3748' text-anchor='middle'>${scope.adj}</text><text x='25' y='75' font-size='13' fill='#2d3748' text-anchor='end'>${scope.opp}</text><text x='110' y='65' font-size='13' fill='#2d3748' transform='rotate(-31 110 65)'>${scope.hyp}</text><path d='M 155,120 A 25,25 0 0,1 158.6,107.1' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='140' y='114' font-size='12' fill='#e53e3e'>θ</text></svg>\n</div>",
+      "inputs": [
+        { "label": "sin θ =", "answer": "${scope.sin_ans}" },
+        { "label": "cos θ =", "answer": "${scope.cos_ans}" },
+        { "label": "tan θ =", "answer": "${scope.tan_ans}" }
+      ],
+      "steps": [
+        "Identify the sides relative to angle $\\theta$:",
+        "Opposite = ${scope.opp}, Adjacent = ${scope.adj}, Hypotenuse = ${scope.hyp}",
+        "$$\\sin \\theta = \\frac{\\text{opposite}}{\\text{hypotenuse}} = \\frac{${scope.opp}}{${scope.hyp}}$$ ",
+        "$$\\cos \\theta = \\frac{\\text{adjacent}}{\\text{hypotenuse}} = \\frac{${scope.adj}}{${scope.hyp}}$$ ",
+        "$$\\tan \\theta = \\frac{\\text{opposite}}{\\text{adjacent}} = \\frac{${scope.opp}}{${scope.adj}}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "triple_idx": { "type": "randInt", "min": 0, "max": 3 }
+      },
+      "derived": {
+        "triples": "[ [20, 21, 29], [8, 15, 17], [5, 12, 13], [7, 24, 25] ]",
+        "opp": "JSON.parse(scope.triples)[scope.triple_idx][0]",
+        "adj": "JSON.parse(scope.triples)[scope.triple_idx][1]",
+        "hyp": "JSON.parse(scope.triples)[scope.triple_idx][2]",
+        "sin_ans": "scope.opp + '/' + scope.hyp",
+        "cos_ans": "scope.adj + '/' + scope.hyp",
+        "tan_ans": "scope.opp + '/' + scope.adj"
+      },
+      "questionTemplate": "State the values of $\\sin \\theta$, $\\cos \\theta$, and $\\tan \\theta$ in the right-angled triangle below. Leave each answer as a fraction in its simplest form.\n\n<div style='text-align: center; margin-top: 12px;'>\n<svg width='220' height='160' viewBox='0 0 220 160'><polygon points='30,130 106,50 190,130' fill='none' stroke='#2b6cb0' stroke-width='2'/><polyline points='97.7,58.7 106.4,67.0 114.7,58.3' fill='none' stroke='#2b6cb0' stroke-width='1.5'/><text x='102' y='38' font-size='14' fill='#2d3748'>D</text><text x='15' y='135' font-size='14' fill='#2d3748'>E</text><text x='198' y='135' font-size='14' fill='#2d3748'>F</text><text x='60' y='85' font-size='13' fill='#2d3748'>${scope.opp}</text><text x='155' y='85' font-size='13' fill='#2d3748'>${scope.adj}</text><text x='110' y='148' font-size='13' fill='#2d3748' text-anchor='middle'>${scope.hyp}</text><path d='M 165,130 A 25,25 0 0,1 171.9,112.8' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='152' y='118' font-size='12' fill='#e53e3e'>θ</text></svg>\n</div>",
+      "inputs": [
+        { "label": "sin θ =", "answer": "${scope.sin_ans}" },
+        { "label": "cos θ =", "answer": "${scope.cos_ans}" },
+        { "label": "tan θ =", "answer": "${scope.tan_ans}" }
+      ],
+      "steps": [
+        "Identify the sides relative to angle $\\theta$ at vertex $F$:",
+        "Opposite = $DE = ${scope.opp}$, Adjacent = $DF = ${scope.adj}$, Hypotenuse = $EF = ${scope.hyp}$",
+        "$$\\sin \\theta = \\frac{\\text{opposite}}{\\text{hypotenuse}} = \\frac{${scope.opp}}{${scope.hyp}}$$ ",
+        "$$\\cos \\theta = \\frac{\\text{adjacent}}{\\text{hypotenuse}} = \\frac{${scope.adj}}{${scope.hyp}}$$ ",
+        "$$\\tan \\theta = \\frac{\\text{opposite}}{\\text{adjacent}} = \\frac{${scope.opp}}{${scope.adj}}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "adj": { "type": "randInt", "min": 7, "max": 20 },
+        "hyp": { "type": "randInt", "min": 21, "max": 35 }
+      },
+      "derived": {
+        "ans_num": "(Math.acos(scope.adj / scope.hyp) * 180 / Math.PI).toFixed(1)",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'\\\\cos \\\\theta = \\\\frac{' + scope.adj + '}{' + scope.hyp + '}'",
+        "step2": "'\\\\theta = \\\\cos^{-1}\\\\left(\\\\frac{' + scope.adj + '}{' + scope.hyp + '}\\\\right)'",
+        "step3": "'\\\\theta \\\\approx ' + scope.ans + '^\\\\circ'"
+      },
+      "questionTemplate": "In the right-angled triangle $PQR$ below, $\\angle Q = 90^\\circ$, adjacent side $QR = ${scope.adj}\\text{ cm}$, and hypotenuse $PR = ${scope.hyp}\\text{ cm}$.\n\nFind the size of the acute angle $\\theta$, giving your answer correct to 1 decimal place.\n\n<div style='text-align: center; margin-top: 12px;'>\n<svg width='220' height='160' viewBox='0 0 220 160'><polygon points='30,120 180,120 30,30' fill='none' stroke='#2b6cb0' stroke-width='2'/><rect x='30' y='105' width='15' height='15' fill='none' stroke='#2b6cb0' stroke-width='1.5'/><text x='18' y='135' font-size='14' fill='#2d3748'>Q</text><text x='188' y='135' font-size='14' fill='#2d3748'>R</text><text x='18' y='25' font-size='14' fill='#2d3748'>P</text><text x='105' y='140' font-size='13' fill='#2d3748' text-anchor='middle'>${scope.adj} cm</text><text x='110' y='65' font-size='13' fill='#2d3748' transform='rotate(31 110 65)'>${scope.hyp} cm</text><path d='M 155,120 A 25,25 0 0,1 158.6,107.1' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='138' y='114' font-size='12' fill='#e53e3e'>θ</text></svg>\n</div>",
+      "inputs": [
+        { "label": "θ =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply the cosine ratio: $$\\cos(\\theta) = \\frac{\\text{adjacent}}{\\text{hypotenuse}}$$ ",
+        "Substitute known side lengths: $$${scope.step1}$$",
+        "Take the inverse cosine: $$${scope.step2}$$",
+        "Evaluate correct to 1 decimal place: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "adj": { "type": "randInt", "min": 8, "max": 18 },
+        "hyp": { "type": "randInt", "min": 20, "max": 35 }
+      },
+      "derived": {
+        "ans_num": "(Math.acos(scope.adj / scope.hyp) * 180 / Math.PI).toFixed(1)",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'\\\\cos \\\\theta = \\\\frac{' + scope.adj + '}{' + scope.hyp + '}'",
+        "step2": "'\\\\theta = \\\\cos^{-1}\\\\left(\\\\frac{' + scope.adj + '}{' + scope.hyp + '}\\\\right)'",
+        "step3": "'\\\\theta \\\\approx ' + scope.ans + '^\\\\circ'"
+      },
+      "questionTemplate": "In the right-angled triangle $DEF$ below, $\\angle E = 90^\\circ$, side $DE = ${scope.adj}\\text{ cm}$, and hypotenuse $DF = ${scope.hyp}\\text{ cm}$.\n\nFind the size of the acute angle $\\theta = \\angle EDF$, giving your answer correct to 1 decimal place.\n\n<div style='text-align: center; margin-top: 12px;'>\n<svg width='220' height='160' viewBox='0 0 220 160'><polygon points='45,120 195,120 45,30' fill='none' stroke='#2b6cb0' stroke-width='2'/><rect x='45' y='105' width='15' height='15' fill='none' stroke='#2b6cb0' stroke-width='1.5'/><text x='33' y='135' font-size='14' fill='#2d3748'>E</text><text x='200' y='135' font-size='14' fill='#2d3748'>F</text><text x='33' y='25' font-size='14' fill='#2d3748'>D</text><text x='40' y='75' font-size='13' fill='#2d3748' text-anchor='end'>${scope.adj} cm</text><text x='125' y='65' font-size='13' fill='#2d3748' transform='rotate(31 125 65)'>${scope.hyp} cm</text><path d='M 45,55 A 25,25 0 0,0 66.4,42.9' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='57' y='65' font-size='12' fill='#e53e3e'>θ</text></svg>\n</div>",
+      "inputs": [
+        { "label": "θ =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "With respect to angle $\\angle EDF$, side $DE$ is adjacent and $DF$ is the hypotenuse.",
+        "Apply the cosine ratio: $$\\cos(\\theta) = \\frac{\\text{adjacent}}{\\text{hypotenuse}}$$ ",
+        "Substitute known side lengths: $$${scope.step1}$$",
+        "Take the inverse cosine: $$${scope.step2}$$",
+        "Evaluate correct to 1 decimal place: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k_num": { "type": "randInt", "min": 3, "max": 28 }
+      },
+      "derived": {
+        "k_dec": "(scope.k_num / 10).toFixed(2)",
+        "ans_num": "(Math.atan(parseFloat(scope.k_dec)) * 180 / Math.PI).toFixed(1)",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'\\\\theta = \\\\tan^{-1}(' + scope.k_dec + ')'",
+        "step2": "'\\\\theta \\\\approx ' + scope.ans + '^\\\\circ'"
+      },
+      "questionTemplate": "Find the acute angle $\\theta$ in degrees that satisfies the equation:\n\n$$\\tan \\theta = ${scope.k_dec}$$\n\nGive your answer correct to 1 decimal place.",
+      "inputs": [
+        { "label": "θ =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply the inverse tangent function: $$${scope.step1}$$",
+        "Evaluate correct to 1 decimal place: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k_num": { "type": "randInt", "min": 15, "max": 95 }
+      },
+      "derived": {
+        "k_dec": "(scope.k_num / 100).toFixed(2)",
+        "ans_num": "(Math.asin(parseFloat(scope.k_dec)) * 180 / Math.PI).toFixed(1)",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'\\\\theta = \\\\sin^{-1}(' + scope.k_dec + ')'",
+        "step2": "'\\\\theta \\\\approx ' + scope.ans + '^\\\\circ'"
+      },
+      "questionTemplate": "Find the acute angle $\\theta$ in degrees that satisfies the equation:\n\n$$\\sin \\theta = ${scope.k_dec}$$\n\nGive your answer correct to 1 decimal place.",
+      "inputs": [
+        { "label": "θ =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply the inverse sine function: $$${scope.step1}$$",
+        "Evaluate correct to 1 decimal place: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k_num": { "type": "randInt", "min": 15, "max": 95 }
+      },
+      "derived": {
+        "k_dec": "(scope.k_num / 100).toFixed(2)",
+        "ans_num": "(Math.acos(parseFloat(scope.k_dec)) * 180 / Math.PI).toFixed(1)",
+        "ans": "scope.ans_num.toString()",
+        "step1": "'\\\\theta = \\\\cos^{-1}(' + scope.k_dec + ')'",
+        "step2": "'\\\\theta \\\\approx ' + scope.ans + '^\\\\circ'"
+      },
+      "questionTemplate": "Find the acute angle $\\theta$ in degrees that satisfies the equation:\n\n$$\\cos \\theta = ${scope.k_dec}$$\n\nGive your answer correct to 1 decimal place.",
+      "inputs": [
+        { "label": "θ =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply the inverse cosine function: $$${scope.step1}$$",
+        "Evaluate correct to 1 decimal place: $$${scope.step2}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "alpha": { "type": "randInt", "min": 30, "max": 55 },
+        "h": { "type": "randInt", "min": 6, "max": 15 },
+        "extra_b": { "type": "randInt", "min": 4, "max": 12 }
+      },
+      "derived": {
+        "ad_val": "scope.h / Math.tan(scope.alpha * Math.PI / 180)",
+        "L": "Math.round(scope.ad_val) + scope.extra_b",
+        "ad_3sf": "parseFloat(scope.ad_val.toPrecision(3)).toString()",
+        "db_val": "scope.L - parseFloat(scope.ad_3sf)",
+        "db_3sf": "parseFloat(scope.db_val.toPrecision(3)).toString()",
+        "theta_val": "(Math.atan(scope.h / parseFloat(scope.db_3sf)) * 180 / Math.PI).toFixed(1)",
+        "ans": "scope.theta_val.toString()",
+        "step1a": "'\\\\tan(' + scope.alpha + '^\\\\circ) = \\\\frac{' + scope.h + '}{AD}'",
+        "step1b": "'AD = \\\\frac{' + scope.h + '}{\\\\tan(' + scope.alpha + '^\\\\circ)} \\\\approx ' + scope.ad_3sf + '\\\\text{ cm}'",
+        "step2": "'BD = AB - AD = ' + scope.L + ' - ' + scope.ad_3sf + ' = ' + scope.db_3sf + '\\\\text{ cm}'",
+        "step3a": "'\\\\tan \\\\theta = \\\\frac{' + scope.h + '}{' + scope.db_3sf + '}'",
+        "step3b": "'\\\\theta = \\\\tan^{-1}\\\\left(\\\\frac{' + scope.h + '}{' + scope.db_3sf + '}\\\\right) \\\\approx ' + scope.ans + '^\\\\circ'"
+      },
+      "questionTemplate": "In the diagram below, $ABC$ is a triangle where $CD \\perp AB$. Given that $\\angle CAD = ${scope.alpha}^\\circ$, $CD = ${scope.h}\\text{ cm}$, and $AB = ${scope.L}\\text{ cm}$, find the size of the angle $\\theta = \\angle CBD$.\n\nGive your answer correct to 1 decimal place.\n\n<div style='text-align: center; margin-top: 12px;'>\n<svg width='240' height='160' viewBox='0 0 240 160'><polygon points='30,120 200,120 110,30' fill='none' stroke='#2b6cb0' stroke-width='2'/><line x1='110' y1='30' x2='110' y2='120' stroke='#2b6cb0' stroke-width='1.5' stroke-dasharray='4,4'/><rect x='110' y='105' width='15' height='15' fill='none' stroke='#2b6cb0' stroke-width='1.5'/><text x='15' y='135' font-size='14' fill='#2d3748'>A</text><text x='105' y='135' font-size='14' fill='#2d3748'>D</text><text x='205' y='135' font-size='14' fill='#2d3748'>B</text><text x='105' y='22' font-size='14' fill='#2d3748'>C</text><text x='118' y='75' font-size='13' fill='#2d3748'>${scope.h} cm</text><text x='115' y='145' font-size='13' fill='#2d3748' text-anchor='middle'>${scope.L} cm</text><path d='M 50,120 A 20,20 0 0,0 43.3,105.1' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='54' y='114' font-size='12' fill='#e53e3e'>${scope.alpha}°</text><path d='M 180,120 A 20,20 0 0,1 185.9,105.9' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='165' y='114' font-size='12' fill='#e53e3e'>θ</text></svg>\n</div>",
+      "inputs": [
+        { "label": "θ =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "In $\\Delta ACD$, calculate length $AD$ using tangent: $$${scope.step1a}$$",
+        "$$${scope.step1b}$$",
+        "Calculate length $BD$: $$${scope.step2}$$",
+        "In $\\Delta BCD$, apply tangent ratio to find $\\theta$: $$${scope.step3a}$$",
+        "$$${scope.step3b}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "beta": { "type": "randInt", "min": 48, "max": 65 },
+        "a": { "type": "randInt", "min": 3, "max": 8 },
+        "b": { "type": "randInt", "min": 6, "max": 14 }
+      },
+      "derived": {
+        "x_val": "scope.a * Math.tan(scope.beta * Math.PI / 180)",
+        "x_ans": "parseFloat(scope.x_val.toPrecision(3)).toString()",
+        "theta_val": "(Math.atan(scope.b / parseFloat(scope.x_ans)) * 180 / Math.PI).toFixed(1)",
+        "theta_ans": "scope.theta_val.toString()",
+        "step1a": "'\\\\tan(' + scope.beta + '^\\\\circ) = \\\\frac{x}{' + scope.a + '}'",
+        "step1b": "'x = ' + scope.a + ' \\\\times \\\\tan(' + scope.beta + '^\\\\circ) \\\\approx ' + scope.x_ans + '\\\\text{ cm}'",
+        "step2a": "'\\\\tan \\\\theta = \\\\frac{' + scope.b + '}{' + scope.x_ans + '}'",
+        "step2b": "'\\\\theta = \\\\tan^{-1}\\\\left(\\\\frac{' + scope.b + '}{' + scope.x_ans + '}\\\\right) \\\\approx ' + scope.theta_ans + '^\\\\circ'"
+      },
+      "questionTemplate": "In the figure below, the unit of length is cm. Find the value of $x$ and of $\\theta$.\n\nGive $x$ correct to 3 significant figures and $\\theta$ correct to 1 decimal place.\n\n<div style='text-align: center; margin-top: 12px;'>\n<svg width='220' height='160' viewBox='0 0 220 160'><polygon points='30,120 90,120 90,30' fill='none' stroke='#2b6cb0' stroke-width='2'/><polygon points='90,30 90,120 180,120' fill='none' stroke='#2b6cb0' stroke-width='2'/><rect x='75' y='105' width='15' height='15' fill='none' stroke='#2b6cb0' stroke-width='1.5'/><text x='18' y='135' font-size='14' fill='#2d3748'>B</text><text x='85' y='135' font-size='14' fill='#2d3748'>C</text><text x='188' y='135' font-size='14' fill='#2d3748'>D</text><text x='85' y='22' font-size='14' fill='#2d3748'>A</text><text x='60' y='140' font-size='13' fill='#2d3748' text-anchor='middle'>${scope.a}</text><text x='135' y='140' font-size='13' fill='#2d3748' text-anchor='middle'>${scope.b}</text><text x='98' y='75' font-size='13' fill='#2d3748'>x</text><path d='M 50,120 A 20,20 0 0,0 41.1,103.4' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='52' y='112' font-size='12' fill='#e53e3e'>${scope.beta}°</text><path d='M 90,50 A 20,20 0 0,0 104.1,44.1' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='96' y='60' font-size='12' fill='#e53e3e'>θ</text></svg>\n</div>",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.x_ans}" },
+        { "label": "θ =", "answer": "${scope.theta_ans}" }
+      ],
+      "steps": [
+        "In right triangle $ABC$, solve for $x$: $$${scope.step1a}$$",
+        "$$${scope.step1b}$$",
+        "In right triangle $ACD$, solve for $\\theta$: $$${scope.step2a}$$",
+        "$$${scope.step2b}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "alpha": { "type": "randInt", "min": 35, "max": 55 },
+        "a": { "type": "randInt", "min": 8, "max": 14 },
+        "c": { "type": "randInt", "min": 22, "max": 35 }
+      },
+      "derived": {
+        "x_val": "scope.a * Math.sin(scope.alpha * Math.PI / 180)",
+        "x_ans": "parseFloat(scope.x_val.toPrecision(3)).toString()",
+        "theta_val": "(Math.asin(parseFloat(scope.x_ans) / scope.c) * 180 / Math.PI).toFixed(1)",
+        "theta_ans": "scope.theta_val.toString()",
+        "step1a": "'\\\\sin(' + scope.alpha + '^\\\\circ) = \\\\frac{x}{' + scope.a + '}'",
+        "step1b": "'x = ' + scope.a + ' \\\\times \\\\sin(' + scope.alpha + '^\\\\circ) \\\\approx ' + scope.x_ans + '\\\\text{ cm}'",
+        "step2a": "'\\\\sin \\\\theta = \\\\frac{' + scope.x_ans + '}{' + scope.c + '}'",
+        "step2b": "'\\\\theta = \\\\sin^{-1}\\\\left(\\\\frac{' + scope.x_ans + '}{' + scope.c + '}\\\\right) \\\\approx ' + scope.theta_ans + '^\\\\circ'"
+      },
+      "questionTemplate": "In the figure below, the unit of length is cm. Find the value of $x$ and of $\\theta$.\n\nGive $x$ correct to 3 significant figures and $\\theta$ correct to 1 decimal place.\n\n<div style='text-align: center; margin-top: 12px;'>\n<svg width='240' height='160' viewBox='0 0 240 160'><polygon points='40,80 100,20 100,140' fill='none' stroke='#2b6cb0' stroke-width='2'/><polygon points='100,20 100,140 190,20' fill='none' stroke='#2b6cb0' stroke-width='2'/><polyline points='48.5,71.5 57,80 48.5,88.5' fill='none' stroke='#2b6cb0' stroke-width='1.5'/><rect x='100' y='20' width='12' height='12' fill='none' stroke='#2b6cb0' stroke-width='1.5'/><text x='25' y='85' font-size='14' fill='#2d3748'>A</text><text x='100' y='12' font-size='14' fill='#2d3748'>D</text><text x='198' y='22' font-size='14' fill='#2d3748'>C</text><text x='95' y='155' font-size='14' fill='#2d3748'>B</text><text x='60' y='45' font-size='13' fill='#2d3748'>${scope.a}</text><text x='150' y='85' font-size='13' fill='#2d3748'>${scope.c}</text><text x='108' y='85' font-size='13' fill='#2d3748'>x</text><path d='M 100,45 A 25,25 0 0,1 82.3,37.7' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='78' y='52' font-size='12' fill='#e53e3e'>${scope.alpha}°</text><path d='M 165,20 A 25,25 0 0,0 175,40' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='152' y='38' font-size='12' fill='#e53e3e'>θ</text></svg>\n</div>",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.x_ans}" },
+        { "label": "θ =", "answer": "${scope.theta_ans}" }
+      ],
+      "steps": [
+        "In right triangle $ABD$, solve for $x$: $$${scope.step1a}$$",
+        "$$${scope.step1b}$$",
+        "In right triangle $BCD$, solve for $\\theta$: $$${scope.step2a}$$",
+        "$$${scope.step2b}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "alpha": { "type": "randInt", "min": 35, "max": 55 },
+        "b": { "type": "randInt", "min": 7, "max": 10 },
+        "c": { "type": "randInt", "min": 10, "max": 15 }
+      },
+      "derived": {
+        "x_val": "scope.b * Math.sin(scope.alpha * Math.PI / 180)",
+        "x_ans": "parseFloat(scope.x_val.toPrecision(3)).toString()",
+        "theta_val": "(Math.asin(parseFloat(scope.x_ans) / scope.c) * 180 / Math.PI).toFixed(1)",
+        "theta_ans": "scope.theta_val.toString()",
+        "step1a": "'\\\\sin(' + scope.alpha + '^\\\\circ) = \\\\frac{x}{' + scope.b + '}'",
+        "step1b": "'x = ' + scope.b + ' \\\\times \\\\sin(' + scope.alpha + '^\\\\circ) \\\\approx ' + scope.x_ans + '\\\\text{ cm}'",
+        "step2a": "'\\\\sin \\\\theta = \\\\frac{' + scope.x_ans + '}{' + scope.c + '}'",
+        "step2b": "'\\\\theta = \\\\sin^{-1}\\\\left(\\\\frac{' + scope.x_ans + '}{' + scope.c + '}\\\\right) \\\\approx ' + scope.theta_ans + '^\\\\circ'"
+      },
+      "questionTemplate": "In the figure below, the unit of length is cm. Find the value of $x$ and of $\\theta$.\n\nGive $x$ correct to 3 significant figures and $\\theta$ correct to 1 decimal place.\n\n<div style='text-align: center; margin-top: 12px;'>\n<svg width='240' height='160' viewBox='0 0 240 160'><polygon points='30,30 90,30 30,130' fill='none' stroke='#2b6cb0' stroke-width='2'/><polygon points='30,30 200,30 30,130' fill='none' stroke='#2b6cb0' stroke-width='2'/><rect x='30' y='30' width='15' height='15' fill='none' stroke='#2b6cb0' stroke-width='1.5'/><text x='18' y='25' font-size='14' fill='#2d3748'>D</text><text x='90' y='22' font-size='14' fill='#2d3748'>C</text><text x='205' y='25' font-size='14' fill='#2d3748'>B</text><text x='18' y='142' font-size='14' fill='#2d3748'>A</text><text x='20' y='85' font-size='13' fill='#2d3748' text-anchor='end'>x</text><text x='65' y='90' font-size='13' fill='#2d3748'>${scope.b}</text><text x='125' y='95' font-size='13' fill='#2d3748'>${scope.c}</text><path d='M 68,30 A 22,22 0 0,0 78.7,48.9' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='52' y='48' font-size='12' fill='#e53e3e'>${scope.alpha}°</text><path d='M 170,30 A 30,30 0 0,0 174.1,45.2' fill='none' stroke='#e53e3e' stroke-width='1.5'/><text x='155' y='42' font-size='12' fill='#e53e3e'>θ</text></svg>\n</div>",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.x_ans}" },
+        { "label": "θ =", "answer": "${scope.theta_ans}" }
+      ],
+      "steps": [
+        "In right triangle $ADC$, solve for $x$: $$${scope.step1a}$$",
+        "$$${scope.step1b}$$",
+        "In right triangle $ADB$, solve for $\\theta$: $$${scope.step2a}$$",
+        "$$${scope.step2b}$$"
+      ]
+    }
+  ]
+}

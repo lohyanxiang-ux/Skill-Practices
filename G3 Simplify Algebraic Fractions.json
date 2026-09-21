@@ -1,0 +1,177 @@
+{
+  "skillTitle": "Simplify Algebraic Fractions",
+  "keypad": [
+    "a", "b", "p", "q",
+    "x", "y", "(", ")",
+    "7", "8", "9", "/",
+    "4", "5", "6", "+",
+    "1", "2", "3", "-",
+    "0", "^2", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "k": { "type": "randInt", "min": 2, "max": 8 },
+        "a": { "type": "randInt", "min": 2, "max": 6 },
+        "b": { "type": "randInt", "min": 1, "max": 9, "excludeZero": true }
+      },
+      "derived": {
+        "gcd": "(function g(u,v){return v===0?Math.abs(u):g(v,u%v)})",
+        "g_den": "eval(scope.gcd)(scope.a, Math.abs(scope.b))",
+        "a_sim": "scope.a / scope.g_den",
+        "b_sim": "scope.b / scope.g_den",
+        "denCommon": "scope.g_den === 1 ? 'x' : scope.g_den + 'x'",
+        "denInnerNoSpace": "(scope.a_sim === 1 ? 'x' : scope.a_sim + 'x') + (scope.b_sim > 0 ? '+' + scope.b_sim : '-' + Math.abs(scope.b_sim))",
+        "denInnerLaTeX": "(scope.a_sim === 1 ? 'x' : scope.a_sim + 'x') + ' ' + (scope.b_sim > 0 ? '+ ' + scope.b_sim : '- ' + Math.abs(scope.b_sim))",
+        "denFactored": "scope.denCommon + '(' + scope.denInnerLaTeX + ')'",
+        "num": "scope.k + 'x'",
+        "den": "(scope.a === 1 ? '' : scope.a) + 'x^2 ' + (scope.b > 0 ? '+ ' + scope.b : '- ' + Math.abs(scope.b)) + 'x'",
+        "g_common": "eval(scope.gcd)(scope.k, scope.g_den)",
+        "cancelFactorStr": "scope.g_common === 1 ? 'x' : scope.g_common + 'x'",
+        "k_ans": "scope.k / scope.g_common",
+        "g_rem": "scope.g_den / scope.g_common",
+        "ansDenNoSpace": "scope.g_rem === 1 ? scope.denInnerNoSpace : scope.g_rem + '(' + scope.denInnerNoSpace + ')'",
+        "ansDenLaTeX": "scope.g_rem === 1 ? scope.denInnerLaTeX : scope.g_rem + '(' + scope.denInnerLaTeX + ')'",
+        "ans": "scope.k_ans + '/(' + scope.ansDenNoSpace + ')'",
+        "ansLaTeX": "'\\\\frac{' + scope.k_ans + '}{' + scope.ansDenLaTeX + '}'",
+        "step1": "'\\\\frac{' + (scope.g_common === scope.k ? scope.num : scope.cancelFactorStr + '(' + scope.k_ans + ')') + '}{' + scope.denFactored + '}'"
+      },
+      "questionTemplate": "Express the algebraic fraction in its simplest form:\n\n$$\\frac{${scope.num}}{${scope.den}}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Factorize both numerator and denominator completely by taking out common factors: $$${scope.step1}$$",
+        "Cancel the common factor $${scope.cancelFactorStr}$ from the numerator and denominator: $$${scope.ansLaTeX}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "k": { "type": "randInt", "min": 2, "max": 6 },
+        "m": { "type": "randInt", "min": 2, "max": 7 }
+      },
+      "derived": {
+        "m_eff": "scope.m === scope.k ? scope.m + 1 : scope.m",
+        "gcd": "(function g(u,v){return v===0?Math.abs(u):g(v,u%v)})",
+        "g": "eval(scope.gcd)(scope.k, scope.m_eff)",
+        "k_sim": "scope.k / scope.g",
+        "m_sim": "scope.m_eff / scope.g",
+        "num": "scope.k + 'x^2 + ' + scope.k + 'xy'",
+        "den": "scope.m_eff + 'xy + ' + scope.m_eff + 'y^2'",
+        "numFactored": "scope.k + 'x(x + y)'",
+        "denFactored": "scope.m_eff + 'y(x + y)'",
+        "ansNumNoSpace": "scope.k_sim === 1 ? 'x' : scope.k_sim + 'x'",
+        "ansDenNoSpace": "scope.m_sim === 1 ? 'y' : scope.m_sim + 'y'",
+        "ansNumLaTeX": "scope.k_sim === 1 ? 'x' : scope.k_sim + 'x'",
+        "ansDenLaTeX": "scope.m_sim === 1 ? 'y' : scope.m_sim + 'y'",
+        "ans": "scope.ansNumNoSpace + '/' + scope.ansDenNoSpace",
+        "ansLaTeX": "'\\\\frac{' + scope.ansNumLaTeX + '}{' + scope.ansDenLaTeX + '}'",
+        "step1": "'\\\\frac{' + scope.numFactored + '}{' + scope.denFactored + '}'"
+      },
+      "questionTemplate": "Express the algebraic fraction in its simplest form:\n\n$$\\frac{${scope.num}}{${scope.den}}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Factorize both numerator and denominator by grouping common factors: $$${scope.step1}$$",
+        "Cancel the common linear factor $(x + y)$ and simplify any common numerical coefficients: $$${scope.ansLaTeX}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 6 },
+        "b": { "type": "randInt", "min": 1, "max": 6 }
+      },
+      "derived": {
+        "b_eff": "scope.b === scope.a ? scope.b + 1 : scope.b",
+        "a2": "scope.a * scope.a",
+        "b_minus_a": "scope.b_eff - scope.a",
+        "ab": "scope.a * scope.b_eff",
+        "num": "'x^2 - ' + scope.a2",
+        "denTerm2": "scope.b_minus_a === 0 ? '' : (scope.b_minus_a === 1 ? '+ x ' : (scope.b_minus_a === -1 ? '- x ' : (scope.b_minus_a > 0 ? '+ ' + scope.b_minus_a + 'x ' : '- ' + Math.abs(scope.b_minus_a) + 'x ')))",
+        "den": "'x^2 ' + scope.denTerm2 + '- ' + scope.ab",
+        "step1": "'\\\\frac{(x - ' + scope.a + ')(x + ' + scope.a + ')}{(x - ' + scope.a + ')(x + ' + scope.b_eff + ')}'",
+        "ansNumNoSpace": "'x+' + scope.a",
+        "ansDenNoSpace": "'x+' + scope.b_eff",
+        "ansNumLaTeX": "'x + ' + scope.a",
+        "ansDenLaTeX": "'x + ' + scope.b_eff",
+        "ans": "'(x+' + scope.a + ')/(x+' + scope.b_eff + ')'",
+        "ansLaTeX": "'\\\\frac{' + scope.ansNumLaTeX + '}{' + scope.ansDenLaTeX + '}'"
+      },
+      "questionTemplate": "Simplify the algebraic fraction:\n\n$$\\frac{${scope.num}}{${scope.den}}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Factorize the numerator using the difference of two squares, and factorize the quadratic trinomial in the denominator: $$${scope.step1}$$",
+        "Cancel the common binomial factor $(x - ${scope.a})$: $$${scope.ansLaTeX}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 5 },
+        "b": { "type": "randInt", "min": 1, "max": 5 }
+      },
+      "derived": {
+        "b_eff": "scope.b === scope.a ? scope.b + 1 : scope.b",
+        "a2": "scope.a * scope.a",
+        "b2": "scope.b_eff * scope.b_eff",
+        "num": "(scope.a2 === 1 ? '' : scope.a2) + 'x^2 - ' + (scope.b2 === 1 ? '' : scope.b2) + 'y^2'",
+        "den": "(scope.a === 1 ? '' : scope.a) + 'x^2 - ' + (scope.b_eff === 1 ? '' : scope.b_eff) + 'xy'",
+        "termAX": "scope.a === 1 ? 'x' : scope.a + 'x'",
+        "termBY": "scope.b_eff === 1 ? 'y' : scope.b_eff + 'y'",
+        "step1": "'\\\\frac{(' + scope.termAX + ' - ' + scope.termBY + ')(' + scope.termAX + ' + ' + scope.termBY + ')}{x(' + scope.termAX + ' - ' + scope.termBY + ')}'",
+        "ansNumNoSpace": "scope.termAX + '+' + scope.termBY",
+        "ansNumLaTeX": "scope.termAX + ' + ' + scope.termBY",
+        "ans": "'(' + scope.ansNumNoSpace + ')/x'",
+        "ansLaTeX": "'\\\\frac{' + scope.ansNumLaTeX + '}{x}'"
+      },
+      "questionTemplate": "Simplify the algebraic fraction:\n\n$$\\frac{${scope.num}}{${scope.den}}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Factorize the numerator as a difference of two squares and factor out $x$ from the denominator: $$${scope.step1}$$",
+        "Cancel the common factor: $$${scope.ansLaTeX}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "m": { "type": "randInt", "min": 2, "max": 4 },
+        "n": { "type": "randInt", "min": 3, "max": 6 },
+        "k": { "type": "randInt", "min": 2, "max": 5 },
+        "c": { "type": "randInt", "min": 2, "max": 5 }
+      },
+      "derived": {
+        "n_eff": "scope.n === scope.m ? scope.n + 1 : scope.n",
+        "km": "scope.k * scope.m",
+        "kn": "scope.k * scope.n_eff",
+        "cm": "scope.c * scope.m",
+        "cn": "scope.c * scope.n_eff",
+        "num": "scope.km + 'ab - ' + scope.kn + 'b^2'",
+        "den": "scope.m + 'a^2 - ' + scope.n_eff + 'ab + ' + scope.cm + 'a - ' + scope.cn + 'b'",
+        "step1": "'\\\\frac{' + scope.k + 'b(' + scope.m + 'a - ' + scope.n_eff + 'b)}{a(' + scope.m + 'a - ' + scope.n_eff + 'b) + ' + scope.c + '(' + scope.m + 'a - ' + scope.n_eff + 'b)}'",
+        "step2": "'\\\\frac{' + scope.k + 'b(' + scope.m + 'a - ' + scope.n_eff + 'b)}{(a + ' + scope.c + ')(' + scope.m + 'a - ' + scope.n_eff + 'b)}'",
+        "ansNumNoSpace": "scope.k + 'b'",
+        "ansDenNoSpace": "'a+' + scope.c",
+        "ansDenLaTeX": "'a + ' + scope.c",
+        "ans": "scope.ansNumNoSpace + '/(' + scope.ansDenNoSpace + ')'",
+        "ansLaTeX": "'\\\\frac{' + scope.ansNumNoSpace + '}{' + scope.ansDenLaTeX + '}'"
+      },
+      "questionTemplate": "Simplify the following algebraic fraction:\n\n$$\\frac{${scope.num}}{${scope.den}}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Factorize the numerator and group terms in the denominator: $$${scope.step1}$$",
+        "Complete factorizing the denominator by grouping: $$${scope.step2}$$",
+        "Cancel the common binomial factor: $$${scope.ansLaTeX}$$"
+      ]
+    }
+  ]
+}

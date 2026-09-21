@@ -1,0 +1,194 @@
+{
+  "skillTitle": "Expansion",
+  "keypad": [
+  "x", "y", "a", "^",
+  "7", "8", "9", "+",
+  "4", "5", "6", "-",
+  "1", "2", "3", "0",
+  "(", ")", "⌫", "Clear"
+],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "b": { "type": "randInt", "min": 2, "max": 6 },
+        "c": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true }
+      },
+      "derived": {
+        "a_eff": "Math.abs(scope.a * scope.b) % 10 === 0 ? (scope.a > 0 ? scope.a + 1 : scope.a - 1) : scope.a",
+        "term1": "scope.a_eff * scope.b",
+        "term2": "scope.a_eff * scope.c",
+        "a_str": "scope.a_eff === 1 ? 'x' : (scope.a_eff === -1 ? '-x' : scope.a_eff + 'x')",
+        "bx_str": "scope.b === 1 ? 'x' : scope.b + 'x'",
+        "c_str": "scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c)",
+        "expr": "scope.a_str + '(' + scope.bx_str + ' ' + scope.c_str + ')'",
+        "partX2": "scope.term1 === 1 ? 'x^2' : (scope.term1 === -1 ? '-x^2' : scope.term1 + 'x^2')",
+        "partX": "scope.term2 > 0 ? '+' + scope.term2 + 'x' : (scope.term2 === -1 ? '-x' : scope.term2 + 'x')",
+        "ans": "scope.partX2 + scope.partX",
+        "frame_setup": "'\\\\begin{array}{c|c|c} \\\\times & ' + scope.bx_str + ' & ' + scope.c + ' \\\\\\\\\\\\\\\\ \\\\hline ' + scope.a_str + ' & & \\\\end{array}'",
+        "frame_filled": "'\\\\begin{array}{c|c|c} \\\\times & ' + scope.bx_str + ' & ' + scope.c + ' \\\\\\\\\\\\\\\\ \\\\hline ' + scope.a_str + ' & ' + scope.partX2 + ' & ' + (scope.term2 > 0 ? '+' + scope.term2 + 'x' : scope.term2 + 'x') + ' \\\\end{array}'"
+      },
+      "questionTemplate": "Expand:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Step 1: Form the multiplication frame with the terms at the top and left side:\n\n$$${scope.frame_setup}$$",
+        "Step 2: Evaluate each multiplication term in the frame:\n\n$$${scope.frame_filled}$$",
+        "Step 3: Simplify by adding like terms:\n\n$$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true },
+        "b": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true }
+      },
+      "derived": {
+        "a_eff": "scope.a",
+        "b_raw": "scope.b",
+        "sum_val": "scope.a_eff + scope.b_raw",
+        "b_eff": "(scope.sum_val === 0 || Math.abs(scope.sum_val) % 10 === 0) ? (scope.b_raw > 0 ? scope.b_raw + 1 : scope.b_raw - 1) : scope.b_raw",
+        "coeffX": "scope.a_eff + scope.b_eff",
+        "constTerm": "scope.a_eff * scope.b_eff",
+        "expr": "'(' + 'x ' + (scope.a_eff > 0 ? '+ ' + scope.a_eff : '- ' + Math.abs(scope.a_eff)) + ')(' + 'x ' + (scope.b_eff > 0 ? '+ ' + scope.b_eff : '- ' + Math.abs(scope.b_eff)) + ')'",
+        "partX": "scope.coeffX === 1 ? '+x' : (scope.coeffX === -1 ? '-x' : (scope.coeffX > 0 ? '+' + scope.coeffX + 'x' : scope.coeffX + 'x'))",
+        "partC": "scope.constTerm > 0 ? '+' + scope.constTerm : scope.constTerm.toString()",
+        "ans": "'x^2' + scope.partX + scope.partC",
+        "frame_setup": "'\\\\begin{array}{c|c|c} \\\\times & x & ' + scope.b_eff + ' \\\\\\\\\\\\\\\\ \\\\hline x & & \\\\\\\\\\\\\\\\ \\\\hline ' + scope.a_eff + ' & & \\\\end{array}'",
+        "frame_filled": "'\\\\begin{array}{c|c|c} \\\\times & x & ' + scope.b_eff + ' \\\\\\\\\\\\\\\\ \\\\hline x & x^2 & ' + (scope.b_eff > 0 ? scope.b_eff + 'x' : scope.b_eff + 'x') + ' \\\\\\\\\\\\\\\\ \\\\hline ' + scope.a_eff + ' & ' + (scope.a_eff > 0 ? scope.a_eff + 'x' : scope.a_eff + 'x') + ' & ' + scope.constTerm + ' \\\\end{array}'",
+        "unsimplified": "'x^2 ' + (scope.b_eff > 0 ? '+ ' + scope.b_eff + 'x' : '- ' + Math.abs(scope.b_eff) + 'x') + ' ' + (scope.a_eff > 0 ? '+ ' + scope.a_eff + 'x' : '- ' + Math.abs(scope.a_eff) + 'x') + ' ' + (scope.constTerm > 0 ? '+ ' + scope.constTerm : '- ' + Math.abs(scope.constTerm))"
+      },
+      "questionTemplate": "Expand and simplify:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Step 1: Form the multiplication frame with the terms at the top and left side:\n\n$$${scope.frame_setup}$$",
+        "Step 2: Evaluate each multiplication term in the frame:\n\n$$${scope.frame_filled}$$",
+        "Step 3: Simplify by adding like terms:\n\n$$${scope.unsimplified} = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 5 },
+        "b": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "c": { "type": "randInt", "min": 1, "max": 4 },
+        "d": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+      },
+      "derived": {
+        "a_eff": "scope.a",
+        "b_eff": "scope.b",
+        "c_eff": "scope.c",
+        "d_raw": "scope.d",
+        "middle_check": "(scope.a_eff * scope.d_raw) + (scope.b_eff * scope.c_eff)",
+        "d_eff": "(scope.middle_check === 0 || Math.abs(scope.middle_check) % 10 === 0) ? (scope.d_raw > 0 ? scope.d_raw + 1 : scope.d_raw - 1) : scope.d_raw",
+        "coeffX2": "scope.a_eff * scope.c_eff",
+        "coeffX": "(scope.a_eff * scope.d_eff) + (scope.b_eff * scope.c_eff)",
+        "constTerm": "scope.b_eff * scope.d_eff",
+        "term_ad": "scope.a_eff * scope.d_eff",
+        "term_bc": "scope.b_eff * scope.c_eff",
+        "cx_str": "scope.c_eff === 1 ? 'x' : scope.c_eff + 'x'",
+        "expr": "'(' + scope.a_eff + 'x ' + (scope.b_eff > 0 ? '+ ' + scope.b_eff : '- ' + Math.abs(scope.b_eff)) + ')(' + scope.cx_str + ' ' + (scope.d_eff > 0 ? '+ ' + scope.d_eff : '- ' + Math.abs(scope.d_eff)) + ')'",
+        "partX2": "scope.coeffX2 === 1 ? 'x^2' : scope.coeffX2 + 'x^2'",
+        "partX": "scope.coeffX === 0 ? '' : (scope.coeffX === 1 ? '+x' : (scope.coeffX === -1 ? '-x' : (scope.coeffX > 0 ? '+' + scope.coeffX + 'x' : scope.coeffX + 'x')))",
+        "partC": "scope.constTerm > 0 ? '+' + scope.constTerm : scope.constTerm.toString()",
+        "ans": "scope.partX2 + scope.partX + scope.partC",
+        "frame_setup": "'\\\\begin{array}{c|c|c} \\\\times & ' + scope.cx_str + ' & ' + scope.d_eff + ' \\\\\\\\\\\\\\\\ \\\\hline ' + scope.a_eff + 'x & & \\\\\\\\\\\\\\\\ \\\\hline ' + scope.b_eff + ' & & \\\\end{array}'",
+        "frame_filled": "'\\\\begin{array}{c|c|c} \\\\times & ' + scope.cx_str + ' & ' + scope.d_eff + ' \\\\\\\\\\\\\\\\ \\\\hline ' + scope.a_eff + 'x & ' + scope.partX2 + ' & ' + scope.term_ad + 'x \\\\\\\\\\\\\\\\ \\\\hline ' + scope.b_eff + ' & ' + scope.term_bc + 'x & ' + scope.constTerm + ' \\\\end{array}'",
+        "unsimplified": "scope.partX2 + ' ' + (scope.term_ad > 0 ? '+ ' + scope.term_ad + 'x' : '- ' + Math.abs(scope.term_ad) + 'x') + ' ' + (scope.term_bc > 0 ? '+ ' + scope.term_bc + 'x' : '- ' + Math.abs(scope.term_bc) + 'x') + ' ' + (scope.constTerm > 0 ? '+ ' + scope.constTerm : '- ' + Math.abs(scope.constTerm))"
+      },
+      "questionTemplate": "Expand and simplify:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Step 1: Form the multiplication frame with the terms at the top and left side:\n\n$$${scope.frame_setup}$$",
+        "Step 2: Evaluate each multiplication term in the frame:\n\n$$${scope.frame_filled}$$",
+        "Step 3: Simplify by adding like terms:\n\n$$${scope.unsimplified} = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 6 },
+        "b": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true }
+      },
+      "derived": {
+        "a_eff": "scope.a",
+        "b_raw": "scope.b",
+        "middle_check": "2 * scope.a_eff * scope.b_raw",
+        "b_eff": "(Math.abs(scope.middle_check) % 10 === 0) ? (scope.b_raw > 0 ? scope.b_raw + 1 : scope.b_raw - 1) : scope.b_raw",
+        "coeffX2": "scope.a_eff * scope.a_eff",
+        "crossTerm": "scope.a_eff * scope.b_eff",
+        "coeffX": "2 * scope.crossTerm",
+        "constTerm": "scope.b_eff * scope.b_eff",
+        "expr": "'(' + scope.a_eff + 'x ' + (scope.b_eff > 0 ? '+ ' + scope.b_eff : '- ' + Math.abs(scope.b_eff)) + ')^2'",
+        "partX2": "scope.coeffX2 + 'x^2'",
+        "partX": "scope.coeffX > 0 ? '+' + scope.coeffX + 'x' : scope.coeffX + 'x'",
+        "partC": "'+' + scope.constTerm",
+        "ans": "scope.partX2 + scope.partX + scope.partC",
+        "frame_setup": "'\\\\begin{array}{c|c|c} \\\\times & ' + scope.a_eff + 'x & ' + scope.b_eff + ' \\\\\\\\\\\\\\\\ \\\\hline ' + scope.a_eff + 'x & & \\\\\\\\\\\\\\\\ \\\\hline ' + scope.b_eff + ' & & \\\\end{array}'",
+        "frame_filled": "'\\\\begin{array}{c|c|c} \\\\times & ' + scope.a_eff + 'x & ' + scope.b_eff + ' \\\\\\\\\\\\\\\\ \\\\hline ' + scope.a_eff + 'x & ' + scope.partX2 + ' & ' + scope.crossTerm + 'x \\\\\\\\\\\\\\\\ \\\\hline ' + scope.b_eff + ' & ' + scope.crossTerm + 'x & ' + scope.constTerm + ' \\\\end{array}'",
+        "unsimplified": "scope.partX2 + ' ' + (scope.crossTerm > 0 ? '+ ' + scope.crossTerm + 'x' : '- ' + Math.abs(scope.crossTerm) + 'x') + ' ' + (scope.crossTerm > 0 ? '+ ' + scope.crossTerm + 'x' : '- ' + Math.abs(scope.crossTerm) + 'x') + ' + ' + scope.constTerm"
+      },
+      "questionTemplate": "Expand and simplify:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Step 1: Form the multiplication frame with the terms at the top and left side:\n\n$$${scope.frame_setup}$$",
+        "Step 2: Evaluate each multiplication term in the frame:\n\n$$${scope.frame_filled}$$",
+        "Step 3: Simplify by adding like terms:\n\n$$${scope.unsimplified} = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true },
+        "b": { "type": "randInt", "min": 1, "max": 3 },
+        "c": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true },
+        "d": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true }
+      },
+      "derived": {
+        "a_eff": "scope.a",
+        "b_eff": "scope.b",
+        "c_eff": "scope.c",
+        "d_eff": "scope.d",
+        "t_x3": "scope.b_eff",
+        "t_x2_1": "scope.c_eff",
+        "t_x2_2": "scope.a_eff * scope.b_eff",
+        "coeffX2": "scope.t_x2_1 + scope.t_x2_2",
+        "t_x_1": "scope.d_eff",
+        "t_x_2": "scope.a_eff * scope.c_eff",
+        "coeffX": "scope.t_x_1 + scope.t_x_2",
+        "constTerm": "scope.a_eff * scope.d_eff",
+        "expr": "'(' + 'x ' + (scope.a_eff > 0 ? '+ ' + scope.a_eff : '- ' + Math.abs(scope.a_eff)) + ')(' + (scope.b_eff === 1 ? 'x^2' : scope.b_eff + 'x^2') + ' ' + (scope.c_eff > 0 ? '+ ' + (scope.c_eff === 1 ? '' : scope.c_eff) + 'x' : '- ' + (Math.abs(scope.c_eff) === 1 ? '' : Math.abs(scope.c_eff)) + 'x') + ' ' + (scope.d_eff > 0 ? '+ ' + scope.d_eff : '- ' + Math.abs(scope.d_eff)) + ')'",
+        "partX3": "scope.t_x3 === 1 ? 'x^3' : scope.t_x3 + 'x^3'",
+        "partX2": "scope.coeffX2 === 0 ? '' : (scope.coeffX2 === 1 ? '+x^2' : (scope.coeffX2 === -1 ? '-x^2' : (scope.coeffX2 > 0 ? '+' + scope.coeffX2 + 'x^2' : scope.coeffX2 + 'x^2')))",
+        "partX": "scope.coeffX === 0 ? '' : (scope.coeffX === 1 ? '+x' : (scope.coeffX === -1 ? '-x' : (scope.coeffX > 0 ? '+' + scope.coeffX + 'x' : scope.coeffX + 'x')))",
+        "partC": "scope.constTerm > 0 ? '+' + scope.constTerm : scope.constTerm.toString()",
+        "ans": "scope.partX3 + scope.partX2 + scope.partX + scope.partC",
+        "bx2_str": "scope.b_eff === 1 ? 'x^2' : scope.b_eff + 'x^2'",
+        "cx_str": "scope.c_eff === 1 ? 'x' : (scope.c_eff === -1 ? '-x' : scope.c_eff + 'x')",
+        "cx2_str": "scope.c_eff === 1 ? 'x^2' : (scope.c_eff === -1 ? '-x^2' : scope.c_eff + 'x^2')",
+        "dx_str": "scope.d_eff === 1 ? 'x' : (scope.d_eff === -1 ? '-x' : scope.d_eff + 'x')",
+        "tx2_2_str": "scope.t_x2_2 === 1 ? 'x^2' : (scope.t_x2_2 === -1 ? '-x^2' : scope.t_x2_2 + 'x^2')",
+        "tx_2_str": "scope.t_x_2 === 1 ? 'x' : (scope.t_x_2 === -1 ? '-x' : scope.t_x_2 + 'x')",
+        "frame_setup": "'\\\\begin{array}{c|c|c|c} \\\\times & ' + scope.bx2_str + ' & ' + scope.cx_str + ' & ' + scope.d_eff + ' \\\\\\\\\\\\\\\\ \\\\hline x & & & \\\\\\\\\\\\\\\\ \\\\hline ' + scope.a_eff + ' & & & \\\\end{array}'",
+        "frame_filled": "'\\\\begin{array}{c|c|c|c} \\\\times & ' + scope.bx2_str + ' & ' + scope.cx_str + ' & ' + scope.d_eff + ' \\\\\\\\\\\\\\\\ \\\\hline x & ' + scope.partX3 + ' & ' + scope.cx2_str + ' & ' + scope.dx_str + ' \\\\\\\\\\\\\\\\ \\\\hline ' + scope.a_eff + ' & ' + scope.tx2_2_str + ' & ' + scope.tx_2_str + ' & ' + scope.constTerm + ' \\\\end{array}'"
+      },
+      "questionTemplate": "Expand and simplify:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Step 1: Form the multiplication frame with the terms at the top and left side:\n\n$$${scope.frame_setup}$$",
+        "Step 2: Evaluate each multiplication term in the frame:\n\n$$${scope.frame_filled}$$",
+        "Step 3: Simplify by adding like terms:\n\n$$${scope.ans}$$"
+      ]
+    }
+  ]
+}

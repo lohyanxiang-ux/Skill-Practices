@@ -1,0 +1,152 @@
+{
+  "skillTitle": "Pythagoras' Theorem",
+  "keypad": [
+  "a", "b", "c", "+",
+  "7", "8", "9", "-",
+  "4", "5", "6", ".",
+  "1", "2", "3", "0",
+  "(", ")", "⌫", "Clear"
+],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 3, "max": 15 },
+        "b": { "type": "randInt", "min": 3, "max": 15 }
+      },
+      "derived": {
+        "a2": "scope.a * scope.a",
+        "b2": "scope.b * scope.b",
+        "c2": "scope.a2 + scope.b2",
+        "ans": "Math.sqrt(scope.c2) % 1 === 0 ? Math.sqrt(scope.c2).toString() : parseFloat(Math.sqrt(scope.c2).toPrecision(3)).toString()",
+        "step1": "'BC^2 = AC^2 + AB^2'",
+        "step2": "'BC^2 = ' + scope.a + '^2 + ' + scope.b + '^2 = ' + scope.a2 + ' + ' + scope.b2 + ' = ' + scope.c2",
+        "step3": "Math.sqrt(scope.c2) % 1 === 0 ? 'BC = \\\\sqrt{' + scope.c2 + '} = ' + Math.sqrt(scope.c2) + '\\\\text{ cm}' : 'BC = \\\\sqrt{' + scope.c2 + '} \\\\approx ' + parseFloat(Math.sqrt(scope.c2).toPrecision(3)) + '\\\\text{ cm (to 3 s.f.)}'"
+      },
+      "questionTemplate": "<svg viewBox='0 0 240 160' width='100%' height='auto' style='max-width:250px; display:block; margin:10px auto;'><polygon points='60,130 190,130 60,30' fill='none' stroke='#2b5b84' stroke-width='2'/><polyline points='60,120 70,120 70,130' fill='none' stroke='#333' stroke-width='1.5'/><text x='45' y='145' font-size='14' font-family='sans-serif' fill='#333'>A</text><text x='195' y='145' font-size='14' font-family='sans-serif' fill='#333'>B</text><text x='55' y='20' font-size='14' font-family='sans-serif' fill='#333'>C</text><text x='50' y='85' font-size='13' font-family='sans-serif' fill='#000' text-anchor='end'>${scope.a} cm</text><text x='125' y='148' font-size='13' font-family='sans-serif' fill='#000' text-anchor='middle'>${scope.b} cm</text></svg>\n\nIn right-angled triangle $ABC$, $AC = ${scope.a}\\text{ cm}$ and $AB = ${scope.b}\\text{ cm}$. Calculate the length of side $BC$.",
+      "inputs": [
+        { "label": "BC =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Apply Pythagoras' Theorem:\n$$${scope.step1}$$",
+        "Substitute the given values:\n$$${scope.step2}$$",
+        "Take the square root to find $BC$:\n$$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "b": { "type": "randInt", "min": 4, "max": 15 },
+        "diff": { "type": "randInt", "min": 2, "max": 10 }
+      },
+      "derived": {
+        "c": "scope.b + scope.diff",
+        "b2": "scope.b * scope.b",
+        "c2": "scope.c * scope.c",
+        "a2": "scope.c2 - scope.b2",
+        "ans": "Math.sqrt(scope.a2) % 1 === 0 ? Math.sqrt(scope.a2).toString() : parseFloat(Math.sqrt(scope.a2).toPrecision(3)).toString()",
+        "step1": "'XY^2 = XZ^2 - YZ^2'",
+        "step2": "'XY^2 = ' + scope.c + '^2 - ' + scope.b + '^2 = ' + scope.c2 + ' - ' + scope.b2 + ' = ' + scope.a2",
+        "step3": "Math.sqrt(scope.a2) % 1 === 0 ? 'XY = \\\\sqrt{' + scope.a2 + '} = ' + Math.sqrt(scope.a2) + '\\\\text{ cm}' : 'XY = \\\\sqrt{' + scope.a2 + '} \\\\approx ' + parseFloat(Math.sqrt(scope.a2).toPrecision(3)) + '\\\\text{ cm (to 3 s.f.)}'"
+      },
+      "questionTemplate": "<svg viewBox='0 0 240 160' width='100%' height='auto' style='max-width:250px; display:block; margin:10px auto;'><polygon points='40,130 180,130 180,30' fill='none' stroke='#2b5b84' stroke-width='2'/><polyline points='170,130 170,120 180,120' fill='none' stroke='#333' stroke-width='1.5'/><text x='25' y='135' font-size='14' font-family='sans-serif' fill='#333'>X</text><text x='188' y='135' font-size='14' font-family='sans-serif' fill='#333'>Y</text><text x='185' y='25' font-size='14' font-family='sans-serif' fill='#333'>Z</text><text x='188' y='85' font-size='13' font-family='sans-serif' fill='#000' text-anchor='start'>${scope.b} cm</text><text x='105' y='75' font-size='13' font-family='sans-serif' fill='#000' text-anchor='end'>${scope.c} cm</text></svg>\n\nIn right-angled triangle $XYZ$, $XZ = ${scope.c}\\text{ cm}$ and $YZ = ${scope.b}\\text{ cm}$. Calculate the length of side $XY$.",
+      "inputs": [
+        { "label": "XY =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Rearrange Pythagoras' Theorem to solve for side $XY$:\n$$${scope.step1}$$",
+        "Substitute the given values:\n$$${scope.step2}$$",
+        "Take the square root to find $XY$:\n$$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "a": "3 * scope.k",
+        "b": "4 * scope.k",
+        "c": "12 * scope.k",
+        "bd_sq": "scope.a * scope.a + scope.b * scope.b",
+        "bd": "5 * scope.k",
+        "bc_sq": "scope.bd_sq + scope.c * scope.c",
+        "bc": "13 * scope.k",
+        "ans": "scope.bc.toString()",
+        "step1": "'BD^2 = AB^2 + AD^2 = ' + scope.a + '^2 + ' + scope.b + '^2 = ' + scope.bd_sq",
+        "step1_res": "'BD = \\\\sqrt{' + scope.bd_sq + '} = ' + scope.bd + '\\\\text{ cm}'",
+        "step2": "'BC^2 = BD^2 + CD^2 = ' + scope.bd + '^2 + ' + scope.c + '^2 = ' + scope.bc_sq",
+        "step3": "'BC = \\\\sqrt{' + scope.bc_sq + '} = ' + scope.bc + '\\\\text{ cm}'"
+      },
+      "questionTemplate": "<svg viewBox='0 0 240 180' width='100%' height='auto' style='max-width:250px; display:block; margin:10px auto;'><polygon points='50,150 190,150 50,90' fill='none' stroke='#2b5b84' stroke-width='2'/><line x1='50' y1='90' x2='80' y2='20' stroke='#2b5b84' stroke-width='2'/><line x1='190' y1='150' x2='80' y2='20' stroke='#2b5b84' stroke-width='2'/><polyline points='50,140 60,140 60,150' fill='none' stroke='#333' stroke-width='1.5'/><path d='M 59.2,93.9 L 63.1,84.7 L 53.9,80.8' fill='none' stroke='#333' stroke-width='1.5'/><text x='35' y='155' font-size='14' font-family='sans-serif' fill='#333'>A</text><text x='198' y='155' font-size='14' font-family='sans-serif' fill='#333'>B</text><text x='80' y='18' font-size='14' font-family='sans-serif' fill='#333'>C</text><text x='32' y='95' font-size='14' font-family='sans-serif' fill='#333'>D</text><text x='120' y='165' font-size='13' font-family='sans-serif' fill='#000' text-anchor='middle'>${scope.a} cm</text><text x='42' y='125' font-size='13' font-family='sans-serif' fill='#000' text-anchor='end'>${scope.b} cm</text><text x='58' y='52' font-size='13' font-family='sans-serif' fill='#000' text-anchor='end'>${scope.c} cm</text></svg>\n\nIn the diagram, $\\angle BAD = \\angle BDC = 90^\\circ$. Given $AB = ${scope.a}\\text{ cm}$, $AD = ${scope.b}\\text{ cm}$, and $CD = ${scope.c}\\text{ cm}$, find the length of $BC$.",
+      "inputs": [
+        { "label": "BC =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Find $BD$ using right-angled triangle $BAD$:\n$$${scope.step1}$$\n$$${scope.step1_res}$$",
+        "Apply Pythagoras' Theorem in right-angled triangle $BDC$:\n$$${scope.step2}$$",
+        "Take the square root to find $BC$:\n$$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "p": "5 * scope.k",
+        "r": "16 * scope.k",
+        "h": "12 * scope.k",
+        "pq": "13 * scope.k",
+        "rq": "20 * scope.k",
+        "r_sq": "scope.r * scope.r",
+        "h_sq": "scope.h * scope.h",
+        "rq_sq": "scope.r_sq + scope.h_sq",
+        "ans": "scope.rq.toString()",
+        "step1": "'RQ^2 = RS^2 + QS^2'",
+        "step2": "'RQ^2 = ' + scope.r + '^2 + ' + scope.h + '^2 = ' + scope.r_sq + ' + ' + scope.h_sq + ' = ' + scope.rq_sq",
+        "step3": "'RQ = \\\\sqrt{' + scope.rq_sq + '} = ' + scope.rq + '\\\\text{ cm}'"
+      },
+      "questionTemplate": "<svg viewBox='0 0 250 160' width='100%' height='auto' style='max-width:260px; display:block; margin:10px auto;'><polygon points='30,40 220,40 90,130' fill='none' stroke='#2b5b84' stroke-width='2'/><line x1='90' y1='40' x2='90' y2='130' stroke='#2b5b84' stroke-width='2'/><polyline points='90,50 100,50 100,40' fill='none' stroke='#333' stroke-width='1.5'/><text x='15' y='42' font-size='14' font-family='sans-serif' fill='#333'>P</text><text x='88' y='25' font-size='14' font-family='sans-serif' fill='#333'>S</text><text x='228' y='42' font-size='14' font-family='sans-serif' fill='#333'>R</text><text x='88' y='148' font-size='14' font-family='sans-serif' fill='#333'>Q</text><text x='60' y='28' font-size='13' font-family='sans-serif' fill='#000' text-anchor='middle'>${scope.p} cm</text><text x='155' y='28' font-size='13' font-family='sans-serif' fill='#000' text-anchor='middle'>${scope.r} cm</text><text x='98' y='90' font-size='13' font-family='sans-serif' fill='#000' text-anchor='start'>${scope.h} cm</text></svg>\n\nIn the diagram, $QS$ is perpendicular to $PR$. Given $PS = ${scope.p}\\text{ cm}$, $RS = ${scope.r}\\text{ cm}$, and $QS = ${scope.h}\\text{ cm}$, find the length of $RQ$.",
+      "inputs": [
+        { "label": "RQ =", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Identify the right-angled triangle $RSQ$ containing side $RQ$:\n$$${scope.step1}$$",
+        "Substitute the known values:\n$$${scope.step2}$$",
+        "Take the square root to find $RQ$:\n$$${scope.step3}$$"
+      ]
+    },
+{
+  "level": 3,
+  "variables": {
+    "k": { "type": "randInt", "min": 1, "max": 4 }
+  },
+  "derived": {
+    "a": "15 * scope.k",
+    "b": "20 * scope.k",
+    "c": "25 * scope.k",
+    "cd": "12 * scope.k",
+    "area": "0.5 * scope.a * scope.b",
+    "c_sq": "scope.a * scope.a + scope.b * scope.b",
+    "ans": "scope.cd.toString()",
+    "step1_1": "'AB^2 = AC^2 + BC^2 = ' + scope.a + '^2 + ' + scope.b + '^2 = ' + scope.c_sq",
+    "step1_2": "'AB = \\\\sqrt{' + scope.c_sq + '} = ' + scope.c + '\\\\text{ cm}'",
+    "step2_1": "'\\\\text{Area} = \\\\frac{1}{2} \\\\times AC \\\\times BC'",
+    "step2_2": "'\\\\text{Area} = \\\\frac{1}{2} \\\\times ' + scope.a + ' \\\\times ' + scope.b + ' = ' + scope.area + '\\\\text{ cm}^2'",
+    "step3_1": "'\\\\frac{1}{2} \\\\times AB \\\\times CD = \\\\text{Area}'",
+    "step3_2": "'\\\\frac{1}{2} \\\\times ' + scope.c + ' \\\\times CD = ' + scope.area",
+    "step3_3": "'CD = \\\\frac{' + (2 * scope.area) + '}{' + scope.c + '} = ' + scope.cd + '\\\\text{ cm}'"
+  },
+  "questionTemplate": "<svg viewBox='0 0 250 170' width='100%' height='auto' style='max-width:260px; display:block; margin:10px auto;'><polygon points='40,130 220,90 70,40' fill='none' stroke='#2b5b84' stroke-width='2'/><line x1='70' y1='40' x2='87.6' y2='119.4' stroke='#2b5b84' stroke-width='2'/><path d='M 66.8,49.5 L 76.3,52.7 L 79.5,43.2' fill='none' stroke='#333' stroke-width='1.5'/><path d='M 77.9,121.6 L 75.7,111.9 L 85.4,109.7' fill='none' stroke='#333' stroke-width='1.5'/><text x='22' y='138' font-size='14' font-family='sans-serif' fill='#333'>A</text><text x='228' y='95' font-size='14' font-family='sans-serif' fill='#333'>B</text><text x='70' y='25' font-size='14' font-family='sans-serif' fill='#333'>C</text><text x='92' y='135' font-size='14' font-family='sans-serif' fill='#333'>D</text><text x='48' y='80' font-size='13' font-family='sans-serif' fill='#000' text-anchor='end'>${scope.a} cm</text><text x='150' y='58' font-size='13' font-family='sans-serif' fill='#000' text-anchor='start'>${scope.b} cm</text></svg>\n\nIn right-angled triangle $ABC$, $\\angle ACB = 90^\\circ$, $AC = ${scope.a}\\text{ cm}$, and $BC = ${scope.b}\\text{ cm}$. $D$ lies on $AB$ such that $CD$ is perpendicular to $AB$. Find the length of $CD$.",
+  "inputs": [
+    { "label": "CD =", "answer": "${scope.ans}" }
+  ],
+  "steps": [
+    "First, calculate hypotenuse $AB$ using Pythagoras' Theorem:\n$$${scope.step1_1}$$\n$$${scope.step1_2}$$",
+    "Calculate the area of $\\Delta ABC$:\n$$${scope.step2_1}$$\n$$${scope.step2_2}$$",
+    "Equate the area formula using base $AB$ and height $CD$ to solve for $CD$:\n$$${scope.step3_1}$$\n$$${scope.step3_2}$$\n$$${scope.step3_3}$$"
+  ]
+}
+  ]
+}

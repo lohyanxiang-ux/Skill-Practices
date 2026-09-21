@@ -1,0 +1,363 @@
+{
+  "skillTitle": "Factorising Quadratic Expressions",
+  "keypad": [
+  "x", "y", "p", "q",
+  "m", "n", "(", ")",
+  "7", "8", "9", "/",
+  "4", "5", "6", "+",
+  "1", "2", "3", "-",
+  "0", "^", "⌫", "Clear"
+],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "p": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true },
+        "q": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true }
+      },
+      "derived": {
+        "q_raw": "(scope.p + scope.q === 0) ? (scope.q > 0 ? scope.q + 1 : scope.q - 1) : scope.q",
+        "q_eff": "(Math.abs(scope.p + scope.q_raw) === 10) ? (scope.q_raw > 0 ? scope.q_raw + 1 : scope.q_raw - 1) : scope.q_raw",
+        "sum": "scope.p + scope.q_eff",
+        "prod": "scope.p * scope.q_eff",
+        "p_str": "scope.p > 0 ? '+' + scope.p : scope.p.toString()",
+        "q_str": "scope.q_eff > 0 ? '+' + scope.q_eff : scope.q_eff.toString()",
+        "px_str": "scope.p === 1 ? '+x' : (scope.p === -1 ? '-x' : (scope.p > 0 ? '+' + scope.p + 'x' : scope.p + 'x'))",
+        "qx_str": "scope.q_eff === 1 ? '+x' : (scope.q_eff === -1 ? '-x' : (scope.q_eff > 0 ? '+' + scope.q_eff + 'x' : scope.q_eff + 'x'))",
+        "prod_str": "scope.prod > 0 ? '+' + scope.prod : scope.prod.toString()",
+        "sumX_str": "scope.sum === 0 ? '0x' : (scope.sum === 1 ? '+x' : (scope.sum === -1 ? '-x' : (scope.sum > 0 ? '+' + scope.sum + 'x' : scope.sum + 'x')))",
+        "partX": "scope.sum === 0 ? '' : (scope.sum === 1 ? '+ x' : (scope.sum === -1 ? '- x' : (scope.sum > 0 ? '+ ' + scope.sum + 'x' : '- ' + Math.abs(scope.sum) + 'x')))",
+        "partC": "scope.prod > 0 ? '+ ' + scope.prod : '- ' + Math.abs(scope.prod)",
+        "expr": "'x^2 ' + scope.partX + ' ' + scope.partC",
+        "fact1": "'x' + (scope.p > 0 ? '+' + scope.p : scope.p)",
+        "fact2": "'x' + (scope.q_eff > 0 ? '+' + scope.q_eff : scope.q_eff)",
+        "ans": "'(' + scope.fact1 + ')(' + scope.fact2 + ')'",
+        "factors_list": "(function(n){ let pos=[], neg=[]; let absN=Math.abs(n); for(let i=1; i*i<=absN; i++){ if(absN%i===0){ let j=absN/i; if(n>0){ pos.push(i+' \\\\times '+j); neg.push((-i)+' \\\\times '+(-j)); } else { pos.push(i+' \\\\times '+(-j)); neg.push((-i)+' \\\\times '+j); } } } return pos.concat(neg).join(', '); })(scope.prod)",
+        "table": "'$$\\\\begin{array}{c|c|r} x & ' + scope.p_str + ' & ' + scope.px_str + ' \\\\\\\\ x & ' + scope.q_str + ' & ' + scope.qx_str + ' \\\\\\\\ \\\\hline x^2 & ' + scope.prod_str + ' & ' + scope.sumX_str + ' \\\\end{array}$$'",
+        "blankTable": "'$$\\\\begin{array}{c|c|r} & & \\\\\\\\ & & \\\\\\\\ \\\\hline x^2 & ' + scope.prod_str + ' & ' + scope.sumX_str + ' \\\\end{array}$$'"
+      },
+      "questionTemplate": "Factorise the expression completely:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Set up the cross method frame with the quadratic expression terms:\n\n${scope.blankTable}",
+        "Identify possible factor pairs for the constant term $$${scope.prod_str}$$: $$${scope.factors_list}$$.",
+        "Fill in the cross method frame:\n\n${scope.table}",
+        "Check that $$${scope.px_str}$$ and $$${scope.qx_str}$$ add up to $$${scope.sumX_str}$$.",
+        "Identify horizontal factors $$(${scope.fact1})$$ and $$(${scope.fact2})$$ from the frame rows.",
+        "Write down the final answer: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 4 },
+        "b": { "type": "randInt", "min": 1, "max": 9 }
+      },
+      "derived": {
+        "a2": "scope.a * scope.a",
+        "b2": "scope.b * scope.b",
+        "gcd": "(function(x,y){while(y){let t=y;y=x%y;x=t;}return x;})(scope.a, scope.b)",
+        "g": "scope.gcd * scope.gcd",
+        "a_eff": "scope.a / scope.gcd",
+        "b_eff": "scope.b / scope.gcd",
+        "termA": "scope.a === 1 ? 'x' : (scope.a + 'x')",
+        "termA_eff": "scope.a_eff === 1 ? 'x' : (scope.a_eff + 'x')",
+        "expr": "(scope.a === 1 ? 'x^2' : (scope.a2 + 'x^2')) + ' - ' + scope.b2",
+        "innerExpr": "(scope.a_eff === 1 ? 'x^2' : (scope.a_eff * scope.a_eff + 'x^2')) + ' - ' + (scope.b_eff * scope.b_eff)",
+        "formSq": "'(' + scope.termA + ')^2 - (' + scope.b + ')^2'",
+        "formSqInner": "'(' + scope.termA_eff + ')^2 - (' + scope.b_eff + ')^2'",
+        "ans": "scope.g > 1 ? (scope.g + '(' + scope.termA_eff + ' - ' + scope.b_eff + ')(' + scope.termA_eff + ' + ' + scope.b_eff + ')') : ('(' + scope.termA + ' - ' + scope.b + ')(' + scope.termA + ' + ' + scope.b + ')')",
+        "step1": "scope.g > 1 ? ('Factorise out the common factor ' + scope.g + ' from all terms:\\n\\n$$' + scope.g + '(' + scope.innerExpr + ')$$') : 'Check for common factors among the terms (there are none).'",
+        "step2": "scope.g > 1 ? ('Rewrite the expression inside the brackets in the form $$(a)^2 - (b)^2$$:\\n\\n$$' + scope.g + '(' + scope.formSqInner + ')$$') : ('Rewrite the expression in the form $$(a)^2 - (b)^2$$:\\n\\n$$' + scope.formSq + '$$')",
+        "step3": "'Apply the difference of squares formula $$a^2 - b^2 = (a - b)(a + b)$$ to write down the final answer:\\n\\n$$' + scope.ans + '$$'"
+      },
+      "questionTemplate": "Factorise the expression completely:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "${scope.step2}",
+        "${scope.step3}"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k": { "type": "randInt", "min": 2, "max": 4 },
+        "p": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "q": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+      },
+      "derived": {
+        "q_eff": "(scope.p + scope.q === 0) ? (scope.q > 0 ? scope.q + 1 : scope.q - 1) : scope.q",
+        "sum": "scope.p + scope.q_eff",
+        "prod": "scope.p * scope.q_eff",
+        "c1": "scope.k * scope.sum",
+        "c0": "scope.k * scope.prod",
+        "partX2": "scope.k + 'x^2'",
+        "partX": "scope.c1 === 0 ? '' : (scope.c1 === 1 ? '+ x' : (scope.c1 === -1 ? '- x' : (scope.c1 > 0 ? '+ ' + scope.c1 + 'x' : '- ' + Math.abs(scope.c1) + 'x')))",
+        "partC": "scope.c0 > 0 ? '+ ' + scope.c0 : '- ' + Math.abs(scope.c0)",
+        "expr": "scope.partX2 + ' ' + scope.partX + ' ' + scope.partC",
+        "innerX": "scope.sum === 0 ? '' : (scope.sum === 1 ? '+ x' : (scope.sum === -1 ? '- x' : (scope.sum > 0 ? '+ ' + scope.sum + 'x' : '- ' + Math.abs(scope.sum) + 'x')))",
+        "innerC": "scope.prod > 0 ? '+ ' + scope.prod : '- ' + Math.abs(scope.prod)",
+        "innerExpr": "'x^2 ' + scope.innerX + ' ' + scope.innerC",
+        "fact1": "'x' + (scope.p > 0 ? '+' + scope.p : scope.p)",
+        "fact2": "'x' + (scope.q_eff > 0 ? '+' + scope.q_eff : scope.q_eff)",
+        "ans": "scope.k + '(' + scope.fact1 + ')(' + scope.fact2 + ')'",
+        "p_str": "scope.p > 0 ? '+' + scope.p : scope.p.toString()",
+        "q_str": "scope.q_eff > 0 ? '+' + scope.q_eff : scope.q_eff.toString()",
+        "px_str": "scope.p === 1 ? '+x' : (scope.p === -1 ? '-x' : (scope.p > 0 ? '+' + scope.p + 'x' : scope.p + 'x'))",
+        "qx_str": "scope.q_eff === 1 ? '+x' : (scope.q_eff === -1 ? '-x' : (scope.q_eff > 0 ? '+' + scope.q_eff + 'x' : scope.q_eff + 'x'))",
+        "prod_str": "scope.prod > 0 ? '+' + scope.prod : scope.prod.toString()",
+        "sumX_str": "scope.sum === 0 ? '0x' : (scope.sum === 1 ? '+x' : (scope.sum === -1 ? '-x' : (scope.sum > 0 ? '+' + scope.sum + 'x' : scope.sum + 'x')))",
+        "table": "'$$\\\\begin{array}{c|c|r} x & ' + scope.p_str + ' & ' + scope.px_str + ' \\\\\\\\ x & ' + scope.q_str + ' & ' + scope.qx_str + ' \\\\\\\\ \\\\hline x^2 & ' + scope.prod_str + ' & ' + scope.sumX_str + ' \\\\end{array}$$'"
+      },
+      "questionTemplate": "Factorise the expression completely:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Factorise out the common factor $$${scope.k}$$ from all terms:\n\n$$${scope.k}(${scope.innerExpr})$$",
+        "Factorise the quadratic expression $$${scope.innerExpr}$$ inside the brackets using the cross method frame:\n\n${scope.table}",
+        "Combine the common factor with the factorised expression: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "p": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "q": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+      },
+      "derived": {
+        "q_eff": "(scope.p + scope.q === 0) ? (scope.q > 0 ? scope.q + 1 : scope.q - 1) : scope.q",
+        "sum": "scope.p + scope.q_eff",
+        "prod": "scope.p * scope.q_eff",
+        "negSum": "-scope.sum",
+        "negProd": "-scope.prod",
+        "partX": "scope.negSum === 0 ? '' : (scope.negSum === 1 ? '+ x' : (scope.negSum === -1 ? '- x' : (scope.negSum > 0 ? '+ ' + scope.negSum + 'x' : '- ' + Math.abs(scope.negSum) + 'x')))",
+        "partC": "scope.negProd > 0 ? '+ ' + scope.negProd : '- ' + Math.abs(scope.negProd)",
+        "expr": "'-x^2 ' + scope.partX + ' ' + scope.partC",
+        "innerX": "scope.sum === 0 ? '' : (scope.sum === 1 ? '+ x' : (scope.sum === -1 ? '- x' : (scope.sum > 0 ? '+ ' + scope.sum + 'x' : '- ' + Math.abs(scope.sum) + 'x')))",
+        "innerC": "scope.prod > 0 ? '+ ' + scope.prod : '- ' + Math.abs(scope.prod)",
+        "innerExpr": "'x^2 ' + scope.innerX + ' ' + scope.innerC",
+        "fact1": "'x' + (scope.p > 0 ? '+' + scope.p : scope.p)",
+        "fact2": "'x' + (scope.q_eff > 0 ? '+' + scope.q_eff : scope.q_eff)",
+        "ans": "'-(' + scope.fact1 + ')(' + scope.fact2 + ')'",
+        "p_str": "scope.p > 0 ? '+' + scope.p : scope.p.toString()",
+        "q_str": "scope.q_eff > 0 ? '+' + scope.q_eff : scope.q_eff.toString()",
+        "px_str": "scope.p === 1 ? '+x' : (scope.p === -1 ? '-x' : (scope.p > 0 ? '+' + scope.p + 'x' : scope.p + 'x'))",
+        "qx_str": "scope.q_eff === 1 ? '+x' : (scope.q_eff === -1 ? '-x' : (scope.q_eff > 0 ? '+' + scope.q_eff + 'x' : scope.q_eff + 'x'))",
+        "prod_str": "scope.prod > 0 ? '+' + scope.prod : scope.prod.toString()",
+        "sumX_str": "scope.sum === 0 ? '0x' : (scope.sum === 1 ? '+x' : (scope.sum === -1 ? '-x' : (scope.sum > 0 ? '+' + scope.sum + 'x' : scope.sum + 'x')))",
+        "table": "'$$\\\\begin{array}{c|c|r} x & ' + scope.p_str + ' & ' + scope.px_str + ' \\\\\\\\ x & ' + scope.q_str + ' & ' + scope.qx_str + ' \\\\\\\\ \\\\hline x^2 & ' + scope.prod_str + ' & ' + scope.sumX_str + ' \\\\end{array}$$'"
+      },
+      "questionTemplate": "Factorise the expression completely:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Factorise out $$-1$$ to obtain a positive leading coefficient:\n\n$$-(${scope.innerExpr})$$",
+        "Factorise the quadratic expression $$${scope.innerExpr}$$ inside the brackets using the cross method frame:\n\n${scope.table}",
+        "Combine terms to write down the final answer: $$${scope.ans}$$"
+      ]
+    },
+{
+  "level": 2,
+  "variables": {
+    "vChoice": { "type": "randInt", "min": 1, "max": 3 },
+    "k": { "type": "randInt", "min": 2, "max": 4 },
+    "a": { "type": "randInt", "min": 1, "max": 3 },
+    "p_raw": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+    "q": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true }
+  },
+  "derived": {
+    "v1": "scope.vChoice === 1 ? 'x' : (scope.vChoice === 2 ? 'p' : 'm')",
+    "v2": "scope.vChoice === 1 ? 'y' : (scope.vChoice === 2 ? 'q' : 'n')",
+    "p": "gcd(scope.a, Math.abs(scope.p_raw)) === 1 ? scope.p_raw : (scope.p_raw > 0 ? 1 : -1)",
+    "q_eff": "(scope.a * scope.q + scope.p === 0) ? (scope.q > 0 ? scope.q + 1 : scope.q - 1) : scope.q",
+    "innerMid": "scope.a * scope.q_eff + scope.p",
+    "innerLast": "scope.p * scope.q_eff",
+    "coeffV1": "scope.k * scope.a",
+    "coeffMid": "scope.k * scope.innerMid",
+    "coeffLast": "scope.k * scope.innerLast",
+    "partV1": "scope.coeffV1 === 1 ? scope.v1 + '^2' : scope.coeffV1 + scope.v1 + '^2'",
+    "partMid": "scope.coeffMid === 0 ? '' : (scope.coeffMid === 1 ? '+ ' + scope.v1 + scope.v2 : (scope.coeffMid === -1 ? '- ' + scope.v1 + scope.v2 : (scope.coeffMid > 0 ? '+ ' + scope.coeffMid + scope.v1 + scope.v2 : '- ' + Math.abs(scope.coeffMid) + scope.v1 + scope.v2)))",
+    "partLast": "scope.coeffLast > 0 ? '+ ' + scope.coeffLast + scope.v2 + '^2' : '- ' + Math.abs(scope.coeffLast) + scope.v2 + '^2'",
+    "expr": "scope.partV1 + ' ' + scope.partMid + ' ' + scope.partLast",
+    "innerPartV1": "scope.a === 1 ? scope.v1 + '^2' : scope.a + scope.v1 + '^2'",
+    "innerPartMid": "scope.innerMid === 0 ? '' : (scope.innerMid === 1 ? '+ ' + scope.v1 + scope.v2 : (scope.innerMid === -1 ? '- ' + scope.v1 + scope.v2 : (scope.innerMid > 0 ? '+ ' + scope.innerMid + scope.v1 + scope.v2 : '- ' + Math.abs(scope.innerMid) + scope.v1 + scope.v2)))",
+    "innerPartLast": "scope.innerLast > 0 ? '+ ' + scope.innerLast + scope.v2 + '^2' : '- ' + Math.abs(scope.innerLast) + scope.v2 + '^2'",
+    "innerExpr": "scope.innerPartV1 + ' ' + scope.innerPartMid + ' ' + scope.innerPartLast",
+    "fact1": "(scope.a === 1 ? scope.v1 : scope.a + scope.v1) + (scope.p > 0 ? '+' + scope.p : scope.p) + scope.v2",
+    "fact2": "scope.v1 + (scope.q_eff > 0 ? '+' + scope.q_eff : scope.q_eff) + scope.v2",
+    "ans": "scope.k + '(' + scope.fact1 + ')(' + scope.fact2 + ')'",
+    "term1_val": "scope.p",
+    "term1_str": "scope.p === 1 ? ('+' + scope.v1 + scope.v2) : (scope.p === -1 ? ('-' + scope.v1 + scope.v2) : (scope.p > 0 ? ('+' + scope.p + scope.v1 + scope.v2) : (scope.p + scope.v1 + scope.v2)))",
+    "term2_val": "scope.a * scope.q_eff",
+    "term2_str": "scope.term2_val === 1 ? ('+' + scope.v1 + scope.v2) : (scope.term2_val === -1 ? ('-' + scope.v1 + scope.v2) : (scope.term2_val > 0 ? ('+' + scope.term2_val + scope.v1 + scope.v2) : (scope.term2_val + scope.v1 + scope.v2)))",
+    "p_v2_str": "scope.p > 0 ? ('+' + scope.p + scope.v2) : (scope.p + scope.v2)",
+    "q_v2_str": "scope.q_eff > 0 ? ('+' + scope.q_eff + scope.v2) : (scope.q_eff + scope.v2)",
+    "sumV1V2_str": "scope.innerMid === 0 ? ('0' + scope.v1 + scope.v2) : (scope.innerMid === 1 ? ('+' + scope.v1 + scope.v2) : (scope.innerMid === -1 ? ('-' + scope.v1 + scope.v2) : (scope.innerMid > 0 ? ('+' + scope.innerMid + scope.v1 + scope.v2) : (scope.innerMid + scope.v1 + scope.v2))))",
+    "prodV2_str": "scope.innerLast > 0 ? ('+' + scope.innerLast + scope.v2 + '^2') : (scope.innerLast + scope.v2 + '^2')",
+    "col1_top": "scope.a === 1 ? scope.v1 : (scope.a + scope.v1)",
+    "table": "'$$\\\\begin{array}{c|c|r} ' + scope.col1_top + ' & ' + scope.p_v2_str + ' & ' + scope.term1_str + ' \\\\\\\\ ' + scope.v1 + ' & ' + scope.q_v2_str + ' & ' + scope.term2_str + ' \\\\\\\\ \\\\hline ' + scope.innerPartV1 + ' & ' + scope.prodV2_str + ' & ' + scope.sumV1V2_str + ' \\\\end{array}$$'"
+  },
+  "questionTemplate": "Factorise the expression completely:\n\n$$${scope.expr}$$",
+  "inputs": [
+    { "label": "=", "answer": "${scope.ans}" }
+  ],
+  "steps": [
+    "Factorise out the common factor $${scope.k}$ from all terms:\n\n$$${scope.expr} = ${scope.k}(${scope.innerExpr})$$",
+    "Set up the cross method frame for the inner expression $${scope.innerExpr}$:\n\n${scope.table}",
+    "Check that $${scope.term1_str}$ and $${scope.term2_str}$ add up to $${scope.sumV1V2_str}$.",
+    "Combine the common factor $${scope.k}$ with the linear factors to get the final answer:\n\n$$${scope.ans}$$"
+  ]
+},
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 3 },
+        "c": { "type": "randInt", "min": 2, "max": 3 },
+        "b": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true },
+        "d": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true }
+      },
+      "derived": {
+        "b_eff": "(Math.abs(scope.b) === Math.abs(scope.a)) ? (scope.b > 0 ? 1 : -1) : scope.b",
+        "d_eff": "(scope.a * scope.d + scope.b_eff * scope.c === 0) ? (scope.d > 0 ? scope.d + 1 : scope.d - 1) : scope.d",
+        "coeffX2": "scope.a * scope.c",
+        "coeffX": "scope.a * scope.d_eff + scope.b_eff * scope.c",
+        "constTerm": "scope.b_eff * scope.d_eff",
+        "partX2": "scope.coeffX2 + 'x^2'",
+        "partX": "scope.coeffX === 0 ? '' : (scope.coeffX === 1 ? '+ x' : (scope.coeffX === -1 ? '- x' : (scope.coeffX > 0 ? '+ ' + scope.coeffX + 'x' : '- ' + Math.abs(scope.coeffX) + 'x')))",
+        "partC": "scope.constTerm > 0 ? '+ ' + scope.constTerm : '- ' + Math.abs(scope.constTerm)",
+        "expr": "scope.partX2 + ' ' + scope.partX + ' ' + scope.partC",
+        "fact1": "scope.a + 'x' + (scope.b_eff > 0 ? '+' + scope.b_eff : scope.b_eff)",
+        "fact2": "scope.c + 'x' + (scope.d_eff > 0 ? '+' + scope.d_eff : scope.d_eff)",
+        "ans": "'(' + scope.fact1 + ')(' + scope.fact2 + ')'",
+        "b_str": "scope.b_eff > 0 ? '+' + scope.b_eff : scope.b_eff.toString()",
+        "d_str": "scope.d_eff > 0 ? '+' + scope.d_eff : scope.d_eff.toString()",
+        "term1_val": "scope.b_eff * scope.c",
+        "term1_str": "scope.term1_val === 1 ? '+x' : (scope.term1_val === -1 ? '-x' : (scope.term1_val > 0 ? '+' + scope.term1_val + 'x' : scope.term1_val + 'x'))",
+        "term2_val": "scope.a * scope.d_eff",
+        "term2_str": "scope.term2_val === 1 ? '+x' : (scope.term2_val === -1 ? '-x' : (scope.term2_val > 0 ? '+' + scope.term2_val + 'x' : scope.term2_val + 'x'))",
+        "prod_str": "scope.constTerm > 0 ? '+' + scope.constTerm : scope.constTerm.toString()",
+        "sumX_str": "scope.coeffX === 0 ? '0x' : (scope.coeffX === 1 ? '+x' : (scope.coeffX === -1 ? '-x' : (scope.coeffX > 0 ? '+' + scope.coeffX + 'x' : scope.coeffX + 'x')))",
+        "table": "'$$\\\\begin{array}{c|c|r} ' + scope.a + 'x & ' + scope.b_str + ' & ' + scope.term1_str + ' \\\\\\\\ ' + scope.c + 'x & ' + scope.d_str + ' & ' + scope.term2_str + ' \\\\\\\\ \\\\hline ' + scope.partX2 + ' & ' + scope.prod_str + ' & ' + scope.sumX_str + ' \\\\end{array}$$'",
+        "blankTable": "'$$\\\\begin{array}{c|c|r} & & \\\\\\\\ & & \\\\\\\\ \\\\hline ' + scope.partX2 + ' & ' + scope.prod_str + ' & ' + scope.sumX_str + ' \\\\end{array}$$'"
+      },
+      "questionTemplate": "Factorise the expression completely:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Set up the cross method frame with the quadratic expression terms:\n\n${scope.blankTable}",
+        "Fill in the cross method frame with factor pairs for $$${scope.partX2}$$ and $$${scope.prod_str}$$:\n\n${scope.table}",
+        "Check that $$${scope.term1_str}$$ and $$${scope.term2_str}$$ add up to $$${scope.sumX_str}$$.",
+        "Read off horizontal factors $$(${scope.fact1})$$ and $$(${scope.fact2})$$ from the frame rows.",
+        "Write down the final answer: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "p": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "q": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "m": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true }
+      },
+      "derived": {
+        "q_eff": "(scope.p + scope.q === scope.m) ? (scope.q > 0 ? scope.q + 2 : scope.q - 2) : scope.q",
+        "n": "scope.p + scope.q_eff - scope.m",
+        "sum": "scope.p + scope.q_eff",
+        "prod": "scope.p * scope.q_eff",
+        "k": "scope.prod - (scope.m * scope.n)",
+        "expr": "'(x ' + (scope.m > 0 ? '+' + scope.m : scope.m) + ')(x ' + (scope.n > 0 ? '+' + scope.n : scope.n) + ') ' + (scope.k > 0 ? '+ ' + scope.k : (scope.k === 0 ? '' : '- ' + Math.abs(scope.k)))",
+        "midX": "scope.sum === 0 ? '' : (scope.sum === 1 ? '+ x' : (scope.sum === -1 ? '- x' : (scope.sum > 0 ? '+ ' + scope.sum + 'x' : '- ' + Math.abs(scope.sum) + 'x')))",
+        "constC": "scope.prod > 0 ? '+ ' + scope.prod : '- ' + Math.abs(scope.prod)",
+        "expanded": "'x^2 ' + scope.midX + ' ' + scope.constC",
+        "ans": "'(x' + (scope.p > 0 ? '+' + scope.p : scope.p) + ')(x' + (scope.q_eff > 0 ? '+' + scope.q_eff : scope.q_eff) + ')'",
+        "p_str": "scope.p > 0 ? '+' + scope.p : scope.p.toString()",
+        "q_str": "scope.q_eff > 0 ? '+' + scope.q_eff : scope.q_eff.toString()",
+        "px_str": "scope.p === 1 ? '+x' : (scope.p === -1 ? '-x' : (scope.p > 0 ? '+' + scope.p + 'x' : scope.p + 'x'))",
+        "qx_str": "scope.q_eff === 1 ? '+x' : (scope.q_eff === -1 ? '-x' : (scope.q_eff > 0 ? '+' + scope.q_eff + 'x' : scope.q_eff + 'x'))",
+        "prod_str": "scope.prod > 0 ? '+' + scope.prod : scope.prod.toString()",
+        "sumX_str": "scope.sum === 0 ? '0x' : (scope.sum === 1 ? '+x' : (scope.sum === -1 ? '-x' : (scope.sum > 0 ? '+' + scope.sum + 'x' : scope.sum + 'x')))",
+        "table": "'$$\\\\begin{array}{c|c|r} x & ' + scope.p_str + ' & ' + scope.px_str + ' \\\\\\\\ x & ' + scope.q_str + ' & ' + scope.qx_str + ' \\\\\\\\ \\\\hline x^2 & ' + scope.prod_str + ' & ' + scope.sumX_str + ' \\\\end{array}$$'"
+      },
+      "questionTemplate": "Factorise the expression completely:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Expand and simplify the given expression into standard quadratic form:\n\n$$${scope.expanded}$$",
+        "Set up and fill the cross method frame for $$${scope.expanded}$$:\n\n${scope.table}",
+        "Check that $$${scope.px_str}$$ and $$${scope.qx_str}$$ add up to $$${scope.sumX_str}$$.",
+        "Read off the horizontal factors to write down the final answer: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 4 },
+        "b": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "c": { "type": "randInt", "min": 1, "max": 3 },
+        "d": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "k": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+      },
+      "derived": {
+        "commonBin": "scope.c + 'x' + (scope.d > 0 ? '+' + scope.d : scope.d)",
+        "part1": "scope.a + 'x' + (scope.b > 0 ? '+' + scope.b : scope.b)",
+        "k_str": "scope.k > 0 ? '+' + scope.k : scope.k.toString()",
+        "expr": "'(' + scope.part1 + ')(' + scope.commonBin + ') ' + (scope.k > 0 ? '+ ' + scope.k : '- ' + Math.abs(scope.k)) + '(' + scope.commonBin + ')'",
+        "simplifiedConst": "scope.b + scope.k",
+        "simplifiedPart": "scope.a + 'x' + (scope.simplifiedConst > 0 ? '+' + scope.simplifiedConst : (scope.simplifiedConst === 0 ? '' : scope.simplifiedConst))",
+        "ans": "'(' + scope.commonBin + ')(' + scope.simplifiedPart + ')'"
+      },
+      "questionTemplate": "Factorise the expression completely:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Identify and factorise out the common binomial factor $$(${scope.commonBin})$$:\n\n$$(${scope.commonBin})[(${scope.part1}) ${scope.k_str}]$$",
+        "Simplify the expression inside the brackets:\n\n$$(${scope.commonBin})(${scope.simplifiedPart})$$",
+        "Write down the final answer: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "p": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "q": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+      },
+      "derived": {
+        "q_eff": "(scope.p + scope.q === 0) ? (scope.q > 0 ? scope.q + 1 : scope.q - 1) : scope.q",
+        "sum": "scope.p + scope.q_eff",
+        "prod": "scope.p * scope.q_eff",
+        "partMid": "scope.sum === 0 ? '' : (scope.sum === 1 ? '+ xy' : (scope.sum === -1 ? '- xy' : (scope.sum > 0 ? '+ ' + scope.sum + 'xy' : '- ' + Math.abs(scope.sum) + 'xy')))",
+        "partC": "scope.prod > 0 ? '+ ' + scope.prod : '- ' + Math.abs(scope.prod)",
+        "expr": "'x^2y^2 ' + scope.partMid + ' ' + scope.partC",
+        "fact1": "'xy' + (scope.p > 0 ? '+' + scope.p : scope.p)",
+        "fact2": "'xy' + (scope.q_eff > 0 ? '+' + scope.q_eff : scope.q_eff)",
+        "ans": "'(' + scope.fact1 + ')(' + scope.fact2 + ')'",
+        "p_str": "scope.p > 0 ? '+' + scope.p : scope.p.toString()",
+        "q_str": "scope.q_eff > 0 ? '+' + scope.q_eff : scope.q_eff.toString()",
+        "pxy_str": "scope.p === 1 ? '+xy' : (scope.p === -1 ? '-xy' : (scope.p > 0 ? '+' + scope.p + 'xy' : scope.p + 'xy'))",
+        "qxy_str": "scope.q_eff === 1 ? '+xy' : (scope.q_eff === -1 ? '-xy' : (scope.q_eff > 0 ? '+' + scope.q_eff + 'xy' : scope.q_eff + 'xy'))",
+        "prod_str": "scope.prod > 0 ? '+' + scope.prod : scope.prod.toString()",
+        "sumXY_str": "scope.sum === 0 ? '0xy' : (scope.sum === 1 ? '+xy' : (scope.sum === -1 ? '-xy' : (scope.sum > 0 ? '+' + scope.sum + 'xy' : scope.sum + 'xy')))",
+        "table": "'$$\\\\begin{array}{c|c|r} xy & ' + scope.p_str + ' & ' + scope.pxy_str + ' \\\\\\\\ xy & ' + scope.q_str + ' & ' + scope.qxy_str + ' \\\\\\\\ \\\\hline x^2y^2 & ' + scope.prod_str + ' & ' + scope.sumXY_str + ' \\\\end{array}$$'"
+      },
+      "questionTemplate": "Factorise the expression completely:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Treat $$xy$$ as a single compound variable.",
+        "Set up and fill the cross method frame for the quadratic expression in terms of $$xy$$:\n\n${scope.table}",
+        "Check that $$${scope.pxy_str}$$ and $$${scope.qxy_str}$$ add up to $$${scope.sumXY_str}$$.",
+        "Write down the final answer: $$${scope.ans}$$"
+      ]
+    }
+  ]
+}

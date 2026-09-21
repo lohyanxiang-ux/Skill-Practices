@@ -1,0 +1,178 @@
+{
+  "skillTitle": "Factorising Simple Expressions",
+  "keypad": [
+  "a", "b", "c", "x",
+  "y", "(", ")", "/",
+  "7", "8", "9", "+",
+  "4", "5", "6", "-",
+  "1", "2", "3", ".",
+  "0", "^", "⌫", "Clear"
+],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "k": { "type": "randInt", "min": 2, "max": 6 },
+        "p": { "type": "randInt", "min": 1, "max": 5 },
+        "q": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true }
+      },
+      "derived": {
+        "g": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.p, scope.q)",
+        "real_k": "scope.k * scope.g",
+        "real_p": "scope.p / scope.g",
+        "real_q": "scope.q / scope.g",
+        "c1": "scope.real_k * scope.real_p",
+        "c2": "scope.real_k * scope.real_q",
+        "t1": "scope.c1 === 1 ? 'a' : (scope.c1 === -1 ? '-a' : scope.c1 + 'a')",
+        "t2": "scope.c2 > 0 ? '+ ' + scope.c2 + 'b' : '- ' + Math.abs(scope.c2) + 'b'",
+        "expr_tex": "scope.t1 + ' ' + scope.t2",
+        "in1": "scope.real_p === 1 ? 'a' : (scope.real_p === -1 ? '-a' : scope.real_p + 'a')",
+        "in2_term": "Math.abs(scope.real_q) === 1 ? 'b' : Math.abs(scope.real_q) + 'b'",
+        "in2": "(scope.real_q > 0 ? '+' : '-') + scope.in2_term",
+        "hcf": "scope.real_k.toString()",
+        "ans": "scope.real_k + '(' + scope.in1 + scope.in2 + ')'"
+      },
+      "questionTemplate": "Factorise the expression:\n\n$$${scope.expr_tex}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Identify the highest common numerical factor of both terms: $$${scope.hcf}$$",
+        "Factorise out the common factor and write the remaining terms inside brackets: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k": { "type": "randInt", "min": 2, "max": 5 },
+        "p": { "type": "randInt", "min": 1, "max": 5 },
+        "q": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "has_y": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "g": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.p, scope.q)",
+        "real_k": "scope.k * scope.g",
+        "real_p": "scope.p / scope.g",
+        "real_q": "scope.q / scope.g",
+        "c1": "scope.real_k * scope.real_p",
+        "c2": "scope.real_k * scope.real_q",
+        "var2": "scope.has_y === 1 ? 'y' : ''",
+        "t1": "scope.c1 === 1 ? 'ax' : (scope.c1 === -1 ? '-ax' : scope.c1 + 'ax')",
+        "t2": "scope.c2 > 0 ? '+ ' + scope.c2 + 'a' + scope.var2 : '- ' + Math.abs(scope.c2) + 'a' + scope.var2",
+        "expr_tex": "scope.t1 + ' ' + scope.t2",
+        "in1": "scope.real_p === 1 ? 'x' : (scope.real_p === -1 ? '-x' : scope.real_p + 'x')",
+        "in2_num": "Math.abs(scope.real_q)",
+        "in2_term": "scope.has_y === 0 ? scope.in2_num.toString() : (scope.in2_num === 1 ? 'y' : scope.in2_num + 'y')",
+        "in2": "(scope.real_q > 0 ? '+' : '-') + scope.in2_term",
+        "hcf": "scope.real_k + 'a'",
+        "ans": "scope.hcf + '(' + scope.in1 + scope.in2 + ')'"
+      },
+      "questionTemplate": "Factorise the expression completely:\n\n$$${scope.expr_tex}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Identify the highest common factor including variables: $$${scope.hcf}$$",
+        "Factorise out $$${scope.hcf}$$ from each term: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k": { "type": "randInt", "min": 2, "max": 5 },
+        "p": { "type": "randInt", "min": 1, "max": 5 },
+        "q": { "type": "randInt", "min": 1, "max": 5 },
+        "has_y": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "g": "(function(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;})(scope.p, scope.q)",
+        "real_k": "scope.k * scope.g",
+        "real_p": "scope.p / scope.g",
+        "real_q": "scope.q / scope.g",
+        "c1": "-1 * scope.real_k * scope.real_p",
+        "c2": "-1 * scope.real_k * scope.real_q",
+        "var2": "scope.has_y === 1 ? 'y' : ''",
+        "t1": "scope.c1 + 'ax'",
+        "t2": "scope.c2 + 'a' + scope.var2",
+        "expr_tex": "scope.t1 + ' ' + scope.c2 + 'a' + scope.var2",
+        "in1": "scope.real_p === 1 ? 'x' : scope.real_p + 'x'",
+        "in2_term": "scope.has_y === 0 ? scope.real_q.toString() : (scope.real_q === 1 ? 'y' : scope.real_q + 'y')",
+        "in2": "'+' + scope.in2_term",
+        "hcf": "'-' + scope.real_k + 'a'",
+        "ans": "scope.hcf + '(' + scope.in1 + scope.in2 + ')'"
+      },
+      "questionTemplate": "Factorise the expression completely:\n\n$$${scope.expr_tex}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Identify the negative highest common factor: $$${scope.hcf}$$",
+        "Factorise out $$${scope.hcf}$$, making the remaining terms inside the bracket positive: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "k": { "type": "randInt", "min": 2, "max": 5 },
+        "p": { "type": "randInt", "min": 1, "max": 4 },
+        "q": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true },
+        "r": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true }
+      },
+      "derived": {
+        "gcd3": "(function(a,b,c){function gcd(x,y){x=Math.abs(x);y=Math.abs(y);while(y){var t=y;y=x%y;x=t;}return x;}return gcd(gcd(a,b),c);})(scope.p, scope.q, scope.r)",
+        "real_k": "scope.k * scope.gcd3",
+        "real_p": "scope.p / scope.gcd3",
+        "real_q": "scope.q / scope.gcd3",
+        "real_r": "scope.r / scope.gcd3",
+        "c1": "scope.real_k * scope.real_p",
+        "c2": "scope.real_k * scope.real_q",
+        "c3": "scope.real_k * scope.real_r",
+        "t1": "scope.c1 === 1 ? 'a' : (scope.c1 === -1 ? '-a' : scope.c1 + 'a')",
+        "t2": "scope.c2 > 0 ? '+ ' + scope.c2 + 'b' : '- ' + Math.abs(scope.c2) + 'b'",
+        "t3": "scope.c3 > 0 ? '+ ' + scope.c3 + 'c' : '- ' + Math.abs(scope.c3) + 'c'",
+        "expr_tex": "scope.t1 + ' ' + scope.t2 + ' ' + scope.t3",
+        "in1": "scope.real_p === 1 ? 'a' : (scope.real_p === -1 ? '-a' : scope.real_p + 'a')",
+        "in2": "scope.real_q > 0 ? '+' + (scope.real_q === 1 ? 'b' : scope.real_q + 'b') : '-' + (scope.real_q === -1 ? 'b' : Math.abs(scope.real_q) + 'b')",
+        "in3": "scope.real_r > 0 ? '+' + (scope.real_r === 1 ? 'c' : scope.real_r + 'c') : '-' + (scope.real_r === -1 ? 'c' : Math.abs(scope.real_r) + 'c')",
+        "hcf": "scope.real_k.toString()",
+        "ans": "scope.real_k + '(' + scope.in1 + scope.in2 + scope.in3 + ')'"
+      },
+      "questionTemplate": "Factorise the expression:\n\n$$${scope.expr_tex}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Find the highest common factor of all three terms: $$${scope.hcf}$$",
+        "Divide each term by $$${scope.hcf}$$ and write inside brackets: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "p": { "type": "randInt", "min": 1, "max": 4 },
+        "q": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "var_type": { "type": "randInt", "min": 0, "max": 1 },
+        "c": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+      },
+      "derived": {
+        "bracket_tex": "scope.var_type === 0 ? '(x + y)' : ('(x ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c)) + ')')",
+        "bracket_ans": "scope.var_type === 0 ? '(x+y)' : ('(x' + (scope.c > 0 ? '+' + scope.c : scope.c) + ')')",
+        "term1_coeff": "scope.p === 1 ? 'a' : scope.p + 'a'",
+        "term2_sign": "scope.q > 0 ? '+ ' : '- '",
+        "term2_coeff": "Math.abs(scope.q) === 1 ? 'b' : Math.abs(scope.q) + 'b'",
+        "expr_tex": "scope.term1_coeff + scope.bracket_tex + ' ' + scope.term2_sign + scope.term2_coeff + scope.bracket_tex",
+        "first_factor_ans": "'(' + scope.term1_coeff + (scope.q > 0 ? '+' : '-') + (Math.abs(scope.q) === 1 ? 'b' : Math.abs(scope.q) + 'b') + ')'",
+        "hcf": "scope.bracket_tex",
+        "ans": "scope.first_factor_ans + scope.bracket_ans"
+      },
+      "questionTemplate": "Factorise the expression completely:\n\n$$${scope.expr_tex}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Identify the common binomial factor in both terms: $$${scope.hcf}$$",
+        "Factorise out $$${scope.hcf}$$ to combine remaining coefficients into a second bracket: $$${scope.ans}$$"
+      ]
+    }
+  ]
+}

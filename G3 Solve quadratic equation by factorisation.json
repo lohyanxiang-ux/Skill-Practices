@@ -1,0 +1,382 @@
+{
+  "skillTitle": "Solving Quadratic Equations using Factorisation",
+  "keypad": [
+    "7", "8", "9", "/",
+    "4", "5", "6", "-",
+    "1", "2", "3", ".",
+    "0", "x", "⌫", "Clear"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 3 },
+        "b": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true },
+        "c": { "type": "randInt", "min": 1, "max": 3 },
+        "d": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true }
+      },
+      "derived": {
+        "d_eff": "(scope.b === scope.d) ? (scope.d === 7 ? -6 : scope.d + 1) : scope.d",
+        "factor1": "(scope.a === 1 ? 'x' : scope.a + 'x') + (scope.b > 0 ? ' + ' + scope.b : ' - ' + Math.abs(scope.b))",
+        "factor2": "(scope.c === 1 ? 'x' : scope.c + 'x') + (scope.d_eff > 0 ? ' + ' + scope.d_eff : ' - ' + Math.abs(scope.d_eff))",
+        "n1": "-scope.b",
+        "d1": "scope.a",
+        "g1": "(function(u,v){ u=Math.abs(u); v=Math.abs(v); while(v){ var t=v; v=u%v; u=t; } return u; })(scope.n1, scope.d1)",
+        "num1": "scope.n1 / scope.g1",
+        "den1": "scope.d1 / scope.g1",
+        "ans1": "scope.den1 === 1 ? scope.num1.toString() : scope.num1 + '/' + scope.den1",
+        "ans1_tex": "scope.den1 === 1 ? scope.num1.toString() : '\\\\frac{' + scope.num1 + '}{' + scope.den1 + '}'",
+        "n2": "-scope.d_eff",
+        "d2": "scope.c",
+        "g2": "(function(u,v){ u=Math.abs(u); v=Math.abs(v); while(v){ var t=v; v=u%v; u=t; } return u; })(scope.n2, scope.d2)",
+        "num2": "scope.n2 / scope.g2",
+        "den2": "scope.d2 / scope.g2",
+        "ans2": "scope.den2 === 1 ? scope.num2.toString() : scope.num2 + '/' + scope.den2",
+        "ans2_tex": "scope.den2 === 1 ? scope.num2.toString() : '\\\\frac{' + scope.num2 + '}{' + scope.den2 + '}'"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$(${scope.factor1})(${scope.factor2}) = 0$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or  x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Set each factor equal to zero:\n\n$$${scope.factor1} = 0 \\quad \\text{or} \\quad ${scope.factor2} = 0$$",
+        "Solve for $x$ in each linear equation:\n\n$$x = ${scope.ans1_tex} \\quad \\text{or} \\quad x = ${scope.ans2_tex}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 3 },
+        "b": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "c": { "type": "randInt", "min": 1, "max": 2 },
+        "d": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+      },
+      "derived": {
+        "d_eff": "((Math.abs(scope.a * scope.d + scope.b * scope.c) % 10 === 0) || (scope.b === scope.d)) ? (scope.d === 6 ? -5 : scope.d + 1) : scope.d",
+        "coeffA": "scope.a * scope.c",
+        "coeffB": "scope.a * scope.d_eff + scope.b * scope.c",
+        "coeffC": "scope.b * scope.d_eff",
+        "partA": "scope.coeffA === 1 ? 'x^2' : scope.coeffA + 'x^2'",
+        "partB": "scope.coeffB === 0 ? '' : (scope.coeffB === 1 ? ' + x' : (scope.coeffB === -1 ? ' - x' : (scope.coeffB > 0 ? ' + ' + scope.coeffB + 'x' : ' - ' + Math.abs(scope.coeffB) + 'x')))",
+        "partC": "scope.coeffC === 0 ? '' : (scope.coeffC > 0 ? ' + ' + scope.coeffC : ' - ' + Math.abs(scope.coeffC))",
+        "eqn": "scope.partA + scope.partB + scope.partC + ' = 0'",
+        "factor1": "(scope.a === 1 ? 'x' : scope.a + 'x') + (scope.b > 0 ? ' + ' + scope.b : ' - ' + Math.abs(scope.b))",
+        "factor2": "(scope.c === 1 ? 'x' : scope.c + 'x') + (scope.d_eff > 0 ? ' + ' + scope.d_eff : ' - ' + Math.abs(scope.d_eff))",
+        "n1": "-scope.b",
+        "d1": "scope.a",
+        "g1": "(function(u,v){ u=Math.abs(u); v=Math.abs(v); while(v){ var t=v; v=u%v; u=t; } return u; })(scope.n1, scope.d1)",
+        "num1": "scope.n1 / scope.g1",
+        "den1": "scope.d1 / scope.g1",
+        "ans1": "scope.den1 === 1 ? scope.num1.toString() : scope.num1 + '/' + scope.den1",
+        "ans1_tex": "scope.den1 === 1 ? scope.num1.toString() : '\\\\frac{' + scope.num1 + '}{' + scope.den1 + '}'",
+        "n2": "-scope.d_eff",
+        "d2": "scope.c",
+        "g2": "(function(u,v){ u=Math.abs(u); v=Math.abs(v); while(v){ var t=v; v=u%v; u=t; } return u; })(scope.n2, scope.d2)",
+        "num2": "scope.n2 / scope.g2",
+        "den2": "scope.d2 / scope.g2",
+        "ans2": "scope.den2 === 1 ? scope.num2.toString() : scope.num2 + '/' + scope.den2",
+        "ans2_tex": "scope.den2 === 1 ? scope.num2.toString() : '\\\\frac{' + scope.num2 + '}{' + scope.den2 + '}'"
+      },
+      "questionTemplate": "Solve the quadratic equation by factorisation:\n\n$$${scope.eqn}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or  x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Factorise the quadratic expression using a multiplication frame:\n\n$$(${scope.factor1})(${scope.factor2}) = 0$$",
+        "Set each factor equal to zero:\n\n$$${scope.factor1} = 0 \\quad \\text{or} \\quad ${scope.factor2} = 0$$",
+        "Solve for $x$:\n\n$$x = ${scope.ans1_tex} \\quad \\text{or} \\quad x = ${scope.ans2_tex}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "r1": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true },
+        "r2_raw": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true }
+      },
+      "derived": {
+        "r2": "scope.r2_raw === scope.r1 ? (scope.r1 === 8 ? 7 : scope.r1 + 1) : scope.r2_raw",
+        "sum": "scope.r1 + scope.r2",
+        "prod": "scope.r1 * scope.r2",
+        "a": "1 - scope.sum",
+        "c": "-scope.prod",
+        "eqLHS": "'x ' + (scope.a > 0 ? '+ ' + scope.a : (scope.a < 0 ? '- ' + Math.abs(scope.a) : ''))",
+        "eqRHS": "'x ' + (scope.c > 0 ? '+ ' + scope.c : (scope.c < 0 ? '- ' + Math.abs(scope.c) : ''))",
+        "step1": "'x^2 ' + (-scope.sum > 0 ? '+ ' + -scope.sum : (-scope.sum < 0 ? '- ' + Math.abs(scope.sum) : '')) + 'x ' + (scope.prod > 0 ? '+ ' + scope.prod : '- ' + Math.abs(scope.prod)) + ' = 0'",
+        "step2": "'(x ' + (-scope.r1 > 0 ? '+ ' + -scope.r1 : '- ' + Math.abs(scope.r1)) + ')(x ' + (-scope.r2 > 0 ? '+ ' + -scope.r2 : '- ' + Math.abs(scope.r2)) + ') = 0'",
+        "step3": "'x ' + (-scope.r1 > 0 ? '+ ' + -scope.r1 : '- ' + Math.abs(scope.r1)) + ' = 0 \\\\text{ or } x ' + (-scope.r2 > 0 ? '+ ' + -scope.r2 : '- ' + Math.abs(scope.r2)) + ' = 0'",
+        "step4": "'x = ' + scope.r1 + ' \\\\text{ or } x = ' + scope.r2",
+        "ans1": "scope.r1.toString()",
+        "ans2": "scope.r2.toString()"
+      },
+      "questionTemplate": "Solve the equation by factorisation:\n\n$x(${scope.eqLHS}) = ${scope.eqRHS}$",
+      "inputs": [
+        { "label": "$x_1 =$", "answer": "${scope.ans1}" },
+        { "label": "$x_2 =$", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Rearrange equation to standard quadratic form: $${scope.step1}$",
+        "Factorise the expression: $${scope.step2}$",
+        "Set each factor to zero: $${scope.step3}$",
+        "Solve for $x$: $${scope.step4}$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "r1": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true },
+        "r2_raw": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true },
+        "a": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+      },
+      "derived": {
+        "r2": "scope.r2_raw === scope.r1 ? (scope.r1 === 7 ? 6 : scope.r1 + 1) : scope.r2_raw",
+        "b": "-(scope.r1 + scope.r2) - scope.a",
+        "c": "(scope.a * scope.b) - (scope.r1 * scope.r2)",
+        "lhs1": "'x ' + (scope.a > 0 ? '+ ' + scope.a : '- ' + Math.abs(scope.a))",
+        "lhs2": "'x ' + (scope.b > 0 ? '+ ' + scope.b : (scope.b < 0 ? '- ' + Math.abs(scope.b) : ''))",
+        "sum": "-(scope.r1 + scope.r2)",
+        "prod": "scope.r1 * scope.r2",
+        "step1": "'x^2 ' + (scope.sum > 0 ? '+ ' + scope.sum : (scope.sum < 0 ? '- ' + Math.abs(scope.sum) : '')) + 'x ' + (scope.prod > 0 ? '+ ' + scope.prod : (scope.prod < 0 ? '- ' + Math.abs(scope.prod) : '')) + ' = 0'",
+        "step2": "'(x ' + (-scope.r1 > 0 ? '+ ' + -scope.r1 : '- ' + Math.abs(scope.r1)) + ')(x ' + (-scope.r2 > 0 ? '+ ' + -scope.r2 : '- ' + Math.abs(scope.r2)) + ') = 0'",
+        "step3": "'x ' + (-scope.r1 > 0 ? '+ ' + -scope.r1 : '- ' + Math.abs(scope.r1)) + ' = 0 \\\\text{ or } x ' + (-scope.r2 > 0 ? '+ ' + -scope.r2 : '- ' + Math.abs(scope.r2)) + ' = 0'",
+        "step4": "'x = ' + scope.r1 + ' \\\\text{ or } x = ' + scope.r2",
+        "ans1": "scope.r1.toString()",
+        "ans2": "scope.r2.toString()"
+      },
+      "questionTemplate": "Solve the equation by factorisation:\n\n$(${scope.lhs1})(${scope.lhs2}) = ${scope.c}$",
+      "inputs": [
+        { "label": "$x_1 =$", "answer": "${scope.ans1}" },
+        { "label": "$x_2 =$", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Expand brackets and rearrange into standard form: $${scope.step1}$",
+        "Factorise the quadratic expression: $${scope.step2}$",
+        "Set each factor to zero: $${scope.step3}$",
+        "Solve for $x$: $${scope.step4}$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 5 },
+        "b": { "type": "randInt", "min": 1, "max": 9 }
+      },
+      "derived": {
+        "a2": "scope.a * scope.a",
+        "b2": "scope.b * scope.b",
+        "partA": "scope.a2 === 1 ? 'x^2' : scope.a2 + 'x^2'",
+        "eqn": "scope.partA + ' - ' + scope.b2 + ' = 0'",
+        "factor1": "(scope.a === 1 ? 'x' : scope.a + 'x') + ' - ' + scope.b",
+        "factor2": "(scope.a === 1 ? 'x' : scope.a + 'x') + ' + ' + scope.b",
+        "g": "(function(u,v){ u=Math.abs(u); v=Math.abs(v); while(v){ var t=v; v=u%v; u=t; } return u; })(scope.b, scope.a)",
+        "num": "scope.b / scope.g",
+        "den": "scope.a / scope.g",
+        "ans1": "scope.den === 1 ? scope.num.toString() : scope.num + '/' + scope.den",
+        "ans1_tex": "scope.den === 1 ? scope.num.toString() : '\\\\frac{' + scope.num + '}{' + scope.den + '}'",
+        "ans2": "scope.den === 1 ? ('-' + scope.num) : ('-' + scope.num + '/' + scope.den)",
+        "ans2_tex": "scope.den === 1 ? ('-' + scope.num) : ('-\\\\frac{' + scope.num + '}{' + scope.den + '}')"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.eqn}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or  x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Apply the difference of two squares identity $a^2 - b^2 = (a - b)(a + b)$ to factorise:\n\n$$(${scope.factor1})(${scope.factor2}) = 0$$",
+        "Set each factor equal to zero:\n\n$$${scope.factor1} = 0 \\quad \\text{or} \\quad ${scope.factor2} = 0$$",
+        "Solve for $x$:\n\n$$x = ${scope.ans1_tex} \\quad \\text{or} \\quad x = ${scope.ans2_tex}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "p": { "type": "randInt", "min": 1, "max": 2 },
+        "q": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "r": { "type": "randInt", "min": 1, "max": 3 },
+        "s": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "c": { "type": "randInt", "min": 1, "max": 4 }
+      },
+      "derived": {
+        "s_eff": "(scope.p === scope.r && scope.q === scope.s) ? (scope.s === 5 ? -4 : scope.s + 1) : scope.s",
+        "a": "scope.p * scope.r",
+        "c_eff": "(Math.abs((scope.p * scope.s_eff + scope.q * scope.r) + scope.c - scope.c) % 10 === 0) ? scope.c + 1 : scope.c",
+        "b": "(scope.p * scope.s_eff + scope.q * scope.r) + scope.c_eff",
+        "d": "-1 * scope.q * scope.s_eff",
+        "LHS_bracket": "(scope.a === 1 ? 'x' : scope.a + 'x') + (scope.b > 0 ? ' + ' + scope.b : ' - ' + Math.abs(scope.b))",
+        "LHS": "'x(' + scope.LHS_bracket + ')'",
+        "RHS": "(scope.c_eff === 1 ? 'x' : scope.c_eff + 'x') + (scope.d > 0 ? ' + ' + scope.d : ' - ' + Math.abs(scope.d))",
+        "std_coeffB": "scope.b - scope.c_eff",
+        "std_coeffC": "-scope.d",
+        "std_partA": "scope.a === 1 ? 'x^2' : scope.a + 'x^2'",
+        "std_partB": "scope.std_coeffB === 0 ? '' : (scope.std_coeffB === 1 ? ' + x' : (scope.std_coeffB === -1 ? ' - x' : (scope.std_coeffB > 0 ? ' + ' + scope.std_coeffB + 'x' : ' - ' + Math.abs(scope.std_coeffB) + 'x')))",
+        "std_partC": "scope.std_coeffC === 0 ? '' : (scope.std_coeffC > 0 ? ' + ' + scope.std_coeffC : ' - ' + Math.abs(scope.std_coeffC))",
+        "std_eqn": "scope.std_partA + scope.std_partB + scope.std_partC + ' = 0'",
+        "factor1": "(scope.p === 1 ? 'x' : scope.p + 'x') + (scope.q > 0 ? ' + ' + scope.q : ' - ' + Math.abs(scope.q))",
+        "factor2": "(scope.r === 1 ? 'x' : scope.r + 'x') + (scope.s_eff > 0 ? ' + ' + scope.s_eff : ' - ' + Math.abs(scope.s_eff))",
+        "n1": "-scope.q",
+        "d1": "scope.p",
+        "g1": "(function(u,v){ u=Math.abs(u); v=Math.abs(v); while(v){ var t=v; v=u%v; u=t; } return u; })(scope.n1, scope.d1)",
+        "num1": "scope.n1 / scope.g1",
+        "den1": "scope.d1 / scope.g1",
+        "ans1": "scope.den1 === 1 ? scope.num1.toString() : scope.num1 + '/' + scope.den1",
+        "ans1_tex": "scope.den1 === 1 ? scope.num1.toString() : '\\\\frac{' + scope.num1 + '}{' + scope.den1 + '}'",
+        "n2": "-scope.s_eff",
+        "d2": "scope.r",
+        "g2": "(function(u,v){ u=Math.abs(u); v=Math.abs(v); while(v){ var t=v; v=u%v; u=t; } return u; })(scope.n2, scope.d2)",
+        "num2": "scope.n2 / scope.g2",
+        "den2": "scope.d2 / scope.g2",
+        "ans2": "scope.den2 === 1 ? scope.num2.toString() : scope.num2 + '/' + scope.den2",
+        "ans2_tex": "scope.den2 === 1 ? scope.num2.toString() : '\\\\frac{' + scope.num2 + '}{' + scope.den2 + '}'"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.LHS} = ${scope.RHS}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or  x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Expand the bracket on the left side and rearrange into standard quadratic form $a x^2 + b x + c = 0$:\n\n$$${scope.std_eqn}$$",
+        "Factorise using a multiplication frame:\n\n$$(${scope.factor1})(${scope.factor2}) = 0$$",
+        "Set each factor equal to zero and solve for $x$:\n\n$$x = ${scope.ans1_tex} \\quad \\text{or} \\quad x = ${scope.ans2_tex}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "p": { "type": "randInt", "min": 1, "max": 4 },
+        "q": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true },
+        "a": { "type": "randInt", "min": 2, "max": 5 },
+        "b": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+      },
+      "derived": {
+        "f1": "simplifyFrac(scope.b, scope.a)",
+        "f2": "simplifyFrac(-scope.q, scope.p)",
+        "ans1": "scope.f1.str",
+        "ans2": "scope.f2.str",
+        "pxq": "(scope.p === 1 ? 'x' : scope.p + 'x') + ' ' + (scope.q > 0 ? '+ ' + scope.q : '- ' + Math.abs(scope.q))",
+        "f1_latex": "scope.f1.den === 1 ? scope.f1.num.toString() : '\\\\frac{' + scope.f1.num + '}{' + scope.f1.den + '}'",
+        "f2_latex": "scope.f2.den === 1 ? scope.f2.num.toString() : '\\\\frac{' + scope.f2.num + '}{' + scope.f2.den + '}'",
+        "step1": "scope.a + 'x(' + scope.pxq + ') ' + (scope.b > 0 ? '- ' + scope.b : '+ ' + Math.abs(scope.b)) + '(' + scope.pxq + ') = 0'",
+        "step2": "'(' + scope.a + 'x ' + (-scope.b > 0 ? '+ ' + -scope.b : '- ' + Math.abs(scope.b)) + ')(' + scope.pxq + ') = 0'",
+        "step3": "scope.a + 'x ' + (-scope.b > 0 ? '+ ' + -scope.b : '- ' + Math.abs(scope.b)) + ' = 0 \\\\text{ or } ' + scope.pxq + ' = 0'",
+        "step4": "'x = ' + scope.f1_latex + ' \\\\text{ or } x = ' + scope.f2_latex"
+      },
+      "questionTemplate": "Solve the equation by factorisation:\n\n$${scope.a}x(${scope.pxq}) = ${scope.b}(${scope.pxq})$",
+      "inputs": [
+        { "label": "$x_1 =$", "answer": "${scope.ans1}" },
+        { "label": "$x_2 =$", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Rearrange to set equation equal to zero: $${scope.step1}$",
+        "Factorise out common term $(${scope.pxq})$: $${scope.step2}$",
+        "Set each factor to zero: $${scope.step3}$",
+        "Solve for $x$: $${scope.step4}$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "b": { "type": "randInt", "min": 2, "max": 6 },
+        "a": { "type": "randInt", "min": 1, "max": 7 }
+      },
+      "derived": {
+        "f1": "simplifyFrac(scope.a, scope.b)",
+        "f2": "simplifyFrac(-scope.a, scope.b)",
+        "ans1": "scope.f1.str",
+        "ans2": "scope.f2.str",
+        "a2": "scope.a * scope.a",
+        "b2": "scope.b * scope.b",
+        "f1_latex": "scope.f1.den === 1 ? scope.f1.num.toString() : '\\\\frac{' + scope.f1.num + '}{' + scope.f1.den + '}'",
+        "f2_latex": "scope.f2.den === 1 ? scope.f2.num.toString() : '\\\\frac{' + scope.f2.num + '}{' + scope.f2.den + '}'",
+        "step1": "scope.a2 + ' - ' + scope.b2 + 'x^2 = 0'",
+        "step2": "'(' + scope.a + ' - ' + scope.b + 'x)(' + scope.a + ' + ' + scope.b + 'x) = 0'",
+        "step3": "scope.a + ' - ' + scope.b + 'x = 0 \\\\text{ or } ' + scope.a + ' + ' + scope.b + 'x = 0'",
+        "step4": "'x = ' + scope.f1_latex + ' \\\\text{ or } x = ' + scope.f2_latex"
+      },
+      "questionTemplate": "Solve the equation by factorisation:\n\n$${scope.a2} - ${scope.b2}x^2 = 0$",
+      "inputs": [
+        { "label": "$x_1 =$", "answer": "${scope.ans1}" },
+        { "label": "$x_2 =$", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Given equation: $${scope.step1}$",
+        "Apply difference of two squares formula: $${scope.step2}$",
+        "Set each factor to zero: $${scope.step3}$",
+        "Solve for $x$: $${scope.step4}$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 3, "max": 6 },
+        "b": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "c": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "d": { "type": "randInt", "min": 1, "max": 2 },
+        "e": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+      },
+      "derived": {
+        "b_eff": "(scope.b === scope.e) ? (scope.b === 6 ? -5 : scope.b + 1) : scope.b",
+        "LHS_f1": "(scope.a === 1 ? 'x' : scope.a + 'x') + (scope.b_eff > 0 ? ' + ' + scope.b_eff : ' - ' + Math.abs(scope.b_eff))",
+        "LHS_f2": "'x' + (scope.c > 0 ? ' + ' + scope.c : ' - ' + Math.abs(scope.c))",
+        "RHS_f1": "(scope.d === 1 ? 'x' : scope.d + 'x') + (scope.e > 0 ? ' + ' + scope.e : ' - ' + Math.abs(scope.e))",
+        "RHS_f2": "scope.LHS_f2",
+        "LHS": "'(' + scope.LHS_f1 + ')(' + scope.LHS_f2 + ')'",
+        "RHS": "'(' + scope.RHS_f1 + ')(' + scope.RHS_f2 + ')'",
+        "coeffA2": "scope.a - scope.d",
+        "coeffB2": "scope.b_eff - scope.e",
+        "simplified_f1": "(scope.coeffA2 === 1 ? 'x' : scope.coeffA2 + 'x') + (scope.coeffB2 > 0 ? ' + ' + scope.coeffB2 : ' - ' + Math.abs(scope.coeffB2))",
+        "simplified_f2": "scope.LHS_f2",
+        "ans1": "(-scope.c).toString()",
+        "ans1_tex": "(-scope.c).toString()",
+        "n2": "scope.e - scope.b_eff",
+        "d2": "scope.a - scope.d",
+        "g2": "(function(u,v){ u=Math.abs(u); v=Math.abs(v); while(v){ var t=v; v=u%v; u=t; } return u; })(scope.n2, scope.d2)",
+        "num2": "scope.n2 / scope.g2",
+        "den2": "scope.d2 / scope.g2",
+        "ans2": "scope.den2 === 1 ? scope.num2.toString() : scope.num2 + '/' + scope.den2",
+        "ans2_tex": "scope.den2 === 1 ? scope.num2.toString() : '\\\\frac{' + scope.num2 + '}{' + scope.den2 + '}'"
+      },
+      "questionTemplate": "Solve the equation:\n\n$$${scope.LHS} = ${scope.RHS}$$",
+      "inputs": [
+        { "label": "x =", "answer": "${scope.ans1}" },
+        { "label": "or  x =", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Rearrange all terms to one side of the equation:\n\n$$(${scope.LHS_f1})(${scope.LHS_f2}) - (${scope.RHS_f1})(${scope.RHS_f2}) = 0$$",
+        "Factorise out the common factor $(${scope.LHS_f2})$:\n\n$$(${scope.LHS_f2})[(${scope.LHS_f1}) - (${scope.RHS_f1})] = 0$$",
+        "Simplify the second factor:\n\n$$(${scope.simplified_f2})(${scope.simplified_f1}) = 0$$",
+        "Set each factor equal to zero and solve for $x$:\n\n$$x = ${scope.ans1_tex} \\quad \\text{or} \\quad x = ${scope.ans2_tex}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "b": { "type": "randInt", "min": 2, "max": 9 }
+      },
+      "derived": {
+        "r1": "-scope.a",
+        "r2": "scope.b - scope.a",
+        "ans1": "scope.r1.toString()",
+        "ans2": "scope.r2.toString()",
+        "xa": "'x ' + (scope.a > 0 ? '+ ' + scope.a : '- ' + Math.abs(scope.a))",
+        "x_ab": "'x ' + (scope.a - scope.b > 0 ? '+ ' + (scope.a - scope.b) : '- ' + Math.abs(scope.a - scope.b))",
+        "step1": "'(' + scope.xa + ')^2 - ' + scope.b + '(' + scope.xa + ') = 0'",
+        "step2": "'(' + scope.xa + ')(' + scope.x_ab + ') = 0'",
+        "step3": "scope.xa + ' = 0 \\\\text{ or } ' + scope.x_ab + ' = 0'",
+        "step4": "'x = ' + scope.r1 + ' \\\\text{ or } x = ' + scope.r2"
+      },
+      "questionTemplate": "Solve the equation by factorisation:\n\n$(${scope.xa})^2 = ${scope.b}(${scope.xa})$",
+      "inputs": [
+        { "label": "$x_1 =$", "answer": "${scope.ans1}" },
+        { "label": "$x_2 =$", "answer": "${scope.ans2}" }
+      ],
+      "steps": [
+        "Rearrange equation to set equal to zero: $${scope.step1}$",
+        "Factorise out common factor $(${scope.xa})$: $${scope.step2}$",
+        "Set each factor to zero: $${scope.step3}$",
+        "Solve for $x$: $${scope.step4}$"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "skillTitle": "Factorising by Grouping",
+  "keypad": [
+  "(",
+  ")",
+  "⌫",
+  "Clear",
+  "a",
+  "b",
+  "c",
+  "k",
+  "p",
+  "q",
+  "x",
+  "y",
+  "7",
+  "8",
+  "9",
+  "+",
+  "4",
+  "5",
+  "6",
+  "-",
+  "1",
+  "2",
+  "3",
+  "0"
+],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "k": { "type": "randInt", "min": 2, "max": 9 }
+      },
+      "derived": {
+        "expr": "scope.k + 'x + ax + ' + scope.k + 'y + ay'",
+        "step1": "'x(' + scope.k + ' + a) + y(' + scope.k + ' + a)'",
+        "ans": "'(' + scope.k + '+a)(x+y)|(x+y)(' + scope.k + '+a)|(a+' + scope.k + ')(x+y)|(x+y)(a+' + scope.k + ')|(' + scope.k + '+a)(y+x)|(y+x)(' + scope.k + '+a)|(a+' + scope.k + ')(y+x)|(y+x)(a+' + scope.k + ')'"
+      },
+      "questionTemplate": "Factorise the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Group terms with common factors: $$${scope.step1}$$",
+        "Factorise out the common factor: $$(${scope.k} + a)(x + y)$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "k": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true },
+        "c": { "type": "randInt", "min": 2, "max": 6 }
+      },
+      "derived": {
+        "k_eff": "Math.abs(scope.k) === 1 ? (scope.k > 0 ? 2 : -2) : scope.k",
+        "kq_str": "scope.k_eff > 0 ? '+ ' + scope.k_eff + 'q' : '- ' + Math.abs(scope.k_eff) + 'q'",
+        "kq_ans": "scope.k_eff > 0 ? '+' + scope.k_eff + 'q' : '-' + Math.abs(scope.k_eff) + 'q'",
+        "expr": "'a(p ' + scope.kq_str + ') + ' + scope.c + 'b(p ' + scope.kq_str + ')'",
+        "step1": "'(p ' + scope.kq_str + ')(a + ' + scope.c + 'b)'",
+        "f1": "'(p' + scope.kq_ans + ')'",
+        "f2": "'(a+' + scope.c + 'b)'",
+        "f1_neg": "'(-p' + (scope.k_eff > 0 ? '-' + scope.k_eff + 'q' : '+' + Math.abs(scope.k_eff) + 'q') + ')'",
+        "f2_neg": "'(-a-' + scope.c + 'b)'",
+        "ans": "scope.f1 + scope.f2 + '|' + scope.f2 + scope.f1 + '|' + scope.f1_neg + scope.f2_neg + '|' + scope.f2_neg + scope.f1_neg"
+      },
+      "questionTemplate": "Factorise the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Factorise out the common binomial term: $$${scope.step1}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "k": { "type": "randInt", "min": 2, "max": 8 }
+      },
+      "derived": {
+        "expr": "'ax - ' + scope.k + 'ay - ' + scope.k + 'by + bx'",
+        "step1": "'ax + bx - ' + scope.k + 'ay - ' + scope.k + 'by'",
+        "step2": "'x(a + b) - ' + scope.k + 'y(a + b)'",
+        "f1": "'(a+b)'",
+        "f1_alt": "'(b+a)'",
+        "f2": "'(x-' + scope.k + 'y)'",
+        "f1_neg": "'(-a-b)'",
+        "f1_neg_alt": "'(-b-a)'",
+        "f2_neg": "'(-x+' + scope.k + 'y)'",
+        "f2_neg_alt": "'(' + scope.k + 'y-x)'",
+        "ans": "scope.f1 + scope.f2 + '|' + scope.f2 + scope.f1 + '|' + scope.f1_alt + scope.f2 + '|' + scope.f2 + scope.f1_alt + '|' + scope.f1_neg + scope.f2_neg + '|' + scope.f2_neg + scope.f1_neg + '|' + scope.f1_neg + scope.f2_neg_alt + '|' + scope.f2_neg_alt + scope.f1_neg"
+      },
+      "questionTemplate": "Factorise the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Rearrange terms to group terms with common variables together: $$${scope.step1}$$",
+        "Factorise each pair of terms: $$${scope.step2}$$",
+        "Factorise out the common binomial factor: $$(a+b)(x-${scope.k}y)$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "c1": { "type": "randInt", "min": 2, "max": 5 },
+        "c2_raw": { "type": "randInt", "min": 3, "max": 7 },
+        "k1": { "type": "randInt", "min": 2, "max": 5 },
+        "k2_raw": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true }
+      },
+      "derived": {
+        "c2": "(function(a,b){ function g(x,y){return y===0?x:g(y,x%y);} while(g(a,b)>1){b++;} return b; })(scope.c1, scope.c2_raw)",
+        "k2": "(function(a,b){ function g(x,y){return y===0?Math.abs(x):g(y,x%y);} var bAbs=Math.abs(b); while(g(a,bAbs)>1 || b===0){b = b > 0 ? b+1 : b-1; bAbs=Math.abs(b);} return b; })(scope.k1, scope.k2_raw)",
+        "t1": "scope.c1 * scope.k1",
+        "t2": "scope.c2 * scope.k1",
+        "t3": "scope.c1 * scope.k2",
+        "t4": "scope.c2 * scope.k2",
+        "t3_str": "scope.t3 > 0 ? '+ ' + scope.t3 + 'py' : '- ' + Math.abs(scope.t3) + 'py'",
+        "t4_str": "scope.t4 > 0 ? '+ ' + scope.t4 + 'qy' : '- ' + Math.abs(scope.t4) + 'qy'",
+        "expr": "scope.t1 + 'px + ' + scope.t2 + 'qx ' + scope.t3_str + ' ' + scope.t4_str",
+        "group1": "scope.k1 + 'x(' + scope.c1 + 'p + ' + scope.c2 + 'q)'",
+        "group2": "(scope.k2 > 0 ? '+ ' + scope.k2 : '- ' + Math.abs(scope.k2)) + 'y(' + scope.c1 + 'p + ' + scope.c2 + 'q)'",
+        "step1": "scope.group1 + ' ' + scope.group2",
+        "f1": "'(' + scope.c1 + 'p+' + scope.c2 + 'q)'",
+        "f2": "'(' + scope.k1 + 'x' + (scope.k2 > 0 ? '+' + scope.k2 : '-' + Math.abs(scope.k2)) + 'y)'",
+        "f1_neg": "'(-' + scope.c1 + 'p-' + scope.c2 + 'q)'",
+        "f2_neg": "'(-' + scope.k1 + 'x' + (scope.k2 > 0 ? '-' + scope.k2 : '+' + Math.abs(scope.k2)) + 'y)'",
+        "ans": "scope.f1 + scope.f2 + '|' + scope.f2 + scope.f1 + '|' + scope.f1_neg + scope.f2_neg + '|' + scope.f2_neg + scope.f1_neg"
+      },
+      "questionTemplate": "Factorise the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Factorise the common terms from the first pair and second pair: $$${scope.step1}$$",
+        "Factorise out the common binomial factor: $$(${scope.c1}p + ${scope.c2}q)(${scope.k1}x ${scope.k2 > 0 ? '+ ' + scope.k2 : '- ' + Math.abs(scope.k2)}y)$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 2, "max": 9 },
+        "b_raw": { "type": "randInt", "min": 2, "max": 9 }
+      },
+      "derived": {
+        "b": "scope.b_raw === scope.a ? (scope.a === 9 ? 8 : scope.a + 1) : scope.b_raw",
+        "term1": "scope.a + 'ck'",
+        "term2": "'- ' + scope.a + 'c'",
+        "term3": "'+ ' + scope.b",
+        "term4": "'- ' + scope.b + 'k'",
+        "expr": "scope.term1 + ' ' + scope.term2 + ' ' + scope.term3 + ' ' + scope.term4",
+        "step1": "'(' + scope.term1 + ' ' + scope.term2 + ') + (' + scope.b + ' - ' + scope.b + 'k)'",
+        "step2": "scope.a + 'c(k - 1) + ' + scope.b + '(1 - k)'",
+        "step3": "scope.a + 'c(k - 1) - ' + scope.b + '(k - 1)'",
+        "f1": "'(k-1)'",
+        "f2": "'(' + scope.a + 'c-' + scope.b + ')'",
+        "f1_neg": "'(1-k)'",
+        "f2_neg": "'(' + scope.b + '-' + scope.a + 'c)'",
+        "ans": "scope.f1 + scope.f2 + '|' + scope.f2 + scope.f1 + '|' + scope.f1_neg + scope.f2_neg + '|' + scope.f2_neg + scope.f1_neg"
+      },
+      "questionTemplate": "Factorise the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Group into pairs of terms: $$${scope.step1}$$",
+        "Factorise each pair: $$${scope.step2}$$",
+        "Reverse the sign of the second term so both share $(k - 1)$: $$${scope.step3}$$",
+        "Factorise out $(k - 1)$: $$(k - 1)(${scope.a}c - ${scope.b})$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "g": { "type": "randInt", "min": 2, "max": 5 },
+        "c1": { "type": "randInt", "min": 2, "max": 4 },
+        "c2_raw": { "type": "randInt", "min": 3, "max": 5 },
+        "k1": { "type": "randInt", "min": 1, "max": 3 },
+        "k2_raw": { "type": "randInt", "min": -3, "max": 3, "excludeZero": true }
+      },
+      "derived": {
+        "c2": "scope.c1 === scope.c2_raw ? scope.c2_raw + 1 : scope.c2_raw",
+        "k2": "scope.k1 === Math.abs(scope.k2_raw) ? (scope.k2_raw > 0 ? scope.k2_raw + 1 : scope.k2_raw - 1) : scope.k2_raw",
+        "t1": "scope.g * scope.c1 * scope.k1",
+        "t2": "scope.g * scope.c2 * scope.k1",
+        "t3": "scope.g * scope.c1 * scope.k2",
+        "t4": "scope.g * scope.c2 * scope.k2",
+        "t3_str": "scope.t3 > 0 ? '+ ' + scope.t3 + 'py' : '- ' + Math.abs(scope.t3) + 'py'",
+        "t4_str": "scope.t4 > 0 ? '+ ' + scope.t4 + 'qy' : '- ' + Math.abs(scope.t4) + 'qy'",
+        "expr": "scope.t1 + 'px + ' + scope.t2 + 'qx ' + scope.t3_str + ' ' + scope.t4_str",
+        "inner_t3": "scope.c1 * scope.k2 > 0 ? '+ ' + (scope.c1 * scope.k2) + 'py' : '- ' + Math.abs(scope.c1 * scope.k2) + 'py'",
+        "inner_t4": "scope.c2 * scope.k2 > 0 ? '+ ' + (scope.c2 * scope.k2) + 'qy' : '- ' + Math.abs(scope.c2 * scope.k2) + 'qy'",
+        "inner_expr": "scope.c1 * scope.k1 + 'px + ' + scope.c2 * scope.k1 + 'qx ' + scope.inner_t3 + ' ' + scope.inner_t4",
+        "step1": "scope.g + '(' + scope.inner_expr + ')'",
+        "k1_x": "scope.k1 === 1 ? 'x' : scope.k1 + 'x'",
+        "k2_y_str": "scope.k2 === 1 ? '+ y' : (scope.k2 === -1 ? '- y' : (scope.k2 > 0 ? '+ ' + scope.k2 + 'y' : '- ' + Math.abs(scope.k2) + 'y'))",
+        "step2": "scope.g + '[' + scope.k1_x + '(' + scope.c1 + 'p + ' + scope.c2 + 'q) ' + (scope.k2 > 0 ? '+ ' + scope.k2 : '- ' + Math.abs(scope.k2)) + 'y(' + scope.c1 + 'p + ' + scope.c2 + 'q)]'",
+        "f1": "'(' + scope.c1 + 'p+' + scope.c2 + 'q)'",
+        "f2": "'(' + (scope.k1 === 1 ? 'x' : scope.k1 + 'x') + (scope.k2 > 0 ? '+' + scope.k2 + 'y' : '-' + Math.abs(scope.k2) + 'y') + ')'",
+        "f1_neg": "'(-' + scope.c1 + 'p-' + scope.c2 + 'q)'",
+        "f2_neg": "'(' + (scope.k1 === 1 ? '-x' : '-' + scope.k1 + 'x') + (scope.k2 > 0 ? '-' + scope.k2 + 'y' : '+' + Math.abs(scope.k2) + 'y') + ')'",
+        "ans": "scope.g + scope.f1 + scope.f2 + '|' + scope.g + scope.f2 + scope.f1 + '|' + scope.g + scope.f1_neg + scope.f2_neg + '|' + scope.g + scope.f2_neg + scope.f1_neg"
+      },
+      "questionTemplate": "Factorise the expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Factorise out the common factor first across all 4 terms: $$${scope.step1}$$",
+        "Group terms inside brackets: $$${scope.step2}$$",
+        "Factorise completely: $$${scope.g}${scope.f1}${scope.f2}$$"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "skillTitle": "Addition & Subtraction",
+  "keypad": [
+  "x", "y", "^2", "/",
+  "7", "8", "9", "+",
+  "4", "5", "6", "-",
+  "1", "2", "3", "0",
+  "(", ")", "⌫", "Clear"
+],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "b": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true },
+        "c": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "d": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "e": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true }
+      },
+      "derived": {
+        "d_eff": "(scope.a + scope.d === 0) ? (scope.d > 0 ? scope.d + 1 : scope.d - 1) : scope.d",
+        "coeffX2": "scope.a + scope.d_eff",
+        "coeffX": "scope.c + scope.e",
+        "constTerm": "scope.b",
+        "t1": "scope.a === 1 ? 'x^2' : (scope.a === -1 ? '-x^2' : scope.a + 'x^2')",
+        "t2": "scope.b > 0 ? '+ ' + scope.b : '- ' + Math.abs(scope.b)",
+        "t3": "scope.c === 1 ? '+ x' : (scope.c === -1 ? '- x' : (scope.c > 0 ? '+ ' + scope.c + 'x' : '- ' + Math.abs(scope.c) + 'x'))",
+        "t4": "scope.d_eff === 1 ? '+ x^2' : (scope.d_eff === -1 ? '- x^2' : (scope.d_eff > 0 ? '+ ' + scope.d_eff + 'x^2' : '- ' + Math.abs(scope.d_eff) + 'x^2'))",
+        "t5": "scope.e === 1 ? '+ x' : (scope.e === -1 ? '- x' : (scope.e > 0 ? '+ ' + scope.e + 'x' : '- ' + Math.abs(scope.e) + 'x'))",
+        "expr": "scope.t1 + ' ' + scope.t2 + ' ' + scope.t3 + ' ' + scope.t4 + ' ' + scope.t5",
+        "partX2": "scope.coeffX2 === 0 ? '' : (scope.coeffX2 === 1 ? 'x^2' : (scope.coeffX2 === -1 ? '-x^2' : scope.coeffX2 + 'x^2'))",
+        "partX": "scope.coeffX === 0 ? '' : (scope.coeffX === 1 ? (scope.partX2 ? '+x' : 'x') : (scope.coeffX === -1 ? '-x' : (scope.coeffX > 0 ? (scope.partX2 ? '+' + scope.coeffX + 'x' : scope.coeffX + 'x') : scope.coeffX + 'x')))",
+        "partC": "scope.constTerm === 0 ? '' : (scope.constTerm > 0 ? (scope.partX2 || scope.partX ? '+' + scope.constTerm : scope.constTerm.toString()) : scope.constTerm.toString())",
+        "ans": "(scope.partX2 + scope.partX + scope.partC) || '0'",
+        "step1": "'(' + scope.t1 + ' ' + scope.t4 + ') + (' + scope.t3 + ' ' + scope.t5 + ') ' + scope.t2"
+      },
+      "questionTemplate": "Simplify the following expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Group like terms together (terms with $x^2$, terms with $x$, and constant terms): $$${scope.step1}$$",
+        "Combine the coefficients of like terms: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "a": { "type": "randInt", "min": -9, "max": 9, "excludeZero": true },
+        "b": { "type": "randInt", "min": -7, "max": 7, "excludeZero": true },
+        "c": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true },
+        "d": { "type": "randInt", "min": -9, "max": 9, "excludeZero": true },
+        "e": { "type": "randInt", "min": -5, "max": 5, "excludeZero": true }
+      },
+      "derived": {
+        "e_eff": "(scope.c + scope.e === 0) ? (scope.e > 0 ? scope.e + 1 : scope.e - 1) : scope.e",
+        "coeffY2": "scope.c + scope.e_eff",
+        "coeffY": "scope.b",
+        "constTerm": "scope.a + scope.d",
+        "t1": "scope.a.toString()",
+        "t2": "scope.b === 1 ? '+ y' : (scope.b === -1 ? '- y' : (scope.b > 0 ? '+ ' + scope.b + 'y' : '- ' + Math.abs(scope.b) + 'y'))",
+        "t3": "scope.c === 1 ? '+ y^2' : (scope.c === -1 ? '- y^2' : (scope.c > 0 ? '+ ' + scope.c + 'y^2' : '- ' + Math.abs(scope.c) + 'y^2'))",
+        "t4": "scope.d > 0 ? '+ ' + scope.d : '- ' + Math.abs(scope.d)",
+        "t5": "scope.e_eff === 1 ? '+ y^2' : (scope.e_eff === -1 ? '- y^2' : (scope.e_eff > 0 ? '+ ' + scope.e_eff + 'y^2' : '- ' + Math.abs(scope.e_eff) + 'y^2'))",
+        "expr": "scope.t1 + ' ' + scope.t2 + ' ' + scope.t3 + ' ' + scope.t4 + ' ' + scope.t5",
+        "partY2": "scope.coeffY2 === 0 ? '' : (scope.coeffY2 === 1 ? 'y^2' : (scope.coeffY2 === -1 ? '-y^2' : scope.coeffY2 + 'y^2'))",
+        "partY": "scope.coeffY === 0 ? '' : (scope.coeffY === 1 ? (scope.partY2 ? '+y' : 'y') : (scope.coeffY === -1 ? '-y' : (scope.coeffY > 0 ? (scope.partY2 ? '+' + scope.coeffY + 'y' : scope.coeffY + 'y') : scope.coeffY + 'y')))",
+        "partC": "scope.constTerm === 0 ? '' : (scope.constTerm > 0 ? (scope.partY2 || scope.partY ? '+' + scope.constTerm : scope.constTerm.toString()) : scope.constTerm.toString())",
+        "ans": "(scope.partY2 + scope.partY + scope.partC) || '0'",
+        "step1": "'(' + scope.t3 + ' ' + scope.t5 + ') ' + scope.t2 + ' + (' + scope.t1 + ' ' + scope.t4 + ')'"
+      },
+      "questionTemplate": "Simplify the following expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Group like terms together: $$${scope.step1}$$",
+        "Simplify by combining like terms: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true },
+        "b": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "c": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true },
+        "d": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true },
+        "e": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "f": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true }
+      },
+      "derived": {
+        "d_eff": "(scope.a + scope.d === 0) ? (scope.d > 0 ? scope.d + 1 : scope.d - 1) : scope.d",
+        "coeffX2": "scope.a + scope.d_eff",
+        "coeffX": "scope.b + scope.e",
+        "constTerm": "scope.c + scope.f",
+        "poly1": "(scope.a === 1 ? 'x^2' : (scope.a === -1 ? '-x^2' : scope.a + 'x^2')) + ' ' + (scope.b === 1 ? '+ x' : (scope.b === -1 ? '- x' : (scope.b > 0 ? '+ ' + scope.b + 'x' : '- ' + Math.abs(scope.b) + 'x'))) + ' ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+        "poly2": "(scope.d_eff === 1 ? 'x^2' : (scope.d_eff === -1 ? '-x^2' : scope.d_eff + 'x^2')) + ' ' + (scope.e === 1 ? '+ x' : (scope.e === -1 ? '- x' : (scope.e > 0 ? '+ ' + scope.e + 'x' : '- ' + Math.abs(scope.e) + 'x'))) + ' ' + (scope.f > 0 ? '+ ' + scope.f : '- ' + Math.abs(scope.f))",
+        "expr": "'(' + scope.poly1 + ') + (' + scope.poly2 + ')'",
+        "partX2": "scope.coeffX2 === 0 ? '' : (scope.coeffX2 === 1 ? 'x^2' : (scope.coeffX2 === -1 ? '-x^2' : scope.coeffX2 + 'x^2'))",
+        "partX": "scope.coeffX === 0 ? '' : (scope.coeffX === 1 ? (scope.partX2 ? '+x' : 'x') : (scope.coeffX === -1 ? '-x' : (scope.coeffX > 0 ? (scope.partX2 ? '+' + scope.coeffX + 'x' : scope.coeffX + 'x') : scope.coeffX + 'x')))",
+        "partC": "scope.constTerm === 0 ? '' : (scope.constTerm > 0 ? (scope.partX2 || scope.partX ? '+' + scope.constTerm : scope.constTerm.toString()) : scope.constTerm.toString())",
+        "ans": "(scope.partX2 + scope.partX + scope.partC) || '0'",
+        "step1": "scope.poly1 + ' ' + (scope.d_eff > 0 ? '+ ' + scope.d_eff + 'x^2' : '- ' + Math.abs(scope.d_eff) + 'x^2') + ' ' + (scope.e > 0 ? '+ ' + scope.e + 'x' : '- ' + Math.abs(scope.e) + 'x') + ' ' + (scope.f > 0 ? '+ ' + scope.f : '- ' + Math.abs(scope.f))"
+      },
+      "questionTemplate": "Simplify the following expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Remove the brackets when adding polynomials: $$${scope.step1}$$",
+        "Combine like terms: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "a": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true },
+        "b": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "c": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true },
+        "d": { "type": "randInt", "min": -4, "max": 4, "excludeZero": true },
+        "e": { "type": "randInt", "min": -6, "max": 6, "excludeZero": true },
+        "f": { "type": "randInt", "min": -8, "max": 8, "excludeZero": true }
+      },
+      "derived": {
+        "d_eff": "(scope.a - scope.d === 0) ? (scope.d > 0 ? scope.d + 1 : scope.d - 1) : scope.d",
+        "coeffY2": "scope.a - scope.d_eff",
+        "coeffY": "scope.b - scope.e",
+        "constTerm": "scope.c - scope.f",
+        "poly1": "(scope.a === 1 ? 'y^2' : (scope.a === -1 ? '-y^2' : scope.a + 'y^2')) + ' ' + (scope.b === 1 ? '+ y' : (scope.b === -1 ? '- y' : (scope.b > 0 ? '+ ' + scope.b + 'y' : '- ' + Math.abs(scope.b) + 'y'))) + ' ' + (scope.c > 0 ? '+ ' + scope.c : '- ' + Math.abs(scope.c))",
+        "poly2": "(scope.d_eff === 1 ? 'y^2' : (scope.d_eff === -1 ? '-y^2' : scope.d_eff + 'y^2')) + ' ' + (scope.e === 1 ? '+ y' : (scope.e === -1 ? '- y' : (scope.e > 0 ? '+ ' + scope.e + 'y' : '- ' + Math.abs(scope.e) + 'y'))) + ' ' + (scope.f > 0 ? '+ ' + scope.f : '- ' + Math.abs(scope.f))",
+        "expr": "'(' + scope.poly1 + ') - (' + scope.poly2 + ')'",
+        "negD": "-scope.d_eff",
+        "negE": "-scope.e",
+        "negF": "-scope.f",
+        "step1": "scope.poly1 + ' ' + (scope.negD > 0 ? '+ ' + scope.negD + 'y^2' : '- ' + Math.abs(scope.negD) + 'y^2') + ' ' + (scope.negE > 0 ? '+ ' + scope.negE + 'y' : '- ' + Math.abs(scope.negE) + 'y') + ' ' + (scope.negF > 0 ? '+ ' + scope.negF : '- ' + Math.abs(scope.negF))",
+        "partY2": "scope.coeffY2 === 0 ? '' : (scope.coeffY2 === 1 ? 'y^2' : (scope.coeffY2 === -1 ? '-y^2' : scope.coeffY2 + 'y^2'))",
+        "partY": "scope.coeffY === 0 ? '' : (scope.coeffY === 1 ? (scope.partY2 ? '+y' : 'y') : (scope.coeffY === -1 ? '-y' : (scope.coeffY > 0 ? (scope.partY2 ? '+' + scope.coeffY + 'y' : scope.coeffY + 'y') : scope.coeffY + 'y')))",
+        "partC": "scope.constTerm === 0 ? '' : (scope.constTerm > 0 ? (scope.partY2 || scope.partY ? '+' + scope.constTerm : scope.constTerm.toString()) : scope.constTerm.toString())",
+        "ans": "(scope.partY2 + scope.partY + scope.partC) || '0'"
+      },
+      "questionTemplate": "Simplify the following expression:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Distribute the minus sign through the second set of brackets: $$${scope.step1}$$",
+        "Combine like terms to simplify: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": { "type": "randInt", "min": 1, "max": 5 },
+        "b": { "type": "randInt", "min": -6, "max": -1 },
+        "c": { "type": "randInt", "min": 1, "max": 8 },
+        "d": { "type": "randInt", "min": -8, "max": -1 },
+        "p": { "type": "randInt", "min": 3, "max": 11 },
+        "q": { "type": "randInt", "min": 2, "max": 4 }
+      },
+      "derived": {
+        "p_eff": "(scope.p % scope.q === 0) ? scope.p + 1 : scope.p",
+        "num_raw": "scope.a * scope.q - scope.p_eff",
+        "gcd_calc": "(function(x, y){ x = Math.abs(x); y = Math.abs(y); while(y){ var t = y; y = x % y; x = t; } return x || 1; })(scope.a * scope.q - scope.p_eff, scope.q)",
+        "simpNum": "scope.num_raw / scope.gcd_calc",
+        "simpDen": "scope.q / scope.gcd_calc",
+        "coeffY": "scope.b + scope.d",
+        "constTerm": "scope.c",
+        "fracLaTeX": "'\\\\frac{' + scope.p_eff + '}{' + scope.q + '}'",
+        "expr": "(scope.a === 1 ? 'y^2' : scope.a + 'y^2') + ' ' + (scope.b === -1 ? '- y' : scope.b + 'y') + ' + ' + scope.c + ' ' + (scope.d === -1 ? '- y' : scope.d + 'y') + ' - ' + scope.fracLaTeX + 'y^2'",
+        "partY2": "scope.simpDen === 1 ? (scope.simpNum === 0 ? '' : (scope.simpNum === 1 ? 'y^2' : (scope.simpNum === -1 ? '-y^2' : scope.simpNum + 'y^2'))) : (scope.simpNum === 1 ? '1/' + scope.simpDen + 'y^2' : (scope.simpNum === -1 ? '-1/' + scope.simpDen + 'y^2' : scope.simpNum + '/' + scope.simpDen + 'y^2'))",
+        "partY": "scope.coeffY === 0 ? '' : (scope.coeffY === 1 ? (scope.partY2 ? '+y' : 'y') : (scope.coeffY === -1 ? '-y' : (scope.coeffY > 0 ? (scope.partY2 ? '+' + scope.coeffY + 'y' : scope.coeffY + 'y') : scope.coeffY + 'y')))",
+        "partC": "scope.constTerm === 0 ? '' : (scope.constTerm > 0 ? (scope.partY2 || scope.partY ? '+' + scope.constTerm : scope.constTerm.toString()) : scope.constTerm.toString())",
+        "ans": "(scope.partY2 + scope.partY + scope.partC) || '0'",
+        "step1": "'\\\\left(' + scope.a + ' - ' + scope.fracLaTeX + '\\\\right)y^2 + (' + scope.b + ' ' + (scope.d > 0 ? '+ ' + scope.d : '- ' + Math.abs(scope.d)) + ')y + ' + scope.c"
+      },
+      "questionTemplate": "Simplify the expression containing fractional coefficients:\n\n$$${scope.expr}$$",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Group coefficients for like terms: $$${scope.step1}$$",
+        "Simplify the coefficients: $$${scope.ans}$$"
+      ]
+    }
+  ]
+}
