@@ -4,18 +4,18 @@
     "7",
     "8",
     "9",
+    "Clear",
     "4",
     "5",
     "6",
+    "⌫",
     "1",
     "2",
     "3",
-    ".",
-    "0",
     "-",
-    "/",
-    "⌫",
-    "Clear"
+    "0",
+    ".",
+    "/"
   ],
   "structures": [
     {
@@ -31,27 +31,21 @@
           "min": 2,
           "max": 12
         },
-        "rand_num": {
-          "type": "randInt",
-          "min": 10,
-          "max": 99
-        },
         "instr_idx": {
           "type": "randInt",
           "min": 0,
-          "max": 3
+          "max": 2
         }
       },
       "derived": {
-        "instr": "['Find the value of', 'Calculate', 'Use your calculator to work out', 'Work out'][scope.instr_idx]",
-        "target_num": "scope.op_type <= 1 ? scope.n : scope.rand_num",
+        "instr": "['Find the value of', 'Calculate', 'Work out'][scope.instr_idx]",
+        "target_num": "scope.op_type === 0 ? scope.n : (scope.op_type === 1 ? scope.n : (scope.op_type === 2 ? scope.n * scope.n : scope.n * scope.n * scope.n))",
         "phrase": "scope.op_type === 0 ? 'the cube of ' + scope.n : (scope.op_type === 1 ? 'the square of ' + scope.n : (scope.op_type === 2 ? 'the square root of ' + scope.target_num : 'the cube root of ' + scope.target_num))",
-        "raw_ans": "scope.op_type === 0 ? scope.n * scope.n * scope.n : (scope.op_type === 1 ? scope.n * scope.n : (scope.op_type === 2 ? Math.sqrt(scope.target_num) : Math.cbrt(scope.target_num)))",
-        "is_exact": "Number.isInteger(scope.raw_ans)",
-        "ans": "scope.is_exact ? scope.raw_ans.toString() : parseFloat(scope.raw_ans.toPrecision(3)).toString()",
+        "ans_num": "scope.op_type === 0 ? scope.n * scope.n * scope.n : (scope.op_type === 1 ? scope.n * scope.n : scope.n)",
+        "ans": "scope.ans_num.toString()",
         "latex_expr": "scope.op_type === 0 ? scope.n + '^3' : (scope.op_type === 1 ? scope.n + '^2' : (scope.op_type === 2 ? '\\\\sqrt{' + scope.target_num + '}' : '\\\\sqrt[3]{' + scope.target_num + '}'))"
       },
-      "questionTemplate": "${scope.instr} ${scope.phrase}.\n\nGive your answer as a whole number if exact, or rounded to 3 significant figures if not exact.",
+      "questionTemplate": "${scope.instr} ${scope.phrase}.",
       "inputs": [
         {
           "label": "=",
@@ -79,11 +73,11 @@
         "instr_idx": {
           "type": "randInt",
           "min": 0,
-          "max": 3
+          "max": 2
         }
       },
       "derived": {
-        "instr": "['Find the value of', 'Calculate', 'Use your calculator to work out', 'Work out'][scope.instr_idx]",
+        "instr": "['Find the value of', 'Calculate', 'Work out'][scope.instr_idx]",
         "den": "Math.pow(scope.base, scope.exp)",
         "ans": "'1/' + scope.den",
         "expr": "scope.base + '^{-' + scope.exp + '}'"
@@ -121,25 +115,21 @@
         "instr_idx": {
           "type": "randInt",
           "min": 0,
-          "max": 3
+          "max": 2
         }
       },
       "derived": {
-        "instr": "['Calculate the exact value of', 'Find the value of', 'Use your calculator to work out', 'Work out'][scope.instr_idx]",
+        "instr": "['Calculate', 'Find the value of', 'Work out'][scope.instr_idx]",
         "a": "scope.a_int / 1000",
         "b": "scope.b_int / 100",
         "c": "scope.c_int / 100",
-        "diff": "Math.round((scope.b - scope.c) * 100) / 100",
-        "raw_num": "Math.abs(Math.round(scope.a_int * (scope.b_int - scope.c_int)))",
-        "sign": "scope.b_int < scope.c_int ? '-' : ''",
-        "raw_den": "100000",
-        "gcd": "((a, b) => { while (b) { let t = b; b = a % b; a = t; } return a; })(scope.raw_num, scope.raw_den)",
-        "p": "scope.raw_num / scope.gcd",
-        "q": "scope.raw_den / scope.gcd",
-        "ans": "scope.q === 1 ? scope.sign + scope.p : scope.sign + scope.p + '/' + scope.q",
+        "raw_ans": "scope.a * (scope.b - scope.c)",
+        "ans": "parseFloat(scope.raw_ans.toPrecision(3)).toString()",
+        "is_rounded": "scope.raw_ans !== parseFloat(scope.ans)",
+        "ans_suffix": "scope.is_rounded ? '\\\\text{ (3 s.f.)}' : ''",
         "expr": "scope.a + '(' + scope.b + ' - ' + scope.c + ')'"
       },
-      "questionTemplate": "${scope.instr}\n\n$$${scope.expr}$$\n\nGive your answer as a fraction in simplest form.",
+      "questionTemplate": "${scope.instr}\n\n$$${scope.expr}$$",
       "inputs": [
         {
           "label": "=",
@@ -148,7 +138,7 @@
       ],
       "steps": [
         "Key the entire expression $$${scope.expr}$$ directly into your calculator.",
-        "Convert to fraction format in simplest form to get: $$${scope.ans}$$"
+        "Evaluate to get: $$${scope.ans}${scope.ans_suffix}$$"
       ]
     },
     {
@@ -172,23 +162,21 @@
         "instr_idx": {
           "type": "randInt",
           "min": 0,
-          "max": 3
+          "max": 2
         }
       },
       "derived": {
-        "instr": "['Use your calculator to work out', 'Calculate', 'Work out', 'Find the value of'][scope.instr_idx]",
+        "instr": "['Calculate', 'Work out', 'Find the value of'][scope.instr_idx]",
         "a": "scope.a_int / 100",
         "b": "scope.b_int / 100",
         "c": "scope.c_int / 100",
-        "raw_num": "scope.a_int + scope.b_int",
-        "raw_den": "scope.c_int",
-        "gcd": "((a, b) => { while (b) { let t = b; b = a % b; a = t; } return a; })(scope.raw_num, scope.raw_den)",
-        "p": "scope.raw_num / scope.gcd",
-        "q": "scope.raw_den / scope.gcd",
-        "ans": "scope.q === 1 ? scope.p.toString() : scope.p + '/' + scope.q",
+        "raw_ans": "(scope.a + scope.b) / scope.c",
+        "ans": "parseFloat(scope.raw_ans.toPrecision(3)).toString()",
+        "is_rounded": "scope.raw_ans !== parseFloat(scope.ans)",
+        "ans_suffix": "scope.is_rounded ? '\\\\text{ (3 s.f.)}' : ''",
         "expr": "'\\\\frac{' + scope.a + ' + ' + scope.b + '}{' + scope.c + '}'"
       },
-      "questionTemplate": "${scope.instr}\n\n$$${scope.expr}$$\n\nGive your answer as a fraction in simplest form.",
+      "questionTemplate": "${scope.instr}\n\n$$${scope.expr}$$",
       "inputs": [
         {
           "label": "=",
@@ -196,8 +184,8 @@
         }
       ],
       "steps": [
-        "Key the whole fraction expression $$${scope.expr}$$ into your calculator using the fraction template key.",
-        "Evaluate to get the fraction in simplest form: $$${scope.ans}$$"
+        "Key the whole fraction expression $$${scope.expr}$$ into your calculator.",
+        "Evaluate to get: $$${scope.ans}${scope.ans_suffix}$$"
       ]
     },
     {
@@ -221,18 +209,19 @@
         "instr_idx": {
           "type": "randInt",
           "min": 0,
-          "max": 3
+          "max": 2
         }
       },
       "derived": {
-        "instr": "['Work out', 'Calculate', 'Use your calculator to work out', 'Find the value of'][scope.instr_idx]",
+        "instr": "['Work out', 'Calculate', 'Find the value of'][scope.instr_idx]",
         "disc": "scope.a * scope.a - 4 * scope.b * (-scope.c)",
         "raw_ans": "Math.sqrt(scope.disc)",
-        "is_exact": "Number.isInteger(scope.raw_ans)",
-        "ans": "scope.is_exact ? scope.raw_ans.toString() : parseFloat(scope.raw_ans.toPrecision(3)).toString()",
+        "ans": "parseFloat(scope.raw_ans.toPrecision(3)).toString()",
+        "is_rounded": "scope.raw_ans !== parseFloat(scope.ans)",
+        "ans_suffix": "scope.is_rounded ? '\\\\text{ (3 s.f.)}' : ''",
         "expr": "'\\\\sqrt{' + scope.a + '^2 - 4 \\\\times ' + scope.b + ' \\\\times (' + (-scope.c) + ')}'"
       },
-      "questionTemplate": "${scope.instr}\n\n$$${scope.expr}$$\n\nGive your answer as a whole number if exact, or rounded to 3 significant figures if not exact.",
+      "questionTemplate": "${scope.instr}\n\n$$${scope.expr}$$",
       "inputs": [
         {
           "label": "=",
@@ -241,7 +230,7 @@
       ],
       "steps": [
         "Key the whole expression $$${scope.expr}$$ into your calculator.",
-        "Evaluate to get: $$${scope.ans}$$"
+        "Evaluate to get: $$${scope.ans}${scope.ans_suffix}$$"
       ]
     },
     {
@@ -265,16 +254,16 @@
         "instr_idx": {
           "type": "randInt",
           "min": 0,
-          "max": 3
+          "max": 2
         }
       },
       "derived": {
-        "instr": "['Find the value of', 'Calculate the exact value of', 'Work out', 'Use your calculator to work out'][scope.instr_idx]",
+        "instr": "['Find the value of', 'Calculate', 'Work out'][scope.instr_idx]",
         "ans_num": "scope.type_idx === 0 ? scope.n_surd : Math.pow(2, scope.exp_val)",
         "ans": "scope.ans_num.toString()",
         "expr": "scope.type_idx === 0 ? '(\\\\sqrt{' + scope.n_surd + '})^2' : '2^{' + scope.exp_val + '}'"
       },
-      "questionTemplate": "${scope.instr}\n\n$$${scope.expr}$$\n\nGive your answer as an exact value.",
+      "questionTemplate": "${scope.instr}\n\n$$${scope.expr}$$",
       "inputs": [
         {
           "label": "=",
