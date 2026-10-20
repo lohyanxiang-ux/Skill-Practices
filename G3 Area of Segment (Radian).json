@@ -1,0 +1,266 @@
+{
+  "skillTitle": "Area of Segment (Radians)",
+  "keypad": [
+  "7", "8", "9", "C",
+  "4", "5", "6", "⌫",
+  "1", "2", "3", "-",
+  "0", ".", "", "="
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "r": {
+          "type": "randInt",
+          "min": 6,
+          "max": 15
+        },
+        "thetaTenths": {
+          "type": "randInt",
+          "min": 8,
+          "max": 24
+        },
+        "rot": {
+          "type": "randInt",
+          "min": 0,
+          "max": 280
+        }
+      },
+      "derived": {
+        "theta": "Number((scope.thetaTenths / 10).toFixed(1))",
+        "rad1": "(scope.rot * Math.PI) / 180",
+        "rad2": "scope.rad1 + scope.theta",
+        "radMid": "scope.rad1 + scope.theta / 2",
+        "ax": "Math.round(130 + 70 * Math.cos(scope.rad1))",
+        "ay": "Math.round(120 - 70 * Math.sin(scope.rad1))",
+        "bx": "Math.round(130 + 70 * Math.cos(scope.rad2))",
+        "by": "Math.round(120 - 70 * Math.sin(scope.rad2))",
+        "arc1x": "Math.round(130 + 22 * Math.cos(scope.rad1))",
+        "arc1y": "Math.round(120 - 22 * Math.sin(scope.rad1))",
+        "arc2x": "Math.round(130 + 22 * Math.cos(scope.rad2))",
+        "arc2y": "Math.round(120 - 22 * Math.sin(scope.rad2))",
+        "lblx": "Math.round(130 + 38 * Math.cos(scope.radMid))",
+        "lbly": "Math.round(120 - 38 * Math.sin(scope.radMid) + 4)",
+        "rlbx": "Math.round(130 + 35 * Math.cos(scope.rad1) + 12 * Math.sin(scope.rad1))",
+        "rlby": "Math.round(120 - 35 * Math.sin(scope.rad1) + 12 * Math.cos(scope.rad1))",
+        "v1x": "Math.round(130 + 84 * Math.cos(scope.rad1))",
+        "v1y": "Math.round(120 - 84 * Math.sin(scope.rad1) + 4)",
+        "v2x": "Math.round(130 + 84 * Math.cos(scope.rad2))",
+        "v2y": "Math.round(120 - 84 * Math.sin(scope.rad2) + 4)",
+        "largeFlag": "scope.theta > Math.PI ? 1 : 0",
+        "secAreaVal": "0.5 * scope.r * scope.r * scope.theta",
+        "triAreaVal": "0.5 * scope.r * scope.r * Math.sin(scope.theta)",
+        "segAreaVal": "scope.secAreaVal - scope.triAreaVal",
+        "ans": "Number(scope.segAreaVal.toPrecision(3)).toString()",
+        "secAreaRounded": "Number(scope.secAreaVal.toPrecision(4))",
+        "triAreaRounded": "Number(scope.triAreaVal.toPrecision(4))",
+        "step1": "'\\\\begin{aligned} \\\\text{Sector Area} &= \\\\frac{1}{2} r^2 \\\\theta = \\\\frac{1}{2} \\\\times (' + scope.r + ')^2 \\\\times ' + scope.theta + ' \\\\\\\\ &\\\\approx ' + scope.secAreaRounded + ' \\\\text{ cm}^2 \\\\end{aligned}'",
+        "step2": "'\\\\begin{aligned} \\\\text{Triangle Area} &= \\\\frac{1}{2} r^2 \\\\sin \\\\theta = \\\\frac{1}{2} \\\\times (' + scope.r + ')^2 \\\\times \\\\sin(' + scope.theta + ') \\\\\\\\ &\\\\approx ' + scope.triAreaRounded + ' \\\\text{ cm}^2 \\\\end{aligned}'",
+        "step3": "'\\\\begin{aligned} \\\\text{Segment Area} &= \\\\text{Sector Area} - \\\\text{Triangle Area} \\\\\\\\ &= ' + scope.secAreaRounded + ' - ' + scope.triAreaRounded + ' \\\\\\\\ &\\\\approx ' + scope.ans + ' \\\\text{ cm}^2 \\\\end{aligned}'",
+        "diagram": "'<svg width=\"260\" height=\"220\" viewBox=\"0 0 260 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#f8fafc; border-radius:8px; border:1px solid #e2e8f0;\"><path d=\"M ' + scope.ax + ' ' + scope.ay + ' A 70 70 0 ' + scope.largeFlag + ' 0 ' + scope.bx + ' ' + scope.by + ' Z\" fill=\"#cbd5e1\" stroke=\"#16a34a\" stroke-width=\"2.5\"/><line x1=\"130\" y1=\"120\" x2=\"' + scope.ax + '\" y2=\"' + scope.ay + '\" stroke=\"#334155\" stroke-width=\"2\"/><line x1=\"130\" y1=\"120\" x2=\"' + scope.bx + '\" y2=\"' + scope.by + '\" stroke=\"#334155\" stroke-width=\"2\"/><path d=\"M ' + scope.arc1x + ' ' + scope.arc1y + ' A 22 22 0 ' + scope.largeFlag + ' 0 ' + scope.arc2x + ' ' + scope.arc2y + '\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"1.5\"/><circle cx=\"130\" cy=\"120\" r=\"3\" fill=\"#1e293b\"/><text x=\"112\" y=\"128\" font-family=\"sans-serif\" font-size=\"14\" font-style=\"italic\">O</text><text x=\"' + scope.v1x + '\" y=\"' + scope.v1y + '\" font-family=\"sans-serif\" font-size=\"14\">A</text><text x=\"' + scope.v2x + '\" y=\"' + scope.v2y + '\" font-family=\"sans-serif\" font-size=\"14\">B</text><text x=\"' + scope.rlbx + '\" y=\"' + scope.rlby + '\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#1e293b\">' + scope.r + '</text><text x=\"' + scope.lblx + '\" y=\"' + scope.lbly + '\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#dc2626\" text-anchor=\"middle\">' + scope.theta + ' rad</text></svg>'"
+      },
+      "questionTemplate": "Find the area of the shaded minor segment bounded by chord $AB$ shown below.\n\n(Give your answer correct to 3 significant figures.)\n\n${scope.diagram}",
+      "inputs": [
+        {
+          "label": "Area =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Calculate the area of sector $OAB$: $$${scope.step1}$$",
+        "Calculate the area of $\\triangle OAB$: $$${scope.step2}$$",
+        "Subtract triangle area from sector area: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "r": {
+          "type": "randInt",
+          "min": 6,
+          "max": 16
+        },
+        "phiTenths": {
+          "type": "randInt",
+          "min": 36,
+          "max": 48
+        },
+        "rot": {
+          "type": "randInt",
+          "min": 0,
+          "max": 280
+        }
+      },
+      "derived": {
+        "phi": "Number((scope.phiTenths / 10).toFixed(1))",
+        "theta": "Number((2 * Math.PI - scope.phi).toPrecision(4))",
+        "thetaDisplay": "Number(scope.theta.toPrecision(3))",
+        "rad1": "(scope.rot * Math.PI) / 180",
+        "rad2": "scope.rad1 + scope.theta",
+        "radMid": "scope.rad1 + scope.theta / 2",
+        "radOppMid": "scope.rad1 + scope.theta + scope.phi / 2",
+        "ax": "Math.round(130 + 70 * Math.cos(scope.rad1))",
+        "ay": "Math.round(120 - 70 * Math.sin(scope.rad1))",
+        "bx": "Math.round(130 + 70 * Math.cos(scope.rad2))",
+        "by": "Math.round(120 - 70 * Math.sin(scope.rad2))",
+        "arc1x": "Math.round(130 + 22 * Math.cos(scope.rad1))",
+        "arc1y": "Math.round(120 - 22 * Math.sin(scope.rad1))",
+        "arc2x": "Math.round(130 + 22 * Math.cos(scope.rad2))",
+        "arc2y": "Math.round(120 - 22 * Math.sin(scope.rad2))",
+        "lblx": "Math.round(130 + 38 * Math.cos(scope.radOppMid))",
+        "lbly": "Math.round(120 - 38 * Math.sin(scope.radOppMid) + 4)",
+        "rlbx": "Math.round(130 + 35 * Math.cos(scope.rad1) + 12 * Math.sin(scope.rad1))",
+        "rlby": "Math.round(120 - 35 * Math.sin(scope.rad1) + 12 * Math.cos(scope.rad1))",
+        "v1x": "Math.round(130 + 84 * Math.cos(scope.rad1))",
+        "v1y": "Math.round(120 - 84 * Math.sin(scope.rad1) + 4)",
+        "v2x": "Math.round(130 + 84 * Math.cos(scope.rad2))",
+        "v2y": "Math.round(120 - 84 * Math.sin(scope.rad2) + 4)",
+        "secAreaVal": "0.5 * scope.r * scope.r * scope.theta",
+        "triAreaVal": "0.5 * scope.r * scope.r * Math.sin(scope.theta)",
+        "segAreaVal": "scope.secAreaVal - scope.triAreaVal",
+        "ans": "Number(scope.segAreaVal.toPrecision(3)).toString()",
+        "secAreaRounded": "Number(scope.secAreaVal.toPrecision(4))",
+        "triAreaRounded": "Number(scope.triAreaVal.toPrecision(4))",
+        "step1": "'\\\\text{Central angle } \\\\theta = 2\\\\pi - ' + scope.phi + ' \\\\approx ' + scope.thetaDisplay + ' \\\\text{ rad}'",
+        "step2": "'\\\\begin{aligned} \\\\text{Sector Area} &= \\\\frac{1}{2} r^2 \\\\theta = \\\\frac{1}{2} \\\\times (' + scope.r + ')^2 \\\\times ' + scope.thetaDisplay + ' \\\\\\\\ &\\\\approx ' + scope.secAreaRounded + ' \\\\text{ cm}^2 \\\\end{aligned}'",
+        "step3": "'\\\\begin{aligned} \\\\text{Triangle Area} &= \\\\frac{1}{2} r^2 \\\\sin \\\\theta = \\\\frac{1}{2} \\\\times (' + scope.r + ')^2 \\\\times \\\\sin(' + scope.thetaDisplay + ') \\\\\\\\ &\\\\approx ' + scope.triAreaRounded + ' \\\\text{ cm}^2 \\\\end{aligned}'",
+        "step4": "'\\\\begin{aligned} \\\\text{Segment Area} &= \\\\text{Sector Area} - \\\\text{Triangle Area} \\\\\\\\ &= ' + scope.secAreaRounded + ' - ' + scope.triAreaRounded + ' \\\\\\\\ &\\\\approx ' + scope.ans + ' \\\\text{ cm}^2 \\\\end{aligned}'",
+        "diagram": "'<svg width=\"260\" height=\"220\" viewBox=\"0 0 260 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#f8fafc; border-radius:8px; border:1px solid #e2e8f0;\"><path d=\"M ' + scope.ax + ' ' + scope.ay + ' A 70 70 0 0 0 ' + scope.bx + ' ' + scope.by + ' Z\" fill=\"#cbd5e1\" stroke=\"#16a34a\" stroke-width=\"2.5\"/><line x1=\"130\" y1=\"120\" x2=\"' + scope.ax + '\" y2=\"' + scope.ay + '\" stroke=\"#334155\" stroke-width=\"2\"/><line x1=\"130\" y1=\"120\" x2=\"' + scope.bx + '\" y2=\"' + scope.by + '\" stroke=\"#334155\" stroke-width=\"2\"/><path d=\"M ' + scope.arc2x + ' ' + scope.arc2y + ' A 22 22 0 1 0 ' + scope.arc1x + ' ' + scope.arc1y + '\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"1.5\"/><circle cx=\"130\" cy=\"120\" r=\"3\" fill=\"#1e293b\"/><text x=\"112\" y=\"128\" font-family=\"sans-serif\" font-size=\"14\" font-style=\"italic\">O</text><text x=\"' + scope.v1x + '\" y=\"' + scope.v1y + '\" font-family=\"sans-serif\" font-size=\"14\">A</text><text x=\"' + scope.v2x + '\" y=\"' + scope.v2y + '\" font-family=\"sans-serif\" font-size=\"14\">B</text><text x=\"' + scope.rlbx + '\" y=\"' + scope.rlby + '\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#1e293b\">' + scope.r + '</text><text x=\"' + scope.lblx + '\" y=\"' + scope.lbly + '\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#dc2626\" text-anchor=\"middle\">' + scope.phi + ' rad</text></svg>'"
+      },
+      "questionTemplate": "Find the area of the minor segment bounded by chord $AB$ in the figure below.\n\n(Give your answer correct to 3 significant figures.)\n\n${scope.diagram}",
+      "inputs": [
+        {
+          "label": "Area =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Find the central angle $\\theta$ subtending the minor arc $AB$: $$${scope.step1}$$",
+        "Calculate the area of sector $OAB$: $$${scope.step2}$$",
+        "Calculate the area of $\\triangle OAB$: $$${scope.step3}$$",
+        "Subtract triangle area from sector area: $$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "r": {
+          "type": "randInt",
+          "min": 6,
+          "max": 15
+        },
+        "thetaTenths": {
+          "type": "randInt",
+          "min": 10,
+          "max": 22
+        }
+      },
+      "derived": {
+        "theta": "Number((scope.thetaTenths / 10).toFixed(1))",
+        "ang1Rad": "1.5 * Math.PI - scope.theta / 2",
+        "ang2Rad": "1.5 * Math.PI + scope.theta / 2",
+        "rad1": "scope.ang1Rad",
+        "rad2": "scope.ang2Rad",
+        "radMid": "1.5 * Math.PI",
+        "ax": "Math.round(130 + 65 * Math.cos(scope.rad1))",
+        "ay": "Math.round(100 - 65 * Math.sin(scope.rad1))",
+        "bx": "Math.round(130 + 65 * Math.cos(scope.rad2))",
+        "by": "Math.round(100 - 65 * Math.sin(scope.rad2))",
+        "arc1x": "Math.round(130 + 22 * Math.cos(scope.rad1))",
+        "arc1y": "Math.round(100 - 22 * Math.sin(scope.rad1))",
+        "arc2x": "Math.round(130 + 22 * Math.cos(scope.rad2))",
+        "arc2y": "Math.round(100 - 22 * Math.sin(scope.rad2))",
+        "lblx": "130",
+        "lbly": "Math.round(100 - 36 * Math.sin(scope.radMid) + 4)",
+        "rlbx": "Math.round(130 + 35 * Math.cos(scope.rad1) + 12 * Math.sin(scope.rad1))",
+        "rlby": "Math.round(100 - 35 * Math.sin(scope.rad1) + 12 * Math.cos(scope.rad1))",
+        "v1x": "Math.round(130 + 82 * Math.cos(scope.rad1))",
+        "v1y": "Math.round(100 - 82 * Math.sin(scope.rad1) + 4)",
+        "v2x": "Math.round(130 + 82 * Math.cos(scope.rad2))",
+        "v2y": "Math.round(100 - 82 * Math.sin(scope.rad2) + 4)",
+        "circleAreaVal": "Math.PI * scope.r * scope.r",
+        "secAreaVal": "0.5 * scope.r * scope.r * scope.theta",
+        "triAreaVal": "0.5 * scope.r * scope.r * Math.sin(scope.theta)",
+        "minorSegVal": "scope.secAreaVal - scope.triAreaVal",
+        "majorSegVal": "scope.circleAreaVal - scope.minorSegVal",
+        "ans": "Number(scope.majorSegVal.toPrecision(3)).toString()",
+        "circleAreaRounded": "Number(scope.circleAreaVal.toPrecision(4))",
+        "minorSegRounded": "Number(scope.minorSegVal.toPrecision(4))",
+        "step1": "'\\\\begin{aligned} \\\\text{Circle Area} &= \\\\pi \\\\times (' + scope.r + ')^2 \\\\\\\\ &\\\\approx ' + scope.circleAreaRounded + ' \\\\text{ cm}^2 \\\\end{aligned}'",
+        "step2": "'\\\\begin{aligned} \\\\text{Minor Segment Area} &= \\\\text{Sector Area} - \\\\text{Triangle Area} \\\\\\\\ &= \\\\frac{1}{2} (' + scope.r + ')^2 (' + scope.theta + ') - \\\\frac{1}{2} (' + scope.r + ')^2 \\\\sin(' + scope.theta + ') \\\\\\\\ &\\\\approx ' + scope.minorSegRounded + ' \\\\text{ cm}^2 \\\\end{aligned}'",
+        "step3": "'\\\\begin{aligned} \\\\text{Major Segment Area} &= \\\\text{Circle Area} - \\\\text{Minor Segment Area} \\\\\\\\ &= ' + scope.circleAreaRounded + ' - ' + scope.minorSegRounded + ' \\\\\\\\ &\\\\approx ' + scope.ans + ' \\\\text{ cm}^2 \\\\end{aligned}'",
+        "diagram": "'<svg width=\"260\" height=\"210\" viewBox=\"0 0 260 210\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#f8fafc; border-radius:8px; border:1px solid #e2e8f0;\"><path d=\"M ' + scope.ax + ' ' + scope.ay + ' A 65 65 0 1 1 ' + scope.bx + ' ' + scope.by + ' Z\" fill=\"#cbd5e1\" stroke=\"#16a34a\" stroke-width=\"2.5\"/><path d=\"M ' + scope.ax + ' ' + scope.ay + ' A 65 65 0 0 0 ' + scope.bx + ' ' + scope.by + '\" fill=\"none\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4 4\"/><line x1=\"' + scope.ax + '\" y1=\"' + scope.ay + '\" x2=\"' + scope.bx + '\" y2=\"' + scope.by + '\" stroke=\"#1e293b\" stroke-width=\"2\"/><line x1=\"130\" y1=\"100\" x2=\"' + scope.ax + '\" y2=\"' + scope.ay + '\" stroke=\"#334155\" stroke-width=\"2\"/><line x1=\"130\" y1=\"100\" x2=\"' + scope.bx + '\" y2=\"' + scope.by + '\" stroke=\"#334155\" stroke-width=\"2\"/><path d=\"M ' + scope.arc1x + ' ' + scope.arc1y + ' A 22 22 0 0 0 ' + scope.arc2x + ' ' + scope.arc2y + '\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"1.5\"/><circle cx=\"130\" cy=\"100\" r=\"3\" fill=\"#1e293b\"/><text x=\"115\" y=\"95\" font-family=\"sans-serif\" font-size=\"14\" font-style=\"italic\">O</text><text x=\"' + scope.v1x + '\" y=\"' + scope.v1y + '\" font-family=\"sans-serif\" font-size=\"14\">A</text><text x=\"' + scope.v2x + '\" y=\"' + scope.v2y + '\" font-family=\"sans-serif\" font-size=\"14\">B</text><text x=\"' + scope.rlbx + '\" y=\"' + scope.rlby + '\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#1e293b\">' + scope.r + '</text><text x=\"' + scope.lblx + '\" y=\"' + scope.lbly + '\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#dc2626\" text-anchor=\"middle\">' + scope.theta + ' rad</text></svg>'"
+      },
+      "questionTemplate": "Find the area of the major segment (shaded region) bounded by chord $AB$ shown below.\n\n(Give your answer correct to 3 significant figures.)\n\n${scope.diagram}",
+      "inputs": [
+        {
+          "label": "Area =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Calculate the total area of the circle: $$${scope.step1}$$",
+        "Calculate the area of the minor segment: $$${scope.step2}$$",
+        "Subtract minor segment area from circle area: $$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "r": {
+          "type": "randInt",
+          "min": 5,
+          "max": 18
+        },
+        "rot": {
+          "type": "randInt",
+          "min": 0,
+          "max": 280
+        }
+      },
+      "derived": {
+        "theta": "1.57",
+        "rad1": "(scope.rot * Math.PI) / 180",
+        "rad2": "scope.rad1 + Math.PI / 2",
+        "radMid": "scope.rad1 + Math.PI / 4",
+        "ax": "Math.round(130 + 70 * Math.cos(scope.rad1))",
+        "ay": "Math.round(120 - 70 * Math.sin(scope.rad1))",
+        "bx": "Math.round(130 + 70 * Math.cos(scope.rad2))",
+        "by": "Math.round(120 - 70 * Math.sin(scope.rad2))",
+        "sq1x": "Math.round(130 + 12 * Math.cos(scope.rad1))",
+        "sq1y": "Math.round(120 - 12 * Math.sin(scope.rad1))",
+        "sq2x": "Math.round(130 + 12 * Math.cos(scope.rad1) + 12 * Math.cos(scope.rad2))",
+        "sq2y": "Math.round(120 - 12 * Math.sin(scope.rad1) - 12 * Math.sin(scope.rad2))",
+        "sq3x": "Math.round(130 + 12 * Math.cos(scope.rad2))",
+        "sq3y": "Math.round(120 - 12 * Math.sin(scope.rad2))",
+        "rlbx": "Math.round(130 + 35 * Math.cos(scope.rad1) + 12 * Math.sin(scope.rad1))",
+        "rlby": "Math.round(120 - 35 * Math.sin(scope.rad1) + 12 * Math.cos(scope.rad1))",
+        "v1x": "Math.round(130 + 84 * Math.cos(scope.rad1))",
+        "v1y": "Math.round(120 - 84 * Math.sin(scope.rad1) + 4)",
+        "v2x": "Math.round(130 + 84 * Math.cos(scope.rad2))",
+        "v2y": "Math.round(120 - 84 * Math.sin(scope.rad2) + 4)",
+        "secAreaVal": "0.25 * Math.PI * scope.r * scope.r",
+        "triAreaVal": "0.5 * scope.r * scope.r",
+        "segAreaVal": "scope.secAreaVal - scope.triAreaVal",
+        "ans": "Number(scope.segAreaVal.toPrecision(3)).toString()",
+        "secAreaRounded": "Number(scope.secAreaVal.toPrecision(4))",
+        "step1": "'\\\\begin{aligned} \\\\text{Sector Area} &= \\\\frac{1}{2} r^2 \\\\theta = \\\\frac{1}{2} \\\\times (' + scope.r + ')^2 \\\\times \\\\frac{\\\\pi}{2} \\\\\\\\ &\\\\approx ' + scope.secAreaRounded + ' \\\\text{ cm}^2 \\\\end{aligned}'",
+        "step2": "'\\\\begin{aligned} \\\\text{Triangle Area} &= \\\\frac{1}{2} \\\\times ' + scope.r + ' \\\\times ' + scope.r + ' \\\\\\\\ &= ' + scope.triAreaVal + ' \\\\text{ cm}^2 \\\\end{aligned}'",
+        "step3": "'\\\\begin{aligned} \\\\text{Segment Area} &= \\\\text{Sector Area} - \\\\text{Triangle Area} \\\\\\\\ &= ' + scope.secAreaRounded + ' - ' + scope.triAreaVal + ' \\\\\\\\ &\\\\approx ' + scope.ans + ' \\\\text{ cm}^2 \\\\end{aligned}'",
+        "diagram": "'<svg width=\"260\" height=\"220\" viewBox=\"0 0 260 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#f8fafc; border-radius:8px; border:1px solid #e2e8f0;\"><path d=\"M ' + scope.ax + ' ' + scope.ay + ' A 70 70 0 0 0 ' + scope.bx + ' ' + scope.by + ' Z\" fill=\"#cbd5e1\" stroke=\"#16a34a\" stroke-width=\"2.5\"/><line x1=\"130\" y1=\"120\" x2=\"' + scope.ax + '\" y2=\"' + scope.ay + '\" stroke=\"#334155\" stroke-width=\"2\"/><line x1=\"130\" y1=\"120\" x2=\"' + scope.bx + '\" y2=\"' + scope.by + '\" stroke=\"#334155\" stroke-width=\"2\"/><polyline points=\"' + scope.sq1x + ',' + scope.sq1y + ' ' + scope.sq2x + ',' + scope.sq2y + ' ' + scope.sq3x + ',' + scope.sq3y + '\" fill=\"none\" stroke=\"#334155\" stroke-width=\"1.5\"/><circle cx=\"130\" cy=\"120\" r=\"3\" fill=\"#1e293b\"/><text x=\"112\" y=\"128\" font-family=\"sans-serif\" font-size=\"14\" font-style=\"italic\">O</text><text x=\"' + scope.v1x + '\" y=\"' + scope.v1y + '\" font-family=\"sans-serif\" font-size=\"14\">A</text><text x=\"' + scope.v2x + '\" y=\"' + scope.v2y + '\" font-family=\"sans-serif\" font-size=\"14\">B</text><text x=\"' + scope.rlbx + '\" y=\"' + scope.rlby + '\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#1e293b\">' + scope.r + '</text></svg>'"
+      },
+      "questionTemplate": "A circle sector $OAB$ has radius $r = ${scope.r}\\text{ cm}$ and central angle $\\angle AOB = \\frac{\\pi}{2}\\text{ rad}$.\n\nFind the area of the minor segment bounded by chord $AB$.\n\n(Give your answer correct to 3 significant figures.)\n\n${scope.diagram}",
+      "inputs": [
+        {
+          "label": "Area =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Calculate the area of sector $OAB$: $$${scope.step1}$$",
+        "Calculate the area of right triangle $\\triangle OAB$: $$${scope.step2}$$",
+        "Subtract triangle area from sector area: $$${scope.step3}$$"
+      ]
+    }
+  ]
+}
