@@ -1,0 +1,277 @@
+{
+  "skillTitle": "Fractions",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "⌫",
+    "4",
+    "5",
+    "6",
+    "Clear",
+    "1",
+    "2",
+    "3",
+    "/",
+    "0",
+    "-",
+    ","
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "k": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "n_raw": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        },
+        "d_raw": {
+          "type": "randInt",
+          "min": 2,
+          "max": 7
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var n = scope.n_raw;\n  var d = scope.d_raw;\n  if (n >= d) d = n + scope.k;\n  var g = gcd(n, d);\n  n = n / g;\n  d = d / g;\n  var k = scope.k;\n  var num = n * k;\n  var den = d * k;\n  var simp = simplifyFrac(num, den);\n  return { num: num, den: den, ans: simp.str, g: k * g, n: n, d: d };\n})()",
+        "num": "scope.data.num",
+        "den": "scope.data.den",
+        "ans": "scope.data.ans",
+        "g": "scope.data.g",
+        "n": "scope.data.n",
+        "d": "scope.data.d"
+      },
+      "questionTemplate": "Express the following fraction in simplest form:\n\n$$\n\\frac{${scope.num}}{${scope.den}}\n$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Find the greatest common divisor (GCD) of ${scope.num} and ${scope.den}, which is ${scope.g}.",
+        "Divide both the numerator and the denominator by ${scope.g}:\n\n$$\\frac{${scope.num} \\div ${scope.g}}{${scope.den} \\div ${scope.g}} = \\frac{${scope.n}}{${scope.d}}$$",
+        "The fraction in simplest form is ${scope.ans}."
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "op_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 1
+        },
+        "d1": {
+          "type": "randInt",
+          "min": 2,
+          "max": 8
+        },
+        "d2": {
+          "type": "randInt",
+          "min": 2,
+          "max": 8
+        },
+        "n1": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        },
+        "n2": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var isAdd = scope.op_idx === 0;\n  var d1 = scope.d1, d2 = scope.d2;\n  var n1 = scope.n1 % d1 || 1;\n  var n2 = scope.n2 % d2 || 1;\n  var common_d = (d1 * d2) / gcd(d1, d2);\n  var num1 = n1 * (common_d / d1);\n  var num2 = n2 * (common_d / d2);\n  if (!isAdd && num1 < num2) {\n    var tempN = n1; n1 = n2; n2 = tempN;\n    var tempD = d1; d1 = d2; d2 = tempD;\n    num1 = n1 * (common_d / d1);\n    num2 = n2 * (common_d / d2);\n  }\n  var res_num = isAdd ? (num1 + num2) : (num1 - num2);\n  var simp = simplifyFrac(res_num, common_d);\n  return { n1: n1, d1: d1, n2: n2, d2: d2, num1: num1, num2: num2, res_num: res_num, common_d: common_d, op: isAdd ? '+' : '-', ans: simp.str };\n})()",
+        "n1": "scope.data.n1",
+        "d1": "scope.data.d1",
+        "n2": "scope.data.n2",
+        "d2": "scope.data.d2",
+        "num1": "scope.data.num1",
+        "num2": "scope.data.num2",
+        "res_num": "scope.data.res_num",
+        "common_d": "scope.data.common_d",
+        "op": "scope.data.op",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "Evaluate the following:\n\n$$\n\\frac{${scope.n1}}{${scope.d1}} ${scope.op} \\frac{${scope.n2}}{${scope.d2}}\n$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Find a common denominator and combine numerators:\n\n$$\\frac{${scope.num1}}{${scope.common_d}} ${scope.op} \\frac{${scope.num2}}{${scope.common_d}} = \\frac{${scope.res_num}}{${scope.common_d}}$$",
+        "Simplify the resulting fraction to get: ${scope.ans}."
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "op_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 1
+        },
+        "n1": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        },
+        "d1": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "n2": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        },
+        "d2": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var isMult = scope.op_idx === 0;\n  var n1 = scope.n1, d1 = scope.d1, n2 = scope.n2, d2 = scope.d2;\n  var res_n = isMult ? (n1 * n2) : (n1 * d2);\n  var res_d = isMult ? (d1 * d2) : (d1 * n2);\n  var simp = simplifyFrac(res_n, res_d);\n  return { n1: n1, d1: d1, n2: n2, d2: d2, res_n: res_n, res_d: res_d, isMult: isMult, ans: simp.str };\n})()",
+        "n1": "scope.data.n1",
+        "d1": "scope.data.d1",
+        "n2": "scope.data.n2",
+        "d2": "scope.data.d2",
+        "res_n": "scope.data.res_n",
+        "res_d": "scope.data.res_d",
+        "opSymbol": "scope.data.isMult ? '\\\\times' : '\\\\div'",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "Evaluate the following:\n\n$$\n\\frac{${scope.n1}}{${scope.d1}} ${scope.opSymbol} \\frac{${scope.n2}}{${scope.d2}}\n$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Multiply numerators and denominators (or multiply by the reciprocal for division):\n\n$$\\frac{${scope.res_n}}{${scope.res_d}}$$",
+        "Simplify the fraction to simplest form: ${scope.ans}."
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "order_type": {
+          "type": "randInt",
+          "min": 0,
+          "max": 1
+        },
+        "seed": {
+          "type": "randInt",
+          "min": 0,
+          "max": 4
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var pools = [\n    [{n:1,d:5,v:0.2}, {n:1,d:4,v:0.25}, {n:1,d:3,v:0.333}],\n    [{n:1,d:10,v:0.1}, {n:3,d:5,v:0.6}, {n:3,d:4,v:0.75}],\n    [{n:1,d:6,v:0.167}, {n:2,d:5,v:0.4}, {n:2,d:3,v:0.667}],\n    [{n:1,d:8,v:0.125}, {n:3,d:8,v:0.375}, {n:5,d:8,v:0.625}],\n    [{n:1,d:9,v:0.111}, {n:4,d:9,v:0.444}, {n:7,d:9,v:0.778}]\n  ];\n  var pool = pools[scope.seed];\n  var isAsc = scope.order_type === 0;\n  var sorted = pool.slice().sort(function(a, b){ return isAsc ? a.v - b.v : b.v - a.v; });\n  var origStr = pool.map(function(f){ return '\\\\frac{' + f.n + '}{' + f.d + '}'; }).join(', ');\n  var ansStr = sorted.map(function(f){ return f.n + '/' + f.d; }).join(', ');\n  var stepStr = sorted.map(function(f){ return '\\\\frac{' + f.n + '}{' + f.d + '}'; }).join(', ');\n  return { origStr: origStr, ansStr: ansStr, stepStr: stepStr, word: isAsc ? 'ascending' : 'descending' };\n})()",
+        "origStr": "scope.data.origStr",
+        "ansStr": "scope.data.ansStr",
+        "stepStr": "scope.data.stepStr",
+        "word": "scope.data.word"
+      },
+      "questionTemplate": "Arrange the following fractions in ${scope.word} order:\n\n$$\n${scope.origStr}\n$$\n\n(Enter fractions separated by commas, e.g., 1/5, 1/4, 1/3)",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ansStr}"
+        }
+      ],
+      "steps": [
+        "Convert each fraction to a common denominator or decimal equivalent to compare magnitudes.",
+        "Arranging the fractions in ${scope.word} order gives:\n\n$$\n${scope.stepStr}\n$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "op_type": {
+          "type": "randInt",
+          "min": 0,
+          "max": 2
+        },
+        "n1": {
+          "type": "randInt",
+          "min": 1,
+          "max": 4
+        },
+        "d1": {
+          "type": "randInt",
+          "min": 2,
+          "max": 5
+        },
+        "n2": {
+          "type": "randInt",
+          "min": 1,
+          "max": 4
+        },
+        "d2": {
+          "type": "randInt",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.op_type;\n  var n1 = scope.n1, d1 = scope.d1, n2 = scope.n2, d2 = scope.d2;\n  var expr, ans_n, ans_d;\n  if (t === 0) {\n    expr = '\\\\left(-\\\\frac{' + n1 + '}{' + d1 + '}\\\\right) \\\\times \\\\left(-\\\\frac{' + n2 + '}{' + d2 + '}\\\\right)';\n    ans_n = n1 * n2;\n    ans_d = d1 * d2;\n  } else if (t === 1) {\n    expr = '\\\\frac{' + n1 + '}{' + d1 + '} \\\\times \\\\left(-\\\\frac{' + n2 + '}{' + d2 + '}\\\\right)';\n    ans_n = -(n1 * n2);\n    ans_d = d1 * d2;\n  } else {\n    expr = '\\\\left(-\\\\frac{' + n1 + '}{' + d1 + '}\\\\right) \\\\div \\\\left(-\\\\frac{' + n2 + '}{' + d2 + '}\\\\right)';\n    ans_n = n1 * d2;\n    ans_d = d1 * n2;\n  }\n  var simp = simplifyFrac(ans_n, ans_d);\n  return { expr: expr, ans: simp.str };\n})()",
+        "expr": "scope.data.expr",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "Evaluate the following:\n\n$$\n${scope.expr}\n$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply sign rules for operations with negative fractions.",
+        "Simplify to get: ${scope.ans}."
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "type_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 1
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.type_idx;\n  if (t === 0) {\n    return {\n      expr: '1 + \\\\frac{2}{3} \\\\times \\\\left(-\\\\frac{1}{4} + \\\\frac{1}{8}\\\\right)',\n      step1: '-\\\\frac{1}{4} + \\\\frac{1}{8} = -\\\\frac{1}{8}',\n      step2: '\\\\frac{2}{3} \\\\times \\\\left(-\\\\frac{1}{8}\\\\right) = -\\\\frac{1}{12}',\n      ans: '11/12'\n    };\n  } else {\n    return {\n      expr: '5 + \\\\left(\\\\frac{2}{5} - \\\\frac{1}{10}\\\\right) \\\\div \\\\left(-\\\\frac{1}{10}\\\\right)',\n      step1: '\\\\frac{2}{5} - \\\\frac{1}{10} = \\\\frac{3}{10}',\n      step2: '\\\\left(\\\\frac{3}{10}\\\\right) \\\\div \\\\left(-\\\\frac{1}{10}\\\\right) = -3',\n      ans: '2'\n    };\n  }\n})()",
+        "expr": "scope.data.expr",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "Evaluate the following using the order of operations:\n\n$$\n${scope.expr}\n$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Evaluate inside the parentheses first:\n\n$$\n${scope.step1}\n$$",
+        "Perform multiplication or division next:\n\n$$\n${scope.step2}\n$$",
+        "Finally, perform addition to get the simplest answer: ${scope.ans}."
+      ]
+    }
+  ]
+}
