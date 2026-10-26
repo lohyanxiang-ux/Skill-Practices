@@ -1143,41 +1143,7 @@ function parseMarkedString(str, baseIdx = 0, isInsideFrac = false, cursorPos = -
     return `${leftHTML}${commaCaret}${commaHTML} ${rightHTML}`;
   }
 
-  // 3. Top-level Addition & Subtraction ('+', '-') at depth 0
-  depth = 0;
-  let addSubIndex = -1;
-  let matchedAddSub = null;
-  for (let i = 0; i < str.length; i++) {
-    if (str[i] === '(' || str[i] === '{') depth++;
-    else if (str[i] === ')' || str[i] === '}') depth--;
-    else if (depth === 0) {
-      if (str[i] === '+' || str[i] === '-') {
-        if (i > 0 && !' +-*/,=<>≥≤'.includes(str[i - 1])) {
-          addSubIndex = i;
-          matchedAddSub = str[i];
-          break;
-        }
-      }
-    }
-  }
-
-  if (addSubIndex !== -1) {
-    const leftPart = str.substring(0, addSubIndex);
-    const rightPart = str.substring(addSubIndex + 1);
-    const rawOpIdx = baseIdx + addSubIndex;
-
-    const leftHTML = parseMarkedString(leftPart, baseIdx, false, cursorPos);
-    let opCaret = '';
-    if (cursorPos === rawOpIdx) {
-      opCaret = '<span class="cursor-caret"></span>';
-    }
-    const opHTML = `<span class="char-node" data-pos="${rawOpIdx}" data-len="1">${escapeHTML(matchedAddSub)}</span>`;
-    const rightHTML = parseMarkedString(rightPart, rawOpIdx + 1, false, cursorPos);
-
-    return `${leftHTML} ${opCaret}${opHTML} ${rightHTML}`;
-  }
-
-  // 4. Fractions (slashes) at depth 0
+  // 3. Fractions (slashes) at depth 0 (evaluated BEFORE addition/subtraction)
   depth = 0;
   let slashIndex = -1;
   for (let i = 0; i < str.length; i++) {
@@ -1230,10 +1196,63 @@ function parseMarkedString(str, baseIdx = 0, isInsideFrac = false, cursorPos = -
       }
     }
 
-    const numHTML = parseMarkedString(cleanNumPart, baseIdx, true, cursorPos);
-    const denHTML = parseMarkedString(denPart, rawSlashIdx + 1, true, cursorPos);
+    // Strip outer parentheses for clean fraction display
+    let displayNumPart = cleanNumPart;
+    let numOffset = 0;
+    if (isWrappedInParens(cleanNumPart.trim())) {
+      let firstParen = cleanNumPart.indexOf('(');
+      let lastParen = cleanNumPart.lastIndexOf(')');
+      displayNumPart = cleanNumPart.substring(firstParen + 1, lastParen);
+      numOffset = firstParen + 1;
+    }
+
+    let displayDenPart = denPart;
+    let denOffset = 0;
+    if (isWrappedInParens(denPart.trim())) {
+      let firstParen = denPart.indexOf('(');
+      let lastParen = denPart.lastIndexOf(')');
+      displayDenPart = denPart.substring(firstParen + 1, lastParen);
+      denOffset = firstParen + 1;
+    }
+
+    const numHTML = parseMarkedString(displayNumPart, baseIdx + numOffset, true, cursorPos);
+    const denHTML = parseMarkedString(displayDenPart, rawSlashIdx + 1 + denOffset, true, cursorPos);
 
     return `${minusPrefixHTML}<span class="frac" data-pos="${rawSlashIdx}" data-len="1"><span class="frac-num">${numHTML}</span><span class="frac-den">${denHTML}</span></span>`;
+  }
+
+  // 4. Top-level Addition & Subtraction ('+', '-') at depth 0
+  depth = 0;
+  let addSubIndex = -1;
+  let matchedAddSub = null;
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === '(' || str[i] === '{') depth++;
+    else if (str[i] === ')' || str[i] === '}') depth--;
+    else if (depth === 0) {
+      if (str[i] === '+' || str[i] === '-') {
+        if (i > 0 && !' +-*/,=<>≥≤'.includes(str[i - 1])) {
+          addSubIndex = i;
+          matchedAddSub = str[i];
+          break;
+        }
+      }
+    }
+  }
+
+  if (addSubIndex !== -1) {
+    const leftPart = str.substring(0, addSubIndex);
+    const rightPart = str.substring(addSubIndex + 1);
+    const rawOpIdx = baseIdx + addSubIndex;
+
+    const leftHTML = parseMarkedString(leftPart, baseIdx, false, cursorPos);
+    let opCaret = '';
+    if (cursorPos === rawOpIdx) {
+      opCaret = '<span class="cursor-caret"></span>';
+    }
+    const opHTML = `<span class="char-node" data-pos="${rawOpIdx}" data-len="1">${escapeHTML(matchedAddSub)}</span>`;
+    const rightHTML = parseMarkedString(rightPart, rawOpIdx + 1, false, cursorPos);
+
+    return `${leftHTML} ${opCaret}${opHTML} ${rightHTML}`;
   }
 
   return renderSegmentTokens(str, baseIdx, cursorPos);
