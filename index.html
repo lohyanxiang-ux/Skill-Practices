@@ -1072,6 +1072,7 @@ function parseMarkedString(str, baseIdx = 0, isInsideFrac = false, cursorPos = -
     return '<span class="frac-placeholder"></span>';
   }
 
+  // 1. Relational operators at depth 0
   const relOps = ['\\ge', '\\le', '>=', '<=', '≥', '≤', '>', '<', '='];
   let topOpIndex = -1;
   let matchedOp = null;
@@ -1114,6 +1115,69 @@ function parseMarkedString(str, baseIdx = 0, isInsideFrac = false, cursorPos = -
     return `${leftHTML} ${opCaret}${opHTML} ${rightHTML}`;
   }
 
+  // 2. Top-level Commas (',') at depth 0
+  depth = 0;
+  let commaIndex = -1;
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === '(' || str[i] === '{') depth++;
+    else if (str[i] === ')' || str[i] === '}') depth--;
+    else if (depth === 0 && str[i] === ',') {
+      commaIndex = i;
+      break;
+    }
+  }
+
+  if (commaIndex !== -1) {
+    const leftPart = str.substring(0, commaIndex);
+    const rightPart = str.substring(commaIndex + 1);
+    const rawCommaIdx = baseIdx + commaIndex;
+
+    const leftHTML = parseMarkedString(leftPart, baseIdx, false, cursorPos);
+    let commaCaret = '';
+    if (cursorPos === rawCommaIdx) {
+      commaCaret = '<span class="cursor-caret"></span>';
+    }
+    const commaHTML = `<span class="char-node" data-pos="${rawCommaIdx}" data-len="1">,</span>`;
+    const rightHTML = parseMarkedString(rightPart, rawCommaIdx + 1, false, cursorPos);
+
+    return `${leftHTML}${commaCaret}${commaHTML} ${rightHTML}`;
+  }
+
+  // 3. Top-level Addition & Subtraction ('+', '-') at depth 0
+  depth = 0;
+  let addSubIndex = -1;
+  let matchedAddSub = null;
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === '(' || str[i] === '{') depth++;
+    else if (str[i] === ')' || str[i] === '}') depth--;
+    else if (depth === 0) {
+      if (str[i] === '+' || str[i] === '-') {
+        if (i > 0 && !' +-*/,=<>≥≤'.includes(str[i - 1])) {
+          addSubIndex = i;
+          matchedAddSub = str[i];
+          break;
+        }
+      }
+    }
+  }
+
+  if (addSubIndex !== -1) {
+    const leftPart = str.substring(0, addSubIndex);
+    const rightPart = str.substring(addSubIndex + 1);
+    const rawOpIdx = baseIdx + addSubIndex;
+
+    const leftHTML = parseMarkedString(leftPart, baseIdx, false, cursorPos);
+    let opCaret = '';
+    if (cursorPos === rawOpIdx) {
+      opCaret = '<span class="cursor-caret"></span>';
+    }
+    const opHTML = `<span class="char-node" data-pos="${rawOpIdx}" data-len="1">${escapeHTML(matchedAddSub)}</span>`;
+    const rightHTML = parseMarkedString(rightPart, rawOpIdx + 1, false, cursorPos);
+
+    return `${leftHTML} ${opCaret}${opHTML} ${rightHTML}`;
+  }
+
+  // 4. Fractions (slashes) at depth 0
   depth = 0;
   let slashIndex = -1;
   for (let i = 0; i < str.length; i++) {
