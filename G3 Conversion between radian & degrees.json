@@ -1,0 +1,146 @@
+{
+  "skillTitle": "Convert between Radian & Degrees",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "4",
+    "5",
+    "6",
+    "1",
+    "2",
+    "3",
+    "0",
+    ".",
+    "π",
+    "/"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 13
+        }
+      },
+      "derived": {
+        "deg": "[15, 30, 45, 60, 75, 120, 135, 150, 210, 225, 240, 300, 315, 330][scope.idx]",
+        "g": "((a, b) => { const gcd = (x, y) => y === 0 ? x : gcd(y, x % y); return gcd(a, b); })(scope.deg, 180)",
+        "k": "scope.deg / scope.g",
+        "m": "180 / scope.g",
+        "radTex": "scope.m === 1 ? (scope.k === 1 ? '\\\\pi' : scope.k + '\\\\pi') : (scope.k === 1 ? '\\\\frac{\\\\pi}{' + scope.m + '}' : '\\\\frac{' + scope.k + '\\\\pi}{' + scope.m + '}')",
+        "ans": "scope.deg.toString()",
+        "step1": "'\\\\pi \\\\text{ rad} = 180^\\\\circ'",
+        "step2": "'1 \\\\text{ rad} = \\\\frac{180^\\\\circ}{\\\\pi}'",
+        "step3": "'\\\\begin{aligned} ' + scope.radTex + ' \\\\text{ rad} &= ' + scope.radTex + ' \\\\times \\\\frac{180^\\\\circ}{\\\\pi} \\\\\\\\ &= ' + scope.ans + '^\\\\circ \\\\end{aligned}'"
+      },
+      "questionTemplate": "Express the angle $${scope.radTex}\\text{ rad}$ in degrees.",
+      "inputs": [
+        {
+          "label": "Angle =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "$$${scope.step1}$$",
+        "$$${scope.step2}$$",
+        "$$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "rHundredths": {
+          "type": "randInt",
+          "min": 50,
+          "max": 628
+        }
+      },
+      "derived": {
+        "r": "Number((scope.rHundredths / 100).toFixed(2))",
+        "degExact": "(scope.r * 180) / Math.PI",
+        "ans": "Number(scope.degExact.toFixed(1)).toString()",
+        "numerator": "Number((scope.r * 180).toFixed(2)).toString()",
+        "step1": "'\\\\pi \\\\text{ rad} = 180^\\\\circ'",
+        "step2": "'1 \\\\text{ rad} = \\\\frac{180^\\\\circ}{\\\\pi}'",
+        "step3": "'\\\\begin{aligned} ' + scope.r + ' \\\\text{ rad} &= ' + scope.r + ' \\\\times \\\\frac{180^\\\\circ}{\\\\pi} \\\\\\\\ &= \\\\frac{' + scope.numerator + '^\\\\circ}{\\\\pi} \\\\approx ' + scope.ans + '^\\\\circ \\\\end{aligned}'"
+      },
+      "questionTemplate": "Express the angle $${scope.r}\\text{ rad}$ in degrees.\n\n(Give your answer correct to 1 decimal place.)",
+      "inputs": [
+        {
+          "label": "Angle =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "$$${scope.step1}$$",
+        "$$${scope.step2}$$",
+        "$$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 15
+        }
+      },
+      "derived": {
+        "deg": "[30, 45, 60, 90, 120, 135, 150, 210, 225, 240, 270, 300, 315, 320, 330, 340][scope.idx]",
+        "g": "((a, b) => { const gcd = (x, y) => y === 0 ? x : gcd(y, x % y); return gcd(a, b); })(scope.deg, 180)",
+        "k": "scope.deg / scope.g",
+        "m": "180 / scope.g",
+        "ans": "scope.m === 1 ? (scope.k === 1 ? 'π' : scope.k + 'π') : (scope.k === 1 ? 'π/' + scope.m : scope.k + 'π/' + scope.m)",
+        "ansTex": "scope.m === 1 ? (scope.k === 1 ? '\\\\pi' : scope.k + '\\\\pi') : (scope.k === 1 ? '\\\\frac{\\\\pi}{' + scope.m + '}' : '\\\\frac{' + scope.k + '\\\\pi}{' + scope.m + '}')",
+        "step1": "'180^\\\\circ = \\\\pi \\\\text{ rad}'",
+        "step2": "'1^\\\\circ = \\\\frac{\\\\pi}{180} \\\\text{ rad}'",
+        "step3": "'\\\\begin{aligned} ' + scope.deg + '^\\\\circ &= ' + scope.deg + ' \\\\times \\\\frac{\\\\pi}{180} \\\\text{ rad} \\\\\\\\ &= ' + scope.ansTex + ' \\\\text{ rad} \\\\end{aligned}'"
+      },
+      "questionTemplate": "Express the angle $${scope.deg}^\\circ$ in radians, giving your answer in terms of $\\pi$.",
+      "inputs": [
+        {
+          "label": "Angle =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "$$${scope.step1}$$",
+        "$$${scope.step2}$$",
+        "$$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "deg": {
+          "type": "randInt",
+          "min": 20,
+          "max": 350
+        }
+      },
+      "derived": {
+        "radExact": "(scope.deg * Math.PI) / 180",
+        "ans": "Number(scope.radExact.toPrecision(3)).toString()",
+        "step1": "'180^\\\\circ = \\\\pi \\\\text{ rad}'",
+        "step2": "'1^\\\\circ = \\\\frac{\\\\pi}{180} \\\\text{ rad}'",
+        "step3": "'\\\\begin{aligned} ' + scope.deg + '^\\\\circ &= ' + scope.deg + ' \\\\times \\\\frac{\\\\pi}{180} \\\\text{ rad} \\\\\\\\ &\\\\approx ' + scope.ans + ' \\\\text{ rad} \\\\end{aligned}'"
+      },
+      "questionTemplate": "Express the angle $${scope.deg}^\\circ$ in radians.\n\n(Give your answer correct to 3 significant figures.)",
+      "inputs": [
+        {
+          "label": "Angle =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "$$${scope.step1}$$",
+        "$$${scope.step2}$$",
+        "$$${scope.step3}$$"
+      ]
+    }
+  ]
+}
