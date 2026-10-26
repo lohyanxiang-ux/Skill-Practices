@@ -1,0 +1,255 @@
+{
+  "skillTitle": "Operations involving Negative Numbers",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "⌫",
+    "4",
+    "5",
+    "6",
+    "Clear",
+    "1",
+    "2",
+    "3",
+    "-",
+    "0",
+    "."
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "type_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        },
+        "a_val": {
+          "type": "randInt",
+          "min": 4,
+          "max": 15
+        },
+        "b_val": {
+          "type": "randInt",
+          "min": 2,
+          "max": 9
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.type_idx;\n  var a, b, expr, ans, step1;\n  if (t === 0) {\n    a = scope.a_val;\n    b = scope.b_val;\n    expr = a + ' + (-' + b + ')';\n    ans = (a - b).toString();\n    step1 = a + ' - ' + b + ' = ' + ans;\n  } else if (t === 1) {\n    a = scope.a_val;\n    b = Math.round((scope.b_val + 0.5) * 10) / 10;\n    expr = a + ' - (-' + b + ')';\n    ans = (Math.round((a + b) * 10) / 10).toString();\n    step1 = a + ' + ' + b + ' = ' + ans;\n  } else if (t === 2) {\n    a = Math.round((scope.a_val + 0.2) * 10) / 10;\n    b = Math.round((scope.b_val + 0.7) * 10) / 10;\n    expr = '-' + a + ' + ' + b;\n    ans = (Math.round((-a + b) * 10) / 10).toString();\n    step1 = '-' + a + ' + ' + b + ' = ' + ans;\n  } else {\n    a = scope.a_val;\n    b = scope.b_val;\n    expr = '-' + a + ' - (-' + b + ')';\n    ans = (-a + b).toString();\n    step1 = '-' + a + ' + ' + b + ' = ' + ans;\n  }\n  return { expr: expr, ans: ans, step1: step1 };\n})()",
+        "expr": "scope.data.expr",
+        "ans": "scope.data.ans",
+        "step1": "scope.data.step1"
+      },
+      "questionTemplate": "Evaluate the following:\n\n$${scope.expr}$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Simplify double signs: plus a negative becomes minus ($+ - \\rightarrow -$), and minus a negative becomes plus ($- - \\rightarrow +$).",
+        "Perform the calculation: $${scope.step1}$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "op_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        },
+        "a_val": {
+          "type": "randInt",
+          "min": 2,
+          "max": 9
+        },
+        "b_val": {
+          "type": "randInt",
+          "min": 2,
+          "max": 8
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.op_idx;\n  var a = scope.a_val, b = scope.b_val;\n  var expr, ans, rule;\n  if (t === 0) {\n    expr = a + ' \\\\times (-' + b + ')';\n    ans = (a * (-b)).toString();\n    rule = '\\\\text{Positive} \\\\times \\\\text{Negative} = \\\\text{Negative}';\n  } else if (t === 1) {\n    expr = '(-' + a + ') \\\\times (-' + b + ')';\n    ans = ((-a) * (-b)).toString();\n    rule = '\\\\text{Negative} \\\\times \\\\text{Negative} = \\\\text{Positive}';\n  } else if (t === 2) {\n    var prod = a * b;\n    expr = prod + ' \\\\div (-' + b + ')';\n    ans = (-a).toString();\n    rule = '\\\\text{Positive} \\\\div \\\\text{Negative} = \\\\text{Negative}';\n  } else {\n    var prod = a * b;\n    expr = '(-' + prod + ') \\\\div (-' + b + ')';\n    ans = a.toString();\n    rule = '\\\\text{Negative} \\\\div \\\\text{Negative} = \\\\text{Positive}';\n  }\n  return { expr: expr, ans: ans, rule: rule };\n})()",
+        "expr": "scope.data.expr",
+        "ans": "scope.data.ans",
+        "rule": "scope.data.rule"
+      },
+      "questionTemplate": "Evaluate the following:\n\n$${scope.expr}$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Apply sign rules for multiplication and division: $${scope.rule}$",
+        "Evaluate: $${scope.expr} = ${scope.ans}$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "pattern_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        },
+        "a": {
+          "type": "randInt",
+          "min": 3,
+          "max": 12
+        },
+        "b": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "c": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var p = scope.pattern_idx;\n  var a = scope.a, b = scope.b, c = scope.c;\n  var expr, ans, step1, step2;\n  if (p === 0) {\n    var prod = b * (-c);\n    expr = a + ' + ' + b + ' \\\\times (-' + c + ')';\n    ans = (a + prod).toString();\n    step1 = b + ' \\\\times (-' + c + ') = ' + prod;\n    step2 = a + ' + (' + prod + ') = ' + ans;\n  } else if (p === 1) {\n    var prod = b * (-c);\n    expr = a + ' - ' + b + ' \\\\times (-' + c + ')';\n    ans = (a - prod).toString();\n    step1 = b + ' \\\\times (-' + c + ') = ' + prod;\n    step2 = a + ' - (' + prod + ') = ' + ans;\n  } else if (p === 2) {\n    var m = b * c;\n    var quot = -b;\n    expr = a + ' + ' + m + ' \\\\div (-' + c + ')';\n    ans = (a + quot).toString();\n    step1 = m + ' \\\\div (-' + c + ') = ' + quot;\n    step2 = a + ' + (' + quot + ') = ' + ans;\n  } else {\n    var m = b * c;\n    var quot = b;\n    expr = a + ' - (-' + m + ') \\\\div (-' + c + ')';\n    ans = (a - quot).toString();\n    step1 = '(-' + m + ') \\\\div (-' + c + ') = ' + quot;\n    step2 = a + ' - ' + quot + ' = ' + ans;\n  }\n  return { expr: expr, ans: ans, step1: step1, step2: step2 };\n})()",
+        "expr": "scope.data.expr",
+        "ans": "scope.data.ans",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2"
+      },
+      "questionTemplate": "Evaluate the following using the order of operations:\n\n$${scope.expr}$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Perform multiplication or division first: $${scope.step1}$",
+        "Then perform addition or subtraction: $${scope.step2}$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "p_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 2
+        },
+        "a": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "b": {
+          "type": "randInt",
+          "min": 2,
+          "max": 7
+        },
+        "c": {
+          "type": "randInt",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var p = scope.p_idx;\n  var a = scope.a, b = scope.b, c = scope.c;\n  var expr, ans, step1, step2;\n  if (p === 0) {\n    var prod1 = (-a) * (-b);\n    var prod2 = c * (-2);\n    expr = '(-' + a + ') \\\\times (-' + b + ') + ' + c + ' \\\\times (-2)';\n    ans = (prod1 + prod2).toString();\n    step1 = '(-' + a + ') \\\\times (-' + b + ') = ' + prod1 + ' \\\\text{ and } ' + c + ' \\\\times (-2) = ' + prod2;\n    step2 = prod1 + ' + (' + prod2 + ') = ' + ans;\n  } else if (p === 1) {\n    var bracket = -a + b;\n    expr = '(-' + a + ' + ' + b + ') \\\\times (-' + c + ')';\n    ans = (bracket * (-c)).toString();\n    step1 = '(-' + a + ' + ' + b + ') = ' + bracket;\n    step2 = bracket + ' \\\\times (-' + c + ') = ' + ans;\n  } else {\n    var sum = a + b;\n    var mult = sum * c;\n    expr = '(-' + mult + ') \\\\div (-' + a + ' - ' + b + ')';\n    var bracket = -a - b;\n    ans = c.toString();\n    step1 = '(-' + a + ' - ' + b + ') = ' + bracket;\n    step2 = '(-' + mult + ') \\\\div (' + bracket + ') = ' + ans;\n  }\n  return { expr: expr, ans: ans, step1: step1, step2: step2 };\n})()",
+        "expr": "scope.data.expr",
+        "ans": "scope.data.ans",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2"
+      },
+      "questionTemplate": "Evaluate the following expression:\n\n$${scope.expr}$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Evaluate inside brackets or perform multiplication/division first: $${scope.step1}$",
+        "Complete the calculation: $${scope.step2}$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "h_val": {
+          "type": "randInt",
+          "min": 5,
+          "max": 25
+        },
+        "l_val": {
+          "type": "randInt",
+          "min": 4,
+          "max": 18
+        }
+      },
+      "derived": {
+        "high": "(Math.round((scope.h_val / 10) * 10) / 10).toString()",
+        "low": "(-Math.round((scope.l_val / 10) * 10) / 10).toString()",
+        "diff": "(Math.round((parseFloat(scope.high) - parseFloat(scope.low)) * 10) / 10).toString()",
+        "ans": "scope.diff",
+        "step1": "scope.high + ' - (' + scope.low + ')'",
+        "step2": "scope.high + ' + ' + Math.abs(parseFloat(scope.low)) + ' = ' + scope.diff"
+      },
+      "questionTemplate": "The table below records the water levels in a lake ($0\\text{ m}$ is normal level):\n\n$$\\begin{array}{|c|c|}\n\\hline\n\\text{Recorded Level} & \\text{Water Level (m)} \\\\\n\\hline\n\\text{Highest} & ${scope.high} \\\\\n\\hline\n\\text{Lowest} & ${scope.low} \\\\\n\\hline\n\\end{array}$$\n\nFind the difference between the highest and lowest water levels.",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "To find the difference, subtract the lowest water level from the highest water level: $${scope.step1}$",
+        "Subtracting a negative number is equivalent to adding its positive value: $${scope.step2}$",
+        "The difference between the highest and lowest water levels is $${scope.ans}\\text{ m}$."
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "start_t": {
+          "type": "randInt",
+          "min": -9,
+          "max": -2
+        },
+        "rise_t": {
+          "type": "randInt",
+          "min": 6,
+          "max": 14
+        },
+        "drop_t": {
+          "type": "randInt",
+          "min": 7,
+          "max": 15
+        }
+      },
+      "derived": {
+        "midT": "scope.start_t + scope.rise_t",
+        "finalT": "scope.start_t + scope.rise_t - scope.drop_t",
+        "ans": "scope.finalT.toString()",
+        "step1": "scope.start_t + ' + ' + scope.rise_t + ' = ' + scope.midT",
+        "step2": "scope.midT + ' - ' + scope.drop_t + ' = ' + scope.finalT"
+      },
+      "questionTemplate": "At 6 AM, the temperature of a city was $${scope.start_t}^{\\circ}\\text{C}$. By noon, the temperature rose by $${scope.rise_t}^{\\circ}\\text{C}$, and by 10 PM it dropped by $${scope.drop_t}^{\\circ}\\text{C}$.\n\nFind the temperature at 10 PM.",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Calculate the temperature at noon by adding the increase: $${scope.step1}^{\\circ}\\text{C}$",
+        "Calculate the temperature at 10 PM by subtracting the drop: $${scope.step2}^{\\circ}\\text{C}$",
+        "The temperature at 10 PM was $${scope.ans}^{\\circ}\\text{C}$."
+      ]
+    }
+  ]
+}

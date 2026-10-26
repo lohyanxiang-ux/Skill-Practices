@@ -1,0 +1,327 @@
+{
+  "skillTitle": "Arrange numbers",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "⌫",
+    "4",
+    "5",
+    "6",
+    "-",
+    "1",
+    "2",
+    "3",
+    ",",
+    "0",
+    "."
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "w": {
+          "type": "randInt",
+          "min": 1,
+          "max": 9
+        },
+        "a": {
+          "type": "randInt",
+          "min": 11,
+          "max": 45
+        },
+        "b": {
+          "type": "randInt",
+          "min": 101,
+          "max": 149
+        },
+        "c": {
+          "type": "randInt",
+          "min": 12,
+          "max": 49
+        },
+        "d": {
+          "type": "randInt",
+          "min": 1,
+          "max": 4
+        }
+      },
+      "derived": {
+        "v1": "(Math.round((scope.w + scope.a / 100) * 1000) / 1000).toString()",
+        "v2": "(Math.round((scope.w + scope.b / 1000) * 1000) / 1000).toString()",
+        "v3": "(Math.round((scope.w + scope.c / 100) * 1000) / 1000).toString()",
+        "v4": "(Math.round((scope.w + scope.d / 10) * 1000) / 1000).toString()",
+        "orig": "scope.v1 + ', ' + scope.v2 + ', ' + scope.v3 + ', ' + scope.v4",
+        "sortedArr": "[parseFloat(scope.v1), parseFloat(scope.v2), parseFloat(scope.v3), parseFloat(scope.v4)].sort((x, y) => x - y)",
+        "ans": "scope.sortedArr.join(', ')",
+        "step1": "parseFloat(scope.v1).toFixed(3) + ', ' + parseFloat(scope.v2).toFixed(3) + ', ' + parseFloat(scope.v3).toFixed(3) + ', ' + parseFloat(scope.v4).toFixed(3)"
+      },
+      "questionTemplate": "Arrange the following numbers in ascending order:\n\n$$${scope.orig}$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Pad each decimal with trailing zeros so all numbers have equal decimal places: $$${scope.step1}$$",
+        "Compare place values from left to right (ones, tenths, hundredths, thousandths).",
+        "Arranging from smallest to largest gives: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "w": {
+          "type": "randInt",
+          "min": 1,
+          "max": 9
+        },
+        "a": {
+          "type": "randInt",
+          "min": 25,
+          "max": 35
+        },
+        "b": {
+          "type": "randInt",
+          "min": 301,
+          "max": 309
+        },
+        "c": {
+          "type": "randInt",
+          "min": 32,
+          "max": 45
+        },
+        "d": {
+          "type": "randInt",
+          "min": 1,
+          "max": 8
+        }
+      },
+      "derived": {
+        "v1": "(Math.round((scope.w + scope.a / 100) * 1000) / 1000).toString()",
+        "v2": "(Math.round((scope.w + scope.b / 1000) * 1000) / 1000).toString()",
+        "v3": "(Math.round((scope.w + scope.c / 100) * 1000) / 1000).toString()",
+        "v4": "(Math.round((scope.w + scope.d / 100) * 1000) / 1000).toString()",
+        "orig": "scope.v1 + ', ' + scope.v2 + ', ' + scope.v3 + ', ' + scope.v4",
+        "sortedArr": "[parseFloat(scope.v1), parseFloat(scope.v2), parseFloat(scope.v3), parseFloat(scope.v4)].sort((x, y) => y - x)",
+        "ans": "scope.sortedArr.join(', ')",
+        "step1": "parseFloat(scope.v1).toFixed(3) + ', ' + parseFloat(scope.v2).toFixed(3) + ', ' + parseFloat(scope.v3).toFixed(3) + ', ' + parseFloat(scope.v4).toFixed(3)"
+      },
+      "questionTemplate": "Arrange the following numbers in descending order:\n\n$$${scope.orig}$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Pad each decimal with trailing zeros so all numbers have equal decimal places: $$${scope.step1}$$",
+        "Compare place values from left to right.",
+        "Arranging from largest to smallest gives: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "pos": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        },
+        "neg1": {
+          "type": "randInt",
+          "min": -5,
+          "max": -4
+        },
+        "neg2": {
+          "type": "randInt",
+          "min": -3,
+          "max": -2
+        },
+        "dec": {
+          "type": "randInt",
+          "min": 1,
+          "max": 9
+        }
+      },
+      "derived": {
+        "decVal": "(Math.round((scope.neg2 - scope.dec / 10) * 10) / 10).toString()",
+        "v1": "scope.pos.toString()",
+        "v2": "scope.neg1.toString()",
+        "v3": "(scope.neg1 - 1).toString()",
+        "v4": "'0'",
+        "v5": "scope.decVal",
+        "orig": "scope.v1 + ', ' + scope.v2 + ', ' + scope.v3 + ', 0, ' + scope.v5",
+        "sortedArr": "[parseFloat(scope.v1), parseFloat(scope.v2), parseFloat(scope.v3), 0, parseFloat(scope.v5)].sort((x, y) => x - y)",
+        "ans": "scope.sortedArr.join(', ')"
+      },
+      "questionTemplate": "Arrange the following numbers in ascending order:\n\n$$${scope.orig}$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Separate negative numbers, zero, and positive numbers.",
+        "Order negative numbers: numbers further left on the number line have smaller values.",
+        "Arranging from smallest to largest gives: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "t1": {
+          "type": "randInt",
+          "min": -6,
+          "max": -5
+        },
+        "t2": {
+          "type": "randInt",
+          "min": -4,
+          "max": -1
+        },
+        "t3": {
+          "type": "randInt",
+          "min": 1,
+          "max": 9
+        },
+        "t4": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        }
+      },
+      "derived": {
+        "decT": "(Math.round((-scope.t3 / 10) * 10) / 10).toString()",
+        "v1": "scope.t1.toString()",
+        "v2": "scope.t2.toString()",
+        "v3": "'0'",
+        "v4": "scope.decT",
+        "v5": "scope.t4.toString()",
+        "orig": "scope.v1 + '^{\\\\circ}\\\\text{C}, ' + scope.v2 + '^{\\\\circ}\\\\text{C}, 0^{\\\\circ}\\\\text{C}, ' + scope.v4 + '^{\\\\circ}\\\\text{C}, ' + scope.v5 + '^{\\\\circ}\\\\text{C}'",
+        "sortedArr": "[parseFloat(scope.v1), parseFloat(scope.v2), 0, parseFloat(scope.v4), parseFloat(scope.v5)].sort((x, y) => x - y)",
+        "ans": "scope.sortedArr.join(', ')"
+      },
+      "questionTemplate": "Arrange the following temperatures, given in $^{\\circ}\\text{C}$, in ascending order (enter numbers separated by commas):\n\n$$${scope.orig}$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Compare temperatures on the number line from coldest (lowest value) to warmest (highest value).",
+        "Negative temperatures are lower than zero, and positive temperatures are higher than zero.",
+        "Arranging from lowest to highest temperature gives: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "p1": {
+          "type": "randInt",
+          "min": 50,
+          "max": 80
+        },
+        "p2": {
+          "type": "randInt",
+          "min": 20,
+          "max": 45
+        },
+        "p3": {
+          "type": "randInt",
+          "min": 501,
+          "max": 699
+        },
+        "n1": {
+          "type": "randInt",
+          "min": 8,
+          "max": 15
+        },
+        "n2": {
+          "type": "randInt",
+          "min": 1,
+          "max": 7
+        }
+      },
+      "derived": {
+        "val3": "Math.round((scope.p3 / 10) * 100) / 100",
+        "val1": "scope.p1",
+        "val2": "-scope.n1",
+        "val4": "scope.p2",
+        "val5": "-scope.n2",
+        "str1": "scope.p1.toString()",
+        "str2": "(-scope.n1).toString()",
+        "str3": "scope.val3.toFixed(2)",
+        "str4": "scope.p2.toString()",
+        "str5": "(-scope.n2).toString()",
+        "orig": "'\\\\$' + scope.str3 + ', \\\\$' + scope.str1 + ', -\\\\$' + scope.n1 + ', \\\\$' + scope.str4 + ', -\\\\$' + scope.n2",
+        "sortedArr": "[scope.val3, scope.val1, scope.val4, scope.val5, scope.val2]",
+        "ans": "scope.sortedArr.join(', ')"
+      },
+      "questionTemplate": "The following are the profits of a company made from 5 completed jobs:\n\n$$${scope.orig}$$\n\nArrange the profits in descending order (enter numbers separated by commas):",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Identify positive profits and negative losses (positive values > negative values).",
+        "Order positive profits from highest to lowest.",
+        "Order negative losses from smallest loss to largest loss.",
+        "Arranging in descending order gives: $$${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": {
+          "type": "randInt",
+          "min": 11,
+          "max": 49
+        },
+        "b": {
+          "type": "randInt",
+          "min": 51,
+          "max": 99
+        },
+        "c": {
+          "type": "randInt",
+          "min": 1,
+          "max": 9
+        },
+        "d": {
+          "type": "randInt",
+          "min": 1,
+          "max": 4
+        }
+      },
+      "derived": {
+        "n1": "(Math.round((-3 - scope.a / 100) * 100) / 100).toString()",
+        "n2": "(Math.round((-3 - scope.b / 100) * 100) / 100).toString()",
+        "n3": "(Math.round((scope.c / 100) * 100) / 100).toString()",
+        "n4": "(Math.round((-scope.d / 10) * 10) / 10).toString()",
+        "n5": "'2.1'",
+        "orig": "scope.n1 + ', ' + scope.n2 + ', ' + scope.n3 + ', ' + scope.n4 + ', ' + scope.n5",
+        "sortedArr": "[parseFloat(scope.n1), parseFloat(scope.n2), parseFloat(scope.n3), parseFloat(scope.n4), parseFloat(scope.n5)].sort((x, y) => x - y)",
+        "ans": "scope.sortedArr.join(', ')"
+      },
+      "questionTemplate": "Arrange the following numbers in ascending order:\n\n$$${scope.orig}$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Group numbers into negative values and positive values.",
+        "Order negative numbers from smallest (most negative) to largest.",
+        "Order positive numbers from smallest to largest.",
+        "Arranging from smallest to largest gives: $$${scope.ans}$$"
+      ]
+    }
+  ]
+}

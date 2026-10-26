@@ -1,0 +1,198 @@
+{
+  "skillTitle": "Prime Numbers",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "⌫",
+    "4",
+    "5",
+    "6",
+    "Clear",
+    "1",
+    "2",
+    "3",
+    ",",
+    "0",
+    "-"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "limit_type": {
+          "type": "randInt",
+          "min": 0,
+          "max": 1
+        }
+      },
+      "derived": {
+        "limit": "scope.limit_type === 0 ? 10 : 20",
+        "primesArr": "(function(){ function isP(n){ if(n<2) return false; for(let i=2; i*i<=n; i++) if(n%i===0) return false; return true; } let res=[]; for(let x=2; x<scope.limit; x++){ if(isP(x)) res.push(x); } return res; })()",
+        "ans": "scope.primesArr.join(', ')"
+      },
+      "questionTemplate": "Find all the prime numbers that are strictly less than $${scope.limit}$.\n\n(Enter numbers separated by commas in ascending order)",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "A prime number is a whole number greater than 1 that has only two distinct positive factors: 1 and itself.",
+        "Note that 1 is not a prime number, and 2 is the smallest prime number.",
+        "The prime numbers strictly less than $${scope.limit}$ are $${scope.ans}$."
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "range_type": {
+          "type": "randInt",
+          "min": 0,
+          "max": 2
+        }
+      },
+      "derived": {
+        "start": "scope.range_type === 0 ? 1 : (scope.range_type === 1 ? 10 : 1)",
+        "end": "scope.range_type === 0 ? 10 : (scope.range_type === 1 ? 20 : 15)",
+        "primesArr": "(function(){ function isP(n){ if(n<2) return false; for(let i=2; i*i<=n; i++) if(n%i===0) return false; return true; } let res=[]; for(let x=scope.start+1; x<scope.end; x++){ if(isP(x)) res.push(x); } return res; })()",
+        "ans": "scope.primesArr.join(', ')"
+      },
+      "questionTemplate": "Find all the prime numbers that lie strictly between $${scope.start}$ and $${scope.end}$.\n\n(Enter numbers separated by commas in ascending order)",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "List the integers strictly between $${scope.start}$ and $${scope.end}$.",
+        "Test each number for divisibility by small prime numbers (2, 3, 5, etc.).",
+        "The prime numbers between $${scope.start}$ and $${scope.end}$ are $${scope.ans}$."
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "tens": {
+          "type": "randInt",
+          "min": 2,
+          "max": 7
+        },
+        "op1": {
+          "type": "randInt",
+          "min": 0,
+          "max": 1
+        },
+        "op2": {
+          "type": "randInt",
+          "min": 0,
+          "max": 1
+        }
+      },
+      "derived": {
+        "lower": "scope.tens * 10",
+        "upper": "scope.lower + 10",
+        "symbol1": "scope.op1 === 0 ? '\\\\ge' : '>'",
+        "symbol2": "scope.op2 === 0 ? '<' : '\\\\le'",
+        "primesArr": "(function(){ function isP(n){ if(n<2) return false; for(let i=2; i*i<=n; i++) if(n%i===0) return false; return true; } let res=[]; let s = scope.op1 === 0 ? scope.lower : scope.lower + 1; let e = scope.op2 === 0 ? scope.upper - 1 : scope.upper; for(let x=s; x<=e; x++){ if(isP(x)) res.push(x); } return res; })()",
+        "ans": "scope.primesArr.join(', ')"
+      },
+      "questionTemplate": "Find all the prime numbers that are $${scope.symbol1} ${scope.lower}$ and $${scope.symbol2} ${scope.upper}$.\n\n(Enter numbers separated by commas in ascending order)",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Check all integers in the given range for divisibility by prime numbers (2, 3, 5, 7, etc.).",
+        "A prime number is a whole number greater than 1 that has only two distinct positive factors: 1 and itself.",
+        "The prime numbers in this range are $${scope.ans}$."
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "base": {
+          "type": "randInt",
+          "min": 2,
+          "max": 7
+        }
+      },
+      "derived": {
+        "data": "(function(){ function isP(x){ if(x<2) return false; for(let i=2; i*i<=x; i++) if(x%i===0) return false; return true; } let start = scope.base * 10; let primeVal = null; for(let x=start; x<start+20; x++){ if(isP(x)){ primeVal = x; break; } } let comp1 = start + 4; if(comp1 % 2 !== 0) comp1++; if(comp1 === primeVal) comp1 += 2; let comp2 = start + 9; if(isP(comp2)) comp2 += 2; if(comp2 === primeVal) comp2 += 2; let comp3 = start + 15; if(isP(comp3)) comp3 += 2; if(comp3 === primeVal) comp3 += 2; let list = [primeVal, comp1, comp2, comp3].sort(() => Math.random() - 0.5); return { prime: primeVal, listStr: list.join(', ') }; })()",
+        "primeNum": "scope.data.prime",
+        "listStr": "scope.data.listStr",
+        "ans": "scope.primeNum.toString()"
+      },
+      "questionTemplate": "Identify the prime number from the following list of numbers:\n\n$${scope.listStr}$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "A prime number has exactly two distinct positive factors: 1 and itself.",
+        "Test each number in the list for factors other than 1 and itself.",
+        "The prime number in the list is $${scope.ans}$."
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "n": {
+          "type": "randInt",
+          "min": 21,
+          "max": 79
+        }
+      },
+      "derived": {
+        "ansNum": "(function(){ function isP(x){ if(x<2) return false; for(let i=2; i*i<=x; i++) if(x%i===0) return false; return true; } let p = scope.n + 1; while(!isP(p)) p++; return p; })()",
+        "ans": "scope.ansNum.toString()",
+        "seq": "(scope.n + 1) + ', ' + (scope.n + 2) + ', \\\\dots'"
+      },
+      "questionTemplate": "Find the smallest prime number that is strictly greater than $${scope.n}$.",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Test integers greater than $${scope.n}$ sequentially: $${scope.seq}$.",
+        "Test each integer to find the first number that is prime (has no factors other than 1 and itself).",
+        "The smallest prime number greater than $${scope.n}$ is $${scope.ans}$."
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "n": {
+          "type": "randInt",
+          "min": 25,
+          "max": 85
+        }
+      },
+      "derived": {
+        "ansNum": "(function(){ function isP(x){ if(x<2) return false; for(let i=2; i*i<=x; i++) if(x%i===0) return false; return true; } let p = scope.n - 1; while(!isP(p)) p--; return p; })()",
+        "ans": "scope.ansNum.toString()",
+        "seq": "(scope.n - 1) + ', ' + (scope.n - 2) + ', \\\\dots'"
+      },
+      "questionTemplate": "Find the largest prime number that is strictly less than $${scope.n}$.",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Test integers less than $${scope.n}$ in descending order: $${scope.seq}$.",
+        "Test each integer to find the first number that is prime.",
+        "The largest prime number less than $${scope.n}$ is $${scope.ans}$."
+      ]
+    }
+  ]
+}
