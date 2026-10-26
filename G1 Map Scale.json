@@ -1,0 +1,347 @@
+{
+  "skillTitle": "Map Scales",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "⌫",
+    "4",
+    "5",
+    "6",
+    "Clear",
+    "1",
+    "2",
+    "3",
+    "a/b",
+    "0",
+    ".",
+    ":",
+    "←",
+    "→"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "type_idx": { "type": "randInt", "min": 0, "max": 2 },
+        "val_raw": { "type": "randInt", "min": 2, "max": 90 }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.type_idx;\n  var v = scope.val_raw;\n  var n, unit, ans, step1, step2, step3;\n  if (t === 0) {\n    n = v * 10;\n    unit = 'centimetres';\n    ans = n.toString();\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm}';\n    step2 = '1\\\\text{ cm represents } ' + n + '\\\\text{ cm}';\n    step3 = '\\\\text{Actual distance} = ' + n + '\\\\text{ cm}';\n  } else if (t === 1) {\n    n = v * 1000;\n    unit = 'metres';\n    var m = n / 100;\n    ans = m.toString();\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm}';\n    step2 = '1\\\\text{ cm} : (' + n + ' \\\\div 100)\\\\text{ m} \\\\implies 1\\\\text{ cm} : ' + m + '\\\\text{ m}';\n    step3 = '\\\\text{Actual distance} = ' + m + '\\\\text{ m}';\n  } else {\n    n = v * 100000;\n    unit = 'kilometres';\n    var km = n / 100000;\n    ans = km.toString();\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm}';\n    step2 = '1\\\\text{ cm} : (' + n + ' \\\\div 100\\\\,000)\\\\text{ km} \\\\implies 1\\\\text{ cm} : ' + km + '\\\\text{ km}';\n    step3 = '\\\\text{Actual distance} = ' + km + '\\\\text{ km}';\n  }\n  return { n: n, unit: unit, ans: ans, step1: step1, step2: step2, step3: step3 };\n})()",
+        "n": "scope.data.n",
+        "unit": "scope.data.unit",
+        "ans": "scope.data.ans",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2",
+        "step3": "scope.data.step3"
+      },
+      "questionTemplate": "A map scale is given as $1 : ${scope.n}$. Find the actual distance represented by $1\\text{ cm}$ on the map, giving your answer in ${scope.unit}.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down map scale ratio:<br>$$${scope.step1}$$",
+        "Convert actual units:<br>$$${scope.step2}$$",
+        "Conclusion:<br>$$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "type_idx": { "type": "randInt", "min": 0, "max": 2 },
+        "x_val": { "type": "randInt", "min": 2, "max": 80 }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.type_idx;\n  var x = scope.x_val;\n  var unit_str, n, step1, step2, step3;\n  if (t === 0) {\n    unit_str = '$' + x + '\\\\text{ cm}$';\n    n = x;\n    step1 = '1\\\\text{ cm} : ' + x + '\\\\text{ cm}';\n    step2 = '\\\\text{Both sides are in centimetres.}';\n    step3 = '\\\\text{Map scale} = 1 : ' + n;\n  } else if (t === 1) {\n    unit_str = '$' + x + '\\\\text{ m}$';\n    n = x * 100;\n    step1 = '1\\\\text{ cm} : ' + x + '\\\\text{ m}';\n    step2 = '1\\\\text{ cm} : (' + x + ' \\\\times 100)\\\\text{ cm} \\\\implies 1\\\\text{ cm} : ' + n + '\\\\text{ cm}';\n    step3 = '\\\\text{Map scale} = 1 : ' + n;\n  } else {\n    unit_str = '$' + x + '\\\\text{ km}$';\n    n = x * 100000;\n    step1 = '1\\\\text{ cm} : ' + x + '\\\\text{ km}';\n    step2 = '1\\\\text{ cm} : (' + x + ' \\\\times 100\\\\,000)\\\\text{ cm} \\\\implies 1\\\\text{ cm} : ' + n + '\\\\text{ cm}';\n    step3 = '\\\\text{Map scale} = 1 : ' + n;\n  }\n  return { unit_str: unit_str, n: n, ans: n.toString(), step1: step1, step2: step2, step3: step3 };\n})()",
+        "unit_str": "scope.data.unit_str",
+        "n": "scope.data.n",
+        "ans": "scope.data.ans",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2",
+        "step3": "scope.data.step3"
+      },
+      "questionTemplate": "Express the map scale in the form $1 : n$ if $1\\text{ cm}$ represents ${scope.unit_str}.",
+      "inputs": [
+        { "label": "1 :", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down relation:<br>$$${scope.step1}$$",
+        "Convert actual quantity to centimetres:<br>$$${scope.step2}$$",
+        "State map scale:<br>$$${scope.step3}$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "type_idx": { "type": "randInt", "min": 0, "max": 1 },
+        "map_cm": { "type": "randInt", "min": 2, "max": 10 },
+        "k": { "type": "randInt", "min": 2, "max": 20 }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.type_idx;\n  var d_map = scope.map_cm;\n  var k = scope.k;\n  var act_str, n, step1, step2, step3, step4;\n  if (t === 0) {\n    var act_m = d_map * k * 5;\n    act_str = '$' + act_m + '\\\\text{ m}$';\n    var act_cm = act_m * 100;\n    n = act_cm / d_map;\n    step1 = d_map + '\\\\text{ cm} : ' + act_m + '\\\\text{ m}';\n    step2 = d_map + '\\\\text{ cm} : (' + act_m + ' \\\\times 100)\\\\text{ cm} \\\\implies ' + d_map + '\\\\text{ cm} : ' + act_cm + '\\\\text{ cm}';\n    step3 = '\\\\frac{' + d_map + '}{' + d_map + '}\\\\text{ cm} : \\\\frac{' + act_cm + '}{' + d_map + '}\\\\text{ cm} \\\\implies 1\\\\text{ cm} : ' + n + '\\\\text{ cm}';\n    step4 = '\\\\text{Map scale} = 1 : ' + n;\n  } else {\n    var act_km = d_map * k * 0.5;\n    act_str = '$' + act_km + '\\\\text{ km}$';\n    var act_cm = Math.round(act_km * 100000);\n    n = act_cm / d_map;\n    step1 = d_map + '\\\\text{ cm} : ' + act_km + '\\\\text{ km}';\n    step2 = d_map + '\\\\text{ cm} : (' + act_km + ' \\\\times 100\\\\,000)\\\\text{ cm} \\\\implies ' + d_map + '\\\\text{ cm} : ' + act_cm + '\\\\text{ cm}';\n    step3 = '\\\\frac{' + d_map + '}{' + d_map + '}\\\\text{ cm} : \\\\frac{' + act_cm + '}{' + d_map + '}\\\\text{ cm} \\\\implies 1\\\\text{ cm} : ' + n + '\\\\text{ cm}';\n    step4 = '\\\\text{Map scale} = 1 : ' + n;\n  }\n  return { act_str: act_str, n: n, ans: n.toString(), step1: step1, step2: step2, step3: step3, step4: step4 };\n})()",
+        "act_str": "scope.data.act_str",
+        "n": "scope.data.n",
+        "ans": "scope.data.ans",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2",
+        "step3": "scope.data.step3",
+        "step4": "scope.data.step4"
+      },
+      "questionTemplate": "On a map, the length of a road is $${scope.map_cm}\\text{ cm}$. The actual length of the road is ${scope.act_str}. Express the map scale in the form $1 : n$.",
+      "inputs": [
+        { "label": "1 :", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down given distance ratio:<br>$$${scope.step1}$$",
+        "Convert actual distance to centimetres:<br>$$${scope.step2}$$",
+        "Divide both terms to get $1\\text{ cm}$ on map:<br>$$${scope.step3}$$",
+        "Express as scale $1 : n$:<br>$$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "type_idx": { "type": "randInt", "min": 0, "max": 1 },
+        "scale_k": { "type": "randInt", "min": 2, "max": 12 },
+        "map_cm": { "type": "randInt", "min": 3, "max": 25 }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.type_idx;\n  var k = scope.scale_k;\n  var d_map = scope.map_cm;\n  var n, unit, act_val, step1, step2, step3, step4;\n  if (t === 0) {\n    n = k * 100;\n    unit = 'm';\n    var m_per_cm = n / 100;\n    act_val = d_map * m_per_cm;\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm}';\n    step2 = '1\\\\text{ cm} : (' + n + ' \\\\div 100)\\\\text{ m} \\\\implies 1\\\\text{ cm} : ' + m_per_cm + '\\\\text{ m}';\n    step3 = '(1 \\\\times ' + d_map + ')\\\\text{ cm} : (' + m_per_cm + ' \\\\times ' + d_map + ')\\\\text{ m}';\n    step4 = d_map + '\\\\text{ cm} : ' + act_val + '\\\\text{ m} \\\\implies \\\\text{Actual distance} = ' + act_val + '\\\\text{ m}';\n  } else {\n    n = k * 10000;\n    unit = 'km';\n    var km_per_cm = n / 100000;\n    act_val = parseFloat((d_map * km_per_cm).toFixed(4));\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm}';\n    step2 = '1\\\\text{ cm} : (' + n + ' \\\\div 100\\\\,000)\\\\text{ km} \\\\implies 1\\\\text{ cm} : ' + km_per_cm + '\\\\text{ km}';\n    step3 = '(1 \\\\times ' + d_map + ')\\\\text{ cm} : (' + km_per_cm + ' \\\\times ' + d_map + ')\\\\text{ km}';\n    step4 = d_map + '\\\\text{ cm} : ' + act_val + '\\\\text{ km} \\\\implies \\\\text{Actual distance} = ' + act_val + '\\\\text{ km}';\n  }\n  return { n: n, unit: unit, act_val: act_val, ans: act_val.toString(), step1: step1, step2: step2, step3: step3, step4: step4 };\n})()",
+        "n": "scope.data.n",
+        "unit": "scope.data.unit",
+        "act_val": "scope.data.act_val",
+        "ans": "scope.data.ans",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2",
+        "step3": "scope.data.step3",
+        "step4": "scope.data.step4"
+      },
+      "questionTemplate": "The scale of a map is $1 : ${scope.n}$. The distance on the map between two places is $${scope.map_cm}\\text{ cm}$. Find the actual distance in ${scope.unit}.",
+      "inputs": [
+        { "label": "${scope.unit}", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down map scale:<br>$$${scope.step1}$$",
+        "Convert actual units:<br>$$${scope.step2}$$",
+        "Scale proportionally to $${scope.map_cm}\\text{ cm}$:<br>$$${scope.step3}$$",
+        "Calculate actual distance:<br>$$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "type_idx": { "type": "randInt", "min": 0, "max": 1 },
+        "scale_k": { "type": "randInt", "min": 2, "max": 12 },
+        "mult": { "type": "randInt", "min": 2, "max": 15 }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.type_idx;\n  var k = scope.scale_k;\n  var m_cm = scope.mult;\n  var n, unit, act_val, step1, step2, step3, step4, step5;\n  if (t === 0) {\n    n = k * 500;\n    unit = 'm';\n    var m_per_cm = n / 100;\n    act_val = m_cm * m_per_cm;\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm}';\n    step2 = '1\\\\text{ cm} : ' + m_per_cm + '\\\\text{ m}';\n    step3 = '\\\\frac{1}{' + m_per_cm + '}\\\\text{ cm} : 1\\\\text{ m}';\n    step4 = '\\\\left(\\\\frac{1}{' + m_per_cm + '} \\\\times ' + act_val + '\\\\right)\\\\text{ cm} : (1 \\\\times ' + act_val + ')\\\\text{ m}';\n    step5 = m_cm + '\\\\text{ cm} : ' + act_val + '\\\\text{ m} \\\\implies \\\\text{Distance on map} = ' + m_cm + '\\\\text{ cm}';\n  } else {\n    n = k * 20000;\n    unit = 'km';\n    var km_per_cm = n / 100000;\n    act_val = parseFloat((m_cm * km_per_cm).toFixed(4));\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm}';\n    step2 = '1\\\\text{ cm} : ' + km_per_cm + '\\\\text{ km}';\n    step3 = '\\\\frac{1}{' + km_per_cm + '}\\\\text{ cm} : 1\\\\text{ km}';\n    step4 = '\\\\left(\\\\frac{1}{' + km_per_cm + '} \\\\times ' + act_val + '\\\\right)\\\\text{ cm} : (1 \\\\times ' + act_val + ')\\\\text{ km}';\n    step5 = m_cm + '\\\\text{ cm} : ' + act_val + '\\\\text{ km} \\\\implies \\\\text{Distance on map} = ' + m_cm + '\\\\text{ cm}';\n  }\n  return { n: n, unit: unit, act_val: act_val, ans: m_cm.toString(), step1: step1, step2: step2, step3: step3, step4: step4, step5: step5 };\n})()",
+        "n": "scope.data.n",
+        "unit": "scope.data.unit",
+        "act_val": "scope.data.act_val",
+        "ans": "scope.data.ans",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2",
+        "step3": "scope.data.step3",
+        "step4": "scope.data.step4",
+        "step5": "scope.data.step5"
+      },
+      "questionTemplate": "The scale of a map is $1 : ${scope.n}$. A road has an actual length of $${scope.act_val}\\text{ ${scope.unit}}$. Find the length of the road on the map in centimetres.",
+      "inputs": [
+        { "label": "cm", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down map scale:<br>$$${scope.step1}$$",
+        "Convert units:<br>$$${scope.step2}$$",
+        "Find map distance for $1\\text{ ${scope.unit}}$:<br>$$${scope.step3}$$",
+        "Scale to actual distance $${scope.act_val}\\text{ ${scope.unit}}$:<br>$$${scope.step4}$$",
+        "Calculate map distance:<br>$$${scope.step5}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "mode": { "type": "randInt", "min": 0, "max": 1 },
+        "a": { "type": "randInt", "min": 2, "max": 5 },
+        "b": { "type": "randInt", "min": 2, "max": 8 },
+        "mult": { "type": "randInt", "min": 2, "max": 6 },
+        "unit_idx": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "data": "(function(){\n  var mode = scope.mode;\n  var a = scope.a;\n  var b = scope.b;\n  var mult = scope.mult;\n  var unit = scope.unit_idx === 0 ? 'm' : 'km';\n  var q_text, ans, step1, step2, step3, step4, input_lbl;\n  if (mode === 0) {\n    var map_cm = a * mult;\n    var act_val = b * mult;\n    q_text = 'A distance on the map is $' + map_cm + '\\\\text{ cm}$. Find the actual distance in ' + unit + '.';\n    ans = act_val.toString();\n    input_lbl = unit;\n    step1 = a + '\\\\text{ cm} : ' + b + '\\\\text{ ' + unit + '}';\n    step2 = '1\\\\text{ cm} : \\\\frac{' + b + '}{' + a + '}\\\\text{ ' + unit + '}';\n    step3 = '(1 \\\\times ' + map_cm + ')\\\\text{ cm} : \\\\left(\\\\frac{' + b + '}{' + a + '} \\\\times ' + map_cm + '\\\\right)\\\\text{ ' + unit + '}';\n    step4 = map_cm + '\\\\text{ cm} : ' + act_val + '\\\\text{ ' + unit + '} \\\\implies \\\\text{Actual distance} = ' + act_val + '\\\\text{ ' + unit + '}';\n  } else {\n    var act_val = b * mult;\n    var map_cm = a * mult;\n    q_text = 'The actual distance between two places is $' + act_val + '\\\\text{ ' + unit + '}$. Find the distance on the map in centimetres.';\n    ans = map_cm.toString();\n    input_lbl = 'cm';\n    step1 = a + '\\\\text{ cm} : ' + b + '\\\\text{ ' + unit + '}';\n    step2 = '\\\\frac{' + a + '}{' + b + '}\\\\text{ cm} : 1\\\\text{ ' + unit + '}';\n    step3 = '\\\\left(\\\\frac{' + a + '}{' + b + '} \\\\times ' + act_val + '\\\\right)\\\\text{ cm} : (1 \\\\times ' + act_val + ')\\\\text{ ' + unit + '}';\n    step4 = map_cm + '\\\\text{ cm} : ' + act_val + '\\\\text{ ' + unit + '} \\\\implies \\\\text{Distance on map} = ' + map_cm + '\\\\text{ cm}';\n  }\n  return { unit: unit, q_text: q_text, ans: ans, input_lbl: input_lbl, step1: step1, step2: step2, step3: step3, step4: step4 };\n})()",
+        "a": "scope.a",
+        "b": "scope.b",
+        "unit": "scope.data.unit",
+        "q_text": "scope.data.q_text",
+        "ans": "scope.data.ans",
+        "input_lbl": "scope.data.input_lbl",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2",
+        "step3": "scope.data.step3",
+        "step4": "scope.data.step4"
+      },
+      "questionTemplate": "A map is drawn to a scale of $${scope.a}\\text{ cm}$ to $${scope.b}\\text{ ${scope.unit}}$.\n\n${scope.q_text}",
+      "inputs": [
+        { "label": "${scope.input_lbl}", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down map scale ratio:<br>$$${scope.step1}$$",
+        "Find unit equivalence:<br>$$${scope.step2}$$",
+        "Scale proportionally:<br>$$${scope.step3}$$",
+        "Calculate answer:<br>$$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "type_idx": { "type": "randInt", "min": 0, "max": 2 },
+        "val_raw": { "type": "randInt", "min": 2, "max": 20 }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.type_idx;\n  var v = scope.val_raw;\n  var scale_str, unit_out, ans, step1, step2, step3, step4;\n  if (t === 0) {\n    var n = v * 10;\n    scale_str = '1 : ' + n;\n    unit_out = '\\\\text{cm}^2';\n    var area_cm2 = n * n;\n    ans = area_cm2.toString();\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm}';\n    step2 = '(1\\\\text{ cm})^2 : (' + n + '\\\\text{ cm})^2';\n    step3 = '1\\\\text{ cm}^2 : ' + area_cm2 + '\\\\text{ cm}^2';\n    step4 = '\\\\text{Actual area represented by } 1\\\\text{ cm}^2 = ' + area_cm2 + '\\\\text{ cm}^2';\n  } else if (t === 1) {\n    var n = v * 500;\n    scale_str = '1 : ' + n;\n    unit_out = '\\\\text{m}^2';\n    var m_per_cm = n / 100;\n    var area_m2 = m_per_cm * m_per_cm;\n    ans = area_m2.toString();\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm} \\\\implies 1\\\\text{ cm} : ' + m_per_cm + '\\\\text{ m}';\n    step2 = '(1\\\\text{ cm})^2 : (' + m_per_cm + '\\\\text{ m})^2';\n    step3 = '1\\\\text{ cm}^2 : ' + area_m2 + '\\\\text{ m}^2';\n    step4 = '\\\\text{Actual area represented by } 1\\\\text{ cm}^2 = ' + area_m2 + '\\\\text{ m}^2';\n  } else {\n    var n = v * 50000;\n    scale_str = '1 : ' + n;\n    unit_out = '\\\\text{km}^2';\n    var km_per_cm = n / 100000;\n    var area_km2 = parseFloat((km_per_cm * km_per_cm).toFixed(6));\n    ans = area_km2.toString();\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm} \\\\implies 1\\\\text{ cm} : ' + km_per_cm + '\\\\text{ km}';\n    step2 = '(1\\\\text{ cm})^2 : (' + km_per_cm + '\\\\text{ km})^2';\n    step3 = '1\\\\text{ cm}^2 : ' + area_km2 + '\\\\text{ km}^2';\n    step4 = '\\\\text{Actual area represented by } 1\\\\text{ cm}^2 = ' + area_km2 + '\\\\text{ km}^2';\n  }\n  return { scale_str: scale_str, unit_out: unit_out, ans: ans, step1: step1, step2: step2, step3: step3, step4: step4 };\n})()",
+        "scale_str": "scope.data.scale_str",
+        "unit_out": "scope.data.unit_out",
+        "ans": "scope.data.ans",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2",
+        "step3": "scope.data.step3",
+        "step4": "scope.data.step4"
+      },
+      "questionTemplate": "For a map scale of $${scope.scale_str}$, find the actual area represented by $1\\text{ cm}^2$ on the map. Give your answer in $${scope.unit_out}$.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down linear map scale:<br>$$${scope.step1}$$",
+        "Square both sides to find area scale:<br>$$${scope.step2}$$",
+        "Simplify area scale:<br>$$${scope.step3}$$",
+        "State actual area:<br>$$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "type_idx": { "type": "randInt", "min": 0, "max": 1 },
+        "scale_k": { "type": "randInt", "min": 2, "max": 10 },
+        "map_area": { "type": "randInt", "min": 2, "max": 20 }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.type_idx;\n  var k = scope.scale_k;\n  var a_map = scope.map_area;\n  var n, unit_out, act_area, step1, step2, step3, step4;\n  if (t === 0) {\n    n = k * 200;\n    unit_out = '\\\\text{m}^2';\n    var m_per_cm = n / 100;\n    var m2_per_cm2 = m_per_cm * m_per_cm;\n    act_area = a_map * m2_per_cm2;\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm} \\\\implies 1\\\\text{ cm} : ' + m_per_cm + '\\\\text{ m}';\n    step2 = '(1\\\\text{ cm})^2 : (' + m_per_cm + '\\\\text{ m})^2 \\\\implies 1\\\\text{ cm}^2 : ' + m2_per_cm2 + '\\\\text{ m}^2';\n    step3 = '(1 \\\\times ' + a_map + ')\\\\text{ cm}^2 : (' + m2_per_cm2 + ' \\\\times ' + a_map + ')\\\\text{ m}^2';\n    step4 = a_map + '\\\\text{ cm}^2 : ' + act_area + '\\\\text{ m}^2 \\\\implies \\\\text{Actual area} = ' + act_area + '\\\\text{ m}^2';\n  } else {\n    n = k * 50000;\n    unit_out = '\\\\text{km}^2';\n    var km_per_cm = n / 100000;\n    var km2_per_cm2 = parseFloat((km_per_cm * km_per_cm).toFixed(6));\n    act_area = parseFloat((a_map * km2_per_cm2).toFixed(6));\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm} \\\\implies 1\\\\text{ cm} : ' + km_per_cm + '\\\\text{ km}';\n    step2 = '(1\\\\text{ cm})^2 : (' + km_per_cm + '\\\\text{ km})^2 \\\\implies 1\\\\text{ cm}^2 : ' + km2_per_cm2 + '\\\\text{ km}^2';\n    step3 = '(1 \\\\times ' + a_map + ')\\\\text{ cm}^2 : (' + km2_per_cm2 + ' \\\\times ' + a_map + ')\\\\text{ km}^2';\n    step4 = a_map + '\\\\text{ cm}^2 : ' + act_area + '\\\\text{ km}^2 \\\\implies \\\\text{Actual area} = ' + act_area + '\\\\text{ km}^2';\n  }\n  return { n: n, unit_out: unit_out, act_area: act_area, ans: act_area.toString(), step1: step1, step2: step2, step3: step3, step4: step4 };\n})()",
+        "n": "scope.data.n",
+        "unit_out": "scope.data.unit_out",
+        "act_area": "scope.data.act_area",
+        "ans": "scope.data.ans",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2",
+        "step3": "scope.data.step3",
+        "step4": "scope.data.step4"
+      },
+      "questionTemplate": "A map with scale $1 : ${scope.n}$ shows a park. The area of the park on the map is $${scope.map_area}\\text{ cm}^2$. Find the actual area of the park in $${scope.unit_out}$.",
+      "inputs": [
+        { "label": "=", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down linear scale:<br>$$${scope.step1}$$",
+        "Square both sides to get area scale:<br>$$${scope.step2}$$",
+        "Scale proportionally to $${scope.map_area}\\text{ cm}^2$:<br>$$${scope.step3}$$",
+        "Calculate actual area:<br>$$${scope.step4}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "type_idx": { "type": "randInt", "min": 0, "max": 1 },
+        "scale_k": { "type": "randInt", "min": 2, "max": 8 },
+        "mult": { "type": "randInt", "min": 2, "max": 15 }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.type_idx;\n  var k = scope.scale_k;\n  var map_area = scope.mult;\n  var n, unit_sym, act_area, step1, step2, step3, step4, step5;\n  if (t === 0) {\n    n = k * 250;\n    unit_sym = '\\\\text{m}^2';\n    var m_per_cm = n / 100;\n    var m2_per_cm2 = m_per_cm * m_per_cm;\n    act_area = map_area * m2_per_cm2;\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm} \\\\implies 1\\\\text{ cm} : ' + m_per_cm + '\\\\text{ m}';\n    step2 = '1\\\\text{ cm}^2 : ' + m2_per_cm2 + '\\\\text{ m}^2';\n    step3 = '\\\\frac{1}{' + m2_per_cm2 + '}\\\\text{ cm}^2 : 1\\\\text{ m}^2';\n    step4 = '\\\\left(\\\\frac{1}{' + m2_per_cm2 + '} \\\\times ' + act_area + '\\\\right)\\\\text{ cm}^2 : (1 \\\\times ' + act_area + ')\\\\text{ m}^2';\n    step5 = map_area + '\\\\text{ cm}^2 : ' + act_area + '\\\\text{ m}^2 \\\\implies \\\\text{Area on map} = ' + map_area + '\\\\text{ cm}^2';\n  } else {\n    n = k * 100000;\n    unit_sym = '\\\\text{km}^2';\n    var km_per_cm = n / 100000;\n    var km2_per_cm2 = parseFloat((km_per_cm * km_per_cm).toFixed(6));\n    act_area = parseFloat((map_area * km2_per_cm2).toFixed(6));\n    step1 = '1\\\\text{ cm} : ' + n + '\\\\text{ cm} \\\\implies 1\\\\text{ cm} : ' + km_per_cm + '\\\\text{ km}';\n    step2 = '1\\\\text{ cm}^2 : ' + km2_per_cm2 + '\\\\text{ km}^2';\n    step3 = '\\\\frac{1}{' + km2_per_cm2 + '}\\\\text{ cm}^2 : 1\\\\text{ km}^2';\n    step4 = '\\\\left(\\\\frac{1}{' + km2_per_cm2 + '} \\\\times ' + act_area + '\\\\right)\\\\text{ cm}^2 : (1 \\\\times ' + act_area + ')\\\\text{ km}^2';\n    step5 = map_area + '\\\\text{ cm}^2 : ' + act_area + '\\\\text{ km}^2 \\\\implies \\\\text{Area on map} = ' + map_area + '\\\\text{ cm}^2';\n  }\n  return { n: n, unit_sym: unit_sym, act_area: act_area, ans: map_area.toString(), step1: step1, step2: step2, step3: step3, step4: step4, step5: step5 };\n})()",
+        "n": "scope.data.n",
+        "unit_sym": "scope.data.unit_sym",
+        "act_area": "scope.data.act_area",
+        "ans": "scope.data.ans",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2",
+        "step3": "scope.data.step3",
+        "step4": "scope.data.step4",
+        "step5": "scope.data.step5"
+      },
+      "questionTemplate": "A map has a scale of $1 : ${scope.n}$. A lake has an actual area of $${scope.act_area}\\ ${scope.unit_sym}$. Find the area of the lake on the map in square centimetres.",
+      "inputs": [
+        { "label": "cm²", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down linear scale:<br>$$${scope.step1}$$",
+        "Square both sides for area scale:<br>$$${scope.step2}$$",
+        "Find map area for $1\\text{ unit}^2$:<br>$$${scope.step3}$$",
+        "Scale to actual area $${scope.act_area}\\ ${scope.unit_sym}$:<br>$$${scope.step4}$$",
+        "Calculate map area:<br>$$${scope.step5}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "mode": { "type": "randInt", "min": 0, "max": 1 },
+        "a": { "type": "randInt", "min": 2, "max": 5 },
+        "b": { "type": "randInt", "min": 2, "max": 6 },
+        "mult": { "type": "randInt", "min": 2, "max": 5 },
+        "unit_idx": { "type": "randInt", "min": 0, "max": 1 }
+      },
+      "derived": {
+        "data": "(function(){\n  var mode = scope.mode;\n  var a = scope.a;\n  var b = scope.b;\n  var mult = scope.mult;\n  var unit = scope.unit_idx === 0 ? 'm' : 'km';\n  var a2 = a * a;\n  var b2 = b * b;\n  var q_text, ans, step1, step2, step3, step4, step5, input_lbl;\n  if (mode === 0) {\n    var map_area = a2 * mult;\n    var act_area = b2 * mult;\n    q_text = 'The area of a park on the map is $' + map_area + '\\\\text{ cm}^2$. Find the actual area of the park in square ' + (unit === 'm' ? 'metres' : 'kilometres') + '.';\n    ans = act_area.toString();\n    input_lbl = unit + '²';\n    step1 = a + '\\\\text{ cm} : ' + b + '\\\\text{ ' + unit + '}';\n    step2 = '(' + a + '\\\\text{ cm})^2 : (' + b + '\\\\text{ ' + unit + '})^2 \\\\implies ' + a2 + '\\\\text{ cm}^2 : ' + b2 + '\\\\text{ ' + unit + '}^2';\n    step3 = '1\\\\text{ cm}^2 : \\\\frac{' + b2 + '}{' + a2 + '}\\\\text{ ' + unit + '}^2';\n    step4 = '(1 \\\\times ' + map_area + ')\\\\text{ cm}^2 : \\\\left(\\\\frac{' + b2 + '}{' + a2 + '} \\\\times ' + map_area + '\\\\right)\\\\text{ ' + unit + '}^2';\n    step5 = map_area + '\\\\text{ cm}^2 : ' + act_area + '\\\\text{ ' + unit + '}^2 \\\\implies \\\\text{Actual area} = ' + act_area + '\\\\text{ ' + unit + '}^2';\n  } else {\n    var act_area = b2 * mult;\n    var map_area = a2 * mult;\n    q_text = 'The actual area of a reservoir is $' + act_area + '\\\\text{ ' + unit + '}^2$. Find its area on the map in square centimetres.';\n    ans = map_area.toString();\n    input_lbl = 'cm²';\n    step1 = a + '\\\\text{ cm} : ' + b + '\\\\text{ ' + unit + '}';\n    step2 = '(' + a + '\\\\text{ cm})^2 : (' + b + '\\\\text{ ' + unit + '})^2 \\\\implies ' + a2 + '\\\\text{ cm}^2 : ' + b2 + '\\\\text{ ' + unit + '}^2';\n    step3 = '\\\\frac{' + a2 + '}{' + b2 + '}\\\\text{ cm}^2 : 1\\\\text{ ' + unit + '}^2';\n    step4 = '\\\\left(\\\\frac{' + a2 + '}{' + b2 + '} \\\\times ' + act_area + '\\\\right)\\\\text{ cm}^2 : (1 \\\\times ' + act_area + ')\\\\text{ ' + unit + '}^2';\n    step5 = map_area + '\\\\text{ cm}^2 : ' + act_area + '\\\\text{ ' + unit + '}^2 \\\\implies \\\\text{Area on map} = ' + map_area + '\\\\text{ cm}^2';\n  }\n  return { unit: unit, q_text: q_text, ans: ans, input_lbl: input_lbl, step1: step1, step2: step2, step3: step3, step4: step4, step5: step5 };\n})()",
+        "a": "scope.a",
+        "b": "scope.b",
+        "unit": "scope.data.unit",
+        "q_text": "scope.data.q_text",
+        "ans": "scope.data.ans",
+        "input_lbl": "scope.data.input_lbl",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2",
+        "step3": "scope.data.step3",
+        "step4": "scope.data.step4",
+        "step5": "scope.data.step5"
+      },
+      "questionTemplate": "A map is drawn to a scale of $${scope.a}\\text{ cm}$ to $${scope.b}\\text{ ${scope.unit}}$.\n\n${scope.q_text}",
+      "inputs": [
+        { "label": "${scope.input_lbl}", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Write down linear scale ratio:<br>$$${scope.step1}$$",
+        "Square both sides to get area scale:<br>$$${scope.step2}$$",
+        "Find unit rate:<br>$$${scope.step3}$$",
+        "Scale proportionally:<br>$$${scope.step4}$$",
+        "Calculate result:<br>$$${scope.step5}$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "map_len": { "type": "randInt", "min": 2, "max": 8 },
+        "k": { "type": "randInt", "min": 2, "max": 6 },
+        "map_area": { "type": "randInt", "min": 10, "max": 40 },
+        "rate": { "type": "randInt", "min": 20, "max": 60 }
+      },
+      "derived": {
+        "data": "(function(){\n  var d_map = scope.map_len;\n  var k = scope.k;\n  var act_m = d_map * k;\n  var m_per_cm = k;\n  var m2_per_cm2 = m_per_cm * m_per_cm;\n  var map_area = scope.map_area;\n  var act_area = map_area * m2_per_cm2;\n  var rate = scope.rate;\n  var total_cost = act_area * rate;\n  \n  var step1 = d_map + '\\\\text{ cm} : ' + act_m + '\\\\text{ m} \\\\implies 1\\\\text{ cm} : ' + m_per_cm + '\\\\text{ m}';\n  var step2 = '(1\\\\text{ cm})^2 : (' + m_per_cm + '\\\\text{ m})^2 \\\\implies 1\\\\text{ cm}^2 : ' + m2_per_cm2 + '\\\\text{ m}^2';\n  var step3 = map_area + '\\\\text{ cm}^2 : (' + map_area + ' \\\\times ' + m2_per_cm2 + ')\\\\text{ m}^2 \\\\implies ' + act_area + '\\\\text{ m}^2';\n  var step4 = '\\\\text{Total cost} = ' + act_area + ' \\\\times \\\\$' + rate + ' = \\\\$' + total_cost;\n  \n  return { act_m: act_m, act_area: act_area, total_cost: total_cost, ans: total_cost.toString(), step1: step1, step2: step2, step3: step3, step4: step4 };\n})()",
+        "act_m": "scope.data.act_m",
+        "act_area": "scope.data.act_area",
+        "total_cost": "scope.data.total_cost",
+        "ans": "scope.data.ans",
+        "step1": "scope.data.step1",
+        "step2": "scope.data.step2",
+        "step3": "scope.data.step3",
+        "step4": "scope.data.step4"
+      },
+      "questionTemplate": "On a floor plan, the length of a living room is $${scope.map_len}\\text{ cm}$ and its actual length is $${scope.act_m}\\text{ m}$.\n\nThe area of the living room on the floor plan is $${scope.map_area}\\text{ cm}^2$.\nVinyl flooring costs $\\$${scope.rate}/\\text{m}^2$. Find the total cost to cover the entire living room floor with vinyl.",
+      "inputs": [
+        { "label": "$", "answer": "${scope.ans}" }
+      ],
+      "steps": [
+        "Find linear map scale:<br>$$${scope.step1}$$",
+        "Square both sides for area scale:<br>$$${scope.step2}$$",
+        "Calculate actual floor area:<br>$$${scope.step3}$$",
+        "Calculate total vinyl flooring cost:<br>$$${scope.step4}$$"
+      ]
+    }
+  ]
+}
