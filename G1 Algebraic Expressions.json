@@ -1,0 +1,203 @@
+{
+  "skillTitle": "Algebraic Expressions",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "⌫",
+    "4",
+    "5",
+    "6",
+    "Clear",
+    "1",
+    "2",
+    "3",
+    "/",
+    "0",
+    "-",
+    "+",
+    "*",
+    "a",
+    "b",
+    "c",
+    "d",
+    "x",
+    "y",
+    "^",
+    "",
+    "(",
+    ")"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "op_type": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        },
+        "num": {
+          "type": "randInt",
+          "min": 2,
+          "max": 25
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.op_type;\n  var k = scope.num;\n  var stmt, expr, ans, step1;\n  if (t === 0) {\n    stmt = 'Add $x$ and $y$';\n    ans = 'x + y';\n    step1 = 'Addition of $x$ and $y$ gives $x + y$.';\n  } else if (t === 1) {\n    stmt = 'Subtract $c$ from ' + k;\n    ans = k + ' - c';\n    step1 = 'Subtracting $c$ from ' + k + ' gives $' + k + ' - c$.';\n  } else if (t === 2) {\n    stmt = 'Product of ' + k + ' and $d$';\n    ans = k + 'd';\n    step1 = 'Multiplying ' + k + ' and $d$ gives $' + k + 'd$.';\n  } else {\n    stmt = 'Divide $a$ by ' + k;\n    ans = 'a/' + k;\n    step1 = 'Dividing $a$ by ' + k + ' gives $\\\\frac{a}{' + k + '}$.';\n  }\n  return { stmt: stmt, ans: ans, step1: step1 };\n})()",
+        "stmt": "scope.data.stmt",
+        "ans": "scope.data.ans",
+        "step1": "scope.data.step1"
+      },
+      "questionTemplate": "Write an algebraic expression for the statement:\n\n${scope.stmt}",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "${scope.step1}",
+        "The algebraic expression is ${scope.ans}."
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "sit_type": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        },
+        "k": {
+          "type": "randInt",
+          "min": 2,
+          "max": 15
+        },
+        "amt": {
+          "type": "randInt",
+          "min": 50,
+          "max": 200
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.sit_type;\n  var k = scope.k, amt = scope.amt;\n  var sit, ans, step;\n  if (t === 0) {\n    sit = 'Faizal had $c$ books. His friend gives him ' + k + ' books on his birthday. How many books does he have now?';\n    ans = 'c + ' + k;\n    step = 'Add ' + k + ' to initial amount $c$: $c + ' + k + '$.';\n  } else if (t === 1) {\n    sit = 'Mei Ling had \\\\$' + amt + '. She donates \\\\$y to charity. How much money does she have now?';\n    ans = amt + ' - y';\n    step = 'Subtract donation $y$ from \\\\$' + amt + ': $' + amt + ' - y$.';\n  } else if (t === 2) {\n    sit = 'A box contains $d$ cookies. How many cookies are there in ' + k + ' such boxes?';\n    ans = k + 'd';\n    step = 'Multiply $d$ by ' + k + ' boxes: $' + k + 'd$.';\n  } else {\n    sit = 'There are $x$ pears. The pears are shared equally among ' + k + ' persons. How many pears does each person get?';\n    ans = 'x/' + k;\n    step = 'Divide total pears $x$ by ' + k + ' persons: $\\\\frac{x}{' + k + '}$.';\n  }\n  return { sit: sit, ans: ans, step: step };\n})()",
+        "sit": "scope.data.sit",
+        "ans": "scope.data.ans",
+        "step": "scope.data.step"
+      },
+      "questionTemplate": "Write an algebraic expression that represents the following situation:\n\n${scope.sit}",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "${scope.step}",
+        "The algebraic expression is ${scope.ans}."
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 5
+        },
+        "k": {
+          "type": "randInt",
+          "min": 10,
+          "max": 30
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var i = scope.idx;\n  var k = scope.k;\n  var cases = [\n    { expr: 'x \\\\times x', ans: 'x^2', step: 'x \\\\times x = x^2' },\n    { expr: 'a \\\\times a \\\\times a', ans: 'a^3', step: 'a \\\\times a \\\\times a = a^3' },\n    { expr: 'b \\\\times c \\\\times c', ans: 'bc^2', step: 'b \\\\times (c \\\\times c) = bc^2' },\n    { expr: k + ' \\\\times x^2', ans: k + 'x^2', step: k + ' \\\\times x^2 = ' + k + 'x^2' },\n    { expr: k + ' \\\\times y^3', ans: k + 'y^3', step: k + ' \\\\times y^3 = ' + k + 'y^3' },\n    { expr: k + ' \\\\times a \\\\times b^2', ans: k + 'ab^2', step: k + ' \\\\times a \\\\times b^2 = ' + k + 'ab^2' }\n  ];\n  var item = cases[i % cases.length];\n  return { expr: item.expr, ans: item.ans, step: item.step };\n})()",
+        "expr": "scope.data.expr",
+        "ans": "scope.data.ans",
+        "step": "scope.data.step"
+      },
+      "questionTemplate": "Give an equivalent algebraic expression for:\n\n$$\n${scope.expr}\n$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Simplify using index notation and removing multiplication signs:\n\n$$\n${scope.step}\n$$",
+        "The equivalent expression is ${scope.ans}."
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 2
+        },
+        "k": {
+          "type": "randInt",
+          "min": 2,
+          "max": 12
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var i = scope.idx;\n  var k = scope.k;\n  var cases = [\n    { expr: '(a + b) \\\\times ' + k, ans: k + '(a + b)', step: '(a + b) \\\\times ' + k + ' = ' + k + '(a + b)' },\n    { expr: '(x + y) \\\\times \\\\frac{1}{' + k + '}', ans: '(x + y)/' + k, step: '(x + y) \\\\times \\\\frac{1}{' + k + '} = \\\\frac{x + y}{' + k + '}' },\n    { expr: '(a + x) \\\\div ' + k, ans: '(a + x)/' + k, step: '(a + x) \\\\div ' + k + ' = \\\\frac{a + x}{' + k + '}' }\n  ];\n  var item = cases[i % cases.length];\n  return { expr: item.expr, ans: item.ans, step: item.step };\n})()",
+        "expr": "scope.data.expr",
+        "ans": "scope.data.ans",
+        "step": "scope.data.step"
+      },
+      "questionTemplate": "Give an equivalent algebraic expression for:\n\n$$\n${scope.expr}\n$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Rewrite using standard algebraic notation:\n\n$$\n${scope.step}\n$$",
+        "The equivalent expression is ${scope.ans}."
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "sit_type": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        },
+        "k": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "m": {
+          "type": "randInt",
+          "min": 3,
+          "max": 10
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var t = scope.sit_type;\n  var k = scope.k, m = scope.m;\n  var sit, ans, step;\n  if (t === 0) {\n    sit = 'A container contains $a$ pencils from Brand A and $b$ pencils from Brand B. How many pencils are there in ' + k + ' such containers?';\n    ans = k + '(a + b)';\n    step = 'First find pencils in 1 container: $a + b$. Then multiply by ' + k + ': $' + k + '(a + b)$.';\n  } else if (t === 1) {\n    sit = 'A box contains $x$ cups. Mary has ' + k + ' such boxes. She gives her friend ' + m + ' cups. How many cups does she have now?';\n    ans = k + 'x - ' + m;\n    step = 'Total in ' + k + ' boxes is $' + k + 'x$. Subtract ' + m + ' given away: $' + k + 'x - ' + m + '$.';\n  } else if (t === 2) {\n    sit = 'Francis had \\\\$x. He spends \\\\$y. He then distributes the remaining amount of money equally among ' + k + ' charities. How much money does each charity receive?';\n    ans = '(x - y)/' + k;\n    step = 'Remaining amount is $x - y$. Divide equally by ' + k + ': $\\\\frac{x - y}{' + k + '}$.';\n  } else {\n    sit = 'There are $a$ pens and $b$ erasers. The pens and erasers are divided equally between ' + k + ' persons. How many pens and erasers will each person get?';\n    ans = '(a + b)/' + k;\n    step = 'Total items = $a + b$. Divide equally by ' + k + ': $\\\\frac{a + b}{' + k + '}$.';\n  }\n  return { sit: sit, ans: ans, step: step };\n})()",
+        "sit": "scope.data.sit",
+        "ans": "scope.data.ans",
+        "step": "scope.data.step"
+      },
+      "questionTemplate": "Write an algebraic expression that represents the following situation:\n\n${scope.sit}",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "${scope.step}",
+        "The algebraic expression is ${scope.ans}."
+      ]
+    }
+  ]
+}

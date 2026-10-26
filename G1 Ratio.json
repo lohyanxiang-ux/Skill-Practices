@@ -1,0 +1,262 @@
+{
+  "skillTitle": "Ratio",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "⌫",
+    "4",
+    "5",
+    "6",
+    "Clear",
+    "1",
+    "2",
+    "3",
+    ":",
+    "0",
+    ",",
+    "/"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "k": {
+          "type": "randInt",
+          "min": 2,
+          "max": 9
+        },
+        "a_base": {
+          "type": "randInt",
+          "min": 1,
+          "max": 8
+        },
+        "b_base": {
+          "type": "randInt",
+          "min": 1,
+          "max": 8
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var g = gcd(scope.a_base, scope.b_base);\n  var a_simp = scope.a_base / g;\n  var b_simp = scope.b_base / g;\n  var k = scope.k;\n  var a = a_simp * k;\n  var b = b_simp * k;\n  var ans = a_simp + ':' + b_simp;\n  var calc_str = b_simp === 1 ? ('' + a_simp) : ('\\\\frac{' + a_simp + '}{' + b_simp + '}');\n  return { a: a, b: b, a_simp: a_simp, b_simp: b_simp, ans: ans, calc_str: calc_str };\n})()",
+        "a": "scope.data.a",
+        "b": "scope.data.b",
+        "a_simp": "scope.data.a_simp",
+        "b_simp": "scope.data.b_simp",
+        "ans": "scope.data.ans",
+        "calc_str": "scope.data.calc_str"
+      },
+      "questionTemplate": "Express the following ratio in simplest form:\n\n$$\n${scope.a} : ${scope.b}\n$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Key into calculator $\\frac{${scope.a}}{${scope.b}}$ to get $${scope.calc_str}$, which is equivalent to $\\frac{${scope.a_simp}}{${scope.b_simp}}$.",
+        "The ratio in simplest form is ${scope.ans}."
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "k": {
+          "type": "randInt",
+          "min": 2,
+          "max": 8
+        },
+        "a_raw": {
+          "type": "randInt",
+          "min": 2,
+          "max": 10
+        },
+        "b_raw": {
+          "type": "randInt",
+          "min": 2,
+          "max": 10
+        },
+        "c_raw": {
+          "type": "randInt",
+          "min": 2,
+          "max": 10
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  function gcd3(x, y, z) { return gcd(x, gcd(y, z)); }\n  var g_raw = gcd3(scope.a_raw, scope.b_raw, scope.c_raw);\n  var a_base = scope.a_raw / g_raw;\n  var b_base = scope.b_raw / g_raw;\n  var c_base = scope.c_raw / g_raw;\n  var k = scope.k;\n  var a = a_base * k;\n  var b = b_base * k;\n  var c = c_base * k;\n  var g = k * g_raw;\n  var ans = a_base + ':' + b_base + ':' + c_base;\n  return { a: a, b: b, c: c, g: g, a_base: a_base, b_base: b_base, c_base: c_base, ans: ans };\n})()",
+        "a": "scope.data.a",
+        "b": "scope.data.b",
+        "c": "scope.data.c",
+        "g": "scope.data.g",
+        "a_base": "scope.data.a_base",
+        "b_base": "scope.data.b_base",
+        "c_base": "scope.data.c_base",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "At a concert, the ratio of the number of men to the number of women to the number of children is:\n\n$$\n${scope.a} : ${scope.b} : ${scope.c}\n$$\n\nWrite the ratio in simplest form.",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Find the greatest common factor of ${scope.a}, ${scope.b}, and ${scope.c}, which is ${scope.g}.",
+        "Divide all three numbers by ${scope.g}:\n\n$$\\frac{${scope.a}}{${scope.g}} : \\frac{${scope.b}}{${scope.g}} : \\frac{${scope.c}}{${scope.g}} = ${scope.a_base} : ${scope.b_base} : ${scope.c_base}$$",
+        "The ratio in simplest form is ${scope.ans}."
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "ratio_a": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        },
+        "ratio_b": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6,
+          "notEqual": "ratio_a"
+        },
+        "multiplier": {
+          "type": "randInt",
+          "min": 4,
+          "max": 16
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var a_count = scope.ratio_a * scope.multiplier;\n  var b_count = scope.ratio_b * scope.multiplier;\n  return { a_count: a_count, b_count: b_count };\n})()",
+        "a_count": "scope.data.a_count",
+        "b_count": "scope.data.b_count",
+        "ans": "scope.b_count"
+      },
+      "questionTemplate": "In a hawker centre, the ratio of the number of tables to the number of benches is ${scope.ratio_a} : ${scope.ratio_b}.\n\nThere are ${scope.a_count} tables in the hawker centre. How many benches are there?",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Set up the proportion corresponding to ${scope.ratio_a} unit(s) = ${scope.a_count} tables.",
+        "Calculate the value of 1 unit:\n\n$$1 \\text{ unit} = ${scope.a_count} \\div ${scope.ratio_a} = ${scope.multiplier}$$",
+        "Find the total number of benches (${scope.ratio_b} units):\n\n$$${scope.ratio_b} \\times ${scope.multiplier} = ${scope.ans}$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "unit_type": {
+          "type": "randInt",
+          "min": 0,
+          "max": 6
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var types = [\n    { text: '\\\\$2.50 : 50\\\\text{\\\\u00a2}', val1: 250, val2: 50, unit1: '\\\\$2.50 = 250\\\\text{\\\\u00a2}', unit2: '50\\\\text{\\\\u00a2}' },\n    { text: '80\\\\text{ cm} : 1.2\\\\text{ m}', val1: 80, val2: 120, unit1: '80\\\\text{ cm}', unit2: '1.2\\\\text{ m} = 120\\\\text{ cm}' },\n    { text: '600\\\\text{ m} : 2\\\\text{ km}', val1: 600, val2: 2000, unit1: '600\\\\text{ m}', unit2: '2\\\\text{ km} = 2000\\\\text{ m}' },\n    { text: '1.5\\\\text{ kg} : 250\\\\text{ g}', val1: 1500, val2: 250, unit1: '1.5\\\\text{ kg} = 1500\\\\text{ g}', unit2: '250\\\\text{ g}' },\n    { text: '1.4\\\\text{ l} : 600\\\\text{ cm}^3', val1: 1400, val2: 600, unit1: '1.4\\\\text{ l} = 1400\\\\text{ cm}^3', unit2: '600\\\\text{ cm}^3' },\n    { text: '1.25\\\\text{ h} : 40\\\\text{ min}', val1: 75, val2: 40, unit1: '1.25\\\\text{ h} = 75\\\\text{ min}', unit2: '40\\\\text{ min}' },\n    { text: '30\\\\text{ s} : 1.5\\\\text{ min}', val1: 30, val2: 90, unit1: '30\\\\text{ s}', unit2: '1.5\\\\text{ min} = 90\\\\text{ s}' }\n  ];\n  var item = types[scope.unit_type % types.length];\n  var g = gcd(item.val1, item.val2);\n  var s1 = item.val1 / g;\n  var s2 = item.val2 / g;\n  var ans = s1 + ':' + s2;\n  var calc_str = s2 === 1 ? ('' + s1) : ('\\\\frac{' + s1 + '}{' + s2 + '}');\n  return { origText: item.text, val1: item.val1, val2: item.val2, unit1: item.unit1, unit2: item.unit2, s1: s1, s2: s2, ans: ans, calc_str: calc_str };\n})()",
+        "origText": "scope.data.origText",
+        "val1": "scope.data.val1",
+        "val2": "scope.data.val2",
+        "unit1": "scope.data.unit1",
+        "unit2": "scope.data.unit2",
+        "s1": "scope.data.s1",
+        "s2": "scope.data.s2",
+        "ans": "scope.data.ans",
+        "calc_str": "scope.data.calc_str"
+      },
+      "questionTemplate": "Express the following ratio in simplest form:\n\n$$\n${scope.origText}\n$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Convert both quantities into the same unit: $${scope.unit1}$ and $${scope.unit2}$.",
+        "Key into calculator $\\frac{${scope.val1}}{${scope.val2}}$ to get $${scope.calc_str}$, which is equivalent to $\\frac{${scope.s1}}{${scope.s2}}$.",
+        "The ratio in simplest form is ${scope.ans}."
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "frac_type": {
+          "type": "randInt",
+          "min": 0,
+          "max": 3
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var cases = [\n    { expr: '0.1\\\\text{ kg of butter} : 0.5\\\\text{ kg of flour}', calc_expr: '\\\\frac{0.1}{0.5}', s1: 1, s2: 5 },\n    { expr: '0.5\\\\text{ l of water} : 0.25\\\\text{ l of milk}', calc_expr: '\\\\frac{0.5}{0.25}', s1: 2, s2: 1 },\n    { expr: '\\\\frac{1}{2}\\\\text{ tsp chilli paste} : 2\\\\text{ tsp prawn paste}', calc_expr: '\\\\frac{\\\\frac{1}{2}}{2}', s1: 1, s2: 4 },\n    { expr: '\\\\frac{1}{4}\\\\text{ onion} : 1\\\\frac{1}{2}\\\\text{ potatoes}', calc_expr: '\\\\frac{\\\\frac{1}{4}}{1\\\\frac{1}{2}}', s1: 1, s2: 6 }\n  ];\n  var item = cases[scope.frac_type % cases.length];\n  var s1 = item.s1, s2 = item.s2;\n  var calc_str = s2 === 1 ? ('' + s1) : ('\\\\frac{' + s1 + '}{' + s2 + '}');\n  return { expr: item.expr, calc_expr: item.calc_expr, s1: s1, s2: s2, ans: s1 + ':' + s2, calc_str: calc_str };\n})()",
+        "expr": "scope.data.expr",
+        "calc_expr": "scope.data.calc_expr",
+        "s1": "scope.data.s1",
+        "s2": "scope.data.s2",
+        "ans": "scope.data.ans",
+        "calc_str": "scope.data.calc_str"
+      },
+      "questionTemplate": "Express the following ratio in simplest form:\n\n$$\n${scope.expr}\n$$",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Key into calculator $${scope.calc_expr}$ to get $${scope.calc_str}$, which is equivalent to $\\frac{${scope.s1}}{${scope.s2}}$.",
+        "The ratio in simplest form is ${scope.ans}."
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "r1": {
+          "type": "randInt",
+          "min": 1,
+          "max": 3
+        },
+        "r2": {
+          "type": "randInt",
+          "min": 2,
+          "max": 5
+        },
+        "r3": {
+          "type": "randInt",
+          "min": 3,
+          "max": 6
+        },
+        "multiplier": {
+          "type": "randInt",
+          "min": 50,
+          "max": 200
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var r1 = scope.r1, r2 = scope.r2, r3 = scope.r3;\n  var g = gcd(r1, gcd(r2, r3));\n  r1 = r1 / g; r2 = r2 / g; r3 = r3 / g;\n  var mult = scope.multiplier;\n  var yellow = r1 * mult;\n  var white = r2 * mult;\n  var grey = r3 * mult;\n  var ans = white + ', ' + grey;\n  return { r1: r1, r2: r2, r3: r3, mult: mult, yellow: yellow, white: white, grey: grey, ans: ans };\n})()",
+        "r1": "scope.data.r1",
+        "r2": "scope.data.r2",
+        "r3": "scope.data.r3",
+        "mult": "scope.data.mult",
+        "yellow": "scope.data.yellow",
+        "white": "scope.data.white",
+        "grey": "scope.data.grey",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "A floor mosaic has yellow, white, and grey tiles in the ratio ${scope.r1} : ${scope.r2} : ${scope.r3}.\n\nThere are ${scope.yellow} yellow tiles on the floor altogether. How many white tiles and grey tiles are there respectively?\n\n(Enter answers separated by a comma, e.g., 840, 1260)",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Yellow tiles correspond to ${scope.r1} unit(s) = ${scope.yellow}.",
+        "Find the value of 1 unit:\n\n$$1 \\text{ unit} = ${scope.yellow} \\div ${scope.r1} = ${scope.mult}$$",
+        "Calculate white tiles (${scope.r2} units) and grey tiles (${scope.r3} units):\n\n$$\\text{White} = ${scope.r2} \\times ${scope.mult} = ${scope.white}$$\n$$\\text{Grey} = ${scope.r3} \\times ${scope.mult} = ${scope.grey}$$",
+        "The number of white and grey tiles are ${scope.white} and ${scope.grey} respectively."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,499 @@
+{
+  "skillTitle": "Evaluate Algebraic Expressions",
+  "keypad": [
+    "7",
+    "8",
+    "9",
+    "⌫",
+    "4",
+    "5",
+    "6",
+    "Clear",
+    "1",
+    "2",
+    "3",
+    "-",
+    "0",
+    ".",
+    "/"
+  ],
+  "structures": [
+    {
+      "level": 1,
+      "variables": {
+        "t_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 4
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var t_list = [1, 2, 3, 4, 5];\n  var t = t_list[scope.t_idx % t_list.length];\n  var c = 3 + 2.25 * t;\n  var mult_val = 2.25 * t;\n  return { t: t, c: c, mult_val: mult_val, ans: '' + c };\n})()",
+        "t": "scope.data.t",
+        "c": "scope.data.c",
+        "mult_val": "scope.data.mult_val",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "The cost of parking, $c$, at a car park is related to the duration of the parking, $t$ hours, by the formula:\n\n$$\nc = 3 + 2.25t\n$$\n\nFind the value of $c$ when $t = ${scope.t}$.",
+      "inputs": [
+        {
+          "label": "c =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $t = ${scope.t}$ into the formula $c = 3 + 2.25t$:\n\n$$\nc = 3 + 2.25(${scope.t})\n$$",
+        "Perform multiplication first:\n\n$$\nc = 3 + ${scope.mult_val}\n$$",
+        "Add the terms to get the final cost:\n\n$$\nc = ${scope.ans}\n$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "t_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 4
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var t_list = [0, 1, 2, 2.5, 3.5];\n  var t = t_list[scope.t_idx % t_list.length];\n  var p = 75 + 20 * t;\n  var ot_pay = 20 * t;\n  return { t: t, p: p, ot_pay: ot_pay, ans: '' + p };\n})()",
+        "t": "scope.data.t",
+        "p": "scope.data.p",
+        "ot_pay": "scope.data.ot_pay",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "Kai Mun's daily pay, $p$, is related to the number of hours he works overtime, $t$, by the formula:\n\n$$\np = 75 + 20t\n$$\n\nFind the value of $p$ when $t = ${scope.t}$.",
+      "inputs": [
+        {
+          "label": "p =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $t = ${scope.t}$ into the formula $p = 75 + 20t$:\n\n$$\np = 75 + 20(${scope.t})\n$$",
+        "Evaluate to get Total daily pay:\n\n$$\np = ${scope.ans}\n$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "d": {
+          "type": "randInt",
+          "min": 2,
+          "max": 12
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var d = scope.d;\n  var mult_val = 1.5 * d;\n  var C = 5 + mult_val;\n  return { d: d, mult_val: mult_val, C: C, ans: '' + C };\n})()",
+        "d": "scope.data.d",
+        "mult_val": "scope.data.mult_val",
+        "C": "scope.data.C",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "The total delivery charge, $\\$C$, for a package sent over a distance of $d$ kilometres is given by the formula:\n\n$$\nC = 5 + 1.5d\n$$\n\nFind the value of $C$ when $d = ${scope.d}$.",
+      "inputs": [
+        {
+          "label": "C =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $d = ${scope.d}$ into the formula $C = 5 + 1.5d$:\n\n$$\nC = 5 + 1.5(${scope.d})\n$$",
+        "Evaluate to get Total delivery charge:\n\n$$\nC = ${scope.ans}\n$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "x": {
+          "type": "randInt",
+          "min": 1,
+          "max": 8
+        },
+        "y": {
+          "type": "randInt",
+          "min": -4,
+          "max": 6
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var x = scope.x;\n  var y = scope.y;\n  var term1 = 3 * x;\n  var term2 = 2 * y;\n  var val = term1 - term2;\n  return { x: x, y: y, term1: term1, term2: term2, val: val, ans: '' + val };\n})()",
+        "x": "scope.data.x",
+        "y": "scope.data.y",
+        "term1": "scope.data.term1",
+        "term2": "scope.data.term2",
+        "val": "scope.data.val",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "Evaluate the algebraic expression:\n\n$$\n3x - 2y\n$$\n\nwhen $x = ${scope.x}$ and $y = ${scope.y}$.",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $x = ${scope.x}$ and $y = ${scope.y}$ into $3x - 2y$:\n\n$$\n3(${scope.x}) - 2(${scope.y})\n$$",
+        "Multiply the coefficients:\n\n$$\n${scope.term1} - (${scope.term2})\n$$",
+        "Simplify the result:\n\n$$\n${scope.ans}\n$$"
+      ]
+    },
+    {
+      "level": 1,
+      "variables": {
+        "x": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "y": {
+          "type": "randInt",
+          "min": 1,
+          "max": 5
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var x = scope.x;\n  var y = scope.y;\n  var inner = x + 2 * y;\n  var term1 = 4 * inner;\n  var term2 = 3 * x;\n  var val = term1 - term2;\n  return { x: x, y: y, inner: inner, term1: term1, term2: term2, val: val, ans: '' + val };\n})()",
+        "x": "scope.data.x",
+        "y": "scope.data.y",
+        "inner": "scope.data.inner",
+        "term1": "scope.data.term1",
+        "term2": "scope.data.term2",
+        "val": "scope.data.val",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "Evaluate the algebraic expression:\n\n$$\n4(x + 2y) - 3x\n$$\n\nwhen $x = ${scope.x}$ and $y = ${scope.y}$.",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $x = ${scope.x}$ and $y = ${scope.y}$ into the expression:\n\n$$\n4(${scope.x} + 2(${scope.y})) - 3(${scope.x})\n$$",
+        "Evaluate inside the parentheses first:\n\n$$\n4(${scope.inner}) - ${scope.term2}\n$$",
+        "Multiply and subtract to get the final answer:\n\n$$\n${scope.term1} - ${scope.term2} = ${scope.ans}\n$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "f_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 5
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var f_list = [122, 32, 50, 68, 86, 104];\n  var F = f_list[scope.f_idx % f_list.length];\n  var f_sub = F - 32;\n  var C = (5 / 9) * f_sub;\n  return { F: F, f_sub: f_sub, C: C, ans: '' + C };\n})()",
+        "F": "scope.data.F",
+        "f_sub": "scope.data.f_sub",
+        "C": "scope.data.C",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "To convert the temperature in degrees Fahrenheit, $F$, to degrees Celsius, $C$, we use the formula:\n\n$$\nC = \\frac{5}{9}(F - 32)\n$$\n\nFind the value of $C$ when $F = ${scope.F}$.",
+      "inputs": [
+        {
+          "label": "C =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $F = ${scope.F}$ into the formula:\n\n$$\nC = \\frac{5}{9}(${scope.F} - 32)\n$$",
+        "Evaluate inside the parentheses first:\n\n$$\nC = \\frac{5}{9}(${scope.f_sub})\n$$",
+        "Multiply by $\\frac{5}{9}$ to get the temperature in Celsius:\n\n$$\nC = ${scope.ans}\n$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "l": {
+          "type": "randInt",
+          "min": 5,
+          "max": 15
+        },
+        "w": {
+          "type": "randInt",
+          "min": 3,
+          "max": 10
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var l = scope.l;\n  var w = scope.w;\n  var sum_lw = l + w;\n  var P = 2 * sum_lw;\n  return { l: l, w: w, sum_lw: sum_lw, P: P, ans: '' + P };\n})()",
+        "l": "scope.data.l",
+        "w": "scope.data.w",
+        "sum_lw": "scope.data.sum_lw",
+        "P": "scope.data.P",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "The perimeter of a rectangle, $P$, is given by the formula:\n\n$$\nP = 2(l + w)\n$$\n\nwhere $l$ is the length and $w$ is the width.\n\nFind the perimeter $P$ when $l = ${scope.l}\\text{ cm}$ and $w = ${scope.w}\\text{ cm}$.",
+      "inputs": [
+        {
+          "label": "P =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $l = ${scope.l}$ and $w = ${scope.w}$ into the formula:\n\n$$\nP = 2(${scope.l} + ${scope.w})\n$$",
+        "Add length and width inside the parentheses:\n\n$$\nP = 2(${scope.sum_lw})\n$$",
+        "Multiply by 2 to get the perimeter:\n\n$$\nP = ${scope.ans}\n$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "u": {
+          "type": "randInt",
+          "min": 5,
+          "max": 25
+        },
+        "a": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "t": {
+          "type": "randInt",
+          "min": 3,
+          "max": 8
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var u = scope.u, a = scope.a, t = scope.t;\n  var at_val = a * t;\n  var v = u + at_val;\n  return { u: u, a: a, t: t, at_val: at_val, v: v, ans: '' + v };\n})()",
+        "u": "scope.data.u",
+        "a": "scope.data.a",
+        "t": "scope.data.t",
+        "at_val": "scope.data.at_val",
+        "v": "scope.data.v",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "The final velocity of an accelerating object, $v$, is given by the formula:\n\n$$\nv = u + at\n$$\n\nwhere $u$ is initial velocity, $a$ is acceleration, and $t$ is time.\n\nFind $v$ when $u = ${scope.u}$, $a = ${scope.a}$, and $t = ${scope.t}$.",
+      "inputs": [
+        {
+          "label": "v =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $u = ${scope.u}$, $a = ${scope.a}$, and $t = ${scope.t}$ into $v = u + at$:\n\n$$\nv = ${scope.u} + (${scope.a})(${scope.t})\n$$",
+        "Multiply acceleration by time:\n\n$$\nv = ${scope.u} + ${scope.at_val}\n$$",
+        "Add to find the final velocity:\n\n$$\nv = ${scope.ans}\n$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "x": {
+          "type": "randInt",
+          "min": 1,
+          "max": 6
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var x = scope.x;\n  var x_sq = x * x;\n  var term1 = 2 * x_sq;\n  var term2 = 5 * x;\n  var val = term1 - term2 + 3;\n  return { x: x, x_sq: x_sq, term1: term1, term2: term2, val: val, ans: '' + val };\n})()",
+        "x": "scope.data.x",
+        "x_sq": "scope.data.x_sq",
+        "term1": "scope.data.term1",
+        "term2": "scope.data.term2",
+        "val": "scope.data.val",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "Evaluate the quadratic expression:\n\n$$\n2x^2 - 5x + 3\n$$\n\nwhen $x = ${scope.x}$.",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $x = ${scope.x}$ into $2x^2 - 5x + 3$:\n\n$$\n2(${scope.x})^2 - 5(${scope.x}) + 3\n$$",
+        "Evaluate the exponent first (${scope.x}^2 = ${scope.x_sq}):\n\n$$\n2(${scope.x_sq}) - 5(${scope.x}) + 3 = ${scope.term1} - ${scope.term2} + 3\n$$",
+        "Calculate the final value:\n\n$$\n${scope.ans}\n$$"
+      ]
+    },
+    {
+      "level": 2,
+      "variables": {
+        "x": {
+          "type": "randInt",
+          "min": 4,
+          "max": 10
+        },
+        "y": {
+          "type": "randInt",
+          "min": 1,
+          "max": 3
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var x = scope.x, y = scope.y;\n  var num = x + 3 * y;\n  var den = x - y;\n  var val = num / den;\n  var simp = simplifyFrac(num, den);\n  return { x: x, y: y, num: num, den: den, ans: simp.str };\n})()",
+        "x": "scope.data.x",
+        "y": "scope.data.y",
+        "num": "scope.data.num",
+        "den": "scope.data.den",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "Evaluate the algebraic fraction in simplest form:\n\n$$\n\\frac{x + 3y}{x - y}\n$$\n\nwhen $x = ${scope.x}$ and $y = ${scope.y}$.",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $x = ${scope.x}$ and $y = ${scope.y}$ into numerator and denominator:\n\n$$\n\\frac{${scope.x} + 3(${scope.y})}{${scope.x} - ${scope.y}}\n$$",
+        "Simplify numerator and denominator:\n\n$$\n\\frac{${scope.num}}{${scope.den}}\n$$",
+        "Reduce to simplest form:\n\n$$\n${scope.ans}\n$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "case_idx": {
+          "type": "randInt",
+          "min": 0,
+          "max": 4
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var cases = [\n    { m: 56, h: 1.67 },\n    { m: 63.5, h: 1.51 },\n    { m: 78, h: 1.91 },\n    { m: 65, h: 1.65 },\n    { m: 70, h: 1.75 }\n  ];\n  var item = cases[scope.case_idx % cases.length];\n  var m = item.m;\n  var h = item.h;\n  var h_sq = Math.round(h * h * 10000) / 10000;\n  var raw_bmi = m / (h * h);\n  var ans = parseFloat(raw_bmi.toPrecision(3)).toString();\n  return { m: m, h: h, h_sq: h_sq, ans: ans };\n})()",
+        "m": "scope.data.m",
+        "h": "scope.data.h",
+        "h_sq": "scope.data.h_sq",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "The body mass index (BMI), $b$, is given by the formula:\n\n$$\nb = \\frac{m}{h^2}\n$$\n\nwhere $m$ is the mass in kilograms and $h$ is the height in metres.\n\nFind the BMI when $m = ${scope.m}$ and $h = ${scope.h}$. Give your answer to 3 significant figures.",
+      "inputs": [
+        {
+          "label": "b =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $m = ${scope.m}$ and $h = ${scope.h}$ into the formula $b = \\frac{m}{h^2}$:\n\n$$\nb = \\frac{${scope.m}}{(${scope.h})^2}\n$$",
+        "Square the height in the denominator:\n\n$$\nb = \\frac{${scope.m}}{${scope.h_sq}}\n$$",
+        "Divide and round to 3 significant figures:\n\n$$\nb \\approx ${scope.ans}\n$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "b": {
+          "type": "randInt",
+          "min": 3,
+          "max": 8
+        },
+        "h": {
+          "type": "randInt",
+          "min": 2,
+          "max": 10
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var a = scope.a;\n  var b = scope.b;\n  var h = scope.h;\n  var sum_ab = a + b;\n  var area = 0.5 * h * sum_ab;\n  return { a: a, b: b, h: h, sum_ab: sum_ab, area: area, ans: '' + area };\n})()",
+        "a": "scope.data.a",
+        "b": "scope.data.b",
+        "h": "scope.data.h",
+        "sum_ab": "scope.data.sum_ab",
+        "area": "scope.data.area",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "The area of a trapezium, $A$, is given by the formula:\n\n$$\nA = \\frac{1}{2}h(a + b)\n$$\n\nFind the value of $A$ when $a = ${scope.a}$, $b = ${scope.b}$, and $h = ${scope.h}$.",
+      "inputs": [
+        {
+          "label": "A =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $a = ${scope.a}$, $b = ${scope.b}$, and $h = ${scope.h}$ into the formula:\n\n$$\nA = \\frac{1}{2}(${scope.h})(${scope.a} + ${scope.b})\n$$",
+        "Add the terms inside the parentheses first:\n\n$$\nA = \\frac{1}{2}(${scope.h})(${scope.sum_ab})\n$$",
+        "Multiply to find the area:\n\n$$\nA = ${scope.ans}\n$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "P": {
+          "type": "randInt",
+          "min": 5,
+          "max": 20
+        },
+        "r": {
+          "type": "randInt",
+          "min": 2,
+          "max": 6
+        },
+        "t": {
+          "type": "randInt",
+          "min": 2,
+          "max": 5
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var P = scope.P * 100;\n  var r = scope.r;\n  var t = scope.t;\n  var prod = P * r * t;\n  var I = prod / 100;\n  return { P: P, r: r, t: t, prod: prod, I: I, ans: '' + I };\n})()",
+        "P": "scope.data.P",
+        "r": "scope.data.r",
+        "t": "scope.data.t",
+        "prod": "scope.data.prod",
+        "I": "scope.data.I",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "The simple interest, $\\$I$, earned on a principal amount $\\$P$ at an annual interest rate of $r\\%$ over $t$ years is given by the formula:\n\n$$\nI = \\frac{P \\times r \\times t}{100}\n$$\n\nFind $I$ when $P = \\$${scope.P}$, $r = ${scope.r}\\%$, and $t = ${scope.t}$ years.",
+      "inputs": [
+        {
+          "label": "I =",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $P = ${scope.P}$, $r = ${scope.r}$, and $t = ${scope.t}$ into the formula:\n\n$$\nI = \\frac{${scope.P} \\times ${scope.r} \\times ${scope.t}}{100}\n$$",
+        "Multiply the numerators:\n\n$$\nI = \\frac{${scope.prod}}{100}\n$$",
+        "Divide by 100 to get the simple interest:\n\n$$\nI = ${scope.ans}\n$$"
+      ]
+    },
+    {
+      "level": 3,
+      "variables": {
+        "a": {
+          "type": "randInt",
+          "min": 2,
+          "max": 5
+        },
+        "b": {
+          "type": "randInt",
+          "min": 2,
+          "max": 4
+        }
+      },
+      "derived": {
+        "data": "(function(){\n  var a = scope.a, b = scope.b;\n  var t1 = 2 * a * a;\n  var t2 = 3 * a * b;\n  var t3 = b * b;\n  var val = t1 + t2 - t3;\n  return { a: a, b: b, t1: t1, t2: t2, t3: t3, val: val, ans: '' + val };\n})()",
+        "a": "scope.data.a",
+        "b": "scope.data.b",
+        "t1": "scope.data.t1",
+        "t2": "scope.data.t2",
+        "t3": "scope.data.t3",
+        "val": "scope.data.val",
+        "ans": "scope.data.ans"
+      },
+      "questionTemplate": "Evaluate the multi-variable expression:\n\n$$\n2a^2 + 3ab - b^2\n$$\n\nwhen $a = ${scope.a}$ and $b = ${scope.b}$.",
+      "inputs": [
+        {
+          "label": "=",
+          "answer": "${scope.ans}"
+        }
+      ],
+      "steps": [
+        "Substitute $a = ${scope.a}$ and $b = ${scope.b}$ into $2a^2 + 3ab - b^2$:\n\n$$\n2(${scope.a})^2 + 3(${scope.a})(${scope.b}) - (${scope.b})^2\n$$",
+        "Evaluate powers and products step-by-step:\n\n$$\n2(${scope.a * scope.a}) + 3(${scope.a * scope.b}) - ${scope.b * scope.b} = ${scope.t1} + ${scope.t2} - ${scope.t3}\n$$",
+        "Simplify to get the final result:\n\n$$\n${scope.ans}\n$$"
+      ]
+    }
+  ]
+}
